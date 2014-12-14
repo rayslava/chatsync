@@ -1,5 +1,5 @@
 #pragma once
-#include "channel.h"
+#include "channel.hpp"
 
 namespace ircChannel {
 

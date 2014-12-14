@@ -1,13 +1,16 @@
 language: cpp
 compiler:
     - clang
+    - gcc
 before_install:
     - sudo add-apt-repository --yes ppa:h-rayflood/llvm
     - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
     - sudo add-apt-repository --yes 'deb http://llvm.org/apt/precise/ llvm-toolchain-precise-3.5 main'
     - wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key | sudo apt-key add -
     - sudo apt-get -qq update
-    - sudo apt-get -qq --yes --force-yes install libclang-3.5-dev clang-3.5 lcov libgtest-dev
+    - sudo apt-get -qq --yes --force-yes install libclang-3.5-dev clang-3.5 gcc-4.9 g++-4.9 libgtest-dev
+    - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 40 --slave /usr/bin/g++ g++ /usr/bin/g++-4.9
+    - sudo update-alternatives --config gcc
     - export LD_LIBRARY_PATH=/usr/lib/llvm-3.5/lib/
     - export PATH=/usr/lib/llvm-3.5/bin:$PATH
     - sudo pip install cpp-coveralls --use-mirrors
@@ -20,8 +23,9 @@ before_install:
 script:
     - mkdir build
     - cd build
-    - cmake .. -DGTEST_BOTH_LIBRARIES="/usr/lib/libgtest.a /usr/lib/libgtest_main.a"
+    - cmake .. -DGTEST_BOTH_LIBRARIES="/usr/lib/libgtest.a /usr/lib/libgtest_main.a" -DCOVERALLS=true
     - make
     - ./unit_tests
+    - make coveralls
 after_success:
-    - coveralls --root .. -E ".*external.*" -E ".*CMakeFiles.*" -E ".*test/.*.cpp.*"
+    - sh coveralls-upload || coveralls --root .. -E ".*external.*" -E ".*CMakeFiles.*" -E ".*test/.*.cpp.*"
