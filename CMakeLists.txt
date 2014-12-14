@@ -12,7 +12,8 @@ set(SOURCE_FILES
     src/config.cpp
     src/channel.cpp
     src/ircchannel.cpp
-    )
+    src/hub.cpp
+   )
 
 include(ConfigSafeGuards)
 include(CodeCoverage)
@@ -26,7 +27,7 @@ endif()
 set(STANDARD "-std=c++1y")
 
 set(CMAKE_CXX_FLAGS         "-Wall -Wno-unknown-pragmas -Wno-sign-compare -Woverloaded-virtual -Wwrite-strings -Wno-unused ${STANDARD} -Wextra -pedantic -Werror")
-set(CMAKE_CXX_FLAGS_DEBUG   "-O0 -g3  ${STANDARD}")
+set(CMAKE_CXX_FLAGS_DEBUG   "-O0 -g3 ${STANDARD}")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3 -flto -fwhole-program ${STANDARD}")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ftest-coverage  ${STANDARD}")
 set(CMAKE_CXX_LINK_FLAGS "-fprofile-arcs -ftest-coverage")
@@ -64,6 +65,7 @@ add_executable(
     ${GTEST_SOURCES}
     test/main.cpp
     test/channel.cpp
+    test/hub.cpp
     )
 
 target_link_libraries(

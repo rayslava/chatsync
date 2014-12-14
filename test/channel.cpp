@@ -1,4 +1,4 @@
-#include "../src/ircchannel.h"
+#include "../src/ircchannel.hpp"
 #include <gtest/gtest.h>
 
 TEST(channell, name)
