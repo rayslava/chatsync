@@ -9,14 +9,13 @@ Hub::Hub *hub;
 TEST(hub, name)
 {
     const auto& hubName = "Hub1";
-    hub = new Hub::Hub(hubName);
+    const auto hub = new Hub::Hub(hubName);
 
     ASSERT_EQ(hub->name(), hubName);
 
-    chan = new ircChannel::IrcChannel("channel", Channeling::ChannelDirection::Input);
+    chan = new ircChannel::IrcChannel("channel", Channeling::ChannelDirection::Input, hub);
 
-    hub->addInput(chan);
-    EXPECT_THROW(hub->addOutput(chan), std::logic_error);
+    //EXPECT_THROW(std::logic_error);
+	delete hub;
 
-    delete(hub);
 }

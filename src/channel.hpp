@@ -3,6 +3,8 @@
 #include <iostream>
 #include <vector>
 
+#include "hub.hpp"
+
 namespace Channeling {
 
     /**
@@ -27,8 +29,9 @@ namespace Channeling {
         /**
         * @param name Channel name in config file
         * @param direction Channel transmission direction
+        * @param hub Hub to add channel to
         */
-        Channel(std::string const &name, ChannelDirection const &direction);
+        Channel(std::string const &name, ChannelDirection const &direction, Hub::Hub* const hub);
         virtual ~Channel() {};
 
         /**
@@ -43,7 +46,7 @@ namespace Channeling {
         *
         * @retval Channel name
         */
-        virtual std::string const & name();
+        virtual std::string const & name() const;
 
         /**
         * Returns a channel direction
@@ -58,8 +61,9 @@ namespace Channeling {
     protected:
         const std::string _name;                            /**< The channel name in config file */
         const ChannelDirection _direction;                  /**< The channel direction for the whole transmission task */
+        Hub::Hub* const _hub;                               /**< Hub the channel is attached to */
 
         virtual void print(std::ostream& o) const = 0;
-        virtual void parse(std::string& l) = 0;
+        virtual std::string const& parse(std::string& l) = 0;
     };
 }

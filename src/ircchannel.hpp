@@ -1,5 +1,6 @@
 #pragma once
 #include "channel.hpp"
+#include "hub.hpp"
 
 namespace ircChannel {
 
@@ -11,11 +12,11 @@ namespace ircChannel {
     */
     class IrcChannel: public Channeling::Channel {
     public:
-        explicit IrcChannel(const std::string& name, Channeling::ChannelDirection const &direction);
+        explicit IrcChannel(const std::string &name, Channeling::ChannelDirection const &direction, Hub::Hub* hub);
         ~IrcChannel() {};
 
     protected:
         void print(std::ostream& o) const;
-        void parse(std::string& l);
+        std::string const& parse(std::string& l);
     };
 }

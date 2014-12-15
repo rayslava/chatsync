@@ -3,6 +3,8 @@
 #include <algorithm>
 
 #include "messages.hpp"
+#include "channel.hpp"
+
 
 namespace Hub {
     Hub::Hub(std::string const &name):
@@ -26,5 +28,20 @@ namespace Hub {
         _outputChannels.push_back(std::unique_ptr<Channeling::Channel const> (channel));
     }
 
+    void Hub::addChannel(const Channeling::Channel* channel) {
+        switch (channel->direction()) {
+            case Channeling::ChannelDirection::Input:
+                addInput(channel);
+                break;
+            case Channeling::ChannelDirection::Output:
+                addOutput(channel);
+                break;
+            default:
+                throw std::runtime_error(ERR_NOT_IMPL);
+        }
+    }
 
+    void Hub::newMessage(std::string const &msg) {
+        throw std::runtime_error("Don't know what to do with " + msg);
+    }
 }

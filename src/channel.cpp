@@ -3,14 +3,18 @@
 #include <typeinfo>
 #include <sstream>
 
+#include "messages.hpp"
+
 namespace Channeling {
-    Channel::Channel(std::string const &name, ChannelDirection const &direction):
+    Channel::Channel(std::string const &name, ChannelDirection const &direction, Hub::Hub* const hub):
     _name(name),
-    _direction(direction)
+    _direction(direction),
+    _hub(hub)
     {
+        _hub->addChannel(this);
     }
 
-    std::string const & Channel::name() {
+    std::string const & Channel::name() const {
         return _name;
     }
 
@@ -30,6 +34,6 @@ namespace Channeling {
         if (lines.empty()) {
             throw std::runtime_error("Channel config is empty");
         }
-        throw std::runtime_error("Not implemented yet");
+        throw std::runtime_error(ERR_NOT_IMPL);
     }
 }

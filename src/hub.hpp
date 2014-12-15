@@ -1,7 +1,10 @@
+#pragma once
 #include <list>
 #include <memory>
 
-#include "channel.hpp"
+namespace Channeling {
+    class Channel;
+}
 
 namespace Hub {
 
@@ -16,12 +19,6 @@ namespace Hub {
         const std::string _name;             /**< Human-readable name */
         std::list<chanPtr> _inputChannels;   /**< Container for all input channels */
         std::list<chanPtr> _outputChannels;  /**< Container for all output channels */
-
-    public:
-        Hub(std::string const& name);
-
-        const std::string &name() const {return _name;};
-
         /**
         * Append one more input channel to list taking ownership
         */
@@ -31,5 +28,20 @@ namespace Hub {
         * Append one more output channel to list taking ownership
         */
         void addOutput(Channeling::Channel const*);
+
+    public:
+        Hub(std::string const& name);
+
+        const std::string &name() const {return _name;};
+
+        /**
+        * Append channel regarding its direction
+        */
+        void addChannel(const Channeling::Channel*);
+
+        /**
+        * New message receiving callback
+        */
+        void newMessage(std::string const& msg);
     };
 }

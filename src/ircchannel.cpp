@@ -1,10 +1,11 @@
 #include "ircchannel.hpp"
+#include "hub.hpp"
 #include <stdexcept>
 #include <typeinfo>
 
 namespace ircChannel {
-    IrcChannel::IrcChannel(std::string const & name, Channeling::ChannelDirection const &direction):
-    Channeling::Channel(name, direction)
+    IrcChannel::IrcChannel(const std::string &name, Channeling::ChannelDirection const &direction, Hub::Hub* hub) :
+    Channeling::Channel(name, direction, hub)
     {
     }
 
@@ -13,8 +14,8 @@ namespace ircChannel {
             throw std::runtime_error("Output not implementer yet");
     }
 
-    void IrcChannel::parse(std::string &l) {
-        if (!l.empty())
-            throw std::runtime_error("Input not implementer yet");
+    std::string const& IrcChannel::parse(std::string &l) {
+        _hub->newMessage(l);
+        return l;
     }
 }
