@@ -55,15 +55,13 @@ namespace Channeling {
         */
         ChannelDirection direction() const {return _direction;};
 
-        friend std::ostream& operator<< (std::ostream &out, Channel const& channel);
-        friend std::istream& operator>> (std::istream &in, Channel& channel);
+        friend Channel& operator>> (const std::string &in, Channel& channel);
 
     protected:
         const std::string _name;                            /**< The channel name in config file */
         const ChannelDirection _direction;                  /**< The channel direction for the whole transmission task */
         Hub::Hub* const _hub;                               /**< Hub the channel is attached to */
 
-        virtual void print(std::ostream& o) const = 0;
-        virtual std::string const& parse(std::string& l) = 0;
+        virtual std::string const& parse(const std::string& l) const = 0;
     };
 }

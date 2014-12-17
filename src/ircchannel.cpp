@@ -9,13 +9,8 @@ namespace ircChannel {
     {
     }
 
-    void IrcChannel::print(std::ostream &o) const {
-        if (o)
-            throw std::runtime_error("Output not implementer yet");
-    }
-
-    std::string const& IrcChannel::parse(std::string &l) {
-        _hub->newMessage(l);
+    std::string const& IrcChannel::parse(const std::string &l) const {
+        std::cerr << "[DEBUG] Parsing line " << l << " inside " << _name << std::endl;
         return l;
     }
 }

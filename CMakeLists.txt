@@ -24,6 +24,8 @@ if (DEFINED GTEST_INCLUDE_DIRS)
 include_directories(${GTEST_INCLUDE_DIRS})
 endif()
 
+find_package (Threads REQUIRED)
+
 set(STANDARD "-std=c++1y")
 
 set(CMAKE_CXX_FLAGS         "-Wall -Wno-unknown-pragmas -Wno-sign-compare -Woverloaded-virtual -Wwrite-strings -Wno-unused ${STANDARD} -Wextra -pedantic -Werror")
@@ -71,7 +73,12 @@ add_executable(
 target_link_libraries(
     unit_tests
     ${GTEST_BOTH_LIBRARIES}
-    pthread
+    ${CMAKE_THREAD_LIBS_INIT}
+    )
+
+  target_link_libraries(
+    chatsync
+    ${CMAKE_THREAD_LIBS_INIT}
     )
 
 include(CTest)

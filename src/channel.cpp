@@ -18,16 +18,11 @@ namespace Channeling {
         return _name;
     }
 
-    std::ostream& operator<<(std::ostream &out, Channel const &channel) {
-        channel.print(out);
-        return out;
-    }
-
-    std::istream& operator>>(std::istream &in, Channel& channel) {
-        std::string line;
-        std::getline(in, line);
-        channel.parse(line);
-        return in;
+    Channel& operator>>(const std::string &msg,  Channel& channel) {
+	if (channel.direction() == Channeling::ChannelDirection::Input)
+	    throw std::logic_error("Can't write data to input channel " + channel.name());
+	channel._hub->newMessage(channel.parse(msg));
+        return channel;
     }
 
     void Channel::parseConfig(std::vector<std::string> const &lines) {
@@ -36,4 +31,6 @@ namespace Channeling {
         }
         throw std::runtime_error(ERR_NOT_IMPL);
     }
+
+
 }
