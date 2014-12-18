@@ -11,6 +11,7 @@ TEST(channell, name)
     Channeling::Channel *och = new ircChannel::IrcChannel("outChannel", Channeling::ChannelDirection::Output, hub);
 
     ASSERT_EQ(ich->name(), chanName);
+    ASSERT_EQ(och->name(), "outChannel");
     ASSERT_EQ(ich->direction(), Channeling::ChannelDirection::Input);
 
     hub->activate();

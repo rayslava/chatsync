@@ -17,17 +17,17 @@ namespace Channeling {
     };
 
     /**
-    * Class describing a channel to connect to input or output
+    * A channel to connect to input or output
     *
     * The deriving class *must* implement:
-    *   void print(std::ostream&) const; --- for data output
-    *   void parse(std::string&) const; --- for data input
+    *   void parse(std::string&) const; --- for data input in case of output channel
     *
+    * Input channel should send message to hub->newMessage()
     */
     class Channel {
     public:
         /**
-        * @param name Channel name in config file
+        * @param name A human-readable channel name in config file
         * @param direction Channel transmission direction
         * @param hub Hub to add channel to
         */
@@ -62,6 +62,11 @@ namespace Channeling {
         const ChannelDirection _direction;                  /**< The channel direction for the whole transmission task */
         Hub::Hub* const _hub;                               /**< Hub the channel is attached to */
 
-        virtual std::string const& parse(const std::string& l) const = 0;
+	/**
+	* Parse line and send it to needed output place in case of Output direction
+	*
+	* @param l An input line coming from hub
+	*/
+        virtual void parse(const std::string& l) const = 0;
     };
 }

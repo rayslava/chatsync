@@ -21,7 +21,7 @@ namespace Channeling {
     Channel& operator>>(const std::string &msg,  Channel& channel) {
 	if (channel.direction() == Channeling::ChannelDirection::Input)
 	    throw std::logic_error("Can't write data to input channel " + channel.name());
-	channel._hub->newMessage(channel.parse(msg));
+	channel.parse(msg);
         return channel;
     }
 

@@ -9,8 +9,7 @@ namespace ircChannel {
     {
     }
 
-    std::string const& IrcChannel::parse(const std::string &l) const {
+    void IrcChannel::parse(const std::string &l) const {
         std::cerr << "[DEBUG] Parsing line " << l << " inside " << _name << std::endl;
-        return l;
     }
 }

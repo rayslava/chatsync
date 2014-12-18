@@ -61,7 +61,7 @@ namespace Hub {
         const std::string &name() const {return _name;};
 
         /**
-        * Append channel regarding its direction
+        * Append channel accordingly to its direction
         */
         void addChannel(Channeling::Channel * const);
 

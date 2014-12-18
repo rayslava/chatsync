@@ -12,6 +12,7 @@ set(SOURCE_FILES
     src/config.cpp
     src/channel.cpp
     src/ircchannel.cpp
+    src/filechannel.cpp
     src/hub.cpp
    )
 

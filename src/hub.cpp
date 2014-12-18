@@ -89,6 +89,7 @@ namespace Hub {
 
     void Hub::deactivate() {
 	_loopRunning = false;
+	pushMessage(MSG_EXITING);
 	_msgLoop->join();
     }
 }
