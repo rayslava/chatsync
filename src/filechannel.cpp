@@ -53,7 +53,7 @@ namespace fileChannel {
 	// Form descriptor
 	const int readFd = fd;
 	fd_set readset;
-	int data = 0, err = 0, size = 0;
+	int err = 0;
 	// Initialize time out struct for select()
 	struct timeval tv;
 	tv.tv_sec = 1;
