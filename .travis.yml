@@ -8,7 +8,7 @@ before_install:
     - sudo add-apt-repository --yes 'deb http://llvm.org/apt/precise/ llvm-toolchain-precise-3.5 main'
     - wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key | sudo apt-key add -
     - sudo apt-get -qq update
-    - sudo apt-get -qq --yes --force-yes install libclang-3.5-dev clang-3.5 gcc-4.9 g++-4.9 libgtest-dev
+    - sudo apt-get -qq --yes --force-yes install libclang-3.5-dev clang-3.5 gcc-4.9 g++-4.9 libgtest-dev valgrind
     - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 40 --slave /usr/bin/g++ g++ /usr/bin/g++-4.9
     - sudo update-alternatives --config gcc
     - export LD_LIBRARY_PATH=/usr/lib/llvm-3.5/lib/
@@ -20,12 +20,17 @@ before_install:
     - sudo mv libgtest.a /usr/lib/
     - sudo mv libgtest_main.a /usr/lib
     - cd $TRAVIS_BUILD_DIR
+matrix:
+    include:
+        - compiler: gcc
+          env: VALGRIND="yes" CMAKE_BUILD_TYPE="Release"
 script:
     - mkdir build
     - cd build
     - cmake .. -DGTEST_BOTH_LIBRARIES="/usr/lib/libgtest.a /usr/lib/libgtest_main.a" -DCOVERALLS=true
-    - make
+    - make VERBOSE=1
     - ./unit_tests
+    - if [ "x$VALGRIND" != "x" ]; then valgrind --tool=memcheck --track-origins=yes --leak-check=full --trace-children=yes --db-attach=yes --show-reachable=yes ./unit_tests 2>/tmp/unit-test-valg.log && sed '/in use/!d;s/.*exit:\s\([[:digit:]]\+\)\sbytes.*/\1/' /tmp/unit-test-valg.log | sort -n | uniq |  { read lines; test $lines -eq 0; } ; fi
     - make coveralls
 after_success:
     - sh coveralls-upload || coveralls --root .. -E ".*external.*" -E ".*CMakeFiles.*" -E ".*test/.*.cpp.*"
