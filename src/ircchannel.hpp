@@ -16,6 +16,6 @@ namespace ircChannel {
         ~IrcChannel() {};
 
     protected:
-        void parse(const std::string& l) const;
+        void parse(const std::string& l);
     };
 }

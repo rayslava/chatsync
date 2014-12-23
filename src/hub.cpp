@@ -15,8 +15,8 @@ namespace Hub {
     }
 
     void Hub::addInput(Channeling::Channel * const channel) {
-        if (!_outputChannels.empty() &&
-             std::find_if(std::begin(_outputChannels), std::end(_outputChannels),
+        if (!_inputChannels.empty() &&
+             std::find_if(std::begin(_inputChannels), std::end(_inputChannels),
                 [&channel](chanPtr const& p)->bool {return p.get() == channel;}) != std::end(_inputChannels))
             throw std::logic_error(ERR_HUB_CHAN_CANT_BE_IN_OUT);
         _inputChannels.push_back(std::unique_ptr<Channeling::Channel> (channel));
@@ -49,7 +49,7 @@ namespace Hub {
 
     const std::string Hub::popMessage() {
        std::unique_lock<std::mutex> mlock(_mutex);
-       while (_messages.empty())
+       while (_messages.empty() && _loopRunning)
 	   _cond.wait(mlock);
 
        auto item = _messages.front();
@@ -73,10 +73,9 @@ namespace Hub {
 
     void Hub::msgLoop() {
 	while (_loopRunning) {
-	    thread_local const std::string& msg(popMessage());
+	    const std::string& msg(popMessage());
 	    for (auto out = _outputChannels.begin(); out != _outputChannels.end(); ++out)
 	      msg >> **out;
-	std::cout << "Loop started, yay!";
 	}
     }
 

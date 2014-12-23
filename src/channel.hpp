@@ -67,6 +67,6 @@ namespace Channeling {
 	*
 	* @param l An input line coming from hub
 	*/
-        virtual void parse(const std::string& l) const = 0;
+        virtual void parse(const std::string& l) = 0;
     };
 }
