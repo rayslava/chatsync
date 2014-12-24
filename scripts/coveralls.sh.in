@@ -7,7 +7,7 @@ GCOV_SOURCE_PREFIX=${SOURCE_PREFIX//\//#}\#
 
 GCOV_VERSION=$(gcov -v | head -n 1 | sed 's/^.*[^0-9]\([0-9]*\)\.\([0-9]*\)\.\([0-9]*\).*$/\1 \2 \3/')
 
-#gcov --source-prefix @CMAKE_SOURCE_DIR@ --preserve-paths --relative-only $(find -iname *.gcda) 1>/dev/null || exit 0
+gcov --source-prefix @CMAKE_SOURCE_DIR@ --preserve-paths --relative-only $(find -iname *.gcda) 1>/dev/null || exit 0
 
 echo "generating gcov files"
 

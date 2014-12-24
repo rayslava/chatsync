@@ -30,7 +30,7 @@ FUNCTION(SETUP_TARGET_FOR_COVERALLS _targetname _testrunner _sourcedir)
 
   message(STATUS "setting up coveralls target")
 
-  set(COVERALLS_SOURCE_DIR ${_sourcedir})
+  set(COVERALLS_SOURCE_DIR CMakeFiles/*.dir/${_sourcedir})
 
   configure_file(${CMAKE_SOURCE_DIR}/scripts/coveralls.sh.in ${CMAKE_BINARY_DIR}/coveralls-upload @ONLY)
 

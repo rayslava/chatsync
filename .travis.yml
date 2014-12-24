@@ -8,9 +8,11 @@ before_install:
     - sudo add-apt-repository --yes 'deb http://llvm.org/apt/precise/ llvm-toolchain-precise-3.5 main'
     - wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key | sudo apt-key add -
     - sudo apt-get -qq update
-    - sudo apt-get -qq --yes --force-yes install libclang-3.5-dev clang-3.5 gcc-4.9 g++-4.9 libgtest-dev valgrind
+    - sudo apt-get -qq --yes --force-yes install libclang-3.5-dev clang-3.5 gcc-4.9 g++-4.9 libgtest-dev valgrind lcov
     - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 40 --slave /usr/bin/g++ g++ /usr/bin/g++-4.9
+    - sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-4.9 40
     - sudo update-alternatives --config gcc
+    - sudo update-alternatives --config gcov
     - export LD_LIBRARY_PATH=/usr/lib/llvm-3.5/lib/
     - export PATH=/usr/lib/llvm-3.5/bin:$PATH
     - sudo pip install cpp-coveralls --use-mirrors
@@ -35,4 +37,4 @@ script:
     - if [ "x$VALGRIND" != "x" ]; then valgrind --tool=memcheck --track-origins=yes --leak-check=full --trace-children=yes --db-attach=yes --show-reachable=yes ./unit_tests 2>/tmp/unit-test-valg.log && sed '/in use/!d;s/.*exit:\s\([[:digit:]]\+\)\sbytes.*/\1/' /tmp/unit-test-valg.log | sort -n | uniq |  { read lines; test $lines -eq 0; } ; fi
     - if [ "x$COVERAGE" != "x" ]; then make coveralls; fi
 after_success:
-    - if [ "x$COVERAGE" != "x" ]; then sh coveralls-upload || coveralls --root .. -E ".*external.*" -E ".*CMakeFiles.*" -E ".*test/.*.cpp.*" ; fi
+    - if [ "x$COVERAGE" != "x" ]; then bash coveralls-upload || coveralls --root .. -E ".*external.*" -E ".*CMakeFiles.*" -E ".*test/.*.cpp.*" ; fi
