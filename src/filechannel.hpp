@@ -15,6 +15,13 @@ namespace fileChannel {
 	std::atomic_bool _pipeRunning;              /**< Pipe reading thread is running */
 
 	/**
+	* Opens input pipe
+	*
+	* @param filename Pipe name with full path (if needed)
+	* @retval int File descriptor
+	*/
+	int openPipe(const std::string& filename);
+	/**
 	* Thread which polls on input pipe and sends messages in case of input channel direction
 	* @param fd Opened input pipe descriptor
 	*/
