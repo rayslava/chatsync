@@ -27,6 +27,8 @@ matrix:
         - compiler: gcc
           env: VALGRIND="yes" CMAKE_BUILD_TYPE="Release"
         - compiler: gcc
+          env: VALGRIND="yes" CMAKE_BUILD_TYPE="Debug"
+        - compiler: gcc
           env: COVERAGE="true" CMAKE_BUILD_TYPE="Debug"
 script:
     - mkdir build
@@ -34,7 +36,7 @@ script:
     - cmake .. -DGTEST_BOTH_LIBRARIES="/usr/lib/libgtest.a /usr/lib/libgtest_main.a" -DCOVERALLS=${COVERAGE}
     - make VERBOSE=1
     - ./unit_tests
-    - if [ "x$VALGRIND" != "x" ]; then valgrind --tool=memcheck --track-origins=yes --leak-check=full --trace-children=yes --db-attach=yes --show-reachable=yes ./unit_tests 2>/tmp/unit-test-valg.log && sed '/in use/!d;s/.*exit:\s\([[:digit:]]\+\)\sbytes.*/\1/' /tmp/unit-test-valg.log | sort -n | uniq |  { read lines; test $lines -eq 0; } ; fi
+    - if [ "x$VALGRIND" != "x" ]; then (valgrind --tool=memcheck --track-origins=yes --leak-check=full --trace-children=yes --db-attach=yes --show-reachable=yes ./unit_tests 2>/tmp/unit-test-valg.log)</dev/null && sed '/in use/!d;s/.*exit:\s\([[:digit:]]\+\)\sbytes.*/\1/' /tmp/unit-test-valg.log | sort -n | uniq |  { read lines; test $lines -eq 0; }; fi
     - if [ "x$COVERAGE" != "x" ]; then make coveralls; fi
 after_success:
     - if [ "x$COVERAGE" != "x" ]; then bash coveralls-upload || coveralls --root .. -E ".*external.*" -E ".*CMakeFiles.*" -E ".*test/.*.cpp.*" ; fi

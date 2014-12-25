@@ -25,6 +25,35 @@ namespace Channeling {
     * Input channel should send message to hub->newMessage()
     */
     class Channel {
+	/* Polling functions */
+	std::unique_ptr<std::thread> _thread;       /**< Pointer to reader thread in case of input channel */
+	std::atomic_bool _pipeRunning;              /**< Pipe reading thread is running */
+
+	void pollThread();                          /**< Thread which selects the descriptor and send messages when new ones come */
+
+    protected:
+      	int _fd;                                    /**< File descriptor to select */
+        const std::string _name;                            /**< The channel name in config file */
+        const ChannelDirection _direction;                  /**< The channel direction for the whole transmission task */
+        Hub::Hub* const _hub;                               /**< Hub the channel is attached to */
+
+	/**
+	* Parse line and send it to needed output place in case of Output direction
+	*
+	* @param l An input line coming from hub
+	*/
+        virtual void parse(const std::string& l) = 0;
+
+	/**
+	* Start thread which polls the descriptor
+	*/
+	void startPolling();
+
+	/**
+	* Stops and joins polling thread
+	*/
+	void stopPolling();
+
     public:
         /**
         * @param name A human-readable channel name in config file
@@ -56,17 +85,5 @@ namespace Channeling {
         ChannelDirection direction() const {return _direction;};
 
         friend Channel& operator>> (const std::string &in, Channel& channel);
-
-    protected:
-        const std::string _name;                            /**< The channel name in config file */
-        const ChannelDirection _direction;                  /**< The channel direction for the whole transmission task */
-        Hub::Hub* const _hub;                               /**< Hub the channel is attached to */
-
-	/**
-	* Parse line and send it to needed output place in case of Output direction
-	*
-	* @param l An input line coming from hub
-	*/
-        virtual void parse(const std::string& l) = 0;
     };
 }

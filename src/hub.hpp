@@ -79,5 +79,10 @@ namespace Hub {
 	* Stop message loop
 	*/
 	void deactivate();
+
+	/**
+	* Returns whether thread is running
+	*/
+	bool active() {return _loopRunning;};
     };
 }

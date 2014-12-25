@@ -11,9 +11,15 @@ namespace ircChannel {
     * Responds to PING with PONG to maintain connection.
     */
     class IrcChannel: public Channeling::Channel {
+
+	int join(const std::string& ircServer, const uint32_t port, const std::string& channel);
+	int disconnect();
+	int sendMessage(const std::string& msg);
+
     public:
-        explicit IrcChannel(const std::string &name, Channeling::ChannelDirection const &direction, Hub::Hub* hub);
-        ~IrcChannel() {};
+        explicit IrcChannel(const std::string &name, Channeling::ChannelDirection const &direction, Hub::Hub* hub,
+			    const std::string& ircServer, const uint32_t port, const std::string& channel);
+        ~IrcChannel();
 
     protected:
         void parse(const std::string& l);

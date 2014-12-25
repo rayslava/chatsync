@@ -7,6 +7,9 @@
 
 namespace Channeling {
     Channel::Channel(std::string const &name, ChannelDirection const &direction, Hub::Hub* const hub):
+    _thread(nullptr),
+    _pipeRunning(ATOMIC_FLAG_INIT),
+    _fd(-1),
     _name(name),
     _direction(direction),
     _hub(hub)
@@ -32,5 +35,61 @@ namespace Channeling {
         throw std::runtime_error(ERR_NOT_IMPL);
     }
 
+    void Channel::startPolling() {
+	if (_fd < 0)
+	    throw std::runtime_error(ERR_FD);
+	_pipeRunning = true;
+	_thread = std::make_unique<std::thread> (std::thread(&Channel::pollThread, this));
+    }
 
+    void Channel::stopPolling() {
+	if (_thread) {
+	    _pipeRunning = false;
+	    _thread->join();
+	}
+    }
+
+    /* OS interaction code begins here */
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <sys/ioctl.h>
+#include <stropts.h>
+
+    void Channel::pollThread() {
+	// Form descriptor
+	const int readFd = _fd;
+	fd_set readset;
+	int err = 0;
+	// Initialize time out struct for select()
+	struct timeval tv;
+	tv.tv_sec = 1;
+	tv.tv_usec = 0;
+	// Implement the receiver loop
+	while (_pipeRunning) {
+	    // Initialize the set
+	    FD_ZERO(&readset);
+	    FD_SET(readFd, &readset);
+	    // Now, check for readability
+	    err = select(readFd+1, &readset, NULL, NULL, &tv);
+	    if (err > 0 && FD_ISSET(readFd, &readset)) {
+		// Clear flags
+		FD_CLR(readFd, &readset);
+		// Check available size
+		int bytes;
+		ioctl(readFd, FIONREAD, &bytes);
+		auto line = new char[bytes + 1];
+		line[bytes] = 0;
+		// Do a simple read on data
+		err = read(readFd, line, bytes);
+		if (err != bytes)
+		    throw std::runtime_error(ERR_SOCK_READ);
+		// Dump read data
+		_hub->newMessage(std::string(line));
+		delete[] line;
+	    }
+	}
+    }
 }
