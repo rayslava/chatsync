@@ -18,16 +18,27 @@ before_install:
     - sudo pip install cpp-coveralls --use-mirrors
     - cd $(mktemp -d)
     - cmake /usr/src/gtest
-    - make
+    - make -j4
     - sudo mv libgtest.a /usr/lib/
     - sudo mv libgtest_main.a /usr/lib
+    - cd $(mktemp -d)
+    - wget 'http://ftp.stack.nl/pub/users/dimitri/doxygen-1.8.9.src.tar.gz'
+    - tar xf doxygen-1.8.9.src.tar.gz
+    - cd doxygen-1.8.9
+    - ./configure --prefix /usr
+    - make -j4
+    - sudo make install
     - cd $TRAVIS_BUILD_DIR
 matrix:
     include:
         - compiler: gcc
           env: VALGRIND="yes" CMAKE_BUILD_TYPE="Release"
         - compiler: gcc
-          env: VALGRIND="yes" CMAKE_BUILD_TYPE="Debug"
+          env:
+              - VALGRIND="yes"
+              - DOCS="yes"
+              - CMAKE_BUILD_TYPE="Debug"
+              - secure: "mRyQKieh/WCxeSmANDeXxzEt+ARvk+m+ypg5Xevi8ykZXMQJsUskFE4vde7+OrfB/4E4ByE8PTqaAdudw3AGUOfetwqXLBs3yLp4J+nw4m3uyUmu8ugbgbuvKVl5+puRRpDX6CFCeq9qAZwuYoAJ/pCTyXhWx4MknqtkSarTIdc="
         - compiler: gcc
           env: COVERAGE="true" CMAKE_BUILD_TYPE="Debug"
 script:
@@ -35,8 +46,9 @@ script:
     - cd build
     - cmake .. -DGTEST_BOTH_LIBRARIES="/usr/lib/libgtest.a /usr/lib/libgtest_main.a" -DCOVERALLS=${COVERAGE}
     - make VERBOSE=1
-    - ./unit_tests
+    - "./unit_tests"
     - if [ "x$VALGRIND" != "x" ]; then (valgrind --tool=memcheck --track-origins=yes --leak-check=full --trace-children=yes --db-attach=yes --show-reachable=yes ./unit_tests 2>/tmp/unit-test-valg.log)</dev/null && sed '/in use/!d;s/.*exit:\s\([[:digit:]]\+\)\sbytes.*/\1/' /tmp/unit-test-valg.log | sort -n | uniq |  { read lines; test $lines -eq 0; }; fi
     - if [ "x$COVERAGE" != "x" ]; then make coveralls; fi
 after_success:
     - if [ "x$COVERAGE" != "x" ]; then bash coveralls-upload || coveralls --root .. -E ".*external.*" -E ".*CMakeFiles.*" -E ".*test/.*.cpp.*" ; fi
+    - if [ "x$DOCS" != "x" ]; then cd .. && bash scripts/publish-doxygen.sh; fi
