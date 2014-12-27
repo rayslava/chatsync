@@ -13,9 +13,10 @@ mkdir -p ${HTML_PATH}
 git clone -b gh-pages "${REPO_PATH}" --single-branch ${HTML_PATH}
 set -x
 
-# Prepare configuration
-sed -ie '1s/$/ {#mainpage}/' README.md
+# Prepare configuration and README file
 sed -ie "/PROJECT_NUMBER/s/=.*$/= ${CHANGESET}/" Doxyfile
+sed -ie '1s/$/ {#mainpage}/' README.md
+sed -ie '/Build Status/s#.*#!\[Build Status\](https://travis-ci.org/rayslava/chatsync.svg?branch=master) !\[Coverage Status\](https://coveralls.io/repos/rayslava/chatsync/badge.png)#' README.md
 
 # rm all the files through git to prevent stale files.
 cd ${HTML_PATH}

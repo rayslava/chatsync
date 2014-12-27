@@ -14,8 +14,19 @@
 constexpr auto port = 33445;
 const char testLine[] = "Testing file writing";
 
-
 TEST(FileChannel, name)
+{
+    const auto hub = new Hub::Hub ("Hub");
+    const auto ich = new fileChannel::FileChannel("file", Channeling::ChannelDirection::Input, hub);
+
+    /* Check that at least constructor works */
+    ASSERT_EQ(ich->name(), "file");
+    ASSERT_EQ(ich->direction(), Channeling::ChannelDirection::Input);
+
+    delete hub;
+}
+
+TEST(FileChannel, files)
 {
     const auto hub = new Hub::Hub ("Hub");
 
@@ -28,9 +39,10 @@ TEST(FileChannel, name)
     ASSERT_EQ(ich->direction(), Channeling::ChannelDirection::Input);
 
     /* Open input pipe from file channel */
+    hub->activate();
     int fd = open("input", O_WRONLY | O_SYNC, 0666);
     ASSERT_NE(fd, -1);
-    hub->activate();
+
     int err = write(fd, testLine, sizeof(testLine));
     ASSERT_EQ(err, sizeof(testLine));
     std::this_thread::sleep_for( std::chrono::milliseconds (50) );
@@ -91,19 +103,29 @@ void sockListen() {
 	}
 }
 
-TEST(IrcChannel, name)
+TEST(IrcChannel, sockerr)
+{
+    const auto hub = new Hub::Hub ("Hub");
+
+    auto ch = new ircChannel::IrcChannel("ircin", Channeling::ChannelDirection::Input, hub, "127.0.0.1", port, "test");
+    new fileChannel::FileChannel("outfile", Channeling::ChannelDirection::Output, hub);
+    /* Wait for ERRSOCK on joining the closed socket */
+    EXPECT_THROW({
+        hub->activate();
+    },  Channeling::activate_error);
+    delete hub;
+}
+
+TEST(IrcChannel, socket)
 {
     const auto hub = new Hub::Hub ("Hub");
     char buffer[sizeof(testLine)];
 
     const auto server = std::make_unique<std::thread>(std::thread(&sockListen));
+    std::this_thread::sleep_for( std::chrono::milliseconds (50) );  /* Give time to open socket */
 
-    auto ich = new ircChannel::IrcChannel("ircin", Channeling::ChannelDirection::Input, hub, "localhost", 33445, "test");
+    auto ich = new ircChannel::IrcChannel("ircin", Channeling::ChannelDirection::Input, hub, "127.0.0.1", port, "test");
     new fileChannel::FileChannel("outfile", Channeling::ChannelDirection::Output, hub);
-
-    /* Check that at least constructor works */
-    ASSERT_EQ(ich->name(), "ircin");
-    ASSERT_EQ(ich->direction(), Channeling::ChannelDirection::Input);
 
     hub->activate();
     std::this_thread::sleep_for( std::chrono::milliseconds (50) );

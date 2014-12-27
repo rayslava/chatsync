@@ -4,11 +4,17 @@
 #include <gtest/gtest.h>
 #include <gtest/gtest-spi.h>
 
-Hub::Hub *hub;
+constexpr auto& hubName = "Hub1";
+Hub::Hub *hub = nullptr;
+
+TEST(hub, init)
+{
+    hub = new Hub::Hub(hubName);
+    delete hub;
+}
 
 TEST(hub, name)
 {
-    const auto& hubName = "Hub1";
     hub = new Hub::Hub(hubName);
 
     ASSERT_EQ(hub->name(), hubName);

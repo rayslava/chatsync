@@ -7,18 +7,23 @@
 namespace ircChannel {
     IrcChannel::IrcChannel(const std::string &name, Channeling::ChannelDirection const &direction, Hub::Hub* hub,
 			   const std::string& ircServer, const uint32_t port, const std::string& channel):
-	Channeling::Channel(name, direction, hub)
+	Channeling::Channel(name, direction, hub),
+	_server(ircServer),
+	_port(port),
+	_channel(channel)
     {
+    }
 
-	if (direction == Channeling::ChannelDirection::Input) {
-	    _fd = join(ircServer, port, channel);
-	    startPolling();
-	};
+    void IrcChannel::activate() {
+        if (_direction == Channeling::ChannelDirection::Input) {
+            _fd = join();
+            startPolling();
+        };
     }
 
     IrcChannel::~IrcChannel() {
-	disconnect();
-	stopPolling();
+	    disconnect();
+	    stopPolling();
     }
 
     void IrcChannel::parse(const std::string &l) {
@@ -42,7 +47,7 @@ namespace ircChannel {
 #include <sys/ioctl.h>
 #include <stropts.h>
 
-    int IrcChannel::join(const std::string &ircServer, const uint32_t port, const std::string& channel) {
+    int IrcChannel::join() {
 
 	int sockfd, n;
 	struct sockaddr_in serv_addr;
@@ -50,23 +55,23 @@ namespace ircChannel {
 
 	char buffer[256];
 
-	std::cout << "Joining" << channel << std::endl;
+	std::cout << "Joining" << _channel << std::endl;
 	sockfd = socket(AF_INET, SOCK_STREAM, 0);
 	if (sockfd < 0)
-	    throw std::runtime_error(ERR_SOCK_CREATE);
-	server = gethostbyname(ircServer.c_str());
+	    throw Channeling::activate_error(ERR_SOCK_CREATE);
+	server = gethostbyname(_server.c_str());
 
 	if (server == NULL)
-	    throw std::runtime_error(ERR_HOST_NOT_FOUND);
+	    throw Channeling::activate_error(ERR_HOST_NOT_FOUND);
 
 	bzero((char *) &serv_addr, sizeof(serv_addr));
 	serv_addr.sin_family = AF_INET;
 	bcopy((char *)server->h_addr,
 	      (char *)&serv_addr.sin_addr.s_addr,
 	      server->h_length);
-	serv_addr.sin_port = htons(port);
+	serv_addr.sin_port = htons(_port);
 	if (connect(sockfd,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0)
-	    throw std::runtime_error(ERR_CONNECTION);
+	    throw Channeling::activate_error(ERR_CONNECTION);
 	return sockfd;
     }
 

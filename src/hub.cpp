@@ -72,18 +72,22 @@ namespace Hub {
     }
 
     void Hub::msgLoop() {
-	while (_loopRunning) {
-	    const std::string& msg(popMessage());
-	    for (auto out = _outputChannels.begin(); out != _outputChannels.end(); ++out)
-	      msg >> **out;
-	}
+        while (_loopRunning) {
+        const std::string& msg(popMessage());
+        for (auto& out : _outputChannels)
+            msg >> *out;
+        }
     }
 
     void Hub::activate() {
-	if (_outputChannels.empty())
-	    throw std::logic_error("Can't run with no outputs");
-	_loopRunning = true;
-	_msgLoop = std::make_unique<std::thread>(std::thread(&Hub::msgLoop, this));
+        if (_outputChannels.empty())
+            throw std::logic_error("Can't run with no outputs");
+        for (auto& out : _outputChannels)
+            out->activate();
+        for (auto& in : _inputChannels)
+            in->activate();
+        _loopRunning = true;
+        _msgLoop = std::make_unique<std::thread>(std::thread(&Hub::msgLoop, this));
     }
 
     void Hub::deactivate() {

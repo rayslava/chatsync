@@ -17,8 +17,12 @@ namespace fileChannel {
 	*
 	* @param filename Pipe name with full path (if needed)
 	* @retval int File descriptor
+	*
+	* @throws Channeling::activate_error when can't open file
 	*/
 	int openPipe(const std::string& filename);
+
+	void activate();
 
     public:
         explicit FileChannel(const std::string &name, Channeling::ChannelDirection const &direction, Hub::Hub* hub);
