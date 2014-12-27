@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['filechannel',['FileChannel',['../classfileChannel_1_1FileChannel.html',1,'fileChannel']]]
+  ['ircchannel',['IrcChannel',['../classircChannel_1_1IrcChannel.html',1,'ircChannel']]]
 ];

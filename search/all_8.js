@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['ldiv_5ft',['ldiv_t',['../structircChannel_1_1ldiv__t.html',1,'ircChannel']]],
-  ['lldiv_5ft',['lldiv_t',['../structircChannel_1_1lldiv__t.html',1,'ircChannel']]]
+  ['operator_3e_3e',['operator&gt;&gt;',['../classChanneling_1_1Channel.html#ae3554c56875eeb20294034920011825a',1,'Channeling::Channel']]]
 ];
