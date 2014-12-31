@@ -18,13 +18,13 @@ TEST(hub, name)
     hub = new Hub::Hub(hubName);
 
     ASSERT_EQ(hub->name(), hubName);
-
-    //    EXPECT_THROW(hub->activate(), std::logic_error);
-    //    Channeling::Channel *ouch = new ircChannel::IrcChannel("channelout", Channeling::ChannelDirection::Output, hub, "irc.freenode.net", 6667, "chatsync");
+    auto inch = new fileChannel::FileChannel("file", Channeling::ChannelDirection::Input, hub);
     EXPECT_THROW({hub->activate();}, std::logic_error);
-    //    EXPECT_THROW({std::string("Test") >> *chan;}, std::logic_error);
-    //    EXPECT_NO_THROW({std::string("Test") >> *ouch;});
-    std::this_thread::sleep_for(std::chrono::milliseconds (100));
+    Channeling::Channel *ouch = new ircChannel::IrcChannel("channelout", Channeling::ChannelDirection::Output, hub, "irc.freenode.net", 6667, "chatsync");
+
+    EXPECT_THROW({std::string("Test") >> *inch;}, std::logic_error);
+    EXPECT_NO_THROW({std::string("Test") >> *ouch;});
+    std::this_thread::sleep_for(std::chrono::milliseconds (50));
     hub->deactivate();
 
     delete hub;
