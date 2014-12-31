@@ -23,12 +23,15 @@ namespace fileChannel {
 	int openPipe(const std::string& filename);
 
 	void activate();
-
+	static const Channeling::ChannelCreatorImpl<FileChannel> creator;
     public:
         explicit FileChannel(const std::string &name, Channeling::ChannelDirection const &direction, Hub::Hub* hub);
         ~FileChannel();
 
+	std::string type() const {return "file";};
+
     protected:
         void parse(const std::string& l);
     };
+    const Channeling::ChannelCreatorImpl<FileChannel> FileChannel::creator("file");
 }

@@ -21,12 +21,18 @@ namespace ircChannel {
 	int sendMessage(const std::string& msg);
 	void activate();
 
+	static const Channeling::ChannelCreatorImpl<IrcChannel> creator;
+	
     public:
-        explicit IrcChannel(const std::string &name, Channeling::ChannelDirection const &direction, Hub::Hub* hub,
-			    const std::string& ircServer, const uint32_t port, const std::string& channel);
+	explicit IrcChannel(const std::string &name, Channeling::ChannelDirection const &direction, Hub::Hub* hub);
+//			    const std::string& ircServer, const uint32_t port, const std::string& channel);
         ~IrcChannel();
+
+	std::string type() const {return "file";};
+        virtual void parseConfig(std::vector<std::string> const& lines);
 
     protected:
         void parse(const std::string& l);
     };
+    const Channeling::ChannelCreatorImpl<IrcChannel> IrcChannel::creator("irc");
 }

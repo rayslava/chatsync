@@ -49,6 +49,32 @@ namespace Channeling {
 	}
     }
 
+  
+    Channel* ChannelFactory::create(const std::string& classname) {
+	std::map<std::string, ChannelCreator*>::iterator i;
+	i = get_table().find(classname);
+
+	if (i != get_table().end())
+	    return i->second->create();
+	else
+	    return (Channel*)NULL;
+    }
+
+    void ChannelFactory::registerClass(const std::string& classname, ChannelCreator* creator) {
+	get_table()[classname] = creator;
+    }
+
+    std::map<std::string, ChannelCreator*>& ChannelFactory::get_table() {
+	static std::map<std::string, ChannelCreator*> table;
+	return table;
+    }
+
+
+// have the creator's constructor do the registration
+    ChannelCreator::ChannelCreator(const std::string& classname) {
+	ChannelFactory::registerClass(classname, this);
+    }
+  
     /* OS interaction code begins here */
 #include <sys/types.h>
 #include <sys/stat.h>

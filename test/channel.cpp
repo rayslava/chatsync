@@ -1,3 +1,4 @@
+#include "../src/channel.hpp"
 #include "../src/ircchannel.hpp"
 #include "../src/filechannel.hpp"
 #include "../src/hub.hpp"
@@ -140,4 +141,12 @@ TEST(IrcChannel, socket)
     ASSERT_EQ(err, sizeof(buffer) - 1);
     close(fd);
     ASSERT_STREQ(buffer, testLine);
+}
+
+TEST(Channel, factory)
+{
+    const auto channel = Channeling::ChannelFactory::create ("irc");
+    
+    std::cout << channel->name() << std::endl;
+    
 }

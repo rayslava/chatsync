@@ -2,6 +2,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <map>
 
 #include "hub.hpp"
 
@@ -91,6 +92,13 @@ namespace Channeling {
         */
         virtual std::string const & name() const;
 
+
+	/**
+	* Returns channel "type" --- unique string to identify channel in config file
+	* @retval std::string Type line
+	*/
+	virtual std::string type() const = 0;	
+
         /**
         * Returns a channel direction
         *
@@ -118,5 +126,30 @@ namespace Channeling {
         * @throws std::logic_error on writing to input channel
         */
         friend Channel& operator>> (const std::string &in, Channel& channel);
+    };
+
+    class ChannelCreator
+    {
+    public:
+	ChannelCreator(const std::string& classname);
+	virtual Channel* create() = 0;
+    };
+
+    template <class T>
+    class ChannelCreatorImpl : public ChannelCreator
+    {
+    public:
+	ChannelCreatorImpl(const std::string& classname) : ChannelCreator(classname) {}
+
+	virtual Channel* create() { return new T; }
+    };
+
+    class ChannelFactory
+    {
+    public:
+	static Channel* create(const std::string& classname);
+	static void registerClass(const std::string& classname, ChannelCreator* creator);
+    private:
+	static std::map<std::string, ChannelCreator*>& get_table();
     };
 }
