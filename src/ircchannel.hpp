@@ -28,7 +28,7 @@ namespace ircChannel {
 //			    const std::string& ircServer, const uint32_t port, const std::string& channel);
         ~IrcChannel();
 
-	std::string type() const {return "file";};
+	std::string type() const {return "irc";};
         virtual void parseConfig(std::vector<std::string> const& lines);
 
     protected:

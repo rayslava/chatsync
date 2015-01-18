@@ -5,12 +5,11 @@
 #include <typeinfo>
 
 namespace ircChannel {
-    IrcChannel::IrcChannel(const std::string &name, Channeling::ChannelDirection const &direction, Hub::Hub* hub,
-			   const std::string& ircServer, const uint32_t port, const std::string& channel):
+    IrcChannel::IrcChannel(const std::string &name, Channeling::ChannelDirection const &direction, Hub::Hub* hub):
 	Channeling::Channel(name, direction, hub),
-	_server(ircServer),
-	_port(port),
-	_channel(channel)
+	_server("localhost"),
+	_port(0),
+	_channel("asdf")
     {
     }
 
@@ -22,8 +21,12 @@ namespace ircChannel {
     }
 
     IrcChannel::~IrcChannel() {
-	    disconnect();
-	    stopPolling();
+	disconnect();
+	stopPolling();
+    }
+
+    void IrcChannel::parseConfig(std::vector<std::string> const& lines) {
+	lines.empty();
     }
 
     void IrcChannel::parse(const std::string &l) {
