@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Chatsync
-   &#160;<span id="projectnumber">ab26aafcd5e5bf82e7354d5d4aedf568744b0324</span>
+   &#160;<span id="projectnumber">293c71771e18ff65a0be7723524ab6ef49695310</span>
    </div>
   </td>
  </tr>
@@ -135,6 +135,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a175fa19261c63437acb5aa43de602bb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0bd3400384ba2801bf17323d576089ef"><td class="memItemLeft" align="right" valign="top">virtual std::string const &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#a0bd3400384ba2801bf17323d576089ef">name</a> () const </td></tr>
 <tr class="separator:a0bd3400384ba2801bf17323d576089ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af128e17f50cd667e92d773dad2a4cc76"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#af128e17f50cd667e92d773dad2a4cc76">type</a> () const =0</td></tr>
+<tr class="separator:af128e17f50cd667e92d773dad2a4cc76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a86ab3881297d545bf44fceccbbbe6d01"><td class="memItemLeft" align="right" valign="top">ChannelDirection&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#a86ab3881297d545bf44fceccbbbe6d01">direction</a> () const </td></tr>
 <tr class="separator:a86ab3881297d545bf44fceccbbbe6d01"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac8fd35321039116937e7210e55ab8609"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#ac8fd35321039116937e7210e55ab8609">activate</a> ()=0</td></tr>
@@ -331,7 +333,7 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classfileChannel_1_1FileChannel.html#a7ec0973749fb9e6daba6ae2dd265d653">fileChannel::FileChannel</a>, and <a class="el" href="classircChannel_1_1IrcChannel.html#a2694ae339377b27f1104cb04f28b0e73">ircChannel::IrcChannel</a>.</p>
+<p>Implemented in <a class="el" href="classircChannel_1_1IrcChannel.html#a2694ae339377b27f1104cb04f28b0e73">ircChannel::IrcChannel</a>, and <a class="el" href="classfileChannel_1_1FileChannel.html#a7ec0973749fb9e6daba6ae2dd265d653">fileChannel::FileChannel</a>.</p>
 
 </div>
 </div>
@@ -369,6 +371,8 @@ Friends</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+<p>Reimplemented in <a class="el" href="classircChannel_1_1IrcChannel.html#aefe7e01957b01543acd97e9ab5fad107">ircChannel::IrcChannel</a>.</p>
 
 </div>
 </div>
@@ -423,6 +427,37 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Stops and joins polling thread </p>
+
+</div>
+</div>
+<a class="anchor" id="af128e17f50cd667e92d773dad2a4cc76"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::string Channeling::Channel::type </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns channel "type" &mdash; unique string to identify channel in config file </p><dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">std::string</td><td>Type line </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="classfileChannel_1_1FileChannel.html#a79129bb7c3904a52e5bfc9b47adab088">fileChannel::FileChannel</a>, and <a class="el" href="classircChannel_1_1IrcChannel.html#a2530eb03c39a61abae7ae9a6a990909a">ircChannel::IrcChannel</a>.</p>
 
 </div>
 </div>
@@ -564,7 +599,7 @@ Friends</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>Channeling</b></li><li class="navelem"><a class="el" href="classChanneling_1_1Channel.html">Channel</a></li>
-    <li class="footer">Generated on Wed Dec 31 2014 10:06:10 for Chatsync by
+    <li class="footer">Generated on Sun Jan 18 2015 15:55:30 for Chatsync by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9 </li>
   </ul>

@@ -9,6 +9,7 @@ var classChanneling_1_1Channel =
     [ "parseConfig", "classChanneling_1_1Channel.html#a175fa19261c63437acb5aa43de602bb7", null ],
     [ "startPolling", "classChanneling_1_1Channel.html#a01fc348487170cd91251c4900ee5e0cd", null ],
     [ "stopPolling", "classChanneling_1_1Channel.html#a0f6020dd45db786436ff43a1598ad2f1", null ],
+    [ "type", "classChanneling_1_1Channel.html#af128e17f50cd667e92d773dad2a4cc76", null ],
     [ "operator>>", "classChanneling_1_1Channel.html#ae3554c56875eeb20294034920011825a", null ],
     [ "_direction", "classChanneling_1_1Channel.html#ac64d544a772cb8f6bfe8c9a083440b66", null ],
     [ "_fd", "classChanneling_1_1Channel.html#ab868693b6df85d5bb41cd11ed8399ff9", null ],
