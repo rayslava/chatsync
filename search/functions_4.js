@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['parse',['parse',['../classChanneling_1_1Channel.html#a209ff085bb7cbe3a47b19f7973fbf7ab',1,'Channeling::Channel::parse()'],['../classfileChannel_1_1FileChannel.html#a7ec0973749fb9e6daba6ae2dd265d653',1,'fileChannel::FileChannel::parse()'],['../classircChannel_1_1IrcChannel.html#a2694ae339377b27f1104cb04f28b0e73',1,'ircChannel::IrcChannel::parse()']]],
-  ['parseconfig',['parseConfig',['../classChanneling_1_1Channel.html#a175fa19261c63437acb5aa43de602bb7',1,'Channeling::Channel::parseConfig()'],['../classircChannel_1_1IrcChannel.html#aefe7e01957b01543acd97e9ab5fad107',1,'ircChannel::IrcChannel::parseConfig()']]],
-  ['parsefile',['parseFile',['../classConfig_1_1ConfigParser.html#a18bba7bd1d45da1c61e30b0393d98d4b',1,'Config::ConfigParser']]]
+  ['operator_20int',['operator int',['../classConfig_1_1ConfigOption.html#a3aec5092f7142eba7864ea681c7d15f4',1,'Config::ConfigOption']]],
+  ['operator_20t',['operator T',['../classConfig_1_1ConfigOption.html#a3cdbd648a7594520fa5e0040786a4c60',1,'Config::ConfigOption']]]
 ];

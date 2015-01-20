@@ -10,6 +10,7 @@ var hierarchy =
       [ "Channeling::ChannelCreatorImpl< T >", "classChanneling_1_1ChannelCreatorImpl.html", null ]
     ] ],
     [ "Channeling::ChannelFactory", "classChanneling_1_1ChannelFactory.html", null ],
+    [ "Config::ConfigOption", "classConfig_1_1ConfigOption.html", null ],
     [ "Config::ConfigParser", "classConfig_1_1ConfigParser.html", null ],
     [ "Hub::Hub", "classHub_1_1Hub.html", null ],
     [ "runtime_error", null, [

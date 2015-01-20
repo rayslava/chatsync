@@ -8,6 +8,7 @@ var annotated =
       [ "ChannelFactory", "classChanneling_1_1ChannelFactory.html", null ]
     ] ],
     [ "Config", null, [
+      [ "ConfigOption", "classConfig_1_1ConfigOption.html", "classConfig_1_1ConfigOption" ],
       [ "ConfigParser", "classConfig_1_1ConfigParser.html", "classConfig_1_1ConfigParser" ]
     ] ],
     [ "fileChannel", null, [
