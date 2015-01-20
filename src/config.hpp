@@ -12,22 +12,21 @@ namespace Config {
      */
     class ConfigOption {
     private:
-	const std::string name;
-	const std::string value;
+	const std::string _value;
     public:
 	/**
 	 * Create option with
 	 *
-	 * @param name string to be the option unique name (in the config set)
 	 * @param value data which will be implicitly lazily converted to type needed
 	 */
-	ConfigOption(const std::string&& name, const std::string&& value): name(name), value(value) {};
+	ConfigOption(const std::string&& value): _value(std::move(value)) {};
+	ConfigOption(const char* value): _value(value) {};
 
 	/**
 	 * Implicit conversions to string-compatible classes
 	 */
 	template <typename T>
-	operator T() const {return T(value);}
+	operator T() const {return T(_value);}
 
 	/**
 	 * Implicit conversion to int
@@ -52,8 +51,8 @@ namespace Config {
      */
     class ConfigParser {
     private:
-	std::unique_ptr<std::map<const std::string, const ConfigOption> const> config;
-	static decltype(config) parseConfig(std::string data);
+	const std::unique_ptr<std::map<const std::string, const ConfigOption> const> _config;
+	static std::map<const std::string, const ConfigOption>* parseConfig(std::string data);
     public:
         /**
 	 * Creates an object
