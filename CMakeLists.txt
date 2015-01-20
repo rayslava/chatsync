@@ -70,6 +70,7 @@ add_executable(
     test/main.cpp
     test/channel.cpp
     test/hub.cpp
+    test/config.cpp
     )
 
 target_link_libraries(
