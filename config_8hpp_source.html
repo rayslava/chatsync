@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Chatsync
-   &#160;<span id="projectnumber">fe91866501c1326748c57b1347208540d122711f</span>
+   &#160;<span id="projectnumber">3994e3143f295efc43c7ddebbd25b178d7b96f3a</span>
    </div>
   </td>
  </tr>
@@ -47,6 +47,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -70,6 +71,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
       <li><a href="files.html"><span>File&#160;List</span></a></li>
+      <li><a href="globals.html"><span>Globals</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -106,7 +108,7 @@ $(document).ready(function(){initNavTree('config_8hpp_source.html','');});
 <div class="title">config.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
+<a href="config_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;</div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;map&gt;</span></div>
@@ -114,42 +116,56 @@ $(document).ready(function(){initNavTree('config_8hpp_source.html','');});
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceConfig.html">Config</a> {</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="classConfig_1_1ConfigOption.html">   13</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classConfig_1_1ConfigOption.html">ConfigOption</a> {</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keyword">const</span> std::string _value;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="classConfig_1_1ConfigOption.html#a4327b079752ba56cbbf81b7806e39c70">   22</a></span>&#160;    <a class="code" href="classConfig_1_1ConfigOption.html#a4327b079752ba56cbbf81b7806e39c70">ConfigOption</a>(<span class="keyword">const</span> std::string&amp;&amp; value): _value(std::move(value)) {};</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <a class="code" href="classConfig_1_1ConfigOption.html#a4327b079752ba56cbbf81b7806e39c70">ConfigOption</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* value): _value(value) {};</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="classConfig_1_1ConfigOption.html#a3cdbd648a7594520fa5e0040786a4c60">   29</a></span>&#160;    <span class="keyword">operator</span> T()<span class="keyword"> const </span>{<span class="keywordflow">return</span> T(_value);}</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keyword">operator</span> int() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    };</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="classConfig_1_1ConfigParser.html">   52</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classConfig_1_1ConfigParser.html">ConfigParser</a> {</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keyword">const</span> std::unique_ptr&lt;std::map&lt;const std::string, const ConfigOption&gt; <span class="keyword">const</span>&gt; _config;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keyword">static</span> std::map&lt;const std::string, const ConfigOption&gt;* parseConfig(std::string data);</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <a class="code" href="classConfig_1_1ConfigParser.html#af145786d977d660837eebe1f14e95506">ConfigParser</a>(std::string path);</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classConfig_1_1ConfigParser.html#a18bba7bd1d45da1c61e30b0393d98d4b">parseFile</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    };</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;}</div>
-<div class="ttc" id="classConfig_1_1ConfigParser_html_af145786d977d660837eebe1f14e95506"><div class="ttname"><a href="classConfig_1_1ConfigParser.html#af145786d977d660837eebe1f14e95506">Config::ConfigParser::ConfigParser</a></div><div class="ttdeci">ConfigParser(std::string path)</div><div class="ttdef"><b>Definition:</b> config.cpp:4</div></div>
-<div class="ttc" id="classConfig_1_1ConfigParser_html_a18bba7bd1d45da1c61e30b0393d98d4b"><div class="ttname"><a href="classConfig_1_1ConfigParser.html#a18bba7bd1d45da1c61e30b0393d98d4b">Config::ConfigParser::parseFile</a></div><div class="ttdeci">void parseFile() const </div></div>
-<div class="ttc" id="classConfig_1_1ConfigParser_html"><div class="ttname"><a href="classConfig_1_1ConfigParser.html">Config::ConfigParser</a></div><div class="ttdef"><b>Definition:</b> config.hpp:52</div></div>
-<div class="ttc" id="classConfig_1_1ConfigOption_html_a4327b079752ba56cbbf81b7806e39c70"><div class="ttname"><a href="classConfig_1_1ConfigOption.html#a4327b079752ba56cbbf81b7806e39c70">Config::ConfigOption::ConfigOption</a></div><div class="ttdeci">ConfigOption(const std::string &amp;&amp;value)</div><div class="ttdef"><b>Definition:</b> config.hpp:22</div></div>
-<div class="ttc" id="namespaceConfig_html"><div class="ttname"><a href="namespaceConfig.html">Config</a></div><div class="ttdef"><b>Definition:</b> config.cpp:3</div></div>
-<div class="ttc" id="classConfig_1_1ConfigOption_html"><div class="ttname"><a href="classConfig_1_1ConfigOption.html">Config::ConfigOption</a></div><div class="ttdef"><b>Definition:</b> config.hpp:13</div></div>
+<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="classConfig_1_1config__error.html">    9</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classConfig_1_1config__error.html">config_error</a>: <span class="keyword">public</span> std::runtime_error {</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="classConfig_1_1config__error.html#a139bc20e9cc17251f702e8d7fec9dad8">   11</a></span>&#160;        <a class="code" href="classConfig_1_1config__error.html#a139bc20e9cc17251f702e8d7fec9dad8">config_error</a>(std::string <span class="keyword">const</span>&amp; message): std::runtime_error(message) {};</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    };</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="classConfig_1_1ConfigOption.html">   18</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classConfig_1_1ConfigOption.html">ConfigOption</a> {</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="classConfig_1_1ConfigOption.html#a169fcc25c331d2d40af165051d8997f4">   20</a></span>&#160;    <span class="keyword">const</span> std::string <a class="code" href="classConfig_1_1ConfigOption.html#a169fcc25c331d2d40af165051d8997f4">_value</a>;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="classConfig_1_1ConfigOption.html#a4327b079752ba56cbbf81b7806e39c70">   27</a></span>&#160;    <a class="code" href="classConfig_1_1ConfigOption.html#a4327b079752ba56cbbf81b7806e39c70">ConfigOption</a>(<span class="keyword">const</span> std::string&amp;&amp; value): _value(std::move(value)) {};</div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="classConfig_1_1ConfigOption.html#a0fd41a7a364ebb282e01d7cd6d262c4a">   28</a></span>&#160;    <a class="code" href="classConfig_1_1ConfigOption.html#a0fd41a7a364ebb282e01d7cd6d262c4a">ConfigOption</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* value): _value(value) {};</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="classConfig_1_1ConfigOption.html#a3cdbd648a7594520fa5e0040786a4c60">   34</a></span>&#160;    <span class="keyword">operator</span> T()<span class="keyword"> const </span>{<span class="keywordflow">return</span> T(_value);}</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keyword">operator</span> int() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    };</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="namespaceConfig.html#a0f82b307506f886adc0d12980637eee2">   45</a></span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> std::string <a class="code" href="namespaceConfig.html#a0f82b307506f886adc0d12980637eee2">configPrefixData</a> = <span class="stringliteral">&quot;data://&quot;</span>;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="classConfig_1_1ConfigParser.html">   62</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classConfig_1_1ConfigParser.html">ConfigParser</a> {</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="classConfig_1_1ConfigParser.html#a5ff3e2184fd9451895af62870721eae8">   64</a></span>&#160;    <span class="keyword">const</span> std::unique_ptr&lt;std::map&lt;const std::string, const ConfigOption&gt; <span class="keyword">const</span>&gt; <a class="code" href="classConfig_1_1ConfigParser.html#a5ff3e2184fd9451895af62870721eae8">_config</a>;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> std::string <a class="code" href="classConfig_1_1ConfigParser.html#a31e3383d66c10a5b776dbbee9b668f17">openConfig</a>(<span class="keyword">const</span> std::string&amp; path);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keyword">static</span> std::map&lt;const std::string, const ConfigOption&gt;* <a class="code" href="classConfig_1_1ConfigParser.html#aa330a6ec2c725dba60c2a8ab04a54e3b">parseConfig</a>(<span class="keyword">const</span> std::string&amp; data);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        <a class="code" href="classConfig_1_1ConfigParser.html#a3733401677039d60676b7ffe763a7b9c">ConfigParser</a>(<span class="keyword">const</span> std::string&amp;&amp; path);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    };</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;}</div>
+<div class="ttc" id="classConfig_1_1ConfigParser_html_a31e3383d66c10a5b776dbbee9b668f17"><div class="ttname"><a href="classConfig_1_1ConfigParser.html#a31e3383d66c10a5b776dbbee9b668f17">Config::ConfigParser::openConfig</a></div><div class="ttdeci">static const std::string openConfig(const std::string &amp;path)</div><div class="ttdef"><b>Definition:</b> config.cpp:16</div></div>
+<div class="ttc" id="classConfig_1_1ConfigParser_html_a5ff3e2184fd9451895af62870721eae8"><div class="ttname"><a href="classConfig_1_1ConfigParser.html#a5ff3e2184fd9451895af62870721eae8">Config::ConfigParser::_config</a></div><div class="ttdeci">const std::unique_ptr&lt; std::map&lt; const std::string, const ConfigOption &gt; const  &gt; _config</div><div class="ttdef"><b>Definition:</b> config.hpp:64</div></div>
+<div class="ttc" id="classConfig_1_1ConfigParser_html_a3733401677039d60676b7ffe763a7b9c"><div class="ttname"><a href="classConfig_1_1ConfigParser.html#a3733401677039d60676b7ffe763a7b9c">Config::ConfigParser::ConfigParser</a></div><div class="ttdeci">ConfigParser(const std::string &amp;&amp;path)</div><div class="ttdef"><b>Definition:</b> config.cpp:5</div></div>
+<div class="ttc" id="namespaceConfig_html_a0f82b307506f886adc0d12980637eee2"><div class="ttname"><a href="namespaceConfig.html#a0f82b307506f886adc0d12980637eee2">Config::configPrefixData</a></div><div class="ttdeci">static const std::string configPrefixData</div><div class="ttdef"><b>Definition:</b> config.hpp:45</div></div>
+<div class="ttc" id="classConfig_1_1config__error_html"><div class="ttname"><a href="classConfig_1_1config__error.html">Config::config_error</a></div><div class="ttdef"><b>Definition:</b> config.hpp:9</div></div>
+<div class="ttc" id="classConfig_1_1ConfigParser_html"><div class="ttname"><a href="classConfig_1_1ConfigParser.html">Config::ConfigParser</a></div><div class="ttdef"><b>Definition:</b> config.hpp:62</div></div>
+<div class="ttc" id="classConfig_1_1ConfigOption_html_a4327b079752ba56cbbf81b7806e39c70"><div class="ttname"><a href="classConfig_1_1ConfigOption.html#a4327b079752ba56cbbf81b7806e39c70">Config::ConfigOption::ConfigOption</a></div><div class="ttdeci">ConfigOption(const std::string &amp;&amp;value)</div><div class="ttdef"><b>Definition:</b> config.hpp:27</div></div>
+<div class="ttc" id="classConfig_1_1ConfigOption_html_a169fcc25c331d2d40af165051d8997f4"><div class="ttname"><a href="classConfig_1_1ConfigOption.html#a169fcc25c331d2d40af165051d8997f4">Config::ConfigOption::_value</a></div><div class="ttdeci">const std::string _value</div><div class="ttdef"><b>Definition:</b> config.hpp:20</div></div>
+<div class="ttc" id="classConfig_1_1ConfigOption_html_a0fd41a7a364ebb282e01d7cd6d262c4a"><div class="ttname"><a href="classConfig_1_1ConfigOption.html#a0fd41a7a364ebb282e01d7cd6d262c4a">Config::ConfigOption::ConfigOption</a></div><div class="ttdeci">ConfigOption(const char *value)</div><div class="ttdef"><b>Definition:</b> config.hpp:28</div></div>
+<div class="ttc" id="classConfig_1_1config__error_html_a139bc20e9cc17251f702e8d7fec9dad8"><div class="ttname"><a href="classConfig_1_1config__error.html#a139bc20e9cc17251f702e8d7fec9dad8">Config::config_error::config_error</a></div><div class="ttdeci">config_error(std::string const &amp;message)</div><div class="ttdef"><b>Definition:</b> config.hpp:11</div></div>
+<div class="ttc" id="namespaceConfig_html"><div class="ttname"><a href="namespaceConfig.html">Config</a></div><div class="ttdef"><b>Definition:</b> config.cpp:4</div></div>
+<div class="ttc" id="classConfig_1_1ConfigOption_html"><div class="ttname"><a href="classConfig_1_1ConfigOption.html">Config::ConfigOption</a></div><div class="ttdef"><b>Definition:</b> config.hpp:18</div></div>
+<div class="ttc" id="classConfig_1_1ConfigParser_html_aa330a6ec2c725dba60c2a8ab04a54e3b"><div class="ttname"><a href="classConfig_1_1ConfigParser.html#aa330a6ec2c725dba60c2a8ab04a54e3b">Config::ConfigParser::parseConfig</a></div><div class="ttdeci">static std::map&lt; const std::string, const ConfigOption &gt; * parseConfig(const std::string &amp;data)</div><div class="ttdef"><b>Definition:</b> config.cpp:23</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><b>config.hpp</b></li>
-    <li class="footer">Generated on Tue Jan 20 2015 20:22:17 for Chatsync by
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="config_8hpp.html">config.hpp</a></li>
+    <li class="footer">Generated on Wed Jan 21 2015 10:26:17 for Chatsync by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9 </li>
   </ul>

@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Chatsync
-   &#160;<span id="projectnumber">fe91866501c1326748c57b1347208540d122711f</span>
+   &#160;<span id="projectnumber">3994e3143f295efc43c7ddebbd25b178d7b96f3a</span>
    </div>
   </td>
  </tr>
@@ -47,6 +47,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -107,7 +108,10 @@ $(document).ready(function(){initNavTree('classfileChannel_1_1FileChannel.html',
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pro-methods">Protected Member Functions</a>  </div>
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
+<a href="#pri-static-attribs">Static Private Attributes</a>  </div>
   <div class="headertitle">
 <div class="title">fileChannel::FileChannel Class Reference</div>  </div>
 </div><!--header-->
@@ -126,19 +130,22 @@ Inheritance diagram for fileChannel::FileChannel:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae15cf212ac15642738b270d90107352d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae15cf212ac15642738b270d90107352d"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>FileChannel</b> (const std::string &amp;<a class="el" href="classChanneling_1_1Channel.html#a0bd3400384ba2801bf17323d576089ef">name</a>, Channeling::ChannelDirection const &amp;<a class="el" href="classChanneling_1_1Channel.html#a86ab3881297d545bf44fceccbbbe6d01">direction</a>, <a class="el" href="classHub_1_1Hub.html">Hub::Hub</a> *hub)</td></tr>
+<tr class="memitem:ae15cf212ac15642738b270d90107352d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfileChannel_1_1FileChannel.html#ae15cf212ac15642738b270d90107352d">FileChannel</a> (const std::string &amp;<a class="el" href="classChanneling_1_1Channel.html#a0bd3400384ba2801bf17323d576089ef">name</a>, <a class="el" href="namespaceChanneling.html#a55b8672b8710070db3c834f4d8425378">Channeling::ChannelDirection</a> const &amp;<a class="el" href="classChanneling_1_1Channel.html#a86ab3881297d545bf44fceccbbbe6d01">direction</a>, <a class="el" href="classHub_1_1Hub.html">Hub::Hub</a> *hub)</td></tr>
 <tr class="separator:ae15cf212ac15642738b270d90107352d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a078a93c10d1a243c259a4b3b43290b12"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfileChannel_1_1FileChannel.html#a078a93c10d1a243c259a4b3b43290b12">~FileChannel</a> ()</td></tr>
+<tr class="separator:a078a93c10d1a243c259a4b3b43290b12"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a79129bb7c3904a52e5bfc9b47adab088"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfileChannel_1_1FileChannel.html#a79129bb7c3904a52e5bfc9b47adab088">type</a> () const </td></tr>
 <tr class="separator:a79129bb7c3904a52e5bfc9b47adab088"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classChanneling_1_1Channel"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classChanneling_1_1Channel')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classChanneling_1_1Channel.html">Channeling::Channel</a></td></tr>
-<tr class="memitem:a28bf7ec4a404f385787c69867cbc7513 inherit pub_methods_classChanneling_1_1Channel"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#a28bf7ec4a404f385787c69867cbc7513">Channel</a> (std::string const &amp;<a class="el" href="classChanneling_1_1Channel.html#a0bd3400384ba2801bf17323d576089ef">name</a>, ChannelDirection const &amp;<a class="el" href="classChanneling_1_1Channel.html#a86ab3881297d545bf44fceccbbbe6d01">direction</a>, <a class="el" href="classHub_1_1Hub.html">Hub::Hub</a> *const hub)</td></tr>
+<tr class="memitem:a28bf7ec4a404f385787c69867cbc7513 inherit pub_methods_classChanneling_1_1Channel"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#a28bf7ec4a404f385787c69867cbc7513">Channel</a> (std::string const &amp;<a class="el" href="classChanneling_1_1Channel.html#a0bd3400384ba2801bf17323d576089ef">name</a>, <a class="el" href="namespaceChanneling.html#a55b8672b8710070db3c834f4d8425378">ChannelDirection</a> const &amp;<a class="el" href="classChanneling_1_1Channel.html#a86ab3881297d545bf44fceccbbbe6d01">direction</a>, <a class="el" href="classHub_1_1Hub.html">Hub::Hub</a> *const hub)</td></tr>
 <tr class="separator:a28bf7ec4a404f385787c69867cbc7513 inherit pub_methods_classChanneling_1_1Channel"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af68955db4e1b5b0d33e0e91b63f370a0 inherit pub_methods_classChanneling_1_1Channel"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#af68955db4e1b5b0d33e0e91b63f370a0">~Channel</a> ()</td></tr>
+<tr class="separator:af68955db4e1b5b0d33e0e91b63f370a0 inherit pub_methods_classChanneling_1_1Channel"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a175fa19261c63437acb5aa43de602bb7 inherit pub_methods_classChanneling_1_1Channel"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#a175fa19261c63437acb5aa43de602bb7">parseConfig</a> (std::vector&lt; std::string &gt; const &amp;lines)</td></tr>
 <tr class="separator:a175fa19261c63437acb5aa43de602bb7 inherit pub_methods_classChanneling_1_1Channel"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0bd3400384ba2801bf17323d576089ef inherit pub_methods_classChanneling_1_1Channel"><td class="memItemLeft" align="right" valign="top">virtual std::string const &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#a0bd3400384ba2801bf17323d576089ef">name</a> () const </td></tr>
 <tr class="separator:a0bd3400384ba2801bf17323d576089ef inherit pub_methods_classChanneling_1_1Channel"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86ab3881297d545bf44fceccbbbe6d01 inherit pub_methods_classChanneling_1_1Channel"><td class="memItemLeft" align="right" valign="top">ChannelDirection&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#a86ab3881297d545bf44fceccbbbe6d01">direction</a> () const </td></tr>
+<tr class="memitem:a86ab3881297d545bf44fceccbbbe6d01 inherit pub_methods_classChanneling_1_1Channel"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceChanneling.html#a55b8672b8710070db3c834f4d8425378">ChannelDirection</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#a86ab3881297d545bf44fceccbbbe6d01">direction</a> () const </td></tr>
 <tr class="separator:a86ab3881297d545bf44fceccbbbe6d01 inherit pub_methods_classChanneling_1_1Channel"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
@@ -151,6 +158,23 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a0f6020dd45db786436ff43a1598ad2f1 inherit pro_methods_classChanneling_1_1Channel"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#a0f6020dd45db786436ff43a1598ad2f1">stopPolling</a> ()</td></tr>
 <tr class="separator:a0f6020dd45db786436ff43a1598ad2f1 inherit pro_methods_classChanneling_1_1Channel"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a0c61411622c87ad37b8b2bb7c1ad5948"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfileChannel_1_1FileChannel.html#a0c61411622c87ad37b8b2bb7c1ad5948">openPipe</a> (const std::string &amp;filename)</td></tr>
+<tr class="separator:a0c61411622c87ad37b8b2bb7c1ad5948"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51ab9a9e1fc00b9e61ae343f1098b6c2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfileChannel_1_1FileChannel.html#a51ab9a9e1fc00b9e61ae343f1098b6c2">activate</a> ()</td></tr>
+<tr class="separator:a51ab9a9e1fc00b9e61ae343f1098b6c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a7a75f50ad82b510af5ddaaa69088ea96"><td class="memItemLeft" align="right" valign="top">std::fstream&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfileChannel_1_1FileChannel.html#a7a75f50ad82b510af5ddaaa69088ea96">_file</a></td></tr>
+<tr class="separator:a7a75f50ad82b510af5ddaaa69088ea96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
+Static Private Attributes</h2></td></tr>
+<tr class="memitem:a2f04a5ef7bce871eeb58c814eb3db4eb"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="classChanneling_1_1ChannelCreatorImpl.html">Channeling::ChannelCreatorImpl</a>&lt; <a class="el" href="classfileChannel_1_1FileChannel.html">FileChannel</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfileChannel_1_1FileChannel.html#a2f04a5ef7bce871eeb58c814eb3db4eb">creator</a></td></tr>
+<tr class="separator:a2f04a5ef7bce871eeb58c814eb3db4eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_attribs_classChanneling_1_1Channel"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classChanneling_1_1Channel')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classChanneling_1_1Channel.html">Channeling::Channel</a></td></tr>
@@ -158,7 +182,7 @@ Additional Inherited Members</h2></td></tr>
 <tr class="separator:ab868693b6df85d5bb41cd11ed8399ff9 inherit pro_attribs_classChanneling_1_1Channel"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac6ea082f1aefb4a2efd07ed1343f39ca inherit pro_attribs_classChanneling_1_1Channel"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#ac6ea082f1aefb4a2efd07ed1343f39ca">_name</a></td></tr>
 <tr class="separator:ac6ea082f1aefb4a2efd07ed1343f39ca inherit pro_attribs_classChanneling_1_1Channel"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac64d544a772cb8f6bfe8c9a083440b66 inherit pro_attribs_classChanneling_1_1Channel"><td class="memItemLeft" align="right" valign="top">const ChannelDirection&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#ac64d544a772cb8f6bfe8c9a083440b66">_direction</a></td></tr>
+<tr class="memitem:ac64d544a772cb8f6bfe8c9a083440b66 inherit pro_attribs_classChanneling_1_1Channel"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceChanneling.html#a55b8672b8710070db3c834f4d8425378">ChannelDirection</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#ac64d544a772cb8f6bfe8c9a083440b66">_direction</a></td></tr>
 <tr class="separator:ac64d544a772cb8f6bfe8c9a083440b66 inherit pro_attribs_classChanneling_1_1Channel"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa88710dcc6c8de6d3c0f965cdcd3430f inherit pro_attribs_classChanneling_1_1Channel"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classHub_1_1Hub.html">Hub::Hub</a> *const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#aa88710dcc6c8de6d3c0f965cdcd3430f">_hub</a></td></tr>
 <tr class="separator:aa88710dcc6c8de6d3c0f965cdcd3430f inherit pro_attribs_classChanneling_1_1Channel"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -166,7 +190,139 @@ Additional Inherited Members</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>File channel</p>
 <p>May be useful for logging </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="ae15cf212ac15642738b270d90107352d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">fileChannel::FileChannel::FileChannel </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceChanneling.html#a55b8672b8710070db3c834f4d8425378">Channeling::ChannelDirection</a> const &amp;&#160;</td>
+          <td class="paramname"><em>direction</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classHub_1_1Hub.html">Hub::Hub</a> *&#160;</td>
+          <td class="paramname"><em>hub</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a078a93c10d1a243c259a4b3b43290b12"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">fileChannel::FileChannel::~FileChannel </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a51ab9a9e1fc00b9e61ae343f1098b6c2"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void fileChannel::FileChannel::activate </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Prepare all prerequisites for polling thread or prepare the output and start working</p>
+<p>Opening file descriptors, connecting to network must be done here. After return from the function channel is considered to be ready for work.</p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">activate_error</td><td>in case of problems </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classChanneling_1_1Channel.html#ac8fd35321039116937e7210e55ab8609">Channeling::Channel</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0c61411622c87ad37b8b2bb7c1ad5948"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int fileChannel::FileChannel::openPipe </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Opens input pipe</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>Pipe name with full path (if needed) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">int</td><td>File descriptor</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classChanneling_1_1activate__error.html">Channeling::activate_error</a></td><td>when can't open file </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a7ec0973749fb9e6daba6ae2dd265d653"></a>
 <div class="memitem">
 <div class="memproto">
@@ -231,17 +387,59 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<h2 class="groupheader">Field Documentation</h2>
+<a class="anchor" id="a7a75f50ad82b510af5ddaaa69088ea96"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::fstream fileChannel::FileChannel::_file</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>File stream to save log </p>
+
+</div>
+</div>
+<a class="anchor" id="a2f04a5ef7bce871eeb58c814eb3db4eb"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="classChanneling_1_1ChannelCreatorImpl.html">Channeling::ChannelCreatorImpl</a>&lt; <a class="el" href="classfileChannel_1_1FileChannel.html">FileChannel</a> &gt; fileChannel::FileChannel::creator</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/<a class="el" href="filechannel_8hpp_source.html">filechannel.hpp</a></li>
-<li>src/filechannel.cpp</li>
+<li>src/<a class="el" href="filechannel_8cpp.html">filechannel.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>fileChannel</b></li><li class="navelem"><a class="el" href="classfileChannel_1_1FileChannel.html">FileChannel</a></li>
-    <li class="footer">Generated on Tue Jan 20 2015 20:22:17 for Chatsync by
+    <li class="navelem"><a class="el" href="namespacefileChannel.html">fileChannel</a></li><li class="navelem"><a class="el" href="classfileChannel_1_1FileChannel.html">FileChannel</a></li>
+    <li class="footer">Generated on Wed Jan 21 2015 10:26:17 for Chatsync by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9 </li>
   </ul>

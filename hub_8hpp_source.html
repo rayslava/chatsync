@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Chatsync
-   &#160;<span id="projectnumber">fe91866501c1326748c57b1347208540d122711f</span>
+   &#160;<span id="projectnumber">3994e3143f295efc43c7ddebbd25b178d7b96f3a</span>
    </div>
   </td>
  </tr>
@@ -47,6 +47,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -70,6 +71,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
       <li><a href="files.html"><span>File&#160;List</span></a></li>
+      <li><a href="globals.html"><span>Globals</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -106,7 +108,7 @@ $(document).ready(function(){initNavTree('hub_8hpp_source.html','');});
 <div class="title">hub.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
+<a href="hub_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &lt;list&gt;</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;queue&gt;</span></div>
@@ -121,18 +123,18 @@ $(document).ready(function(){initNavTree('hub_8hpp_source.html','');});
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceHub.html">Hub</a> {</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">typedef</span> std::unique_ptr&lt;Channeling::Channel&gt; chanPtr;</div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="namespaceHub.html#aad8b0f195690ff1d4d32adcdc2989bbc">   16</a></span>&#160;    <span class="keyword">typedef</span> std::unique_ptr&lt;Channeling::Channel&gt; <a class="code" href="namespaceHub.html#aad8b0f195690ff1d4d32adcdc2989bbc">chanPtr</a>;</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
 <div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="classHub_1_1Hub.html">   22</a></span>&#160;    <span class="keyword">class </span><a class="code" href="namespaceHub.html">Hub</a> {</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keyword">const</span> std::string _name;             </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        std::list&lt;chanPtr&gt; _inputChannels;   </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        std::list&lt;chanPtr&gt; _outputChannels;  </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        std::queue&lt;std::string&gt; _messages;   </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        std::mutex _mutex;                   </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        std::condition_variable _cond;       </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    std::unique_ptr&lt;std::thread&gt; _msgLoop; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    std::atomic_bool _loopRunning;       </div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="classHub_1_1Hub.html#a3223ce3fa9b2d1e4960f75fa26b69856">   24</a></span>&#160;        <span class="keyword">const</span> std::string <a class="code" href="classHub_1_1Hub.html#a3223ce3fa9b2d1e4960f75fa26b69856">_name</a>;             </div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="classHub_1_1Hub.html#a4c0e1a3ab97b966fb2686069d796ca42">   25</a></span>&#160;        std::list&lt;chanPtr&gt; <a class="code" href="classHub_1_1Hub.html#a4c0e1a3ab97b966fb2686069d796ca42">_inputChannels</a>;   </div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="classHub_1_1Hub.html#acc1b02d2715c90d66d6f58c5c3912a5e">   26</a></span>&#160;        std::list&lt;chanPtr&gt; <a class="code" href="classHub_1_1Hub.html#acc1b02d2715c90d66d6f58c5c3912a5e">_outputChannels</a>;  </div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="classHub_1_1Hub.html#a0db5825349b023fbe1760e7dae4d9f3e">   28</a></span>&#160;        std::queue&lt;std::string&gt; <a class="code" href="classHub_1_1Hub.html#a0db5825349b023fbe1760e7dae4d9f3e">_messages</a>;   </div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="classHub_1_1Hub.html#a06dd4f3aee8f1b7e9b3eec6ae012cc3e">   29</a></span>&#160;        std::mutex <a class="code" href="classHub_1_1Hub.html#a06dd4f3aee8f1b7e9b3eec6ae012cc3e">_mutex</a>;                   </div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="classHub_1_1Hub.html#a2fd921dde24809a7befabab2c2ff7818">   30</a></span>&#160;        std::condition_variable <a class="code" href="classHub_1_1Hub.html#a2fd921dde24809a7befabab2c2ff7818">_cond</a>;       </div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="classHub_1_1Hub.html#a4c497369b9a908c10860f30caf5cf29d">   32</a></span>&#160;    std::unique_ptr&lt;std::thread&gt; <a class="code" href="classHub_1_1Hub.html#a4c497369b9a908c10860f30caf5cf29d">_msgLoop</a>; </div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="classHub_1_1Hub.html#a1c89f0b1f1644a623b21c8fd7badb7fe">   33</a></span>&#160;    std::atomic_bool <a class="code" href="classHub_1_1Hub.html#a1c89f0b1f1644a623b21c8fd7badb7fe">_loopRunning</a>;       </div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keywordtype">void</span> addInput(<a class="code" href="classChanneling_1_1Channel.html">Channeling::Channel</a> * <span class="keyword">const</span>);</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keywordtype">void</span> addOutput(<a class="code" href="classChanneling_1_1Channel.html">Channeling::Channel</a> * <span class="keyword">const</span>);</div>
@@ -150,7 +152,7 @@ $(document).ready(function(){initNavTree('hub_8hpp_source.html','');});
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <a class="code" href="namespaceHub.html">Hub</a>(std::string <span class="keyword">const</span>&amp; name);</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keyword">const</span> std::string &amp;name()<span class="keyword"> const </span>{<span class="keywordflow">return</span> _name;};</div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="classHub_1_1Hub.html#a8be8d16bf0348819033a27e903ab8735">   61</a></span>&#160;        <span class="keyword">const</span> std::string &amp;<a class="code" href="classHub_1_1Hub.html#a8be8d16bf0348819033a27e903ab8735">name</a>()<span class="keyword"> const </span>{<span class="keywordflow">return</span> _name;};</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keywordtype">void</span> addChannel(<a class="code" href="classChanneling_1_1Channel.html">Channeling::Channel</a> * <span class="keyword">const</span>);</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
@@ -163,17 +165,27 @@ $(document).ready(function(){initNavTree('hub_8hpp_source.html','');});
 <div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="classHub_1_1Hub.html#a5b7a5aa9b0145abcc4dc49e8920fdf73">   86</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classHub_1_1Hub.html#a5b7a5aa9b0145abcc4dc49e8920fdf73">active</a>() {<span class="keywordflow">return</span> _loopRunning;};</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    };</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;}</div>
+<div class="ttc" id="classHub_1_1Hub_html_acc1b02d2715c90d66d6f58c5c3912a5e"><div class="ttname"><a href="classHub_1_1Hub.html#acc1b02d2715c90d66d6f58c5c3912a5e">Hub::Hub::_outputChannels</a></div><div class="ttdeci">std::list&lt; chanPtr &gt; _outputChannels</div><div class="ttdef"><b>Definition:</b> hub.hpp:26</div></div>
+<div class="ttc" id="classHub_1_1Hub_html_a4c0e1a3ab97b966fb2686069d796ca42"><div class="ttname"><a href="classHub_1_1Hub.html#a4c0e1a3ab97b966fb2686069d796ca42">Hub::Hub::_inputChannels</a></div><div class="ttdeci">std::list&lt; chanPtr &gt; _inputChannels</div><div class="ttdef"><b>Definition:</b> hub.hpp:25</div></div>
 <div class="ttc" id="namespaceHub_html"><div class="ttname"><a href="namespaceHub.html">Hub</a></div><div class="ttdef"><b>Definition:</b> hub.cpp:10</div></div>
+<div class="ttc" id="classHub_1_1Hub_html_a2fd921dde24809a7befabab2c2ff7818"><div class="ttname"><a href="classHub_1_1Hub.html#a2fd921dde24809a7befabab2c2ff7818">Hub::Hub::_cond</a></div><div class="ttdeci">std::condition_variable _cond</div><div class="ttdef"><b>Definition:</b> hub.hpp:30</div></div>
+<div class="ttc" id="classHub_1_1Hub_html_a06dd4f3aee8f1b7e9b3eec6ae012cc3e"><div class="ttname"><a href="classHub_1_1Hub.html#a06dd4f3aee8f1b7e9b3eec6ae012cc3e">Hub::Hub::_mutex</a></div><div class="ttdeci">std::mutex _mutex</div><div class="ttdef"><b>Definition:</b> hub.hpp:29</div></div>
 <div class="ttc" id="namespaceChanneling_html"><div class="ttname"><a href="namespaceChanneling.html">Channeling</a></div><div class="ttdef"><b>Definition:</b> channel.cpp:8</div></div>
+<div class="ttc" id="namespaceHub_html_aad8b0f195690ff1d4d32adcdc2989bbc"><div class="ttname"><a href="namespaceHub.html#aad8b0f195690ff1d4d32adcdc2989bbc">Hub::chanPtr</a></div><div class="ttdeci">std::unique_ptr&lt; Channeling::Channel &gt; chanPtr</div><div class="ttdef"><b>Definition:</b> hub.hpp:16</div></div>
+<div class="ttc" id="classHub_1_1Hub_html_a8be8d16bf0348819033a27e903ab8735"><div class="ttname"><a href="classHub_1_1Hub.html#a8be8d16bf0348819033a27e903ab8735">Hub::Hub::name</a></div><div class="ttdeci">const std::string &amp; name() const </div><div class="ttdef"><b>Definition:</b> hub.hpp:61</div></div>
+<div class="ttc" id="classHub_1_1Hub_html_a3223ce3fa9b2d1e4960f75fa26b69856"><div class="ttname"><a href="classHub_1_1Hub.html#a3223ce3fa9b2d1e4960f75fa26b69856">Hub::Hub::_name</a></div><div class="ttdeci">const std::string _name</div><div class="ttdef"><b>Definition:</b> hub.hpp:24</div></div>
 <div class="ttc" id="classChanneling_1_1Channel_html"><div class="ttname"><a href="classChanneling_1_1Channel.html">Channeling::Channel</a></div><div class="ttdef"><b>Definition:</b> channel.hpp:37</div></div>
+<div class="ttc" id="classHub_1_1Hub_html_a1c89f0b1f1644a623b21c8fd7badb7fe"><div class="ttname"><a href="classHub_1_1Hub.html#a1c89f0b1f1644a623b21c8fd7badb7fe">Hub::Hub::_loopRunning</a></div><div class="ttdeci">std::atomic_bool _loopRunning</div><div class="ttdef"><b>Definition:</b> hub.hpp:33</div></div>
+<div class="ttc" id="classHub_1_1Hub_html_a0db5825349b023fbe1760e7dae4d9f3e"><div class="ttname"><a href="classHub_1_1Hub.html#a0db5825349b023fbe1760e7dae4d9f3e">Hub::Hub::_messages</a></div><div class="ttdeci">std::queue&lt; std::string &gt; _messages</div><div class="ttdef"><b>Definition:</b> hub.hpp:28</div></div>
 <div class="ttc" id="classHub_1_1Hub_html_a5b7a5aa9b0145abcc4dc49e8920fdf73"><div class="ttname"><a href="classHub_1_1Hub.html#a5b7a5aa9b0145abcc4dc49e8920fdf73">Hub::Hub::active</a></div><div class="ttdeci">bool active()</div><div class="ttdef"><b>Definition:</b> hub.hpp:86</div></div>
+<div class="ttc" id="classHub_1_1Hub_html_a4c497369b9a908c10860f30caf5cf29d"><div class="ttname"><a href="classHub_1_1Hub.html#a4c497369b9a908c10860f30caf5cf29d">Hub::Hub::_msgLoop</a></div><div class="ttdeci">std::unique_ptr&lt; std::thread &gt; _msgLoop</div><div class="ttdef"><b>Definition:</b> hub.hpp:32</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><b>hub.hpp</b></li>
-    <li class="footer">Generated on Tue Jan 20 2015 20:22:17 for Chatsync by
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="hub_8hpp.html">hub.hpp</a></li>
+    <li class="footer">Generated on Wed Jan 21 2015 10:26:17 for Chatsync by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9 </li>
   </ul>

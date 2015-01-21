@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['operator_20int',['operator int',['../classConfig_1_1ConfigOption.html#a3aec5092f7142eba7864ea681c7d15f4',1,'Config::ConfigOption']]],
-  ['operator_20t',['operator T',['../classConfig_1_1ConfigOption.html#a3cdbd648a7594520fa5e0040786a4c60',1,'Config::ConfigOption']]],
-  ['operator_3e_3e',['operator&gt;&gt;',['../classChanneling_1_1Channel.html#ae3554c56875eeb20294034920011825a',1,'Channeling::Channel']]]
+  ['hub',['Hub',['../classHub_1_1Hub.html',1,'Hub']]],
+  ['hub',['Hub',['../namespaceHub.html',1,'Hub'],['../classHub_1_1Hub.html#ab5b591861acf98e4c5f7175ff940f051',1,'Hub::Hub::Hub()']]],
+  ['hub_2ecpp',['hub.cpp',['../hub_8cpp.html',1,'']]],
+  ['hub_2ehpp',['hub.hpp',['../hub_8hpp.html',1,'']]]
 ];

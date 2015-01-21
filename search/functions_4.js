@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['operator_20int',['operator int',['../classConfig_1_1ConfigOption.html#a3aec5092f7142eba7864ea681c7d15f4',1,'Config::ConfigOption']]],
-  ['operator_20t',['operator T',['../classConfig_1_1ConfigOption.html#a3cdbd648a7594520fa5e0040786a4c60',1,'Config::ConfigOption']]]
+  ['get_5ftable',['get_table',['../classChanneling_1_1ChannelFactory.html#a1f6de9367d2a56dc839a0a7ed4cddb9f',1,'Channeling::ChannelFactory']]]
 ];

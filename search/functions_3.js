@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['name',['name',['../classChanneling_1_1Channel.html#a0bd3400384ba2801bf17323d576089ef',1,'Channeling::Channel']]],
-  ['newmessage',['newMessage',['../classHub_1_1Hub.html#ad0298b773e882115a6ddd83fe6d0d6de',1,'Hub::Hub']]]
+  ['filechannel',['FileChannel',['../classfileChannel_1_1FileChannel.html#ae15cf212ac15642738b270d90107352d',1,'fileChannel::FileChannel']]]
 ];

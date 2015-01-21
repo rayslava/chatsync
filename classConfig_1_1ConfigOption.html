@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Chatsync
-   &#160;<span id="projectnumber">fe91866501c1326748c57b1347208540d122711f</span>
+   &#160;<span id="projectnumber">3994e3143f295efc43c7ddebbd25b178d7b96f3a</span>
    </div>
   </td>
  </tr>
@@ -47,6 +47,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -106,7 +107,8 @@ $(document).ready(function(){initNavTree('classConfig_1_1ConfigOption.html','');
 
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Public Member Functions</a>  </div>
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a>  </div>
   <div class="headertitle">
 <div class="title">Config::ConfigOption Class Reference</div>  </div>
 </div><!--header-->
@@ -118,14 +120,18 @@ $(document).ready(function(){initNavTree('classConfig_1_1ConfigOption.html','');
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a4327b079752ba56cbbf81b7806e39c70"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConfig_1_1ConfigOption.html#a4327b079752ba56cbbf81b7806e39c70">ConfigOption</a> (const std::string &amp;&amp;value)</td></tr>
 <tr class="separator:a4327b079752ba56cbbf81b7806e39c70"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0fd41a7a364ebb282e01d7cd6d262c4a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0fd41a7a364ebb282e01d7cd6d262c4a"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>ConfigOption</b> (const char *value)</td></tr>
+<tr class="memitem:a0fd41a7a364ebb282e01d7cd6d262c4a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConfig_1_1ConfigOption.html#a0fd41a7a364ebb282e01d7cd6d262c4a">ConfigOption</a> (const char *value)</td></tr>
 <tr class="separator:a0fd41a7a364ebb282e01d7cd6d262c4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3cdbd648a7594520fa5e0040786a4c60"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a3cdbd648a7594520fa5e0040786a4c60"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classConfig_1_1ConfigOption.html#a3cdbd648a7594520fa5e0040786a4c60">operator T</a> () const </td></tr>
 <tr class="separator:a3cdbd648a7594520fa5e0040786a4c60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3aec5092f7142eba7864ea681c7d15f4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConfig_1_1ConfigOption.html#a3aec5092f7142eba7864ea681c7d15f4">operator int</a> () const </td></tr>
 <tr class="separator:a3aec5092f7142eba7864ea681c7d15f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a169fcc25c331d2d40af165051d8997f4"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConfig_1_1ConfigOption.html#a169fcc25c331d2d40af165051d8997f4">_value</a></td></tr>
+<tr class="separator:a169fcc25c331d2d40af165051d8997f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Single option from config. Can be casted to needed type, however is stored as std::string </p>
@@ -158,6 +164,30 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="a0fd41a7a364ebb282e01d7cd6d262c4a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Config::ConfigOption::ConfigOption </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -204,17 +234,38 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<h2 class="groupheader">Field Documentation</h2>
+<a class="anchor" id="a169fcc25c331d2d40af165051d8997f4"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string Config::ConfigOption::_value</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/<a class="el" href="config_8hpp_source.html">config.hpp</a></li>
-<li>src/config.cpp</li>
+<li>src/<a class="el" href="config_8cpp.html">config.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>Config</b></li><li class="navelem"><a class="el" href="classConfig_1_1ConfigOption.html">ConfigOption</a></li>
-    <li class="footer">Generated on Tue Jan 20 2015 20:22:17 for Chatsync by
+    <li class="navelem"><a class="el" href="namespaceConfig.html">Config</a></li><li class="navelem"><a class="el" href="classConfig_1_1ConfigOption.html">ConfigOption</a></li>
+    <li class="footer">Generated on Wed Jan 21 2015 10:26:17 for Chatsync by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9 </li>
   </ul>

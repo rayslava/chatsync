@@ -14,6 +14,7 @@ var hierarchy =
     [ "Config::ConfigParser", "classConfig_1_1ConfigParser.html", null ],
     [ "Hub::Hub", "classHub_1_1Hub.html", null ],
     [ "runtime_error", null, [
-      [ "Channeling::activate_error", "classChanneling_1_1activate__error.html", null ]
+      [ "Channeling::activate_error", "classChanneling_1_1activate__error.html", null ],
+      [ "Config::config_error", "classConfig_1_1config__error.html", null ]
     ] ]
 ];

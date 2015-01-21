@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['parse',['parse',['../classChanneling_1_1Channel.html#a209ff085bb7cbe3a47b19f7973fbf7ab',1,'Channeling::Channel::parse()'],['../classfileChannel_1_1FileChannel.html#a7ec0973749fb9e6daba6ae2dd265d653',1,'fileChannel::FileChannel::parse()'],['../classircChannel_1_1IrcChannel.html#a2694ae339377b27f1104cb04f28b0e73',1,'ircChannel::IrcChannel::parse()']]],
-  ['parseconfig',['parseConfig',['../classChanneling_1_1Channel.html#a175fa19261c63437acb5aa43de602bb7',1,'Channeling::Channel::parseConfig()'],['../classircChannel_1_1IrcChannel.html#aefe7e01957b01543acd97e9ab5fad107',1,'ircChannel::IrcChannel::parseConfig()']]],
-  ['parsefile',['parseFile',['../classConfig_1_1ConfigParser.html#a18bba7bd1d45da1c61e30b0393d98d4b',1,'Config::ConfigParser']]]
+  ['input',['Input',['../namespaceChanneling.html#a55b8672b8710070db3c834f4d8425378a324118a6721dd6b8a9b9f4e327df2bf5',1,'Channeling']]],
+  ['ircchannel',['ircChannel',['../namespaceircChannel.html',1,'ircChannel'],['../classircChannel_1_1IrcChannel.html#ae59e5a08c8d02e0e5dbbfe0bf7013d34',1,'ircChannel::IrcChannel::IrcChannel()']]],
+  ['ircchannel',['IrcChannel',['../classircChannel_1_1IrcChannel.html',1,'ircChannel']]],
+  ['ircchannel_2ecpp',['ircchannel.cpp',['../ircchannel_8cpp.html',1,'']]],
+  ['ircchannel_2ehpp',['ircchannel.hpp',['../ircchannel_8hpp.html',1,'']]]
 ];
