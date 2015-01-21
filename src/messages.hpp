@@ -18,3 +18,5 @@ const static std::string ERR_SOCK_READ = "Error during reading to socket";
 const static std::string ERR_FD = "Wrong file descriptor provided to poll function";
 
 const static std::string ERR_FILE_OPEN = "Can't open file";
+
+const static std::string ERR_CONFIG_SCHEME = "Access scheme is not supported";

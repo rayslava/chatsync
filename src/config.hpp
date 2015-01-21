@@ -6,6 +6,11 @@
 
 namespace Config {
 
+    class config_error: public std::runtime_error {
+    public:
+        config_error(std::string const& message): std::runtime_error(message) {};
+    };
+
     /**
      * Single option from config.
      * Can be casted to needed type, however is stored as std::string
@@ -35,6 +40,11 @@ namespace Config {
     };
 
     /**
+     * Raw data is provided as plain text line
+     */
+    static const std::string configPrefixData = "data://";
+
+    /**
      * An object for parsing configuration file
      *
      * Config file format is just like .ini files
@@ -52,18 +62,27 @@ namespace Config {
     class ConfigParser {
     private:
 	const std::unique_ptr<std::map<const std::string, const ConfigOption> const> _config;
-	static std::map<const std::string, const ConfigOption>* parseConfig(std::string data);
+
+	/**
+	 * Opens @param path parsing scheme and returns a single line with configuration
+	 *
+	 * Possible schemes:
+	 * - file:// open a file, read it to memory and return
+	 * - data:// raw data line, just cut the "data://" and return line
+	 *
+	 * @param path path to config
+	 * @retval string with config lines separated with \n
+	 *
+	 * @throws config_error if file can't be opened
+	 */
+	static const std::string openConfig(const std::string& path);
+	static std::map<const std::string, const ConfigOption>* parseConfig(const std::string& data);
     public:
         /**
 	 * Creates an object
 	 *
-	 * param @filename Configuration file name and path
+	 * @param path Configuration file name and path
 	 */
-        ConfigParser(std::string path);
-
-        /**
-	 * Parses a configuration file
-	 */
-        void parseFile() const;
+        ConfigParser(const std::string&& path);
     };
 }

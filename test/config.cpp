@@ -30,12 +30,18 @@ TEST(option, integer)
   const auto& value = "123";
   ConfigOption option(value);
 
-  int line = option;
+  int number = option;
 
-  ASSERT_EQ(line, 123);
+  ASSERT_EQ(number, 123);
 }
 
-TEST(configParser, create)
+TEST(configParser, empty)
 {
-  const ConfigParser parser("");
+  EXPECT_THROW({
+      const ConfigParser parser("");}, config_error);
+}
+
+TEST(configParser, data)
+{
+  const ConfigParser parser("data://[hub]");
 }
