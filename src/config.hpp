@@ -84,5 +84,10 @@ namespace Config {
 	 * @param path Configuration file name and path
 	 */
         ConfigParser(const std::string&& path);
+
+	/**
+	 * Get option from storage
+	 */
+	const ConfigOption operator[] (const std::string&& option) const;
     };
 }

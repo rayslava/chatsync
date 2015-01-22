@@ -1,3 +1,4 @@
+#include <regex>
 #include "config.hpp"
 #include "messages.hpp"
 
@@ -22,10 +23,20 @@ namespace Config {
 
     std::map<const std::string, const ConfigOption>* ConfigParser::parseConfig(const std::string& data) {
 	auto configMap = new std::map<const std::string, const ConfigOption>;
-	configMap->emplace("test", "testval");
+	std::regex optionRe("^\\s*(\\S+)\\s*=\\s*(\\S+)$");
+	std::smatch optionMatches;
 
-	if (data.empty())
-	    return configMap;
+	std::stringstream ss(data);
+	std::string item;
+
+	while (std::getline(ss, item, '\n'))
+	    if (std::regex_match(item, optionMatches, optionRe))
+		configMap->emplace(optionMatches[1].str(), optionMatches[2].str());
+
 	return configMap;
+    }
+
+    const ConfigOption ConfigParser::operator[] (const std::string&& option) const {
+	return _config->at(option);
     }
 }

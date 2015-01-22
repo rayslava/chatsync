@@ -43,5 +43,12 @@ TEST(configParser, empty)
 
 TEST(configParser, data)
 {
-  const ConfigParser parser("data://[hub]");
+  const std::string testval1 = "testval";
+  const std::string testval2 = "value2";
+  const ConfigParser parser("data://test = testval\ntest2\t=\tvalue2");
+
+  const std::string mapval1 = parser["test"];
+  const std::string mapval2 = parser["test2"];
+  ASSERT_EQ(testval1, mapval1);
+  ASSERT_EQ(testval2, mapval2);
 }
