@@ -15,6 +15,8 @@ var hierarchy =
     [ "Hub::Hub", "classHub_1_1Hub.html", null ],
     [ "runtime_error", null, [
       [ "Channeling::activate_error", "classChanneling_1_1activate__error.html", null ],
-      [ "Config::config_error", "classConfig_1_1config__error.html", null ]
+      [ "Config::config_error", "classConfig_1_1config__error.html", [
+        [ "Config::option_error", "classConfig_1_1option__error.html", null ]
+      ] ]
     ] ]
 ];
