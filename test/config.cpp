@@ -38,7 +38,8 @@ TEST(option, integer)
 TEST(configParser, empty)
 {
   EXPECT_THROW({
-      const ConfigParser parser("");}, config_error);
+      const ConfigParser parser("");
+    }, config_error);
 }
 
 TEST(configParser, data)
@@ -51,4 +52,8 @@ TEST(configParser, data)
   const std::string mapval2 = parser["test2"];
   ASSERT_EQ(testval1, mapval1);
   ASSERT_EQ(testval2, mapval2);
+
+  EXPECT_THROW({
+      parser["no_such_option"];
+    }, option_error);
 }

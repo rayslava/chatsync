@@ -37,6 +37,10 @@ namespace Config {
     }
 
     const ConfigOption ConfigParser::operator[] (const std::string&& option) const {
-	return _config->at(option);
+	try {
+	    return _config->at(option);
+	} catch (std::out_of_range) {
+	    throw option_error(ERR_NO_OPTION);
+	}
     }
 }

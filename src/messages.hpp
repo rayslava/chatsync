@@ -20,3 +20,5 @@ const static std::string ERR_FD = "Wrong file descriptor provided to poll functi
 const static std::string ERR_FILE_OPEN = "Can't open file";
 
 const static std::string ERR_CONFIG_SCHEME = "Access scheme is not supported";
+
+const static std::string ERR_NO_OPTION = "Option is not configured";

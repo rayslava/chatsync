@@ -6,10 +6,22 @@
 
 namespace Config {
 
+    /**
+     * Generic configuration error
+     */
     class config_error: public std::runtime_error {
     public:
         config_error(std::string const& message): std::runtime_error(message) {};
     };
+
+    /**
+     * Requested option can't be received (e.g. not found)
+     */
+    class option_error: public config_error {
+    public:
+        option_error(std::string const& message): config_error(message) {};
+    };
+
 
     /**
      * Single option from config.
@@ -87,6 +99,7 @@ namespace Config {
 
 	/**
 	 * Get option from storage
+	 * @throws option_error if no option found in storage
 	 */
 	const ConfigOption operator[] (const std::string&& option) const;
     };
