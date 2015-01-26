@@ -57,6 +57,11 @@ namespace Config {
     static const std::string configPrefixData = "data://";
 
     /**
+     * Filename is provided to read config
+     */
+    static const std::string configPrefixFile = "file://";
+
+    /**
      * An object for parsing configuration file
      *
      * Config file format is just like .ini files

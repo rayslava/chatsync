@@ -1,4 +1,7 @@
 #include <regex>
+#include <string>
+#include <fstream>
+#include <streambuf>
 #include "config.hpp"
 #include "messages.hpp"
 
@@ -17,6 +20,13 @@ namespace Config {
     const std::string ConfigParser::openConfig(const std::string& path) {
 	if (std::equal(configPrefixData.begin(), configPrefixData.end(), path.begin()))
 	    return path.substr(configPrefixData.length());
+
+	if (std::equal(configPrefixFile.begin(), configPrefixFile.end(), path.begin())) {
+	    std::ifstream t(path.substr(configPrefixFile.length()));
+	    std::string str((std::istreambuf_iterator<char>(t)),
+			    std::istreambuf_iterator<char>());
+	    return str;
+	}
 
 	throw config_error(ERR_CONFIG_SCHEME);
     }
