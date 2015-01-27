@@ -36,6 +36,21 @@ TEST(option, integer)
   ASSERT_EQ(number, 123);
 }
 
+TEST(option, direction)
+{
+  const auto& valueIn = "input";
+  const auto& valueWr = "wrong";
+  ConfigOption option(valueIn);
+
+  Channeling::ChannelDirection dir = option;
+
+  ASSERT_EQ(dir, Channeling::ChannelDirection::Input);
+  EXPECT_THROW({
+      ConfigOption optionWr(valueWr);
+      dir = optionWr;
+    }, option_error);
+}
+
 TEST(configParser, empty)
 {
   EXPECT_THROW({
@@ -47,7 +62,7 @@ TEST(configParser, data)
 {
   const std::string testval1 = "testval";
   const std::string testval2 = "value2";
-  const ConfigParser parser("data://test = testval\ntest2\t=\tvalue2");
+  const ConfigParser parser("data://test = testval\ntest2\t=value2");
 
   const std::string mapval1 = parser["test"];
   const std::string mapval2 = parser["test2"];
@@ -93,4 +108,3 @@ TEST(configParser, file)
       parser["no_such_option"];
     }, option_error);
 }
-

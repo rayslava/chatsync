@@ -24,12 +24,10 @@ namespace ircChannel {
 	static const Channeling::ChannelCreatorImpl<IrcChannel> creator;
 	
     public:
-	explicit IrcChannel(const std::string &name, Channeling::ChannelDirection const &direction, Hub::Hub* hub);
-//			    const std::string& ircServer, const uint32_t port, const std::string& channel);
+	explicit IrcChannel(Hub::Hub* hub, const std::string&& config);
         ~IrcChannel();
 
 	std::string type() const {return "irc";};
-        virtual void parseConfig(std::vector<std::string> const& lines);
 
     protected:
         void parse(const std::string& l);

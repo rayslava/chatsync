@@ -3,6 +3,25 @@
 #include <string>
 #include <map>
 #include <memory>
+#include <vector>
+
+namespace Channeling {
+
+    /**
+     * Channel direction
+     */
+    enum class ChannelDirection {
+	Input,                      /**< Receive data  */
+	    Output,                     /**< Transmit data */
+	    Bidirectional               /**< Receive and transmit data */
+	    };
+
+    const static std::vector<std::string> ChannelDirectionName = {
+	"input",
+	"output",
+	"bidirectional"
+    };
+}
 
 namespace Config {
 
@@ -42,13 +61,17 @@ namespace Config {
 	/**
 	 * Implicit conversions to string-compatible classes
 	 */
-	template <typename T>
-	operator T() const {return T(_value);}
+	operator std::string() const {return std::string(_value);}
 
 	/**
 	 * Implicit conversion to int
 	 */
 	operator int() const;
+
+	/**
+	 * Channel direction
+	 */
+	operator Channeling::ChannelDirection() const;
     };
 
     /**

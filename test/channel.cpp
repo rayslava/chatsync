@@ -16,7 +16,7 @@ const char testLine[] = "Testing file writing";
 TEST(FileChannel, name)
 {
     const auto hub = new Hub::Hub ("Hub");
-    const auto ich = Channeling::ChannelFactory::create("file", "file", Channeling::ChannelDirection::Input, hub);
+    const auto ich = Channeling::ChannelFactory::create("file", hub, "data://direction=input\nname=file\n");
 
     // Check that at least constructor works
     ASSERT_EQ(ich->name(), "file");
@@ -101,7 +101,6 @@ void sockListen() {
 	    exit(1);
 	}
 }
-*/
 
 TEST(IrcChannel, sockerr)
 {
@@ -116,7 +115,7 @@ TEST(IrcChannel, sockerr)
     },  Channeling::activate_error);
     delete hub;
 }
-/*
+
 TEST(IrcChannel, socket)
 {
     const auto hub = new Hub::Hub ("Hub");

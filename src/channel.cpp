@@ -2,18 +2,21 @@
 #include <stdexcept>
 #include <typeinfo>
 #include <sstream>
+#include <utility>
 
 #include "messages.hpp"
 
 namespace Channeling {
-  Channel::Channel(std::string const &name, ChannelDirection const &direction, Hub::Hub* const hub):
+  Channel::Channel(Hub::Hub* const hub, const std::string&& config):
     _thread(nullptr),
     _pipeRunning(ATOMIC_FLAG_INIT),
     _fd(-1),
-    _name(name),
-    _direction(direction),
+    _config(std::move(config)),
+    _name(_config["name"]),
+    _direction(_config["direction"]),
     _hub(hub)
   {
+    std::cout << _name << std::endl;
     _hub->addChannel(this);
   }
 
@@ -26,13 +29,6 @@ namespace Channeling {
       throw std::logic_error("Can't write data to input channel " + channel.name());
     channel.parse(msg);
     return channel;
-  }
-
-  void Channel::parseConfig(std::vector<std::string> const &lines) {
-    if (lines.empty()) {
-      throw std::runtime_error("Channel config is empty");
-    }
-    throw std::runtime_error(ERR_NOT_IMPL);
   }
 
   void Channel::startPolling() {
@@ -50,12 +46,12 @@ namespace Channeling {
   }
 
   
-  Channel* ChannelFactory::create(const std::string& classname, std::string const &name, ChannelDirection const &direction, Hub::Hub* const hub) {
+  Channel* ChannelFactory::create(const std::string& classname, Hub::Hub* const hub, const std::string&& config) {
     std::map<std::string, ChannelCreator*>::iterator i;
     i = get_table().find(classname);
 
     if (i != get_table().end())
-      return i->second->create(name, direction, hub);
+      return i->second->create(hub, std::move(config));
     else
       return (Channel*)NULL;
   }

@@ -17,6 +17,15 @@ namespace Config {
 	return std::stoi(_value);
     }
 
+    ConfigOption::operator Channeling::ChannelDirection() const {
+	if (_value == "input")
+	    return Channeling::ChannelDirection::Input;
+	else if (_value == "output")
+	    return Channeling::ChannelDirection::Output;
+
+	throw option_error(ERR_WRONG_DIR + ": " + _value);
+    }
+
     const std::string ConfigParser::openConfig(const std::string& path) {
 	if (std::equal(configPrefixData.begin(), configPrefixData.end(), path.begin()))
 	    return path.substr(configPrefixData.length());

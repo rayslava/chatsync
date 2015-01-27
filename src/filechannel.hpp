@@ -25,7 +25,7 @@ namespace fileChannel {
 	void activate();
 	static const Channeling::ChannelCreatorImpl<FileChannel> creator;
     public:
-        explicit FileChannel(const std::string &name, Channeling::ChannelDirection const &direction, Hub::Hub* hub);
+	explicit FileChannel(Hub::Hub* hub, const std::string&& config);
         ~FileChannel();
 
 	std::string type() const {return "file";};

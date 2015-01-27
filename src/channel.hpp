@@ -5,18 +5,9 @@
 #include <map>
 
 #include "hub.hpp"
+#include "config.hpp"
 
 namespace Channeling {
-
-    /**
-     * Channel direction
-     */
-    enum class ChannelDirection {
-        Input,                      /**< Receive data  */
-	    Output,                     /**< Transmit data */
-	    Bidirectional               /**< Receive and transmit data */
-	    };
-
     /**
      * Thrown during Channel::activate in case of activation problems
      */
@@ -42,10 +33,12 @@ namespace Channeling {
 	void pollThread();                          /**< Thread which selects the descriptor and send messages when new ones come */
 
     protected:
-        int _fd;                                /**< File descriptor to select */
-        const std::string _name;                /**< The channel name in config file */
-        const ChannelDirection _direction;      /**< The channel direction for the whole transmission task */
-        Hub::Hub* const _hub;                   /**< Hub the channel is attached to */
+        int _fd;                                    /**< File descriptor to select */
+	const Config::ConfigParser _config;         /**< Configuration storage */
+        const std::string _name;                    /**< The channel name in config file */
+        const ChannelDirection _direction;          /**< The channel direction for the whole transmission task */
+        Hub::Hub* const _hub;                       /**< Hub the channel is attached to */
+
 
 	/**
 	 * Parse line and send it to needed output place in case of Output direction
@@ -69,21 +62,12 @@ namespace Channeling {
 
     public:
         /**
-	 * @param name A human-readable channel name in config file
-	 * @param direction Channel transmission direction
 	 * @param hub Hub to add channel to
+	 * @param config configuration data or path (see config.hpp for details)
 	 */
-        Channel(std::string const &name, ChannelDirection const &direction, Hub::Hub* const hub);
+        Channel(Hub::Hub* const hub, const std::string&& config);
 
         virtual ~Channel() {};
-
-        /**
-	 * Parses a configuration for this certain channel
-	 *
-	 * @param lines Part of config file to parse for this channel
-	 * @throws std::runtime_error if config is empty
-	 */
-        virtual void parseConfig(std::vector<std::string> const& lines);
 
         /**
 	 * Returns channel name
@@ -132,7 +116,7 @@ namespace Channeling {
     {
     public:
 	ChannelCreator(const std::string& classname);
-	virtual Channel* create(std::string const &name, ChannelDirection const &direction, Hub::Hub* const hub) = 0;
+	virtual Channel* create(Hub::Hub* const hub, const std::string&& config) = 0;
     };
 
     template <class T>
@@ -141,13 +125,13 @@ namespace Channeling {
     public:
 	ChannelCreatorImpl(const std::string& classname) : ChannelCreator(classname) {}
 
-	virtual Channel* create(std::string const &name, ChannelDirection const &direction, Hub::Hub* const hub) { return new T(name, direction, hub); }
+	virtual Channel* create(Hub::Hub* const hub, const std::string&& config) { return new T(hub, std::move(config)); }
     };
 
     class ChannelFactory
     {
     public:
-	static Channel* create(const std::string& classname, std::string const &name, ChannelDirection const &direction, Hub::Hub* const hub);
+	static Channel* create(const std::string& classname, Hub::Hub* const hub, const std::string&& config);
 	static void registerClass(const std::string& classname, ChannelCreator* creator);
     private:
 	static std::map<std::string, ChannelCreator*>& get_table();
