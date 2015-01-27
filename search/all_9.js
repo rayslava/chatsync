@@ -4,5 +4,6 @@ var searchData=
   ['ircchannel',['ircChannel',['../namespaceircChannel.html',1,'ircChannel'],['../classircChannel_1_1IrcChannel.html#a1ee1d21e6a80831c29329c4c29d13d48',1,'ircChannel::IrcChannel::IrcChannel()']]],
   ['ircchannel',['IrcChannel',['../classircChannel_1_1IrcChannel.html',1,'ircChannel']]],
   ['ircchannel_2ecpp',['ircchannel.cpp',['../ircchannel_8cpp.html',1,'']]],
-  ['ircchannel_2ehpp',['ircchannel.hpp',['../ircchannel_8hpp.html',1,'']]]
+  ['ircchannel_2ehpp',['ircchannel.hpp',['../ircchannel_8hpp.html',1,'']]],
+  ['net',['net',['../namespaceircChannel_1_1net.html',1,'ircChannel']]]
 ];

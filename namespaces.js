@@ -4,5 +4,5 @@ var namespaces =
     [ "Config", "namespaceConfig.html", null ],
     [ "fileChannel", "namespacefileChannel.html", null ],
     [ "Hub", "namespaceHub.html", null ],
-    [ "ircChannel", "namespaceircChannel.html", null ]
+    [ "ircChannel", "namespaceircChannel.html", "namespaceircChannel" ]
 ];

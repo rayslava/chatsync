@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['sendmessage',['sendMessage',['../classircChannel_1_1IrcChannel.html#ae76f069ffef1ac326d467263592e9044',1,'ircChannel::IrcChannel']]],
-  ['startpolling',['startPolling',['../classChanneling_1_1Channel.html#a01fc348487170cd91251c4900ee5e0cd',1,'Channeling::Channel']]],
-  ['stoppolling',['stopPolling',['../classChanneling_1_1Channel.html#a0f6020dd45db786436ff43a1598ad2f1',1,'Channeling::Channel']]]
+  ['type',['type',['../classChanneling_1_1Channel.html#af128e17f50cd667e92d773dad2a4cc76',1,'Channeling::Channel::type()'],['../classfileChannel_1_1FileChannel.html#a79129bb7c3904a52e5bfc9b47adab088',1,'fileChannel::FileChannel::type()'],['../classircChannel_1_1IrcChannel.html#a2530eb03c39a61abae7ae9a6a990909a',1,'ircChannel::IrcChannel::type()']]]
 ];
