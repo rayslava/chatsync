@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Chatsync
-   &#160;<span id="projectnumber">1ba333dec3db446440dfcf76dbd328d96e239a20</span>
+   &#160;<span id="projectnumber">f36d59dda5ee8ab2e5bc0cae0126896e8e06aa60</span>
    </div>
   </td>
  </tr>
@@ -125,8 +125,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a8be8d16bf0348819033a27e903ab8735"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9ef2558ada3af38ceb0cdfd1ddc461b8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHub_1_1Hub.html#a9ef2558ada3af38ceb0cdfd1ddc461b8">addChannel</a> (<a class="el" href="classChanneling_1_1Channel.html">Channeling::Channel</a> *const)</td></tr>
 <tr class="separator:a9ef2558ada3af38ceb0cdfd1ddc461b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad0298b773e882115a6ddd83fe6d0d6de"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHub_1_1Hub.html#ad0298b773e882115a6ddd83fe6d0d6de">newMessage</a> (std::string const &amp;msg)</td></tr>
-<tr class="separator:ad0298b773e882115a6ddd83fe6d0d6de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83fe3e1a958ab04a2128d5a2c4547f68"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHub_1_1Hub.html#a83fe3e1a958ab04a2128d5a2c4547f68">newMessage</a> (const std::string &amp;&amp;msg)</td></tr>
+<tr class="separator:a83fe3e1a958ab04a2128d5a2c4547f68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a30dec05330203ef21679459cce47dcc8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHub_1_1Hub.html#a30dec05330203ef21679459cce47dcc8">activate</a> ()</td></tr>
 <tr class="separator:a30dec05330203ef21679459cce47dcc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a843709fca28e53907951a4c7783af029"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHub_1_1Hub.html#a843709fca28e53907951a4c7783af029">deactivate</a> ()</td></tr>
@@ -142,8 +142,6 @@ Private Member Functions</h2></td></tr>
 <tr class="separator:a2befa0c1af7bbe6dccf4ce6f804cf1c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa6c6d9e9c6a40dd010fe1136d9b69357"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHub_1_1Hub.html#aa6c6d9e9c6a40dd010fe1136d9b69357">popMessage</a> ()</td></tr>
 <tr class="separator:aa6c6d9e9c6a40dd010fe1136d9b69357"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaa87418c4fa009df4ce01d8bfa0dacea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHub_1_1Hub.html#aaa87418c4fa009df4ce01d8bfa0dacea">pushMessage</a> (const std::string &amp;item)</td></tr>
-<tr class="separator:aaa87418c4fa009df4ce01d8bfa0dacea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeafd7e7bf9ff41ba33a6e807a23ff94d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHub_1_1Hub.html#aeafd7e7bf9ff41ba33a6e807a23ff94d">pushMessage</a> (const std::string &amp;&amp;item)</td></tr>
 <tr class="separator:aeafd7e7bf9ff41ba33a6e807a23ff94d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5046d0079801387ada28d27b612efbc0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHub_1_1Hub.html#a5046d0079801387ada28d27b612efbc0">msgLoop</a> ()</td></tr>
@@ -358,14 +356,14 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ad0298b773e882115a6ddd83fe6d0d6de"></a>
+<a class="anchor" id="a83fe3e1a958ab04a2128d5a2c4547f68"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void Hub::Hub::newMessage </td>
           <td>(</td>
-          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramtype">const std::string &amp;&amp;&#160;</td>
           <td class="paramname"><em>msg</em></td><td>)</td>
           <td></td>
         </tr>
@@ -386,30 +384,6 @@ Private Attributes</h2></td></tr>
           <td class="memname">const std::string Hub::Hub::popMessage </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="aaa87418c4fa009df4ce01d8bfa0dacea"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Hub::Hub::pushMessage </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>item</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -625,7 +599,7 @@ Private Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceHub.html">Hub</a></li><li class="navelem"><a class="el" href="classHub_1_1Hub.html">Hub</a></li>
-    <li class="footer">Generated on Tue Jan 27 2015 06:17:13 for Chatsync by
+    <li class="footer">Generated on Tue Jan 27 2015 06:21:47 for Chatsync by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9 </li>
   </ul>
