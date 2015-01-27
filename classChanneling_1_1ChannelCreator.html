@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Chatsync
-   &#160;<span id="projectnumber">2a1fd92ab4748d52298eea2ddaf67b725f30c91f</span>
+   &#160;<span id="projectnumber">1ba333dec3db446440dfcf76dbd328d96e239a20</span>
    </div>
   </td>
  </tr>
@@ -130,8 +130,8 @@ Inheritance diagram for Channeling::ChannelCreator:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aecd4d01c5fa3c8b6069d2a206636ab06"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1ChannelCreator.html#aecd4d01c5fa3c8b6069d2a206636ab06">ChannelCreator</a> (const std::string &amp;classname)</td></tr>
 <tr class="separator:aecd4d01c5fa3c8b6069d2a206636ab06"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a09f81074808e166f86703bf067f785be"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classChanneling_1_1Channel.html">Channel</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1ChannelCreator.html#a09f81074808e166f86703bf067f785be">create</a> (std::string const &amp;name, <a class="el" href="namespaceChanneling.html#a55b8672b8710070db3c834f4d8425378">ChannelDirection</a> const &amp;direction, <a class="el" href="classHub_1_1Hub.html">Hub::Hub</a> *const hub)=0</td></tr>
-<tr class="separator:a09f81074808e166f86703bf067f785be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d84a6e9a45f6c6f1bec6dcd9b76851c"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classChanneling_1_1Channel.html">Channel</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1ChannelCreator.html#a0d84a6e9a45f6c6f1bec6dcd9b76851c">create</a> (<a class="el" href="classHub_1_1Hub.html">Hub::Hub</a> *const hub, const std::string &amp;&amp;config)=0</td></tr>
+<tr class="separator:a0d84a6e9a45f6c6f1bec6dcd9b76851c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="aecd4d01c5fa3c8b6069d2a206636ab06"></a>
@@ -151,7 +151,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a09f81074808e166f86703bf067f785be"></a>
+<a class="anchor" id="a0d84a6e9a45f6c6f1bec6dcd9b76851c"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -161,20 +161,14 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">virtual <a class="el" href="classChanneling_1_1Channel.html">Channel</a>* Channeling::ChannelCreator::create </td>
           <td>(</td>
-          <td class="paramtype">std::string const &amp;&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespaceChanneling.html#a55b8672b8710070db3c834f4d8425378">ChannelDirection</a> const &amp;&#160;</td>
-          <td class="paramname"><em>direction</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype"><a class="el" href="classHub_1_1Hub.html">Hub::Hub</a> *const&#160;</td>
-          <td class="paramname"><em>hub</em>&#160;</td>
+          <td class="paramname"><em>hub</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&amp;&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -189,7 +183,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implemented in <a class="el" href="classChanneling_1_1ChannelCreatorImpl.html#a678eb096b5ce1abd2681d2d5545f1feb">Channeling::ChannelCreatorImpl&lt; T &gt;</a>, <a class="el" href="classChanneling_1_1ChannelCreatorImpl.html#a678eb096b5ce1abd2681d2d5545f1feb">Channeling::ChannelCreatorImpl&lt; ircChannel::IrcChannel &gt;</a>, and <a class="el" href="classChanneling_1_1ChannelCreatorImpl.html#a678eb096b5ce1abd2681d2d5545f1feb">Channeling::ChannelCreatorImpl&lt; fileChannel::FileChannel &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classChanneling_1_1ChannelCreatorImpl.html#aae89ae5a33c03f74c11eee174f606b45">Channeling::ChannelCreatorImpl&lt; T &gt;</a>, <a class="el" href="classChanneling_1_1ChannelCreatorImpl.html#aae89ae5a33c03f74c11eee174f606b45">Channeling::ChannelCreatorImpl&lt; ircChannel::IrcChannel &gt;</a>, and <a class="el" href="classChanneling_1_1ChannelCreatorImpl.html#aae89ae5a33c03f74c11eee174f606b45">Channeling::ChannelCreatorImpl&lt; fileChannel::FileChannel &gt;</a>.</p>
 
 </div>
 </div>
@@ -203,7 +197,7 @@ Public Member Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceChanneling.html">Channeling</a></li><li class="navelem"><a class="el" href="classChanneling_1_1ChannelCreator.html">ChannelCreator</a></li>
-    <li class="footer">Generated on Mon Jan 26 2015 13:29:31 for Chatsync by
+    <li class="footer">Generated on Tue Jan 27 2015 06:17:13 for Chatsync by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9 </li>
   </ul>

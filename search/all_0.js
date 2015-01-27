@@ -2,7 +2,7 @@ var searchData=
 [
   ['_5fchannel',['_channel',['../classircChannel_1_1IrcChannel.html#a5cb40ec3010c67e4180efa045b91dfaf',1,'ircChannel::IrcChannel']]],
   ['_5fcond',['_cond',['../classHub_1_1Hub.html#a2fd921dde24809a7befabab2c2ff7818',1,'Hub::Hub']]],
-  ['_5fconfig',['_config',['../classConfig_1_1ConfigParser.html#a5ff3e2184fd9451895af62870721eae8',1,'Config::ConfigParser']]],
+  ['_5fconfig',['_config',['../classChanneling_1_1Channel.html#a10cfaebb9b38213c6e984a582b831852',1,'Channeling::Channel::_config()'],['../classConfig_1_1ConfigParser.html#a5ff3e2184fd9451895af62870721eae8',1,'Config::ConfigParser::_config()']]],
   ['_5fdirection',['_direction',['../classChanneling_1_1Channel.html#ac64d544a772cb8f6bfe8c9a083440b66',1,'Channeling::Channel']]],
   ['_5ffd',['_fd',['../classChanneling_1_1Channel.html#ab868693b6df85d5bb41cd11ed8399ff9',1,'Channeling::Channel']]],
   ['_5ffile',['_file',['../classfileChannel_1_1FileChannel.html#a7a75f50ad82b510af5ddaaa69088ea96',1,'fileChannel::FileChannel']]],

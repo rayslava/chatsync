@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Chatsync
-   &#160;<span id="projectnumber">2a1fd92ab4748d52298eea2ddaf67b725f30c91f</span>
+   &#160;<span id="projectnumber">1ba333dec3db446440dfcf76dbd328d96e239a20</span>
    </div>
   </td>
  </tr>
@@ -132,12 +132,10 @@ Inheritance diagram for Channeling::Channel:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a28bf7ec4a404f385787c69867cbc7513"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#a28bf7ec4a404f385787c69867cbc7513">Channel</a> (std::string const &amp;<a class="el" href="classChanneling_1_1Channel.html#a0bd3400384ba2801bf17323d576089ef">name</a>, <a class="el" href="namespaceChanneling.html#a55b8672b8710070db3c834f4d8425378">ChannelDirection</a> const &amp;<a class="el" href="classChanneling_1_1Channel.html#a86ab3881297d545bf44fceccbbbe6d01">direction</a>, <a class="el" href="classHub_1_1Hub.html">Hub::Hub</a> *const hub)</td></tr>
-<tr class="separator:a28bf7ec4a404f385787c69867cbc7513"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3cc3c0cc3cae292f9e3925f01db19fe"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#ac3cc3c0cc3cae292f9e3925f01db19fe">Channel</a> (<a class="el" href="classHub_1_1Hub.html">Hub::Hub</a> *const hub, const std::string &amp;&amp;config)</td></tr>
+<tr class="separator:ac3cc3c0cc3cae292f9e3925f01db19fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af68955db4e1b5b0d33e0e91b63f370a0"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#af68955db4e1b5b0d33e0e91b63f370a0">~Channel</a> ()</td></tr>
 <tr class="separator:af68955db4e1b5b0d33e0e91b63f370a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a175fa19261c63437acb5aa43de602bb7"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#a175fa19261c63437acb5aa43de602bb7">parseConfig</a> (std::vector&lt; std::string &gt; const &amp;lines)</td></tr>
-<tr class="separator:a175fa19261c63437acb5aa43de602bb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0bd3400384ba2801bf17323d576089ef"><td class="memItemLeft" align="right" valign="top">virtual std::string const &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#a0bd3400384ba2801bf17323d576089ef">name</a> () const </td></tr>
 <tr class="separator:a0bd3400384ba2801bf17323d576089ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af128e17f50cd667e92d773dad2a4cc76"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#af128e17f50cd667e92d773dad2a4cc76">type</a> () const =0</td></tr>
@@ -160,6 +158,8 @@ Protected Member Functions</h2></td></tr>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:ab868693b6df85d5bb41cd11ed8399ff9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#ab868693b6df85d5bb41cd11ed8399ff9">_fd</a></td></tr>
 <tr class="separator:ab868693b6df85d5bb41cd11ed8399ff9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10cfaebb9b38213c6e984a582b831852"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classConfig_1_1ConfigParser.html">Config::ConfigParser</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#a10cfaebb9b38213c6e984a582b831852">_config</a></td></tr>
+<tr class="separator:a10cfaebb9b38213c6e984a582b831852"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac6ea082f1aefb4a2efd07ed1343f39ca"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#ac6ea082f1aefb4a2efd07ed1343f39ca">_name</a></td></tr>
 <tr class="separator:ac6ea082f1aefb4a2efd07ed1343f39ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac64d544a772cb8f6bfe8c9a083440b66"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespaceChanneling.html#a55b8672b8710070db3c834f4d8425378">ChannelDirection</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#ac64d544a772cb8f6bfe8c9a083440b66">_direction</a></td></tr>
@@ -189,27 +189,21 @@ Friends</h2></td></tr>
 <p>The deriving class <em>must</em> implement: void parse(std::string&amp;) const; &mdash; for data input in case of output channel void <a class="el" href="classChanneling_1_1Channel.html#ac8fd35321039116937e7210e55ab8609">activate()</a>; &mdash; to implement specific activities for channel work starting</p>
 <p>Input channel should send message to hub-&gt;newMessage() </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a28bf7ec4a404f385787c69867cbc7513"></a>
+<a class="anchor" id="ac3cc3c0cc3cae292f9e3925f01db19fe"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">Channeling::Channel::Channel </td>
           <td>(</td>
-          <td class="paramtype">std::string const &amp;&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespaceChanneling.html#a55b8672b8710070db3c834f4d8425378">ChannelDirection</a> const &amp;&#160;</td>
-          <td class="paramname"><em>direction</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype"><a class="el" href="classHub_1_1Hub.html">Hub::Hub</a> *const&#160;</td>
-          <td class="paramname"><em>hub</em>&#160;</td>
+          <td class="paramname"><em>hub</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&amp;&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -220,9 +214,8 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">name</td><td>A human-readable channel name in config file </td></tr>
-    <tr><td class="paramname">direction</td><td><a class="el" href="classChanneling_1_1Channel.html">Channel</a> transmission direction </td></tr>
     <tr><td class="paramname">hub</td><td><a class="el" href="namespaceHub.html">Hub</a> to add channel to </td></tr>
+    <tr><td class="paramname">config</td><td>configuration data or path (see <a class="el" href="config_8hpp.html">config.hpp</a> for details) </td></tr>
   </table>
   </dd>
 </dl>
@@ -375,46 +368,7 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classircChannel_1_1IrcChannel.html#a2694ae339377b27f1104cb04f28b0e73">ircChannel::IrcChannel</a>, and <a class="el" href="classfileChannel_1_1FileChannel.html#a7ec0973749fb9e6daba6ae2dd265d653">fileChannel::FileChannel</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a175fa19261c63437acb5aa43de602bb7"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Channeling::Channel::parseConfig </td>
-          <td>(</td>
-          <td class="paramtype">std::vector&lt; std::string &gt; const &amp;&#160;</td>
-          <td class="paramname"><em>lines</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Parses a configuration for this certain channel</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">lines</td><td>Part of config file to parse for this channel </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>if config is empty </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Reimplemented in <a class="el" href="classircChannel_1_1IrcChannel.html#aefe7e01957b01543acd97e9ab5fad107">ircChannel::IrcChannel</a>.</p>
+<p>Implemented in <a class="el" href="classfileChannel_1_1FileChannel.html#a7ec0973749fb9e6daba6ae2dd265d653">fileChannel::FileChannel</a>, and <a class="el" href="classircChannel_1_1IrcChannel.html#a2694ae339377b27f1104cb04f28b0e73">ircChannel::IrcChannel</a>.</p>
 
 </div>
 </div>
@@ -571,6 +525,27 @@ Friends</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Field Documentation</h2>
+<a class="anchor" id="a10cfaebb9b38213c6e984a582b831852"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="classConfig_1_1ConfigParser.html">Config::ConfigParser</a> Channeling::Channel::_config</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Configuration storage </p>
+
+</div>
+</div>
 <a class="anchor" id="ac64d544a772cb8f6bfe8c9a083440b66"></a>
 <div class="memitem">
 <div class="memproto">
@@ -707,7 +682,7 @@ Friends</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceChanneling.html">Channeling</a></li><li class="navelem"><a class="el" href="classChanneling_1_1Channel.html">Channel</a></li>
-    <li class="footer">Generated on Mon Jan 26 2015 13:29:31 for Chatsync by
+    <li class="footer">Generated on Tue Jan 27 2015 06:17:13 for Chatsync by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9 </li>
   </ul>

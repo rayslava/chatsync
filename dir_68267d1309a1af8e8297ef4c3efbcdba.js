@@ -1,7 +1,13 @@
 var dir_68267d1309a1af8e8297ef4c3efbcdba =
 [
     [ "channel.cpp", "channel_8cpp.html", "channel_8cpp" ],
-    [ "channel.hpp", "channel_8hpp.html", "channel_8hpp" ],
+    [ "channel.hpp", "channel_8hpp.html", [
+      [ "activate_error", "classChanneling_1_1activate__error.html", "classChanneling_1_1activate__error" ],
+      [ "Channel", "classChanneling_1_1Channel.html", "classChanneling_1_1Channel" ],
+      [ "ChannelCreator", "classChanneling_1_1ChannelCreator.html", "classChanneling_1_1ChannelCreator" ],
+      [ "ChannelCreatorImpl", "classChanneling_1_1ChannelCreatorImpl.html", "classChanneling_1_1ChannelCreatorImpl" ],
+      [ "ChannelFactory", "classChanneling_1_1ChannelFactory.html", "classChanneling_1_1ChannelFactory" ]
+    ] ],
     [ "config.cpp", "config_8cpp.html", null ],
     [ "config.hpp", "config_8hpp.html", "config_8hpp" ],
     [ "filechannel.cpp", "filechannel_8cpp.html", null ],
