@@ -15,7 +15,7 @@ namespace ircChannel {
 
     void IrcChannel::activate() {
         if (_direction == Channeling::ChannelDirection::Input) {
-            _fd = join();
+            _fd = connect();
             startPolling();
         };
     }
@@ -30,6 +30,8 @@ namespace ircChannel {
     }
 
     /* OS interaction code begins here */
+    namespace net {
+	extern "C" {
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -40,42 +42,43 @@ namespace ircChannel {
 #include <netdb.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <fcntl.h>           /* Definition of AT_* constants */
+#include <fcntl.h>
 #include <sys/stat.h>
 #include <unistd.h>
 #include <sys/ioctl.h>
 #include <stropts.h>
-
-    int IrcChannel::join() {
+	}
+    }
+    int IrcChannel::connect() {
 
 	int sockfd, n;
-	struct sockaddr_in serv_addr;
-	struct hostent *server;
+	struct net::sockaddr_in serv_addr;
+	struct net::hostent *server;
 
 	char buffer[256];
 
 	std::cout << "Joining" << _channel << std::endl;
-	sockfd = socket(AF_INET, SOCK_STREAM, 0);
+	sockfd = net::socket(AF_INET, net::SOCK_STREAM, 0);
 	if (sockfd < 0)
 	    throw Channeling::activate_error(ERR_SOCK_CREATE);
-	server = gethostbyname(_server.c_str());
+	server = net::gethostbyname(_server.c_str());
 
 	if (server == NULL)
 	    throw Channeling::activate_error(ERR_HOST_NOT_FOUND);
 
-	bzero((char *) &serv_addr, sizeof(serv_addr));
+	net::bzero((char *) &serv_addr, sizeof(serv_addr));
 	serv_addr.sin_family = AF_INET;
-	bcopy((char *)server->h_addr,
+	net::bcopy((char *)server->h_addr,
 	      (char *)&serv_addr.sin_addr.s_addr,
 	      server->h_length);
-	serv_addr.sin_port = htons(_port);
-	if (connect(sockfd,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0)
+	serv_addr.sin_port = net::htons(_port);
+	if (net::connect(sockfd,(struct net::sockaddr *) &serv_addr,sizeof(serv_addr)) < 0)
 	    throw Channeling::activate_error(ERR_CONNECTION);
 	return sockfd;
     }
 
     int IrcChannel::sendMessage(const std::string &msg) {
-	const int n = write(_fd,msg.c_str(),msg.length());
+	const int n = net::write(_fd,msg.c_str(),msg.length());
 
 	if (n < 0)
 	    throw std::runtime_error(ERR_SOCK_WRITE);
@@ -85,7 +88,7 @@ namespace ircChannel {
 
     int IrcChannel::disconnect() {
 	if (_fd > 0)
-	    close(_fd);
+	    net::close(_fd);
 	return 0;
     }
 

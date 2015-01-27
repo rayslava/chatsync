@@ -16,7 +16,7 @@ namespace ircChannel {
     const uint32_t _port;                            /**< Connection port */
     const std::string _channel;                      /**< Channel name (starting with #) */
 
-	int join();
+	int connect();
 	int disconnect();
 	int sendMessage(const std::string& msg);
 	void activate();

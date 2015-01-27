@@ -5,8 +5,12 @@
 int main()
 {
     const auto hub = new Hub::Hub("Hubeg");
-    const auto ch = Channeling::ChannelFactory::create("irc", hub, "data://"); //, "irc.freenode.net", 6667, "chatsync");
+    const auto ch = Channeling::ChannelFactory::create("irc", hub, "data://direction=input\nname=irc\nserver=irc.freenode.net\nport=6667\nchannel=#chatsync");
     std::cout << ch->name() << std::endl;
+    Channeling::ChannelFactory::create("file", hub, "data://direction=output\nname=logfile");
+    hub->activate();
+    std::this_thread::sleep_for(std::chrono::milliseconds (150));
+    hub->deactivate();
     delete hub;
     return 0;
 }
