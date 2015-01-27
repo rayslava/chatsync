@@ -59,7 +59,7 @@ namespace Config {
 	try {
 	    return _config->at(option);
 	} catch (std::out_of_range) {
-	    throw option_error(ERR_NO_OPTION);
+	    throw option_error(ERR_NO_OPTION + ": " + option);
 	}
     }
 }

@@ -24,17 +24,18 @@ TEST(FileChannel, name)
 
     delete hub;
 }
-/*
+
 TEST(FileChannel, files)
 {
     const auto hub = new Hub::Hub ("Hub");
 
     char buffer[sizeof(testLine)];
-    auto ich = new fileChannel::FileChannel("file", Channeling::ChannelDirection::Input, hub);
-    new fileChannel::FileChannel("outfile", Channeling::ChannelDirection::Output, hub);
+    const auto ich = Channeling::ChannelFactory::create("file", hub, "data://direction=input\nname=infile");
+
+    Channeling::ChannelFactory::create("file", hub, "data://direction=output\nname=outfile");
 
     // Check that at least constructor works
-    ASSERT_EQ(ich->name(), "file");
+    ASSERT_EQ(ich->name(), "infile");
     ASSERT_EQ(ich->direction(), Channeling::ChannelDirection::Input);
 
     // Open input pipe from file channel
@@ -106,9 +107,9 @@ TEST(IrcChannel, sockerr)
 {
     const auto hub = new Hub::Hub ("Hub");
 
-    auto ch = Channeling::ChannelFactory::create("irc", "ircin", Channeling::ChannelDirection::Input, hub);
-    //    auto ch = new ircChannel::IrcChannel("ircin", Channeling::ChannelDirection::Input, hub, "127.0.0.1", port, "test");
-    Channeling::ChannelFactory::create("file", "outfile", Channeling::ChannelDirection::Output, hub);
+    auto ch = Channeling::ChannelFactory::create("irc", hub, "data://direction=input\nname=ircin\nserver=127.0.0.1\nport=0\nchannel=test");
+    Channeling::ChannelFactory::create("file", hub, "data://direction=output\nname=outfile");
+
     // Wait for ERRSOCK on joining the closed socket
     EXPECT_THROW({
         hub->activate();
@@ -123,9 +124,8 @@ TEST(IrcChannel, socket)
 
     const auto server = std::make_unique<std::thread>(std::thread(&sockListen));
     std::this_thread::sleep_for( std::chrono::milliseconds (50) );  // Give time to open socket 
-
-    auto ich = new ircChannel::IrcChannel("ircin", Channeling::ChannelDirection::Input, hub, "127.0.0.1", port, "test");
-    new fileChannel::FileChannel("outfile", Channeling::ChannelDirection::Output, hub);
+    auto ich = Channeling::ChannelFactory::create("irc", hub, "data://direction=input\nname=ircin\nserver=127.0.0.1\nport=" + std::to_string(port) + "\nchannel=test");
+    Channeling::ChannelFactory::create("file", hub, "data://direction=output\nname=outfile");
 
     hub->activate();
     std::this_thread::sleep_for( std::chrono::milliseconds (50) );
@@ -141,14 +141,3 @@ TEST(IrcChannel, socket)
     close(fd);
     ASSERT_STREQ(buffer, testLine);
 }
-
-TEST(Channel, factory)
-{
-  const auto hub = new Hub::Hub ("Hub");
-
-  const auto channel = Channeling::ChannelFactory::create ("irc", "ircin", Channeling::ChannelDirection::Input, hub);
-    
-    std::cout << channel->name() << std::endl;
-    
-}
-*/

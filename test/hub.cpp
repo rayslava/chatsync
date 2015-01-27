@@ -11,15 +11,16 @@ TEST(hub, init)
     hub = new Hub::Hub(hubName);
     delete hub;
 }
-/*
+
 TEST(hub, name)
 {
     hub = new Hub::Hub(hubName);
 
     ASSERT_EQ(hub->name(), hubName);
-    auto inch = new fileChannel::FileChannel("file", Channeling::ChannelDirection::Input, hub);
+    const auto inch = Channeling::ChannelFactory::create("file", hub, "data://direction=input\nname=file\n");    
+
     EXPECT_THROW({hub->activate();}, std::logic_error);
-    Channeling::Channel *ouch = new ircChannel::IrcChannel("channelout", Channeling::ChannelDirection::Output, hub); //, "irc.freenode.net", 6667, "chatsync");
+    auto ouch = Channeling::ChannelFactory::create("irc", hub, "data://direction=output\nname=ircin\nserver=127.0.0.1\nport=0\nchannel=test");
 
     EXPECT_THROW({std::string("Test") >> *inch;}, std::logic_error);
     EXPECT_NO_THROW({std::string("Test") >> *ouch;});
@@ -28,4 +29,4 @@ TEST(hub, name)
 
     delete hub;
 }
-*/
+
