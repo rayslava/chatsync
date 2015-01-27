@@ -43,8 +43,8 @@ namespace Hub {
         }
     }
 
-    void Hub::newMessage(std::string const &msg) {
-      pushMessage(msg);
+    void Hub::newMessage(const std::string&& msg) {
+      pushMessage(std::move(msg));
     }
 
     const std::string Hub::popMessage() {
@@ -55,13 +55,6 @@ namespace Hub {
        auto item = _messages.front();
        _messages.pop();
        return item;
-    }
-
-    void Hub::pushMessage(const std::string& item) {
-	std::unique_lock<std::mutex> mlock(_mutex);
-	_messages.push(item);
-	mlock.unlock();
-	_cond.notify_one();
     }
 
     void Hub::pushMessage(const std::string&& item) {
@@ -94,7 +87,7 @@ namespace Hub {
 	if (!_loopRunning)
 	    return;
 	_loopRunning = false;
-	pushMessage(MSG_EXITING);
+	pushMessage(std::move(MSG_EXITING));
 	_msgLoop->join();
     }
 }

@@ -47,7 +47,6 @@ namespace Hub {
         */
 
 	const std::string popMessage();
-	void pushMessage(const std::string& item);
         void pushMessage(const std::string&& item);
 
 	/**
@@ -68,7 +67,7 @@ namespace Hub {
         /**
         * New message receiving callback
         */
-        void newMessage(std::string const& msg);
+        void newMessage(const std::string&& msg);
 
 	/**
 	* Start message loop
