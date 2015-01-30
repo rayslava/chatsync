@@ -9,7 +9,7 @@ int main()
     std::cout << ch->name() << std::endl;
     Channeling::ChannelFactory::create("file", hub, "data://direction=output\nname=logfile");
     hub->activate();
-    std::this_thread::sleep_for(std::chrono::milliseconds (150));
+    std::this_thread::sleep_for(std::chrono::milliseconds (10000));
     hub->deactivate();
     delete hub;
     return 0;

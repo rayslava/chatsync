@@ -17,6 +17,7 @@ namespace ircChannel {
         if (_direction == Channeling::ChannelDirection::Input) {
             _fd = connect();
             startPolling();
+	    registerConnection();
         };
     }
 
@@ -29,6 +30,24 @@ namespace ircChannel {
         std::cerr << "[DEBUG] Parsing line " << l << " inside " << _name << std::endl;
     }
 
+    int IrcChannel::registerConnection() {
+	const std::string nick = "chatsyncbot";
+	const std::string mode = "mode";
+	const auto passline = "PASS *\r\n";
+	const auto nickline = "NICK " + nick + "\r\n";
+	const auto userline = "USER " + nick + " " + mode + " * :" + nick + " " + nick + "\r\n";
+	const auto joinline = "JOIN " + _channel + "  \r\n";
+
+	sendMessage(passline);
+	sendMessage(nickline);
+	sendMessage(userline);
+	std::this_thread::sleep_for(std::chrono::milliseconds (500));
+
+	sendMessage(joinline);
+	std::this_thread::sleep_for(std::chrono::milliseconds (500));
+	sendMessage("PRIVMSG #chatsync :Hello there\r\n");
+	return 0;
+    }
     /* OS interaction code begins here */
     namespace net {
 	extern "C" {

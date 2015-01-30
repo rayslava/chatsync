@@ -12,11 +12,20 @@ namespace ircChannel {
     */
     class IrcChannel: public Channeling::Channel {
 
-    const std::string _server;                       /**< Server address */
-    const uint32_t _port;                            /**< Connection port */
-    const std::string _channel;                      /**< Channel name (starting with #) */
-
+	const std::string _server;                       /**< Server address */
+	const uint32_t _port;                            /**< Connection port */
+	const std::string _channel;                      /**< Channel name (starting with #) */
+	/**
+	 * Makes a connection to socket
+	 *
+	 * @retval socket fd
+	 */
 	int connect();
+
+	/**
+	 * Sends PASS, NICK and USER commands to register irc connection
+	 */
+	int registerConnection();
 	int disconnect();
 	int sendMessage(const std::string& msg);
 	void activate();
