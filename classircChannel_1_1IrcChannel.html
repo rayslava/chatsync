@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Chatsync
-   &#160;<span id="projectnumber">30f2364b1e75ceda2137a955bdbbcf4c009646a3</span>
+   &#160;<span id="projectnumber">ede2f395b70b8f8f0d0bfc510aa0ee651373699e</span>
    </div>
   </td>
  </tr>
@@ -160,6 +160,8 @@ Protected Member Functions</h2></td></tr>
 Private Member Functions</h2></td></tr>
 <tr class="memitem:a52e2baace598d46bac765f02ebe1b985"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classircChannel_1_1IrcChannel.html#a52e2baace598d46bac765f02ebe1b985">connect</a> ()</td></tr>
 <tr class="separator:a52e2baace598d46bac765f02ebe1b985"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50d2857561905d6b9a03f815614aa1ba"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classircChannel_1_1IrcChannel.html#a50d2857561905d6b9a03f815614aa1ba">registerConnection</a> ()</td></tr>
+<tr class="separator:a50d2857561905d6b9a03f815614aa1ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa67e184b6ccf59acb994c40c3446546b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classircChannel_1_1IrcChannel.html#aa67e184b6ccf59acb994c40c3446546b">disconnect</a> ()</td></tr>
 <tr class="separator:aa67e184b6ccf59acb994c40c3446546b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae76f069ffef1ac326d467263592e9044"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classircChannel_1_1IrcChannel.html#ae76f069ffef1ac326d467263592e9044">sendMessage</a> (const std::string &amp;msg)</td></tr>
@@ -302,6 +304,13 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Makes a connection to socket</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">socket</td><td>fd </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -358,6 +367,30 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 
 <p>Implements <a class="el" href="classChanneling_1_1Channel.html#a209ff085bb7cbe3a47b19f7973fbf7ab">Channeling::Channel</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a50d2857561905d6b9a03f815614aa1ba"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int ircChannel::IrcChannel::registerConnection </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Sends PASS, NICK and USER commands to register irc connection </p>
 
 </div>
 </div>
@@ -510,7 +543,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceircChannel.html">ircChannel</a></li><li class="navelem"><a class="el" href="classircChannel_1_1IrcChannel.html">IrcChannel</a></li>
-    <li class="footer">Generated on Tue Jan 27 2015 08:14:09 for Chatsync by
+    <li class="footer">Generated on Fri Jan 30 2015 13:19:10 for Chatsync by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9 </li>
   </ul>
