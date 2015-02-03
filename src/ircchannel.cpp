@@ -31,11 +31,14 @@ namespace ircChannel {
     }
 
     int IrcChannel::registerConnection() {
-	const std::string nick = "chatsyncbot";
-	const std::string mode = "mode";
+	const std::string nick = _config.get("nickname", "chatsyncbot");
+	const std::string mode = _config.get("mode", "*");
+	const std::string hostname = _config.get("hostname", "chatsynchost");
+	const std::string servername = _config.get("servername", "chatsyncserver");
+	const std::string realname = _config.get("realname", "Chat Sync");	
 	const auto passline = "PASS *\r\n";
 	const auto nickline = "NICK " + nick + "\r\n";
-	const auto userline = "USER " + nick + " " + mode + " * :" + nick + " " + nick + "\r\n";
+	const auto userline = "USER " + nick + " " + hostname + " " + servername + ":"  + realname + "\r\n";
 	const auto joinline = "JOIN " + _channel + "  \r\n";
 
 	sendMessage(passline);

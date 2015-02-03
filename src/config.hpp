@@ -130,5 +130,14 @@ namespace Config {
 	 * @throws option_error if no option found in storage
 	 */
 	const ConfigOption operator[] (const std::string&& option) const;
+
+      	/**
+	 * Get option from storage or return default value
+	 *
+	 * @param option Option name to request
+	 * @param defaultValue Default value to return if no value found in map
+	 */
+	const ConfigOption get(const std::string&& option, const ConfigOption&& defaultValue) const;
+
     };
 }

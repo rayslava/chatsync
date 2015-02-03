@@ -62,4 +62,12 @@ namespace Config {
 	    throw option_error(ERR_NO_OPTION + ": " + option);
 	}
     }
+
+    const ConfigOption ConfigParser::get(const std::string&& option, const ConfigOption&& defaultValue) const {
+	try {
+	    return _config->at(option);
+	} catch (std::out_of_range) {
+	    return defaultValue;
+	}
+    }
 }
