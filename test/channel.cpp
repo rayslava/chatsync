@@ -124,7 +124,7 @@ TEST(IrcChannel, socket)
 
     const auto server = std::make_unique<std::thread>(std::thread(&sockListen));
     std::this_thread::sleep_for( std::chrono::milliseconds (50) );  // Give time to open socket 
-    auto ich = Channeling::ChannelFactory::create("irc", hub, "data://direction=input\nname=ircin\nserver=127.0.0.1\nport=" + std::to_string(port) + "\nchannel=test");
+    Channeling::ChannelFactory::create("irc", hub, "data://direction=input\nname=ircin\nserver=127.0.0.1\nport=" + std::to_string(port) + "\nchannel=test");
     Channeling::ChannelFactory::create("file", hub, "data://direction=output\nname=outfile");
 
     hub->activate();

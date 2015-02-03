@@ -12,3 +12,17 @@ TEST(ToxChannel, name)
 
     delete hub;
 }
+
+TEST(ToxChannel, running)
+{
+    const auto hub = new Hub::Hub ("Hub");
+    Channeling::ChannelFactory::create("tox", hub, "data://direction=input\nname=tox\n");
+    Channeling::ChannelFactory::create("file", hub, "data://direction=output\nname=outfile");
+
+    hub->activate();
+    std::this_thread::sleep_for( std::chrono::milliseconds (50) );
+    hub->deactivate();
+
+    delete hub;
+}
+
