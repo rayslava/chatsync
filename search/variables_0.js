@@ -18,5 +18,6 @@ var searchData=
   ['_5fport',['_port',['../classircChannel_1_1IrcChannel.html#ab68f31d628fae4ad985c24a3cc3ee05c',1,'ircChannel::IrcChannel']]],
   ['_5fserver',['_server',['../classircChannel_1_1IrcChannel.html#afded0c90bc90f3bdae8f73fc64aaac27',1,'ircChannel::IrcChannel']]],
   ['_5fthread',['_thread',['../classChanneling_1_1Channel.html#a2a3dccef74972f2946c188f6599049d0',1,'Channeling::Channel']]],
+  ['_5ftox',['_tox',['../classtoxChannel_1_1ToxChannel.html#a21f37a11eddffd62371e36b9e4445eed',1,'toxChannel::ToxChannel']]],
   ['_5fvalue',['_value',['../classConfig_1_1ConfigOption.html#a169fcc25c331d2d40af165051d8997f4',1,'Config::ConfigOption']]]
 ];

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['filechannel',['FileChannel',['../classfileChannel_1_1FileChannel.html#a71bce4fcf35aa6fc8e575ef27a371a8f',1,'fileChannel::FileChannel']]]
+  ['filechannel',['FileChannel',['../classfileChannel_1_1FileChannel.html#a71bce4fcf35aa6fc8e575ef27a371a8f',1,'fileChannel::FileChannel']]],
+  ['friendrequestcallback',['friendRequestCallback',['../classtoxChannel_1_1ToxChannel.html#a4e1cd51a83f6c67fa1e2d5626181560b',1,'toxChannel::ToxChannel']]]
 ];

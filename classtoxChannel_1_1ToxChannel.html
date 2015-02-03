@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Chatsync
-   &#160;<span id="projectnumber">1e0c447114dcf2117ad34e300cf339fc038da98b</span>
+   &#160;<span id="projectnumber">db6b9b36ccaf5a284bfc29938e191a7726af35c1</span>
    </div>
   </td>
  </tr>
@@ -110,6 +110,8 @@ $(document).ready(function(){initNavTree('classtoxChannel_1_1ToxChannel.html',''
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-static-methods">Static Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="#pri-static-attribs">Static Private Attributes</a>  </div>
   <div class="headertitle">
 <div class="title">toxChannel::ToxChannel Class Reference</div>  </div>
@@ -157,8 +159,22 @@ Protected Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
+<tr class="memitem:afbc1e1b17222b1af6abe9d0ac675a8fa"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtoxChannel_1_1ToxChannel.html#afbc1e1b17222b1af6abe9d0ac675a8fa">toxInit</a> ()</td></tr>
+<tr class="separator:afbc1e1b17222b1af6abe9d0ac675a8fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a533e88febac47692a8280258f58e9c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtoxChannel_1_1ToxChannel.html#a1a533e88febac47692a8280258f58e9c">activate</a> ()</td></tr>
 <tr class="separator:a1a533e88febac47692a8280258f58e9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-methods"></a>
+Static Private Member Functions</h2></td></tr>
+<tr class="memitem:a4e1cd51a83f6c67fa1e2d5626181560b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtoxChannel_1_1ToxChannel.html#a4e1cd51a83f6c67fa1e2d5626181560b">friendRequestCallback</a> (Tox *tox, const uint8_t *public_key, const uint8_t *data, uint16_t length, void *userdata)</td></tr>
+<tr class="separator:a4e1cd51a83f6c67fa1e2d5626181560b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae46fd1c3695aac40bb9e67ac4f39b043"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtoxChannel_1_1ToxChannel.html#ae46fd1c3695aac40bb9e67ac4f39b043">messageCallback</a> (Tox *tox, int32_t friendnumber, const uint8_t *message, uint16_t length, void *userdata)</td></tr>
+<tr class="separator:ae46fd1c3695aac40bb9e67ac4f39b043"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a21f37a11eddffd62371e36b9e4445eed"><td class="memItemLeft" align="right" valign="top">Tox *const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtoxChannel_1_1ToxChannel.html#a21f37a11eddffd62371e36b9e4445eed">_tox</a></td></tr>
+<tr class="separator:a21f37a11eddffd62371e36b9e4445eed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
 Static Private Attributes</h2></td></tr>
@@ -213,6 +229,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>TODO: make options handling </p>
 
 </div>
 </div>
@@ -265,6 +282,110 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a4e1cd51a83f6c67fa1e2d5626181560b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void toxChannel::ToxChannel::friendRequestCallback </td>
+          <td>(</td>
+          <td class="paramtype">Tox *&#160;</td>
+          <td class="paramname"><em>tox</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>public_key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>userdata</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ae46fd1c3695aac40bb9e67ac4f39b043"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void toxChannel::ToxChannel::messageCallback </td>
+          <td>(</td>
+          <td class="paramtype">Tox *&#160;</td>
+          <td class="paramname"><em>tox</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname"><em>friendnumber</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>message</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>userdata</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a8bc4e5435dc3cbfa5dd8e6a3c7467b41"></a>
 <div class="memitem">
 <div class="memproto">
@@ -295,6 +416,29 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 
 <p>Implements <a class="el" href="classChanneling_1_1Channel.html#a209ff085bb7cbe3a47b19f7973fbf7ab">Channeling::Channel</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="afbc1e1b17222b1af6abe9d0ac675a8fa"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int toxChannel::ToxChannel::toxInit </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -330,6 +474,27 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Field Documentation</h2>
+<a class="anchor" id="a21f37a11eddffd62371e36b9e4445eed"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Tox* const toxChannel::ToxChannel::_tox</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Main tox structure </p>
+
+</div>
+</div>
 <a class="anchor" id="a85592fd76db06e78483042076d9f6ac3"></a>
 <div class="memitem">
 <div class="memproto">
@@ -360,7 +525,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacetoxChannel.html">toxChannel</a></li><li class="navelem"><a class="el" href="classtoxChannel_1_1ToxChannel.html">ToxChannel</a></li>
-    <li class="footer">Generated on Tue Feb 3 2015 09:39:11 for Chatsync by
+    <li class="footer">Generated on Tue Feb 3 2015 13:24:15 for Chatsync by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9 </li>
   </ul>
