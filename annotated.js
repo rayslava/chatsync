@@ -4,5 +4,6 @@ var annotated =
     [ "Config", "namespaceConfig.html", "namespaceConfig" ],
     [ "fileChannel", "namespacefileChannel.html", "namespacefileChannel" ],
     [ "Hub", "namespaceHub.html", "namespaceHub" ],
-    [ "ircChannel", "namespaceircChannel.html", "namespaceircChannel" ]
+    [ "ircChannel", "namespaceircChannel.html", "namespaceircChannel" ],
+    [ "toxChannel", "namespacetoxChannel.html", "namespacetoxChannel" ]
 ];

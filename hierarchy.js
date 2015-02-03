@@ -2,11 +2,13 @@ var hierarchy =
 [
     [ "Channeling::Channel", "classChanneling_1_1Channel.html", [
       [ "fileChannel::FileChannel", "classfileChannel_1_1FileChannel.html", null ],
-      [ "ircChannel::IrcChannel", "classircChannel_1_1IrcChannel.html", null ]
+      [ "ircChannel::IrcChannel", "classircChannel_1_1IrcChannel.html", null ],
+      [ "toxChannel::ToxChannel", "classtoxChannel_1_1ToxChannel.html", null ]
     ] ],
     [ "Channeling::ChannelCreator", "classChanneling_1_1ChannelCreator.html", [
       [ "Channeling::ChannelCreatorImpl< fileChannel::FileChannel >", "classChanneling_1_1ChannelCreatorImpl.html", null ],
       [ "Channeling::ChannelCreatorImpl< ircChannel::IrcChannel >", "classChanneling_1_1ChannelCreatorImpl.html", null ],
+      [ "Channeling::ChannelCreatorImpl< toxChannel::ToxChannel >", "classChanneling_1_1ChannelCreatorImpl.html", null ],
       [ "Channeling::ChannelCreatorImpl< T >", "classChanneling_1_1ChannelCreatorImpl.html", null ]
     ] ],
     [ "Channeling::ChannelFactory", "classChanneling_1_1ChannelFactory.html", null ],
