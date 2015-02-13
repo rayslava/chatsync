@@ -11,5 +11,6 @@ var searchData=
   ['err_5fsock_5fcreate',['ERR_SOCK_CREATE',['../messages_8hpp.html#ae48c9bc570268ec367049d7d1e5da490',1,'messages.hpp']]],
   ['err_5fsock_5fread',['ERR_SOCK_READ',['../messages_8hpp.html#a85049fbf8e6e580042870c07a2c40818',1,'messages.hpp']]],
   ['err_5fsock_5fwrite',['ERR_SOCK_WRITE',['../messages_8hpp.html#adc30415559809cfcf3959d4c48689920',1,'messages.hpp']]],
+  ['err_5ftox_5finit',['ERR_TOX_INIT',['../messages_8hpp.html#a20de4a83a494f951683471d4c4c4a837',1,'messages.hpp']]],
   ['err_5fwrong_5fdir',['ERR_WRONG_DIR',['../messages_8hpp.html#aab5357e6547fd47625853795b3ea7737',1,'messages.hpp']]]
 ];

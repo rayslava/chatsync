@@ -22,6 +22,6 @@ var dir_68267d1309a1af8e8297ef4c3efbcdba =
     ] ],
     [ "main.cpp", "main_8cpp.html", "main_8cpp" ],
     [ "messages.hpp", "messages_8hpp.html", "messages_8hpp" ],
-    [ "toxchannel.cpp", "toxchannel_8cpp.html", null ],
+    [ "toxchannel.cpp", "toxchannel_8cpp.html", "toxchannel_8cpp" ],
     [ "toxchannel.hpp", "toxchannel_8hpp.html", "toxchannel_8hpp" ]
 ];

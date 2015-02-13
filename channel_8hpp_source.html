@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Chatsync
-   &#160;<span id="projectnumber">db6b9b36ccaf5a284bfc29938e191a7726af35c1</span>
+   &#160;<span id="projectnumber">5de15bbf4c07d8caba54e5b9214e44ce78ac32b4</span>
    </div>
   </td>
  </tr>
@@ -124,11 +124,11 @@ $(document).ready(function(){initNavTree('channel_8hpp_source.html','');});
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    };</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
 <div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="classChanneling_1_1Channel.html">   28</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classChanneling_1_1Channel.html">Channel</a> {</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="comment">/* Polling functions */</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="classChanneling_1_1Channel.html#a2a3dccef74972f2946c188f6599049d0">   30</a></span>&#160;    std::unique_ptr&lt;std::thread&gt; <a class="code" href="classChanneling_1_1Channel.html#a2a3dccef74972f2946c188f6599049d0">_thread</a>;       </div>
-<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="classChanneling_1_1Channel.html#a8f74dc1230d920949932171c9b2cd562">   31</a></span>&#160;    std::atomic_bool <a class="code" href="classChanneling_1_1Channel.html#a8f74dc1230d920949932171c9b2cd562">_pipeRunning</a>;              </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classChanneling_1_1Channel.html#a89db92100b0ebdd84017cf8d1ab56b3e">pollThread</a>();                          </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="comment">/* Polling functions */</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="classChanneling_1_1Channel.html#a2a3dccef74972f2946c188f6599049d0">   31</a></span>&#160;    std::unique_ptr&lt;std::thread&gt; <a class="code" href="classChanneling_1_1Channel.html#a2a3dccef74972f2946c188f6599049d0">_thread</a>;       </div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="classChanneling_1_1Channel.html#a8f74dc1230d920949932171c9b2cd562">   32</a></span>&#160;    std::atomic_bool <a class="code" href="classChanneling_1_1Channel.html#a8f74dc1230d920949932171c9b2cd562">_pipeRunning</a>;              </div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classChanneling_1_1Channel.html#a89db92100b0ebdd84017cf8d1ab56b3e">pollThread</a>();                          </div>
 <div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="classChanneling_1_1Channel.html#ab868693b6df85d5bb41cd11ed8399ff9">   36</a></span>&#160;        <span class="keywordtype">int</span> <a class="code" href="classChanneling_1_1Channel.html#ab868693b6df85d5bb41cd11ed8399ff9">_fd</a>;                                    </div>
 <div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="classChanneling_1_1Channel.html#a10cfaebb9b38213c6e984a582b831852">   37</a></span>&#160;    <span class="keyword">const</span> <a class="code" href="classConfig_1_1ConfigParser.html">Config::ConfigParser</a> <a class="code" href="classChanneling_1_1Channel.html#a10cfaebb9b38213c6e984a582b831852">_config</a>;         </div>
 <div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="classChanneling_1_1Channel.html#ac6ea082f1aefb4a2efd07ed1343f39ca">   38</a></span>&#160;        <span class="keyword">const</span> std::string <a class="code" href="classChanneling_1_1Channel.html#ac6ea082f1aefb4a2efd07ed1343f39ca">_name</a>;                    </div>
@@ -190,7 +190,7 @@ $(document).ready(function(){initNavTree('channel_8hpp_source.html','');});
 <div class="ttc" id="classChanneling_1_1Channel_html_a01fc348487170cd91251c4900ee5e0cd"><div class="ttname"><a href="classChanneling_1_1Channel.html#a01fc348487170cd91251c4900ee5e0cd">Channeling::Channel::startPolling</a></div><div class="ttdeci">void startPolling()</div><div class="ttdef"><b>Definition:</b> channel.cpp:34</div></div>
 <div class="ttc" id="classChanneling_1_1Channel_html_aa88710dcc6c8de6d3c0f965cdcd3430f"><div class="ttname"><a href="classChanneling_1_1Channel.html#aa88710dcc6c8de6d3c0f965cdcd3430f">Channeling::Channel::_hub</a></div><div class="ttdeci">Hub::Hub *const _hub</div><div class="ttdef"><b>Definition:</b> channel.hpp:40</div></div>
 <div class="ttc" id="namespaceChanneling_html"><div class="ttname"><a href="namespaceChanneling.html">Channeling</a></div><div class="ttdef"><b>Definition:</b> channel.cpp:9</div></div>
-<div class="ttc" id="classChanneling_1_1Channel_html_a8f74dc1230d920949932171c9b2cd562"><div class="ttname"><a href="classChanneling_1_1Channel.html#a8f74dc1230d920949932171c9b2cd562">Channeling::Channel::_pipeRunning</a></div><div class="ttdeci">std::atomic_bool _pipeRunning</div><div class="ttdef"><b>Definition:</b> channel.hpp:31</div></div>
+<div class="ttc" id="classChanneling_1_1Channel_html_a8f74dc1230d920949932171c9b2cd562"><div class="ttname"><a href="classChanneling_1_1Channel.html#a8f74dc1230d920949932171c9b2cd562">Channeling::Channel::_pipeRunning</a></div><div class="ttdeci">std::atomic_bool _pipeRunning</div><div class="ttdef"><b>Definition:</b> channel.hpp:32</div></div>
 <div class="ttc" id="config_8hpp_html"><div class="ttname"><a href="config_8hpp.html">config.hpp</a></div></div>
 <div class="ttc" id="classChanneling_1_1activate__error_html_ae0771a4fe3cf7330cc3745ca6a703193"><div class="ttname"><a href="classChanneling_1_1activate__error.html#ae0771a4fe3cf7330cc3745ca6a703193">Channeling::activate_error::activate_error</a></div><div class="ttdeci">activate_error(std::string const &amp;message)</div><div class="ttdef"><b>Definition:</b> channel.hpp:16</div></div>
 <div class="ttc" id="classChanneling_1_1Channel_html_a209ff085bb7cbe3a47b19f7973fbf7ab"><div class="ttname"><a href="classChanneling_1_1Channel.html#a209ff085bb7cbe3a47b19f7973fbf7ab">Channeling::Channel::parse</a></div><div class="ttdeci">virtual void parse(const std::string &amp;l)=0</div></div>
@@ -215,7 +215,7 @@ $(document).ready(function(){initNavTree('channel_8hpp_source.html','');});
 <div class="ttc" id="classChanneling_1_1Channel_html_a0f6020dd45db786436ff43a1598ad2f1"><div class="ttname"><a href="classChanneling_1_1Channel.html#a0f6020dd45db786436ff43a1598ad2f1">Channeling::Channel::stopPolling</a></div><div class="ttdeci">void stopPolling()</div><div class="ttdef"><b>Definition:</b> channel.cpp:41</div></div>
 <div class="ttc" id="classChanneling_1_1Channel_html_a89db92100b0ebdd84017cf8d1ab56b3e"><div class="ttname"><a href="classChanneling_1_1Channel.html#a89db92100b0ebdd84017cf8d1ab56b3e">Channeling::Channel::pollThread</a></div><div class="ttdeci">void pollThread()</div><div class="ttdef"><b>Definition:</b> channel.cpp:83</div></div>
 <div class="ttc" id="classHub_1_1Hub_html"><div class="ttname"><a href="classHub_1_1Hub.html">Hub::Hub</a></div><div class="ttdef"><b>Definition:</b> hub.hpp:22</div></div>
-<div class="ttc" id="classChanneling_1_1Channel_html_a2a3dccef74972f2946c188f6599049d0"><div class="ttname"><a href="classChanneling_1_1Channel.html#a2a3dccef74972f2946c188f6599049d0">Channeling::Channel::_thread</a></div><div class="ttdeci">std::unique_ptr&lt; std::thread &gt; _thread</div><div class="ttdef"><b>Definition:</b> channel.hpp:30</div></div>
+<div class="ttc" id="classChanneling_1_1Channel_html_a2a3dccef74972f2946c188f6599049d0"><div class="ttname"><a href="classChanneling_1_1Channel.html#a2a3dccef74972f2946c188f6599049d0">Channeling::Channel::_thread</a></div><div class="ttdeci">std::unique_ptr&lt; std::thread &gt; _thread</div><div class="ttdef"><b>Definition:</b> channel.hpp:31</div></div>
 <div class="ttc" id="namespaceChanneling_html_a55b8672b8710070db3c834f4d8425378"><div class="ttname"><a href="namespaceChanneling.html#a55b8672b8710070db3c834f4d8425378">Channeling::ChannelDirection</a></div><div class="ttdeci">ChannelDirection</div><div class="ttdef"><b>Definition:</b> config.hpp:13</div></div>
 <div class="ttc" id="classChanneling_1_1ChannelCreator_html"><div class="ttname"><a href="classChanneling_1_1ChannelCreator.html">Channeling::ChannelCreator</a></div><div class="ttdef"><b>Definition:</b> channel.hpp:115</div></div>
 <div class="ttc" id="classChanneling_1_1Channel_html_ac6ea082f1aefb4a2efd07ed1343f39ca"><div class="ttname"><a href="classChanneling_1_1Channel.html#ac6ea082f1aefb4a2efd07ed1343f39ca">Channeling::Channel::_name</a></div><div class="ttdeci">const std::string _name</div><div class="ttdef"><b>Definition:</b> channel.hpp:38</div></div>
@@ -225,7 +225,7 @@ $(document).ready(function(){initNavTree('channel_8hpp_source.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="channel_8hpp.html">channel.hpp</a></li>
-    <li class="footer">Generated on Tue Feb 3 2015 13:24:15 for Chatsync by
+    <li class="footer">Generated on Fri Feb 13 2015 13:50:42 for Chatsync by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9 </li>
   </ul>

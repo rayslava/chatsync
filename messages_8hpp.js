@@ -11,6 +11,7 @@ var messages_8hpp =
     [ "ERR_SOCK_CREATE", "messages_8hpp.html#ae48c9bc570268ec367049d7d1e5da490", null ],
     [ "ERR_SOCK_READ", "messages_8hpp.html#a85049fbf8e6e580042870c07a2c40818", null ],
     [ "ERR_SOCK_WRITE", "messages_8hpp.html#adc30415559809cfcf3959d4c48689920", null ],
+    [ "ERR_TOX_INIT", "messages_8hpp.html#a20de4a83a494f951683471d4c4c4a837", null ],
     [ "ERR_WRONG_DIR", "messages_8hpp.html#aab5357e6547fd47625853795b3ea7737", null ],
     [ "MSG_EXITING", "messages_8hpp.html#ac3a08cfb2a8d4a13ee717d3eecacbf0a", null ]
 ];

@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Chatsync
-   &#160;<span id="projectnumber">db6b9b36ccaf5a284bfc29938e191a7726af35c1</span>
+   &#160;<span id="projectnumber">5de15bbf4c07d8caba54e5b9214e44ce78ac32b4</span>
    </div>
   </td>
  </tr>
@@ -151,6 +151,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a7ec0973749fb9e6daba6ae2dd265d653"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfileChannel_1_1FileChannel.html#a7ec0973749fb9e6daba6ae2dd265d653">parse</a> (const std::string &amp;l)</td></tr>
 <tr class="separator:a7ec0973749fb9e6daba6ae2dd265d653"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classChanneling_1_1Channel"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classChanneling_1_1Channel')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classChanneling_1_1Channel.html">Channeling::Channel</a></td></tr>
+<tr class="memitem:a89db92100b0ebdd84017cf8d1ab56b3e inherit pro_methods_classChanneling_1_1Channel"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#a89db92100b0ebdd84017cf8d1ab56b3e">pollThread</a> ()</td></tr>
+<tr class="separator:a89db92100b0ebdd84017cf8d1ab56b3e inherit pro_methods_classChanneling_1_1Channel"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a01fc348487170cd91251c4900ee5e0cd inherit pro_methods_classChanneling_1_1Channel"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#a01fc348487170cd91251c4900ee5e0cd">startPolling</a> ()</td></tr>
 <tr class="separator:a01fc348487170cd91251c4900ee5e0cd inherit pro_methods_classChanneling_1_1Channel"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0f6020dd45db786436ff43a1598ad2f1 inherit pro_methods_classChanneling_1_1Channel"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#a0f6020dd45db786436ff43a1598ad2f1">stopPolling</a> ()</td></tr>
@@ -176,6 +178,10 @@ Static Private Attributes</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_attribs_classChanneling_1_1Channel"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classChanneling_1_1Channel')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classChanneling_1_1Channel.html">Channeling::Channel</a></td></tr>
+<tr class="memitem:a2a3dccef74972f2946c188f6599049d0 inherit pro_attribs_classChanneling_1_1Channel"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; std::thread &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#a2a3dccef74972f2946c188f6599049d0">_thread</a></td></tr>
+<tr class="separator:a2a3dccef74972f2946c188f6599049d0 inherit pro_attribs_classChanneling_1_1Channel"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f74dc1230d920949932171c9b2cd562 inherit pro_attribs_classChanneling_1_1Channel"><td class="memItemLeft" align="right" valign="top">std::atomic_bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#a8f74dc1230d920949932171c9b2cd562">_pipeRunning</a></td></tr>
+<tr class="separator:a8f74dc1230d920949932171c9b2cd562 inherit pro_attribs_classChanneling_1_1Channel"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab868693b6df85d5bb41cd11ed8399ff9 inherit pro_attribs_classChanneling_1_1Channel"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#ab868693b6df85d5bb41cd11ed8399ff9">_fd</a></td></tr>
 <tr class="separator:ab868693b6df85d5bb41cd11ed8399ff9 inherit pro_attribs_classChanneling_1_1Channel"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a10cfaebb9b38213c6e984a582b831852 inherit pro_attribs_classChanneling_1_1Channel"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classConfig_1_1ConfigParser.html">Config::ConfigParser</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#a10cfaebb9b38213c6e984a582b831852">_config</a></td></tr>
@@ -433,7 +439,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacefileChannel.html">fileChannel</a></li><li class="navelem"><a class="el" href="classfileChannel_1_1FileChannel.html">FileChannel</a></li>
-    <li class="footer">Generated on Tue Feb 3 2015 13:24:15 for Chatsync by
+    <li class="footer">Generated on Fri Feb 13 2015 13:50:42 for Chatsync by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9 </li>
   </ul>

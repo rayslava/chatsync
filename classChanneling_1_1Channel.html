@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Chatsync
-   &#160;<span id="projectnumber">db6b9b36ccaf5a284bfc29938e191a7726af35c1</span>
+   &#160;<span id="projectnumber">5de15bbf4c07d8caba54e5b9214e44ce78ac32b4</span>
    </div>
   </td>
  </tr>
@@ -110,8 +110,6 @@ $(document).ready(function(){initNavTree('classChanneling_1_1Channel.html','');}
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
-<a href="#pri-methods">Private Member Functions</a> &#124;
-<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="#friends">Friends</a>  </div>
   <div class="headertitle">
 <div class="title">Channeling::Channel Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -148,6 +146,8 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
+<tr class="memitem:a89db92100b0ebdd84017cf8d1ab56b3e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#a89db92100b0ebdd84017cf8d1ab56b3e">pollThread</a> ()</td></tr>
+<tr class="separator:a89db92100b0ebdd84017cf8d1ab56b3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a209ff085bb7cbe3a47b19f7973fbf7ab"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#a209ff085bb7cbe3a47b19f7973fbf7ab">parse</a> (const std::string &amp;l)=0</td></tr>
 <tr class="separator:a209ff085bb7cbe3a47b19f7973fbf7ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a01fc348487170cd91251c4900ee5e0cd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#a01fc348487170cd91251c4900ee5e0cd">startPolling</a> ()</td></tr>
@@ -157,6 +157,10 @@ Protected Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
+<tr class="memitem:a2a3dccef74972f2946c188f6599049d0"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; std::thread &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#a2a3dccef74972f2946c188f6599049d0">_thread</a></td></tr>
+<tr class="separator:a2a3dccef74972f2946c188f6599049d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f74dc1230d920949932171c9b2cd562"><td class="memItemLeft" align="right" valign="top">std::atomic_bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#a8f74dc1230d920949932171c9b2cd562">_pipeRunning</a></td></tr>
+<tr class="separator:a8f74dc1230d920949932171c9b2cd562"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab868693b6df85d5bb41cd11ed8399ff9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#ab868693b6df85d5bb41cd11ed8399ff9">_fd</a></td></tr>
 <tr class="separator:ab868693b6df85d5bb41cd11ed8399ff9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a10cfaebb9b38213c6e984a582b831852"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classConfig_1_1ConfigParser.html">Config::ConfigParser</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#a10cfaebb9b38213c6e984a582b831852">_config</a></td></tr>
@@ -167,18 +171,6 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:ac64d544a772cb8f6bfe8c9a083440b66"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa88710dcc6c8de6d3c0f965cdcd3430f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classHub_1_1Hub.html">Hub::Hub</a> *const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#aa88710dcc6c8de6d3c0f965cdcd3430f">_hub</a></td></tr>
 <tr class="separator:aa88710dcc6c8de6d3c0f965cdcd3430f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
-Private Member Functions</h2></td></tr>
-<tr class="memitem:a89db92100b0ebdd84017cf8d1ab56b3e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#a89db92100b0ebdd84017cf8d1ab56b3e">pollThread</a> ()</td></tr>
-<tr class="separator:a89db92100b0ebdd84017cf8d1ab56b3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
-Private Attributes</h2></td></tr>
-<tr class="memitem:a2a3dccef74972f2946c188f6599049d0"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; std::thread &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#a2a3dccef74972f2946c188f6599049d0">_thread</a></td></tr>
-<tr class="separator:a2a3dccef74972f2946c188f6599049d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f74dc1230d920949932171c9b2cd562"><td class="memItemLeft" align="right" valign="top">std::atomic_bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#a8f74dc1230d920949932171c9b2cd562">_pipeRunning</a></td></tr>
-<tr class="separator:a8f74dc1230d920949932171c9b2cd562"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
@@ -389,7 +381,7 @@ Friends</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -644,7 +636,7 @@ Friends</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -665,7 +657,7 @@ Friends</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -683,7 +675,7 @@ Friends</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceChanneling.html">Channeling</a></li><li class="navelem"><a class="el" href="classChanneling_1_1Channel.html">Channel</a></li>
-    <li class="footer">Generated on Tue Feb 3 2015 13:24:15 for Chatsync by
+    <li class="footer">Generated on Fri Feb 13 2015 13:50:42 for Chatsync by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9 </li>
   </ul>
