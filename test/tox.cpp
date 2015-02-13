@@ -20,7 +20,7 @@ TEST(ToxChannel, running)
     Channeling::ChannelFactory::create("file", hub, "data://direction=output\nname=outfile");
 
     hub->activate();
-    std::this_thread::sleep_for( std::chrono::milliseconds (50) );
+    std::this_thread::sleep_for( std::chrono::milliseconds (20000) );
     hub->deactivate();
 
     delete hub;

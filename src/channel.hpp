@@ -26,13 +26,13 @@ namespace Channeling {
      * Input channel should send message to hub->newMessage()
      */
     class Channel {
+    protected:
 	/* Polling functions */
 	std::unique_ptr<std::thread> _thread;       /**< Pointer to reader thread in case of input channel */
 	std::atomic_bool _pipeRunning;              /**< Pipe reading thread is running */
 
 	void pollThread();                          /**< Thread which selects the descriptor and send messages when new ones come */
 
-    protected:
         int _fd;                                    /**< File descriptor to select */
 	const Config::ConfigParser _config;         /**< Configuration storage */
         const std::string _name;                    /**< The channel name in config file */

@@ -24,3 +24,5 @@ const static std::string ERR_CONFIG_SCHEME = "Access scheme is not supported";
 const static std::string ERR_NO_OPTION = "Option is not configured";
 
 const static std::string ERR_WRONG_DIR = "Wrong channel direction option";
+
+const static std::string ERR_TOX_INIT = "Can't initialize TOX engine";
