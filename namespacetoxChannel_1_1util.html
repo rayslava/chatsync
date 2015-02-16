@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9"/>
-<title>Chatsync: src/filechannel.cpp File Reference</title>
+<title>Chatsync: toxChannel::util Namespace Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -47,9 +47,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
+      <li class="current"><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
-      <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -70,8 +70,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
-      <li><a href="files.html"><span>File&#160;List</span></a></li>
-      <li><a href="globals.html"><span>Globals</span></a></li>
+      <li><a href="namespaces.html"><span>Namespace&#160;List</span></a></li>
+      <li><a href="namespacemembers.html"><span>Namespace&#160;Members</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -86,7 +86,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('filechannel_8cpp.html','');});
+$(document).ready(function(){initNavTree('namespacetoxChannel_1_1util.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -105,33 +105,82 @@ $(document).ready(function(){initNavTree('filechannel_8cpp.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#namespaces">Namespaces</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">filechannel.cpp File Reference</div>  </div>
+<div class="title">toxChannel::util Namespace Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="filechannel_8hpp_source.html">filechannel.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="hub_8hpp_source.html">hub.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="messages_8hpp_source.html">messages.hpp</a>&quot;</code><br />
-<code>#include &lt;sstream&gt;</code><br />
-<code>#include &lt;sys/types.h&gt;</code><br />
-<code>#include &lt;sys/stat.h&gt;</code><br />
-<code>#include &lt;fcntl.h&gt;</code><br />
-<code>#include &lt;unistd.h&gt;</code><br />
-<code>#include &lt;sys/ioctl.h&gt;</code><br />
-<code>#include &lt;stropts.h&gt;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:namespacefileChannel"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefileChannel.html">fileChannel</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a15ab598833bb9035f71ec9703fafd27a"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetoxChannel_1_1util.html#a15ab598833bb9035f71ec9703fafd27a">hex2bin</a> (std::string const &amp;s)</td></tr>
+<tr class="separator:a15ab598833bb9035f71ec9703fafd27a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd92a49e0e2a87b1569343646551efe3"><td class="memTemplParams" colspan="2">template&lt;size_t Size&gt; </td></tr>
+<tr class="memitem:afd92a49e0e2a87b1569343646551efe3"><td class="memTemplItemLeft" align="right" valign="top">std::string&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacetoxChannel_1_1util.html#afd92a49e0e2a87b1569343646551efe3">ToxId2HR</a> (const uint8_t *address)</td></tr>
+<tr class="separator:afd92a49e0e2a87b1569343646551efe3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad344f08bb026bb75db1751fe46b6875b"><td class="memTemplParams" colspan="2">template&lt;size_t Size&gt; </td></tr>
+<tr class="memitem:ad344f08bb026bb75db1751fe46b6875b"><td class="memTemplItemLeft" align="right" valign="top">std::string&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacetoxChannel_1_1util.html#ad344f08bb026bb75db1751fe46b6875b">ToxId2HR</a> (const std::array&lt; uint8_t, Size &gt; &amp;address)</td></tr>
+<tr class="separator:ad344f08bb026bb75db1751fe46b6875b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="a15ab598833bb9035f71ec9703fafd27a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string toxChannel::util::hex2bin </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="afd92a49e0e2a87b1569343646551efe3"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t Size&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string toxChannel::util::ToxId2HR </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>address</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ad344f08bb026bb75db1751fe46b6875b"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t Size&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string toxChannel::util::ToxId2HR </td>
+          <td>(</td>
+          <td class="paramtype">const std::array&lt; uint8_t, Size &gt; &amp;&#160;</td>
+          <td class="paramname"><em>address</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="filechannel_8cpp.html">filechannel.cpp</a></li>
+    <li class="navelem"><a class="el" href="namespacetoxChannel.html">toxChannel</a></li><li class="navelem"><a class="el" href="namespacetoxChannel_1_1util.html">util</a></li>
     <li class="footer">Generated on Mon Feb 16 2015 15:01:51 for Chatsync by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9 </li>
