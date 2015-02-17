@@ -10,15 +10,17 @@ namespace fileChannel {
     {
     }
 
-    void FileChannel::activate() {
-        if (_direction == Channeling::ChannelDirection::Input) {
-            _fd = openPipe("input");
-            startPolling();
-        } else if (_direction == Channeling::ChannelDirection::Output) {
-            _file.clear();
-            _file.open("output", std::ios::out);
-        }
-    }
+    std::future<void> FileChannel::activate() {
+	return std::async(std::launch::async,
+			  [this]() {
+			      if (_direction == Channeling::ChannelDirection::Input) {
+				  _fd = openPipe("input");
+				  startPolling();
+			      } else if (_direction == Channeling::ChannelDirection::Output) {
+				  _file.clear();
+				  _file.open("output", std::ios::out);
+			      };
+			  });}
 
     void FileChannel::parse(const std::string &l) {
         _file << l;

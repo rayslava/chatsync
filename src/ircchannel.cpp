@@ -13,13 +13,14 @@ namespace ircChannel {
     {
     }
 
-    void IrcChannel::activate() {
-        if (_direction == Channeling::ChannelDirection::Input) {
-            _fd = connect();
-            startPolling();
-	    registerConnection();
-        };
-    }
+    std::future<void> IrcChannel::activate() {
+	return std::async(std::launch::async, [this]() {
+		if (_direction == Channeling::ChannelDirection::Input) {
+		    _fd = connect();
+		    startPolling();
+		    registerConnection();
+		};
+	    });}
 
     IrcChannel::~IrcChannel() {
 	disconnect();
@@ -79,7 +80,7 @@ namespace ircChannel {
 
 	char buffer[256];
 
-	std::cout << "Joining" << _channel << std::endl;
+	std::cerr << "[DEBUG] Joining" << _channel << std::endl;
 	sockfd = net::socket(AF_INET, net::SOCK_STREAM, 0);
 	if (sockfd < 0)
 	    throw Channeling::activate_error(ERR_SOCK_CREATE);

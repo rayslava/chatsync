@@ -2,6 +2,7 @@
 #include <memory>
 #include <algorithm>
 #include <sstream>
+#include <future>
 
 #include "messages.hpp"
 #include "channel.hpp"
@@ -75,10 +76,37 @@ namespace Hub {
     void Hub::activate() {
         if (_outputChannels.empty())
             throw std::logic_error("Can't run with no outputs");
+
+	std::vector<std::future<void>> activators;
+
         for (auto& out : _outputChannels)
-            out->activate();
+	    activators.push_back(out->activate());
+
+	bool ready = true;
+	do {
+	    ready = true;
+	    for (auto& ch : activators) {
+		ready &= ch.valid();
+		if (ch.valid())
+		    ch.get();
+	    }
+	} while (!ready);
+	activators.clear();
+
         for (auto& in : _inputChannels)
-            in->activate();
+            activators.push_back(in->activate());
+
+	do {
+	    ready = true;
+	    for (auto& ch : activators) {
+		ready &= ch.valid();
+		if (ch.valid())
+		    ch.get();
+	    }
+
+	} while (!ready);
+	activators.clear();
+
         _loopRunning = true;
         _msgLoop = std::make_unique<std::thread>(std::thread(&Hub::msgLoop, this));
     }

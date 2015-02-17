@@ -28,7 +28,7 @@ namespace ircChannel {
 	int registerConnection();
 	int disconnect();
 	int sendMessage(const std::string& msg);
-	void activate();
+	std::future<void> activate();
 
 	static const Channeling::ChannelCreatorImpl<IrcChannel> creator;
 	

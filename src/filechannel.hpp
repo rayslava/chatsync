@@ -22,7 +22,7 @@ namespace fileChannel {
 	*/
 	int openPipe(const std::string& filename);
 
-	void activate();
+	std::future<void> activate();
 	static const Channeling::ChannelCreatorImpl<FileChannel> creator;
     public:
 	explicit FileChannel(Hub::Hub* hub, const std::string&& config);

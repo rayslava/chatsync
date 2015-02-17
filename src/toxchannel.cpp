@@ -56,17 +56,18 @@ namespace toxChannel {
     {
     }
 
-    void ToxChannel::activate() {
-	_pipeRunning = true;
-	toxInit();
-	_thread = std::make_unique<std::thread> (std::thread(&ToxChannel::toxThread, this));
-    }
+    std::future<void> ToxChannel::activate() {
+	return std::async(std::launch::async, [this]() {
+		_pipeRunning = true;
+		toxInit();
+		_thread = std::make_unique<std::thread> (std::thread(&ToxChannel::pollThread, this));
+	    });}
 
     void ToxChannel::parse(const std::string &l) {
 	std::cerr << "[DEBUG] Parsing line " << l << " inside " << _name << std::endl;
     }
 
-    void ToxChannel::toxThread() {
+    void ToxChannel::pollThread() {
 	std::cerr << "[DEBUG] Starting tox thread" << std::endl;
 	while (_pipeRunning) {
 	    tox_do(_tox);
@@ -154,6 +155,7 @@ namespace toxChannel {
 	    }
 	    std::this_thread::sleep_for( std::chrono::milliseconds (wait));
 	}
+
 	result = tox_add_groupchat (_tox);
 	if (result < 0)
 	    throw Channeling::activate_error(ERR_TOX_INIT + "(tox_add_groupchat) Can't create a group chat");
