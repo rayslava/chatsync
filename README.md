@@ -12,3 +12,14 @@ The idea is to create a small and lightweight tool for chat systems interconnect
 The first step is connect irc to tox chat. Existing python script is too heavy to run on small machines like Raspberry Pi, so the separate small and compiled tool is needed.
 
 Internal docs are at [GH Pages](https://rayslava.github.io/chatsync)
+
+Channel types
+-------------
+
+Currently implemented plugins for file, tox and irc.
+They even can pass synthetic tests.
+
+License
+-------
+
+Software has [2-clause BSD license](https://github.com/rayslava/chatsync/blob/master/LICENSE)
