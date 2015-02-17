@@ -2,7 +2,7 @@ var classChanneling_1_1Channel =
 [
     [ "Channel", "classChanneling_1_1Channel.html#ac3cc3c0cc3cae292f9e3925f01db19fe", null ],
     [ "~Channel", "classChanneling_1_1Channel.html#af68955db4e1b5b0d33e0e91b63f370a0", null ],
-    [ "activate", "classChanneling_1_1Channel.html#ac8fd35321039116937e7210e55ab8609", null ],
+    [ "activate", "classChanneling_1_1Channel.html#af45f5ea6fcad7633e81b1e88c7103561", null ],
     [ "direction", "classChanneling_1_1Channel.html#a86ab3881297d545bf44fceccbbbe6d01", null ],
     [ "name", "classChanneling_1_1Channel.html#a0bd3400384ba2801bf17323d576089ef", null ],
     [ "parse", "classChanneling_1_1Channel.html#a209ff085bb7cbe3a47b19f7973fbf7ab", null ],

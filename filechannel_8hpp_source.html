@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Chatsync
-   &#160;<span id="projectnumber">fc4a5c8500f12448a62252ad74ed5b3e60ef9e35</span>
+   &#160;<span id="projectnumber">88bf4756b61431f8e9623cfea0c9ebc650f44bc7</span>
    </div>
   </td>
  </tr>
@@ -118,7 +118,7 @@ $(document).ready(function(){initNavTree('filechannel_8hpp_source.html','');});
 <div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="classfileChannel_1_1FileChannel.html#a7a75f50ad82b510af5ddaaa69088ea96">   13</a></span>&#160;    std::fstream <a class="code" href="classfileChannel_1_1FileChannel.html#a7a75f50ad82b510af5ddaaa69088ea96">_file</a>;                         </div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classfileChannel_1_1FileChannel.html#a0c61411622c87ad37b8b2bb7c1ad5948">openPipe</a>(<span class="keyword">const</span> std::string&amp; filename);</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classfileChannel_1_1FileChannel.html#a51ab9a9e1fc00b9e61ae343f1098b6c2">activate</a>();</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    std::future&lt;void&gt; <a class="code" href="classfileChannel_1_1FileChannel.html#a608a48dfbc8300d766f61a985f5a7466">activate</a>();</div>
 <div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="classfileChannel_1_1FileChannel.html#a2f04a5ef7bce871eeb58c814eb3db4eb">   26</a></span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="classChanneling_1_1ChannelCreatorImpl.html">Channeling::ChannelCreatorImpl&lt;FileChannel&gt;</a> <a class="code" href="classfileChannel_1_1FileChannel.html#a2f04a5ef7bce871eeb58c814eb3db4eb">creator</a>;</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classfileChannel_1_1FileChannel.html#a71bce4fcf35aa6fc8e575ef27a371a8f">FileChannel</a>(<a class="code" href="classHub_1_1Hub.html">Hub::Hub</a>* hub, <span class="keyword">const</span> std::string&amp;&amp; config);</div>
@@ -131,27 +131,27 @@ $(document).ready(function(){initNavTree('filechannel_8hpp_source.html','');});
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    };</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keyword">const</span> <a class="code" href="classChanneling_1_1ChannelCreatorImpl.html">Channeling::ChannelCreatorImpl&lt;FileChannel&gt;</a> <a class="code" href="classfileChannel_1_1FileChannel.html#a2f04a5ef7bce871eeb58c814eb3db4eb">FileChannel::creator</a>(<span class="stringliteral">&quot;file&quot;</span>);</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;}</div>
+<div class="ttc" id="classfileChannel_1_1FileChannel_html_a608a48dfbc8300d766f61a985f5a7466"><div class="ttname"><a href="classfileChannel_1_1FileChannel.html#a608a48dfbc8300d766f61a985f5a7466">fileChannel::FileChannel::activate</a></div><div class="ttdeci">std::future&lt; void &gt; activate()</div><div class="ttdef"><b>Definition:</b> filechannel.cpp:13</div></div>
 <div class="ttc" id="channel_8hpp_html"><div class="ttname"><a href="channel_8hpp.html">channel.hpp</a></div></div>
-<div class="ttc" id="classfileChannel_1_1FileChannel_html_a7ec0973749fb9e6daba6ae2dd265d653"><div class="ttname"><a href="classfileChannel_1_1FileChannel.html#a7ec0973749fb9e6daba6ae2dd265d653">fileChannel::FileChannel::parse</a></div><div class="ttdeci">void parse(const std::string &amp;l)</div><div class="ttdef"><b>Definition:</b> filechannel.cpp:23</div></div>
+<div class="ttc" id="classfileChannel_1_1FileChannel_html_a7ec0973749fb9e6daba6ae2dd265d653"><div class="ttname"><a href="classfileChannel_1_1FileChannel.html#a7ec0973749fb9e6daba6ae2dd265d653">fileChannel::FileChannel::parse</a></div><div class="ttdeci">void parse(const std::string &amp;l)</div><div class="ttdef"><b>Definition:</b> filechannel.cpp:25</div></div>
 <div class="ttc" id="classfileChannel_1_1FileChannel_html_a2f04a5ef7bce871eeb58c814eb3db4eb"><div class="ttname"><a href="classfileChannel_1_1FileChannel.html#a2f04a5ef7bce871eeb58c814eb3db4eb">fileChannel::FileChannel::creator</a></div><div class="ttdeci">static const Channeling::ChannelCreatorImpl&lt; FileChannel &gt; creator</div><div class="ttdef"><b>Definition:</b> filechannel.hpp:26</div></div>
 <div class="ttc" id="classfileChannel_1_1FileChannel_html_a7a75f50ad82b510af5ddaaa69088ea96"><div class="ttname"><a href="classfileChannel_1_1FileChannel.html#a7a75f50ad82b510af5ddaaa69088ea96">fileChannel::FileChannel::_file</a></div><div class="ttdeci">std::fstream _file</div><div class="ttdef"><b>Definition:</b> filechannel.hpp:13</div></div>
-<div class="ttc" id="classfileChannel_1_1FileChannel_html_a078a93c10d1a243c259a4b3b43290b12"><div class="ttname"><a href="classfileChannel_1_1FileChannel.html#a078a93c10d1a243c259a4b3b43290b12">fileChannel::FileChannel::~FileChannel</a></div><div class="ttdeci">~FileChannel()</div><div class="ttdef"><b>Definition:</b> filechannel.cpp:28</div></div>
+<div class="ttc" id="classfileChannel_1_1FileChannel_html_a078a93c10d1a243c259a4b3b43290b12"><div class="ttname"><a href="classfileChannel_1_1FileChannel.html#a078a93c10d1a243c259a4b3b43290b12">fileChannel::FileChannel::~FileChannel</a></div><div class="ttdeci">~FileChannel()</div><div class="ttdef"><b>Definition:</b> filechannel.cpp:30</div></div>
 <div class="ttc" id="classfileChannel_1_1FileChannel_html_a71bce4fcf35aa6fc8e575ef27a371a8f"><div class="ttname"><a href="classfileChannel_1_1FileChannel.html#a71bce4fcf35aa6fc8e575ef27a371a8f">fileChannel::FileChannel::FileChannel</a></div><div class="ttdeci">FileChannel(Hub::Hub *hub, const std::string &amp;&amp;config)</div><div class="ttdef"><b>Definition:</b> filechannel.cpp:8</div></div>
-<div class="ttc" id="classChanneling_1_1ChannelCreatorImpl_html"><div class="ttname"><a href="classChanneling_1_1ChannelCreatorImpl.html">Channeling::ChannelCreatorImpl</a></div><div class="ttdef"><b>Definition:</b> channel.hpp:123</div></div>
-<div class="ttc" id="classChanneling_1_1Channel_html"><div class="ttname"><a href="classChanneling_1_1Channel.html">Channeling::Channel</a></div><div class="ttdef"><b>Definition:</b> channel.hpp:28</div></div>
+<div class="ttc" id="classChanneling_1_1ChannelCreatorImpl_html"><div class="ttname"><a href="classChanneling_1_1ChannelCreatorImpl.html">Channeling::ChannelCreatorImpl</a></div><div class="ttdef"><b>Definition:</b> channel.hpp:124</div></div>
+<div class="ttc" id="classChanneling_1_1Channel_html"><div class="ttname"><a href="classChanneling_1_1Channel.html">Channeling::Channel</a></div><div class="ttdef"><b>Definition:</b> channel.hpp:29</div></div>
 <div class="ttc" id="classfileChannel_1_1FileChannel_html"><div class="ttname"><a href="classfileChannel_1_1FileChannel.html">fileChannel::FileChannel</a></div><div class="ttdef"><b>Definition:</b> filechannel.hpp:12</div></div>
 <div class="ttc" id="namespacefileChannel_html"><div class="ttname"><a href="namespacefileChannel.html">fileChannel</a></div><div class="ttdef"><b>Definition:</b> filechannel.cpp:6</div></div>
 <div class="ttc" id="classfileChannel_1_1FileChannel_html_a79129bb7c3904a52e5bfc9b47adab088"><div class="ttname"><a href="classfileChannel_1_1FileChannel.html#a79129bb7c3904a52e5bfc9b47adab088">fileChannel::FileChannel::type</a></div><div class="ttdeci">std::string type() const </div><div class="ttdef"><b>Definition:</b> filechannel.hpp:31</div></div>
 <div class="ttc" id="classHub_1_1Hub_html"><div class="ttname"><a href="classHub_1_1Hub.html">Hub::Hub</a></div><div class="ttdef"><b>Definition:</b> hub.hpp:22</div></div>
-<div class="ttc" id="classfileChannel_1_1FileChannel_html_a0c61411622c87ad37b8b2bb7c1ad5948"><div class="ttname"><a href="classfileChannel_1_1FileChannel.html#a0c61411622c87ad37b8b2bb7c1ad5948">fileChannel::FileChannel::openPipe</a></div><div class="ttdeci">int openPipe(const std::string &amp;filename)</div><div class="ttdef"><b>Definition:</b> filechannel.cpp:45</div></div>
-<div class="ttc" id="classfileChannel_1_1FileChannel_html_a51ab9a9e1fc00b9e61ae343f1098b6c2"><div class="ttname"><a href="classfileChannel_1_1FileChannel.html#a51ab9a9e1fc00b9e61ae343f1098b6c2">fileChannel::FileChannel::activate</a></div><div class="ttdeci">void activate()</div><div class="ttdef"><b>Definition:</b> filechannel.cpp:13</div></div>
+<div class="ttc" id="classfileChannel_1_1FileChannel_html_a0c61411622c87ad37b8b2bb7c1ad5948"><div class="ttname"><a href="classfileChannel_1_1FileChannel.html#a0c61411622c87ad37b8b2bb7c1ad5948">fileChannel::FileChannel::openPipe</a></div><div class="ttdeci">int openPipe(const std::string &amp;filename)</div><div class="ttdef"><b>Definition:</b> filechannel.cpp:47</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="filechannel_8hpp.html">filechannel.hpp</a></li>
-    <li class="footer">Generated on Mon Feb 16 2015 15:01:51 for Chatsync by
+    <li class="footer">Generated on Tue Feb 17 2015 12:19:20 for Chatsync by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9 </li>
   </ul>
