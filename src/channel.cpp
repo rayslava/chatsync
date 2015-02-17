@@ -85,17 +85,18 @@ namespace Channeling {
     const int readFd = _fd;
     fd_set readset;
     int err = 0;
-    // Initialize time out struct for select()
-    struct timeval tv;
-    tv.tv_sec = 1;
-    tv.tv_usec = 0;
     // Implement the receiver loop
     while (_pipeRunning) {
+      // Initialize time out struct for select()
+      struct timeval tv;
+      tv.tv_sec = 30;
+      tv.tv_usec = 0;
       // Initialize the set
       FD_ZERO(&readset);
       FD_SET(readFd, &readset);
       // Now, check for readability
       err = select(readFd+1, &readset, NULL, NULL, &tv);
+      std::cerr << "[DEBUG] Selected fd " << err << std::endl;
       if (err > 0 && FD_ISSET(readFd, &readset)) {
 	// Clear flags
 	FD_CLR(readFd, &readset);

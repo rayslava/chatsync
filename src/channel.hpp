@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#include <future>
 
 #include "hub.hpp"
 #include "config.hpp"
@@ -31,7 +32,7 @@ namespace Channeling {
 	std::unique_ptr<std::thread> _thread;       /**< Pointer to reader thread in case of input channel */
 	std::atomic_bool _pipeRunning;              /**< Pipe reading thread is running */
 
-	void pollThread();                          /**< Thread which selects the descriptor and send messages when new ones come */
+	virtual void pollThread();                  /**< Thread which selects the descriptor and send messages when new ones come */
 
         int _fd;                                    /**< File descriptor to select */
 	const Config::ConfigParser _config;         /**< Configuration storage */
@@ -98,7 +99,7 @@ namespace Channeling {
 	 *
 	 * @throws activate_error in case of problems
 	 */
-        virtual void activate() = 0;
+	virtual std::future<void> activate() = 0;
 
         /**
 	 * Operator >> is used to push data into output channels
