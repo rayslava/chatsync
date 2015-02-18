@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['toxchannel',['ToxChannel',['../classtoxChannel_1_1ToxChannel.html',1,'toxChannel']]]
+  ['option_5ferror',['option_error',['../classConfig_1_1option__error.html',1,'Config']]]
 ];

@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['parse',['parse',['../classChanneling_1_1Channel.html#a209ff085bb7cbe3a47b19f7973fbf7ab',1,'Channeling::Channel::parse()'],['../classfileChannel_1_1FileChannel.html#a7ec0973749fb9e6daba6ae2dd265d653',1,'fileChannel::FileChannel::parse()'],['../classircChannel_1_1IrcChannel.html#a2694ae339377b27f1104cb04f28b0e73',1,'ircChannel::IrcChannel::parse()'],['../classtoxChannel_1_1ToxChannel.html#a8bc4e5435dc3cbfa5dd8e6a3c7467b41',1,'toxChannel::ToxChannel::parse()']]],
   ['parseconfig',['parseConfig',['../classConfig_1_1ConfigParser.html#aa330a6ec2c725dba60c2a8ab04a54e3b',1,'Config::ConfigParser']]],
   ['pollthread',['pollThread',['../classChanneling_1_1Channel.html#a89db92100b0ebdd84017cf8d1ab56b3e',1,'Channeling::Channel::pollThread()'],['../classtoxChannel_1_1ToxChannel.html#ae9313cf6fd430d6cce838f847f64f394',1,'toxChannel::ToxChannel::pollThread()']]],
-  ['popmessage',['popMessage',['../classHub_1_1Hub.html#aa6c6d9e9c6a40dd010fe1136d9b69357',1,'Hub::Hub']]],
-  ['pushmessage',['pushMessage',['../classHub_1_1Hub.html#aeafd7e7bf9ff41ba33a6e807a23ff94d',1,'Hub::Hub']]]
+  ['popmessage',['popMessage',['../classHub_1_1Hub.html#a5762262058841a39a0f928103a18e2ea',1,'Hub::Hub']]],
+  ['pushmessage',['pushMessage',['../classHub_1_1Hub.html#affe6e6b8d653a70d3c5bf9d77941ee6c',1,'Hub::Hub']]]
 ];

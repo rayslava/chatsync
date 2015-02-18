@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['option_5ferror',['option_error',['../classConfig_1_1option__error.html',1,'Config']]]
+  ['message',['Message',['../classmessaging_1_1Message.html',1,'messaging']]]
 ];

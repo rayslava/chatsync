@@ -21,7 +21,11 @@ var dir_68267d1309a1af8e8297ef4c3efbcdba =
       [ "IrcChannel", "classircChannel_1_1IrcChannel.html", "classircChannel_1_1IrcChannel" ]
     ] ],
     [ "main.cpp", "main_8cpp.html", "main_8cpp" ],
+    [ "message.hpp", "message_8hpp.html", "message_8hpp" ],
     [ "messages.hpp", "messages_8hpp.html", "messages_8hpp" ],
     [ "toxchannel.cpp", "toxchannel_8cpp.html", "toxchannel_8cpp" ],
-    [ "toxchannel.hpp", "toxchannel_8hpp.html", "toxchannel_8hpp" ]
+    [ "toxchannel.hpp", "toxchannel_8hpp.html", "toxchannel_8hpp" ],
+    [ "user.hpp", "user_8hpp.html", [
+      [ "User", "classmessaging_1_1User.html", "classmessaging_1_1User" ]
+    ] ]
 ];

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['activate',['activate',['../classChanneling_1_1Channel.html#af45f5ea6fcad7633e81b1e88c7103561',1,'Channeling::Channel::activate()'],['../classfileChannel_1_1FileChannel.html#a608a48dfbc8300d766f61a985f5a7466',1,'fileChannel::FileChannel::activate()'],['../classHub_1_1Hub.html#a30dec05330203ef21679459cce47dcc8',1,'Hub::Hub::activate()'],['../classircChannel_1_1IrcChannel.html#a0ce6b4f2182dcc5ac0c0d7c6665c8546',1,'ircChannel::IrcChannel::activate()'],['../classtoxChannel_1_1ToxChannel.html#a38ab2bdc113ba7e594c999099f766e25',1,'toxChannel::ToxChannel::activate()']]],
+  ['activate',['activate',['../classChanneling_1_1Channel.html#af45f5ea6fcad7633e81b1e88c7103561',1,'Channeling::Channel::activate()'],['../classfileChannel_1_1FileChannel.html#a03fb11fe8d9dce534b2191c5855c6ffe',1,'fileChannel::FileChannel::activate()'],['../classHub_1_1Hub.html#a30dec05330203ef21679459cce47dcc8',1,'Hub::Hub::activate()'],['../classircChannel_1_1IrcChannel.html#a3b8e2e68fd1f87d5473fbd4f4e32f5fd',1,'ircChannel::IrcChannel::activate()'],['../classtoxChannel_1_1ToxChannel.html#a8f74922080684a5718261e89dc569861',1,'toxChannel::ToxChannel::activate()']]],
   ['activate_5ferror',['activate_error',['../classChanneling_1_1activate__error.html#ae0771a4fe3cf7330cc3745ca6a703193',1,'Channeling::activate_error']]],
   ['active',['active',['../classHub_1_1Hub.html#a5b7a5aa9b0145abcc4dc49e8920fdf73',1,'Hub::Hub']]],
   ['addchannel',['addChannel',['../classHub_1_1Hub.html#a9ef2558ada3af38ceb0cdfd1ddc461b8',1,'Hub::Hub']]],
