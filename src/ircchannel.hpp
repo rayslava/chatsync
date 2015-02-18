@@ -28,7 +28,7 @@ namespace ircChannel {
 	int registerConnection();
 	int disconnect();
 	int sendMessage(const std::string& msg);
-	std::future<void> activate();
+	std::future<void> activate() override;
 
 	static const Channeling::ChannelCreatorImpl<IrcChannel> creator;
 	
@@ -36,10 +36,10 @@ namespace ircChannel {
 	explicit IrcChannel(Hub::Hub* hub, const std::string&& config);
         ~IrcChannel();
 
-	std::string type() const {return "irc";};
+	std::string type() const override {return "irc";};
 
     protected:
-        void parse(const std::string& l);
+	void incoming(const messaging::message_ptr&& msg) override;
     };
     const Channeling::ChannelCreatorImpl<IrcChannel> IrcChannel::creator("irc");
 }

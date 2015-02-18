@@ -21,9 +21,12 @@ TEST(hub, name)
 
     EXPECT_THROW({hub->activate();}, std::logic_error);
     auto ouch = Channeling::ChannelFactory::create("irc", hub, "data://direction=output\nname=ircin\nserver=127.0.0.1\nport=0\nchannel=test");
+    const auto msg = std::make_shared<const messaging::Message>(
+	    std::move(std::make_shared<const messaging::User>(messaging::User("system"))),
+	    "test");
 
-    EXPECT_THROW({std::string("Test") >> *inch;}, std::logic_error);
-    EXPECT_NO_THROW({std::string("Test") >> *ouch;});
+    EXPECT_THROW({msg >> *inch;}, std::logic_error);
+    EXPECT_NO_THROW({msg >> *ouch;});
     std::this_thread::sleep_for(std::chrono::milliseconds (50));
     hub->deactivate();
 

@@ -51,13 +51,18 @@ set(STANDARD "-std=c++1y")
 
 set(CMAKE_CXX_FLAGS         "-Wall -Wno-unknown-pragmas -Wno-sign-compare -Woverloaded-virtual -Wwrite-strings -Wno-unused ${STANDARD} -Wextra -pedantic -Werror")
 
-set(CMAKE_CXX_FLAGS_DEBUG   "-O0 -g3 ${STANDARD}")
+set(CMAKE_CXX_FLAGS_DEBUG   "-O0 -ggdb ${STANDARD}")
 set(CMAKE_CXX_FLAGS_RELEASE "-Ofast ${STANDARD}")
 set(CMAKE_CXX_FLAGS_PROFILED "${CMAKE_CXX_FLAGS_RELEASE} -pg")
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
   set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -flto -fwhole-program")
 endif()
+
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-error=braced-scalar-init")
+endif()
+
 
 if ((COVERALLS OR COVERAGE) AND CMAKE_BUILD_TYPE STREQUAL "Debug")
   message(STATUS "will generate coverage data")

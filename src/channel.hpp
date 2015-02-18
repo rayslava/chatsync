@@ -5,10 +5,12 @@
 #include <map>
 #include <future>
 
+#include "message.hpp"
 #include "hub.hpp"
 #include "config.hpp"
 
 namespace Channeling {
+    using namespace messaging;
     /**
      * Thrown during Channel::activate in case of activation problems
      */
@@ -20,8 +22,8 @@ namespace Channeling {
     /**
      * A channel to connect to input or output
      *
-     * The deriving class *must* implement:
-     *   void parse(std::string&) const; --- for data input in case of output channel
+     * The deriving class *must* override:
+     *   void void incoming(const message_ptr msg) = 0; --- for data input in case of output channel
      *   void activate(); --- to implement specific activities for channel work starting
      *
      * Input channel should send message to hub->newMessage()
@@ -44,9 +46,10 @@ namespace Channeling {
 	/**
 	 * Parse line and send it to needed output place in case of Output direction
 	 *
-	 * @param l An input line coming from hub
-	 */
-	virtual void parse(const std::string& l) = 0;
+	 * @param msg Incoming message from hub. Passed by value to preserve ownership 
+	 *            and ensure existence during processing in all output channels.
+	 */ 
+	virtual void incoming(const message_ptr&& msg) = 0;
 
 	/**
 	 * Start thread which polls the descriptor Channel::_fd
@@ -95,7 +98,7 @@ namespace Channeling {
 	 * Prepare all prerequisites for polling thread or prepare the output and start working
 	 *
 	 * Opening file descriptors, connecting to network must be done here.
-	 * After return from the function channel is considered to be ready for work.
+	 * After future is valid channel is considered to be ready for work.
 	 *
 	 * @throws activate_error in case of problems
 	 */
@@ -110,7 +113,7 @@ namespace Channeling {
 	 * @endcode
 	 * @throws std::logic_error on writing to input channel
 	 */
-        friend Channel& operator>> (const std::string &in, Channel& channel);
+        friend Channel& operator>> (const message_ptr, Channel& channel);
     };
 
     class ChannelCreator

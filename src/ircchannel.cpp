@@ -27,8 +27,8 @@ namespace ircChannel {
 	stopPolling();
     }
 
-    void IrcChannel::parse(const std::string &l) {
-        std::cerr << "[DEBUG] Parsing line " << l << " inside " << _name << std::endl;
+    void IrcChannel::incoming(const messaging::message_ptr&& msg) {
+        std::cerr << "[DEBUG] #irc" << _name << " " << msg->data() << " inside " << _name << std::endl;
     }
 
     int IrcChannel::registerConnection() {
@@ -70,6 +70,7 @@ namespace ircChannel {
 #include <unistd.h>
 #include <sys/ioctl.h>
 #include <stropts.h>
+#include <arpa/inet.h>	   
 	}
     }
     int IrcChannel::connect() {

@@ -22,16 +22,16 @@ namespace fileChannel {
 	*/
 	int openPipe(const std::string& filename);
 
-	std::future<void> activate();
+	std::future<void> activate() override;
 	static const Channeling::ChannelCreatorImpl<FileChannel> creator;
     public:
 	explicit FileChannel(Hub::Hub* hub, const std::string&& config);
         ~FileChannel();
 
-	std::string type() const {return "file";};
+	std::string type() const override { return "file"; };
 
     protected:
-        void parse(const std::string& l);
+	void incoming(const std::shared_ptr<const messaging::Message>&& msg) override;
     };
     const Channeling::ChannelCreatorImpl<FileChannel> FileChannel::creator("file");
 }

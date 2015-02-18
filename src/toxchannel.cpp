@@ -63,8 +63,8 @@ namespace toxChannel {
 		_thread = std::make_unique<std::thread> (std::thread(&ToxChannel::pollThread, this));
 	    });}
 
-    void ToxChannel::parse(const std::string &l) {
-	std::cerr << "[DEBUG] Parsing line " << l << " inside " << _name << std::endl;
+    void ToxChannel::incoming(const messaging::message_ptr&& msg) {
+	std::cerr << "[DEBUG] #tox " << _name << " " << msg->data() << std::endl;
     }
 
     void ToxChannel::pollThread() {
@@ -87,7 +87,7 @@ namespace toxChannel {
     void ToxChannel::friendRequestCallback(Tox *tox, const uint8_t * public_key, const uint8_t * data, uint16_t length, void *userdata) {
 	const auto channel = static_cast<ToxChannel*>(userdata);
 	const auto friendNum = tox_add_friend_norequest(tox, public_key);
-	std::cerr << "[DEBUG] tox id " << util::ToxId2HR<TOX_FRIEND_ADDRESS_SIZE>(public_key) << " wants to be your friend. Added with #" << friendNum << std::endl;
+	std::cerr << "[DEBUG] tox id with data" << data << " of " << length << " bytes "  << util::ToxId2HR<TOX_FRIEND_ADDRESS_SIZE>(public_key) << " wants to be your friend. Added with #" << friendNum << std::endl;
     }
 
     void ToxChannel::messageCallback(Tox *tox, int32_t friendnumber, const uint8_t * message, uint16_t length, void *userdata) {
@@ -102,13 +102,19 @@ namespace toxChannel {
     void ToxChannel::groupMessageCallback(Tox *tox, int32_t groupnumber, int32_t peernumber, const uint8_t * message, uint16_t length, void *userdata) {
 	const auto channel = static_cast<ToxChannel*>(userdata);
 
-	const auto namebuffer = std::make_unique<uint8_t*>(new uint8_t[TOX_MAX_NAME_LENGTH]);
-	const auto nameLen = tox_group_peername(tox, groupnumber, peernumber, *namebuffer);
-	const auto debugLen = nameLen + length + 4 + 1;
-	const auto msgbuffer = std::make_unique<char*>(new char[debugLen]);
+	const auto nameBuffer = std::make_unique<uint8_t*>(new uint8_t[TOX_MAX_NAME_LENGTH]);
+	const auto nameLen = tox_group_peername(tox, groupnumber, peernumber, *nameBuffer);
+	const auto name = std::make_unique<char*>(new char[nameLen + 2]);
+	snprintf(*name, nameLen + 1, "%s", *nameBuffer);
+	
+	const auto msg = std::make_unique<char*>(new char[length + 2]);
+	snprintf(*msg, length + 1, "%s", message);
 
-	snprintf(*msgbuffer, debugLen, "[%.*s]: %.*s", nameLen, *namebuffer, length, message);
-	std::cerr << "[DEBUG] Tox group msg> " << *msgbuffer << std::endl;
+	const auto newMessage = std::make_shared<const messaging::Message>(
+	    std::move(std::make_shared<const messaging::User>(messaging::User(*name))),
+	    *msg);
+	std::cerr << "[DEBUG] tox Group msg " << newMessage->user()->name() << "> " << newMessage->data() << std::endl;	
+	channel->_hub->newMessage(std::move(newMessage));
     }
 
     int ToxChannel::toxInit() {

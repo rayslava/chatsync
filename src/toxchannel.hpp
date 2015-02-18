@@ -21,7 +21,7 @@ namespace toxChannel {
     class ToxChannel: public Channeling::Channel {
 	Tox* const _tox;    /**< Main tox structure */
 	int toxInit();
-	std::future<void> activate();
+	std::future<void> activate() override;
 	bool wasConnected;
 
 	static void friendRequestCallback(Tox *tox, const uint8_t * public_key, const uint8_t * data, uint16_t length, void *userdata);
@@ -34,10 +34,10 @@ namespace toxChannel {
 	explicit ToxChannel(Hub::Hub* hub, const std::string&& config);
         ~ToxChannel();
 
-	std::string type() const {return "tox";};
+	std::string type() const override { return "tox"; };
 
     protected:
-        void parse(const std::string& l);
+	void incoming(const messaging::message_ptr&& msg) override;
     };
     const Channeling::ChannelCreatorImpl<ToxChannel> ToxChannel::creator("tox");
 }

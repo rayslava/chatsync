@@ -23,11 +23,12 @@ namespace Channeling {
   std::string const & Channel::name() const {
     return _name;
   }
-
-  Channel& operator>>(const std::string &msg,  Channel& channel) {
+ 
+  Channel& operator>> (const message_ptr msg,  Channel& channel) {
     if (channel.direction() == Channeling::ChannelDirection::Input)
       throw std::logic_error("Can't write data to input channel " + channel.name());
-    channel.parse(msg);
+    std::cerr << "[DEBUG] Incoming message " << msg->data() << std::endl;    
+    channel.incoming(std::move(msg));
     return channel;
   }
 
@@ -89,7 +90,7 @@ namespace Channeling {
     while (_pipeRunning) {
       // Initialize time out struct for select()
       struct timeval tv;
-      tv.tv_sec = 30;
+      tv.tv_sec = _config.get("poll_time", "5");
       tv.tv_usec = 0;
       // Initialize the set
       FD_ZERO(&readset);
@@ -110,7 +111,10 @@ namespace Channeling {
 	if (err != bytes)
 	  throw std::runtime_error(ERR_SOCK_READ);
 	// Dump read data
-	_hub->newMessage(std::string(line));
+	const auto msg = std::make_shared<const messaging::Message>(
+	    std::move(std::make_shared<const messaging::User>(messaging::User(_name.c_str()))),
+	    line);
+	_hub->newMessage(std::move(msg));
 	delete[] line;
       }
     }

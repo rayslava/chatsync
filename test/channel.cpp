@@ -29,8 +29,10 @@ TEST(FileChannel, files)
 {
     const auto hub = new Hub::Hub ("Hub");
 
-    char buffer[sizeof(testLine)];
     const auto ich = Channeling::ChannelFactory::create("file", hub, "data://direction=input\nname=infile");
+    const int buffer_size = sizeof(testLine) + ich->name().length() + 2;
+    const std::string valid_line = ich->name() + ": " + testLine;    
+    const auto buffer = new char[buffer_size];
 
     Channeling::ChannelFactory::create("file", hub, "data://direction=output\nname=outfile");
 
@@ -53,11 +55,12 @@ TEST(FileChannel, files)
 
     fd = open("output", O_RDONLY | O_SYNC);
     ASSERT_NE(fd, -1);
-    bzero(buffer, sizeof(buffer));
-    err = read(fd, buffer, sizeof(buffer) - 1);
-    ASSERT_EQ(err, sizeof(buffer) - 1);
+    bzero(buffer, buffer_size);
+    err = read(fd, buffer, buffer_size - 1);
+    ASSERT_EQ(err, buffer_size - 1);
     close(fd);
-    ASSERT_STREQ(buffer, testLine);
+    ASSERT_STREQ(buffer, valid_line.c_str());
+    delete[] buffer;
 }
 
 void sockListen() {
@@ -120,12 +123,14 @@ TEST(IrcChannel, sockerr)
 TEST(IrcChannel, socket)
 {
     const auto hub = new Hub::Hub ("Hub");
-    char buffer[sizeof(testLine)];
 
     const auto server = std::make_unique<std::thread>(std::thread(&sockListen));
     std::this_thread::sleep_for( std::chrono::milliseconds (50) );  // Give time to open socket 
-    Channeling::ChannelFactory::create("irc", hub, "data://direction=input\nname=ircin\nserver=127.0.0.1\nport=" + std::to_string(port) + "\nchannel=test");
+    const auto ich = Channeling::ChannelFactory::create("irc", hub, "data://direction=input\nname=ircin\nserver=127.0.0.1\nport=" + std::to_string(port) + "\nchannel=test");
     Channeling::ChannelFactory::create("file", hub, "data://direction=output\nname=outfile");
+    const int buffer_size = sizeof(testLine) + ich->name().length() + 2;
+    const std::string valid_line = ich->name() + ": " + testLine;    
+    const auto buffer = new char[buffer_size];
 
     hub->activate();
     std::this_thread::sleep_for( std::chrono::milliseconds (50) );
@@ -135,9 +140,10 @@ TEST(IrcChannel, socket)
 
     const auto fd = open("output", O_RDONLY | O_SYNC);
     ASSERT_NE(fd, -1);
-    bzero(buffer, sizeof(buffer));
-    auto err = read(fd, buffer, sizeof(buffer) - 1);
-    ASSERT_EQ(err, sizeof(buffer) - 1);
+    bzero(buffer, buffer_size);
+    auto err = read(fd, buffer, buffer_size - 1);
+    ASSERT_EQ(err, buffer_size - 1);
     close(fd);
-    ASSERT_STREQ(buffer, testLine);
+    ASSERT_STREQ(buffer, valid_line.c_str());
+    delete[] buffer;
 }

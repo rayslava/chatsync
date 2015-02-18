@@ -80,7 +80,7 @@ TEST(configParser, file)
   // Prepare config file
   const auto configLine = "test = testval\ntest2\t=\tvalue2\n";
   char nameBuffer [L_tmpnam];
-  tmpnam(nameBuffer);
+  const auto tmpnamres = tmpnam(nameBuffer);
 
   FILE *config  = fopen(nameBuffer, "w");
   int result = fputs(configLine, config);

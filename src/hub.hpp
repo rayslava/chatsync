@@ -1,4 +1,6 @@
 #pragma once
+#include "message.hpp"
+
 #include <list>
 #include <memory>
 #include <queue>
@@ -21,16 +23,16 @@ namespace Hub {
     */
     class Hub {
     private:
-        const std::string _name;             /**< Human-readable name */
-        std::list<chanPtr> _inputChannels;   /**< Container for all input channels */
-        std::list<chanPtr> _outputChannels;  /**< Container for all output channels */
+        const std::string _name;                    /**< Human-readable name */
+        std::list<chanPtr> _inputChannels;          /**< Container for all input channels */
+        std::list<chanPtr> _outputChannels;         /**< Container for all output channels */
 
-        std::queue<std::string> _messages;   /**< Message queue */
-        std::mutex _mutex;                   /**< Message queue lock */
-        std::condition_variable _cond;       /**< Lock condvar */
+	std::queue<messaging::message_ptr> _messages;   /**< Message queue */
+        std::mutex _mutex;                          /**< Message queue lock */
+        std::condition_variable _cond;              /**< Lock condvar */
 
-	std::unique_ptr<std::thread> _msgLoop; /**< Message processing thread (created from msgLoop() */
-	std::atomic_bool _loopRunning;       /**< Messaging is active */
+	std::unique_ptr<std::thread> _msgLoop;      /**< Message processing thread (created from msgLoop() */
+	std::atomic_bool _loopRunning;              /**< Messaging is active */
 
         /**
         * Append one more input channel to list taking ownership
@@ -46,8 +48,8 @@ namespace Hub {
         * Queue operations
         */
 
-	const std::string popMessage();
-        void pushMessage(const std::string&& item);
+	const messaging::message_ptr popMessage();
+        void pushMessage(const messaging::message_ptr&& item);
 
 	/**
 	* Thread function with main event loop
@@ -66,8 +68,10 @@ namespace Hub {
 
         /**
         * New message receiving callback
+	*
+	* @param msg The message. Costref is used to pass ownership to this Hub. Must be normally passed using std::move()
         */
-        void newMessage(const std::string&& msg);
+	void newMessage(const messaging::message_ptr&& msg);
 
 	/**
 	* Start message loop

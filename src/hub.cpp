@@ -44,21 +44,21 @@ namespace Hub {
         }
     }
 
-    void Hub::newMessage(const std::string&& msg) {
+    void Hub::newMessage(const messaging::message_ptr&& msg) {
       pushMessage(std::move(msg));
     }
 
-    const std::string Hub::popMessage() {
+    const messaging::message_ptr Hub::popMessage() {
        std::unique_lock<std::mutex> mlock(_mutex);
        while (_messages.empty() && _loopRunning)
 	   _cond.wait(mlock);
 
-       auto item = _messages.front();
+       const auto item = _messages.front();
        _messages.pop();
        return item;
     }
 
-    void Hub::pushMessage(const std::string&& item) {
+    void Hub::pushMessage(const messaging::message_ptr&& item) {
 	std::unique_lock<std::mutex> mlock(_mutex);
 	_messages.push(std::move(item));
 	mlock.unlock();
@@ -67,9 +67,9 @@ namespace Hub {
 
     void Hub::msgLoop() {
         while (_loopRunning) {
-        const std::string& msg(popMessage());
-        for (auto& out : _outputChannels)
-            msg >> *out;
+	    const auto msg = popMessage();
+	    for (auto& out : _outputChannels)
+		msg >> *out;
         }
     }
 
@@ -115,7 +115,10 @@ namespace Hub {
 	if (!_loopRunning)
 	    return;
 	_loopRunning = false;
-	pushMessage(std::move(MSG_EXITING));
+	const auto msg = std::make_shared<const messaging::Message>(
+	    std::move(std::make_shared<const messaging::User>(messaging::User("system"))),
+	    MSG_EXITING);
+	pushMessage(std::move(msg));
 	_msgLoop->join();
     }
 }

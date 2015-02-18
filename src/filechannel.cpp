@@ -22,9 +22,9 @@ namespace fileChannel {
 			      };
 			  });}
 
-    void FileChannel::parse(const std::string &l) {
-        _file << l;
-        std::cerr << "[DEBUG] Parsing line " << l << " inside " << _name << std::endl;
+    void FileChannel::incoming(const std::shared_ptr<const messaging::Message>&& msg) {
+	_file << msg->user()->name() << ": " << msg->data();
+        std::cerr << "[DEBUG] #file " << _name << " " << msg->data() << std::endl;
     }
 
     FileChannel::~FileChannel() {
