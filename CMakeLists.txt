@@ -50,10 +50,10 @@ find_package (Threads REQUIRED)
 set(STANDARD "-std=c++1y")
 
 set(CMAKE_CXX_FLAGS         "-Wall -Wno-unknown-pragmas -Wno-sign-compare -Woverloaded-virtual -Wwrite-strings -Wno-unused ${STANDARD} -Wextra -pedantic -Werror")
+set(CMAKE_CXX_FLAGS_PROFILED "${CMAKE_CXX_FLAGS} -pg")
 
 set(CMAKE_CXX_FLAGS_DEBUG   "-O0 -ggdb ${STANDARD}")
 set(CMAKE_CXX_FLAGS_RELEASE "-Ofast ${STANDARD}")
-set(CMAKE_CXX_FLAGS_PROFILED "${CMAKE_CXX_FLAGS_RELEASE} -pg")
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
   set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -flto -fwhole-program")
