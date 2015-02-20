@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Chatsync
-   &#160;<span id="projectnumber">2272257b9fb30534520b8e6697da9e14b05f5f22</span>
+   &#160;<span id="projectnumber">69da2f19293f7216f6388b68517a89575cb1dfb6</span>
    </div>
   </td>
  </tr>
@@ -180,7 +180,9 @@ Friends</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A channel to connect to input or output</p>
 <p>The deriving class <em>must</em> override: void void incoming(const message_ptr msg) = 0; &mdash; for data input in case of output channel void <a class="el" href="classChanneling_1_1Channel.html#af45f5ea6fcad7633e81b1e88c7103561">activate()</a>; &mdash; to implement specific activities for channel work starting</p>
-<p>Input channel should send message to hub-&gt;newMessage() </p>
+<p>Input channel should send message to hub-&gt;newMessage()</p>
+<p>If channel implementation depends on any abstraction represented by file descriptor the <a class="el" href="classChanneling_1_1Channel.html#a89db92100b0ebdd84017cf8d1ab56b3e">pollThread()</a> can be used: _fd : file descriptor, should be prepared during <a class="el" href="classChanneling_1_1Channel.html#af45f5ea6fcad7633e81b1e88c7103561">activate()</a> <a class="el" href="classChanneling_1_1Channel.html#a01fc348487170cd91251c4900ee5e0cd">startPolling()</a> and <a class="el" href="classChanneling_1_1Channel.html#a0f6020dd45db786436ff43a1598ad2f1">stopPolling()</a> functions start and stop the pollThread which reads _fd (using select()) and sends messages to _hub.</p>
+<p>If channel has own abstraction then it can override _pollThread() and implement own message loop. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="ac3cc3c0cc3cae292f9e3925f01db19fe"></a>
 <div class="memitem">
@@ -677,7 +679,7 @@ Friends</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceChanneling.html">Channeling</a></li><li class="navelem"><a class="el" href="classChanneling_1_1Channel.html">Channel</a></li>
-    <li class="footer">Generated on Thu Feb 19 2015 13:31:14 for Chatsync by
+    <li class="footer">Generated on Fri Feb 20 2015 11:46:54 for Chatsync by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9 </li>
   </ul>
