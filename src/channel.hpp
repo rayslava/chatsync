@@ -27,16 +27,23 @@ namespace Channeling {
      *   void activate(); --- to implement specific activities for channel work starting
      *
      * Input channel should send message to hub->newMessage()
+     *
+     * If channel implementation depends on any abstraction represented by file descriptor the pollThread()
+     * can be used:
+     * _fd : file descriptor, should be prepared during activate()
+     * startPolling() and stopPolling() functions start and stop the pollThread which reads _fd (using select())
+     * and sends messages to _hub.
+     *
+     * If channel has own abstraction then it can override _pollThread() and implement own message loop.
      */
     class Channel {
     protected:
 	/* Polling functions */
 	std::unique_ptr<std::thread> _thread;       /**< Pointer to reader thread in case of input channel */
 	std::atomic_bool _pipeRunning;              /**< Pipe reading thread is running */
-
 	virtual void pollThread();                  /**< Thread which selects the descriptor and send messages when new ones come */
-
         int _fd;                                    /**< File descriptor to select */
+
 	const Config::ConfigParser _config;         /**< Configuration storage */
         const std::string _name;                    /**< The channel name in config file */
         const ChannelDirection _direction;          /**< The channel direction for the whole transmission task */
