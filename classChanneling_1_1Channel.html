@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Chatsync
-   &#160;<span id="projectnumber">69da2f19293f7216f6388b68517a89575cb1dfb6</span>
+   &#160;<span id="projectnumber">22fcef2a571371b982a67b7d5821556a3620fef0</span>
    </div>
   </td>
  </tr>
@@ -150,6 +150,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a89db92100b0ebdd84017cf8d1ab56b3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c7e633ec1ccd9180e2abf24e3ca9e7b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#a7c7e633ec1ccd9180e2abf24e3ca9e7b">incoming</a> (const <a class="el" href="namespacemessaging.html#aa012bd42e06013a9d4a4d69a1a9897bc">message_ptr</a> &amp;&amp;msg)=0</td></tr>
 <tr class="separator:a7c7e633ec1ccd9180e2abf24e3ca9e7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4dcf9df2d4a0b67bc9ace88629e5d704"><td class="memItemLeft" align="right" valign="top">virtual const <a class="el" href="namespacemessaging.html#aa012bd42e06013a9d4a4d69a1a9897bc">message_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#a4dcf9df2d4a0b67bc9ace88629e5d704">parse</a> (const char *line) const =0</td></tr>
+<tr class="separator:a4dcf9df2d4a0b67bc9ace88629e5d704"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a01fc348487170cd91251c4900ee5e0cd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#a01fc348487170cd91251c4900ee5e0cd">startPolling</a> ()</td></tr>
 <tr class="separator:a01fc348487170cd91251c4900ee5e0cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0f6020dd45db786436ff43a1598ad2f1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChanneling_1_1Channel.html#a0f6020dd45db786436ff43a1598ad2f1">stopPolling</a> ()</td></tr>
@@ -364,6 +366,39 @@ Friends</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="a4dcf9df2d4a0b67bc9ace88629e5d704"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual const <a class="el" href="namespacemessaging.html#aa012bd42e06013a9d4a4d69a1a9897bc">message_ptr</a> Channeling::Channel::parse </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>line</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Parse a text line and generate a corresponding Message TODO: Decide if it should throw something</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">line</td><td>Text line from socket </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="classircChannel_1_1IrcChannel.html#ab48781b1151b1b678246964b1fe6c613">ircChannel::IrcChannel</a>, <a class="el" href="classtoxChannel_1_1ToxChannel.html#a15bd57c28dd55dbe040dfd3042b902c6">toxChannel::ToxChannel</a>, and <a class="el" href="classfileChannel_1_1FileChannel.html#affaaad64ae3784f33c184aed21c5ee0b">fileChannel::FileChannel</a>.</p>
 
 </div>
 </div>
@@ -679,7 +714,7 @@ Friends</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceChanneling.html">Channeling</a></li><li class="navelem"><a class="el" href="classChanneling_1_1Channel.html">Channel</a></li>
-    <li class="footer">Generated on Fri Feb 20 2015 11:46:54 for Chatsync by
+    <li class="footer">Generated on Wed Feb 25 2015 08:34:26 for Chatsync by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9 </li>
   </ul>

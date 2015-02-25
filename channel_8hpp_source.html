@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Chatsync
-   &#160;<span id="projectnumber">69da2f19293f7216f6388b68517a89575cb1dfb6</span>
+   &#160;<span id="projectnumber">22fcef2a571371b982a67b7d5821556a3620fef0</span>
    </div>
   </td>
  </tr>
@@ -139,52 +139,54 @@ $(document).ready(function(){initNavTree('channel_8hpp_source.html','');});
 <div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="classChanneling_1_1Channel.html#aa88710dcc6c8de6d3c0f965cdcd3430f">   50</a></span>&#160;        <a class="code" href="classHub_1_1Hub.html">Hub::Hub</a>* <span class="keyword">const</span> <a class="code" href="classChanneling_1_1Channel.html#aa88710dcc6c8de6d3c0f965cdcd3430f">_hub</a>;                       </div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> incoming(<span class="keyword">const</span> <a class="code" href="namespacemessaging.html#aa012bd42e06013a9d4a4d69a1a9897bc">message_ptr</a>&amp;&amp; msg) = 0;</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordtype">void</span> startPolling();</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span> <a class="code" href="namespacemessaging.html#aa012bd42e06013a9d4a4d69a1a9897bc">message_ptr</a> parse(<span class="keyword">const</span> <span class="keywordtype">char</span>* line) <span class="keyword">const</span> = 0;</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordtype">void</span> stopPolling();</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <a class="code" href="classChanneling_1_1Channel.html">Channel</a>(<a class="code" href="classHub_1_1Hub.html">Hub::Hub</a>* <span class="keyword">const</span> hub, <span class="keyword">const</span> std::string&amp;&amp; config);</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
-<div class="line"><a name="l00081"></a><span class="lineno"><a class="line" href="classChanneling_1_1Channel.html#af68955db4e1b5b0d33e0e91b63f370a0">   81</a></span>&#160;        <span class="keyword">virtual</span> <a class="code" href="classChanneling_1_1Channel.html#af68955db4e1b5b0d33e0e91b63f370a0">~Channel</a>() {};</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        <span class="keyword">virtual</span> std::string <span class="keyword">const</span> &amp; name() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keywordtype">void</span> startPolling();</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keywordtype">void</span> stopPolling();</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <a class="code" href="classChanneling_1_1Channel.html">Channel</a>(<a class="code" href="classHub_1_1Hub.html">Hub::Hub</a>* <span class="keyword">const</span> hub, <span class="keyword">const</span> std::string&amp;&amp; config);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
+<div class="line"><a name="l00089"></a><span class="lineno"><a class="line" href="classChanneling_1_1Channel.html#af68955db4e1b5b0d33e0e91b63f370a0">   89</a></span>&#160;        <span class="keyword">virtual</span> <a class="code" href="classChanneling_1_1Channel.html#af68955db4e1b5b0d33e0e91b63f370a0">~Channel</a>() {};</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keyword">virtual</span> std::string type() <span class="keyword">const</span> = 0;   </div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
-<div class="line"><a name="l00102"></a><span class="lineno"><a class="line" href="classChanneling_1_1Channel.html#a86ab3881297d545bf44fceccbbbe6d01">  102</a></span>&#160;        <a class="code" href="namespaceChanneling.html#a55b8672b8710070db3c834f4d8425378">ChannelDirection</a> <a class="code" href="classChanneling_1_1Channel.html#a86ab3881297d545bf44fceccbbbe6d01">direction</a>()<span class="keyword"> const </span>{<span class="keywordflow">return</span> _direction;};</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    <span class="keyword">virtual</span> std::future&lt;void&gt; activate() = 0;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        <span class="keyword">friend</span> <a class="code" href="classChanneling_1_1Channel.html">Channel</a>&amp; <a class="code" href="namespaceChanneling.html#ab5184cc46b8b46b29b3701d32ffa1623">operator&gt;&gt; </a>(<span class="keyword">const</span> <a class="code" href="namespacemessaging.html#aa012bd42e06013a9d4a4d69a1a9897bc">message_ptr</a>, <a class="code" href="classChanneling_1_1Channel.html">Channel</a>&amp; channel);</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    };</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;</div>
-<div class="line"><a name="l00126"></a><span class="lineno"><a class="line" href="classChanneling_1_1ChannelCreator.html">  126</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classChanneling_1_1ChannelCreator.html">ChannelCreator</a></div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    {</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    <a class="code" href="classChanneling_1_1ChannelCreator.html">ChannelCreator</a>(<span class="keyword">const</span> std::string&amp; classname);</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classChanneling_1_1Channel.html">Channel</a>* create(<a class="code" href="classHub_1_1Hub.html">Hub::Hub</a>* <span class="keyword">const</span> hub, <span class="keyword">const</span> std::string&amp;&amp; config) = 0;</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    };</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><a name="l00134"></a><span class="lineno"><a class="line" href="classChanneling_1_1ChannelCreatorImpl.html">  134</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classChanneling_1_1ChannelCreatorImpl.html">ChannelCreatorImpl</a> : <span class="keyword">public</span> <a class="code" href="classChanneling_1_1ChannelCreator.html">ChannelCreator</a></div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="keyword">virtual</span> std::string <span class="keyword">const</span> &amp; name() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keyword">virtual</span> std::string type() <span class="keyword">const</span> = 0;   </div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
+<div class="line"><a name="l00110"></a><span class="lineno"><a class="line" href="classChanneling_1_1Channel.html#a86ab3881297d545bf44fceccbbbe6d01">  110</a></span>&#160;        <a class="code" href="namespaceChanneling.html#a55b8672b8710070db3c834f4d8425378">ChannelDirection</a> <a class="code" href="classChanneling_1_1Channel.html#a86ab3881297d545bf44fceccbbbe6d01">direction</a>()<span class="keyword"> const </span>{<span class="keywordflow">return</span> _direction;};</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    <span class="keyword">virtual</span> std::future&lt;void&gt; activate() = 0;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        <span class="keyword">friend</span> <a class="code" href="classChanneling_1_1Channel.html">Channel</a>&amp; <a class="code" href="namespaceChanneling.html#ab5184cc46b8b46b29b3701d32ffa1623">operator&gt;&gt; </a>(<span class="keyword">const</span> <a class="code" href="namespacemessaging.html#aa012bd42e06013a9d4a4d69a1a9897bc">message_ptr</a>, <a class="code" href="classChanneling_1_1Channel.html">Channel</a>&amp; channel);</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    };</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;</div>
+<div class="line"><a name="l00134"></a><span class="lineno"><a class="line" href="classChanneling_1_1ChannelCreator.html">  134</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classChanneling_1_1ChannelCreator.html">ChannelCreator</a></div>
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    {</div>
 <div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00137"></a><span class="lineno"><a class="line" href="classChanneling_1_1ChannelCreatorImpl.html#a8d28ffbec472bc0ab8b288f9603ea0ea">  137</a></span>&#160;    <a class="code" href="classChanneling_1_1ChannelCreatorImpl.html#a8d28ffbec472bc0ab8b288f9603ea0ea">ChannelCreatorImpl</a>(<span class="keyword">const</span> std::string&amp; classname) : <a class="code" href="classChanneling_1_1ChannelCreator.html">ChannelCreator</a>(classname) {}</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;</div>
-<div class="line"><a name="l00139"></a><span class="lineno"><a class="line" href="classChanneling_1_1ChannelCreatorImpl.html#aae89ae5a33c03f74c11eee174f606b45">  139</a></span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classChanneling_1_1Channel.html">Channel</a>* <a class="code" href="classChanneling_1_1ChannelCreatorImpl.html#aae89ae5a33c03f74c11eee174f606b45">create</a>(<a class="code" href="classHub_1_1Hub.html">Hub::Hub</a>* <span class="keyword">const</span> hub, <span class="keyword">const</span> std::string&amp;&amp; config) { <span class="keywordflow">return</span> <span class="keyword">new</span> T(hub, std::move(config)); }</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    };</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;</div>
-<div class="line"><a name="l00142"></a><span class="lineno"><a class="line" href="classChanneling_1_1ChannelFactory.html">  142</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classChanneling_1_1ChannelFactory.html">ChannelFactory</a></div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    <a class="code" href="classChanneling_1_1ChannelCreator.html">ChannelCreator</a>(<span class="keyword">const</span> std::string&amp; classname);</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classChanneling_1_1Channel.html">Channel</a>* create(<a class="code" href="classHub_1_1Hub.html">Hub::Hub</a>* <span class="keyword">const</span> hub, <span class="keyword">const</span> std::string&amp;&amp; config) = 0;</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    };</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><a name="l00142"></a><span class="lineno"><a class="line" href="classChanneling_1_1ChannelCreatorImpl.html">  142</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classChanneling_1_1ChannelCreatorImpl.html">ChannelCreatorImpl</a> : <span class="keyword">public</span> <a class="code" href="classChanneling_1_1ChannelCreator.html">ChannelCreator</a></div>
 <div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    {</div>
 <div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    <span class="keyword">static</span> <a class="code" href="classChanneling_1_1Channel.html">Channel</a>* create(<span class="keyword">const</span> std::string&amp; classname, <a class="code" href="classHub_1_1Hub.html">Hub::Hub</a>* <span class="keyword">const</span> hub, <span class="keyword">const</span> std::string&amp;&amp; config);</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> registerClass(<span class="keyword">const</span> std::string&amp; classname, <a class="code" href="classChanneling_1_1ChannelCreator.html">ChannelCreator</a>* creator);</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    <span class="keyword">static</span> std::map&lt;std::string, ChannelCreator*&gt;&amp; get_table();</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    };</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;}</div>
+<div class="line"><a name="l00145"></a><span class="lineno"><a class="line" href="classChanneling_1_1ChannelCreatorImpl.html#a8d28ffbec472bc0ab8b288f9603ea0ea">  145</a></span>&#160;    <a class="code" href="classChanneling_1_1ChannelCreatorImpl.html#a8d28ffbec472bc0ab8b288f9603ea0ea">ChannelCreatorImpl</a>(<span class="keyword">const</span> std::string&amp; classname) : <a class="code" href="classChanneling_1_1ChannelCreator.html">ChannelCreator</a>(classname) {}</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;</div>
+<div class="line"><a name="l00147"></a><span class="lineno"><a class="line" href="classChanneling_1_1ChannelCreatorImpl.html#aae89ae5a33c03f74c11eee174f606b45">  147</a></span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classChanneling_1_1Channel.html">Channel</a>* <a class="code" href="classChanneling_1_1ChannelCreatorImpl.html#aae89ae5a33c03f74c11eee174f606b45">create</a>(<a class="code" href="classHub_1_1Hub.html">Hub::Hub</a>* <span class="keyword">const</span> hub, <span class="keyword">const</span> std::string&amp;&amp; config) { <span class="keywordflow">return</span> <span class="keyword">new</span> T(hub, std::move(config)); }</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    };</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;</div>
+<div class="line"><a name="l00150"></a><span class="lineno"><a class="line" href="classChanneling_1_1ChannelFactory.html">  150</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classChanneling_1_1ChannelFactory.html">ChannelFactory</a></div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    {</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    <span class="keyword">static</span> <a class="code" href="classChanneling_1_1Channel.html">Channel</a>* create(<span class="keyword">const</span> std::string&amp; classname, <a class="code" href="classHub_1_1Hub.html">Hub::Hub</a>* <span class="keyword">const</span> hub, <span class="keyword">const</span> std::string&amp;&amp; config);</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> registerClass(<span class="keyword">const</span> std::string&amp; classname, <a class="code" href="classChanneling_1_1ChannelCreator.html">ChannelCreator</a>* creator);</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    <span class="keyword">static</span> std::map&lt;std::string, ChannelCreator*&gt;&amp; get_table();</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    };</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;}</div>
 <div class="ttc" id="classChanneling_1_1Channel_html_aa88710dcc6c8de6d3c0f965cdcd3430f"><div class="ttname"><a href="classChanneling_1_1Channel.html#aa88710dcc6c8de6d3c0f965cdcd3430f">Channeling::Channel::_hub</a></div><div class="ttdeci">Hub::Hub *const _hub</div><div class="ttdef"><b>Definition:</b> channel.hpp:50</div></div>
 <div class="ttc" id="namespaceChanneling_html"><div class="ttname"><a href="namespaceChanneling.html">Channeling</a></div><div class="ttdef"><b>Definition:</b> channel.cpp:9</div></div>
 <div class="ttc" id="classChanneling_1_1Channel_html_a8f74dc1230d920949932171c9b2cd562"><div class="ttname"><a href="classChanneling_1_1Channel.html#a8f74dc1230d920949932171c9b2cd562">Channeling::Channel::_pipeRunning</a></div><div class="ttdeci">std::atomic_bool _pipeRunning</div><div class="ttdef"><b>Definition:</b> channel.hpp:43</div></div>
@@ -193,24 +195,24 @@ $(document).ready(function(){initNavTree('channel_8hpp_source.html','');});
 <div class="ttc" id="classChanneling_1_1Channel_html_ac64d544a772cb8f6bfe8c9a083440b66"><div class="ttname"><a href="classChanneling_1_1Channel.html#ac64d544a772cb8f6bfe8c9a083440b66">Channeling::Channel::_direction</a></div><div class="ttdeci">const ChannelDirection _direction</div><div class="ttdef"><b>Definition:</b> channel.hpp:49</div></div>
 <div class="ttc" id="namespaceChanneling_html_ab5184cc46b8b46b29b3701d32ffa1623"><div class="ttname"><a href="namespaceChanneling.html#ab5184cc46b8b46b29b3701d32ffa1623">Channeling::operator&gt;&gt;</a></div><div class="ttdeci">Channel &amp; operator&gt;&gt;(const message_ptr msg, Channel &amp;channel)</div><div class="ttdef"><b>Definition:</b> channel.cpp:27</div></div>
 <div class="ttc" id="namespacemessaging_html_aa012bd42e06013a9d4a4d69a1a9897bc"><div class="ttname"><a href="namespacemessaging.html#aa012bd42e06013a9d4a4d69a1a9897bc">messaging::message_ptr</a></div><div class="ttdeci">std::shared_ptr&lt; const Message &gt; message_ptr</div><div class="ttdef"><b>Definition:</b> message.hpp:26</div></div>
-<div class="ttc" id="classChanneling_1_1ChannelCreatorImpl_html"><div class="ttname"><a href="classChanneling_1_1ChannelCreatorImpl.html">Channeling::ChannelCreatorImpl</a></div><div class="ttdef"><b>Definition:</b> channel.hpp:134</div></div>
-<div class="ttc" id="classChanneling_1_1ChannelCreatorImpl_html_aae89ae5a33c03f74c11eee174f606b45"><div class="ttname"><a href="classChanneling_1_1ChannelCreatorImpl.html#aae89ae5a33c03f74c11eee174f606b45">Channeling::ChannelCreatorImpl::create</a></div><div class="ttdeci">virtual Channel * create(Hub::Hub *const hub, const std::string &amp;&amp;config)</div><div class="ttdef"><b>Definition:</b> channel.hpp:139</div></div>
-<div class="ttc" id="classChanneling_1_1Channel_html_a86ab3881297d545bf44fceccbbbe6d01"><div class="ttname"><a href="classChanneling_1_1Channel.html#a86ab3881297d545bf44fceccbbbe6d01">Channeling::Channel::direction</a></div><div class="ttdeci">ChannelDirection direction() const </div><div class="ttdef"><b>Definition:</b> channel.hpp:102</div></div>
+<div class="ttc" id="classChanneling_1_1ChannelCreatorImpl_html"><div class="ttname"><a href="classChanneling_1_1ChannelCreatorImpl.html">Channeling::ChannelCreatorImpl</a></div><div class="ttdef"><b>Definition:</b> channel.hpp:142</div></div>
+<div class="ttc" id="classChanneling_1_1ChannelCreatorImpl_html_aae89ae5a33c03f74c11eee174f606b45"><div class="ttname"><a href="classChanneling_1_1ChannelCreatorImpl.html#aae89ae5a33c03f74c11eee174f606b45">Channeling::ChannelCreatorImpl::create</a></div><div class="ttdeci">virtual Channel * create(Hub::Hub *const hub, const std::string &amp;&amp;config)</div><div class="ttdef"><b>Definition:</b> channel.hpp:147</div></div>
+<div class="ttc" id="classChanneling_1_1Channel_html_a86ab3881297d545bf44fceccbbbe6d01"><div class="ttname"><a href="classChanneling_1_1Channel.html#a86ab3881297d545bf44fceccbbbe6d01">Channeling::Channel::direction</a></div><div class="ttdeci">ChannelDirection direction() const </div><div class="ttdef"><b>Definition:</b> channel.hpp:110</div></div>
 <div class="ttc" id="classChanneling_1_1Channel_html_ab868693b6df85d5bb41cd11ed8399ff9"><div class="ttname"><a href="classChanneling_1_1Channel.html#ab868693b6df85d5bb41cd11ed8399ff9">Channeling::Channel::_fd</a></div><div class="ttdeci">int _fd</div><div class="ttdef"><b>Definition:</b> channel.hpp:45</div></div>
 <div class="ttc" id="classChanneling_1_1activate__error_html"><div class="ttname"><a href="classChanneling_1_1activate__error.html">Channeling::activate_error</a></div><div class="ttdef"><b>Definition:</b> channel.hpp:17</div></div>
 <div class="ttc" id="classChanneling_1_1Channel_html"><div class="ttname"><a href="classChanneling_1_1Channel.html">Channeling::Channel</a></div><div class="ttdef"><b>Definition:</b> channel.hpp:39</div></div>
 <div class="ttc" id="classChanneling_1_1Channel_html_a10cfaebb9b38213c6e984a582b831852"><div class="ttname"><a href="classChanneling_1_1Channel.html#a10cfaebb9b38213c6e984a582b831852">Channeling::Channel::_config</a></div><div class="ttdeci">const Config::ConfigParser _config</div><div class="ttdef"><b>Definition:</b> channel.hpp:47</div></div>
 <div class="ttc" id="message_8hpp_html"><div class="ttname"><a href="message_8hpp.html">message.hpp</a></div></div>
-<div class="ttc" id="classChanneling_1_1ChannelCreatorImpl_html_a8d28ffbec472bc0ab8b288f9603ea0ea"><div class="ttname"><a href="classChanneling_1_1ChannelCreatorImpl.html#a8d28ffbec472bc0ab8b288f9603ea0ea">Channeling::ChannelCreatorImpl::ChannelCreatorImpl</a></div><div class="ttdeci">ChannelCreatorImpl(const std::string &amp;classname)</div><div class="ttdef"><b>Definition:</b> channel.hpp:137</div></div>
+<div class="ttc" id="classChanneling_1_1ChannelCreatorImpl_html_a8d28ffbec472bc0ab8b288f9603ea0ea"><div class="ttname"><a href="classChanneling_1_1ChannelCreatorImpl.html#a8d28ffbec472bc0ab8b288f9603ea0ea">Channeling::ChannelCreatorImpl::ChannelCreatorImpl</a></div><div class="ttdeci">ChannelCreatorImpl(const std::string &amp;classname)</div><div class="ttdef"><b>Definition:</b> channel.hpp:145</div></div>
 <div class="ttc" id="namespacemessaging_html"><div class="ttname"><a href="namespacemessaging.html">messaging</a></div><div class="ttdef"><b>Definition:</b> message.hpp:6</div></div>
-<div class="ttc" id="classChanneling_1_1ChannelFactory_html"><div class="ttname"><a href="classChanneling_1_1ChannelFactory.html">Channeling::ChannelFactory</a></div><div class="ttdef"><b>Definition:</b> channel.hpp:142</div></div>
-<div class="ttc" id="classChanneling_1_1Channel_html_af68955db4e1b5b0d33e0e91b63f370a0"><div class="ttname"><a href="classChanneling_1_1Channel.html#af68955db4e1b5b0d33e0e91b63f370a0">Channeling::Channel::~Channel</a></div><div class="ttdeci">virtual ~Channel()</div><div class="ttdef"><b>Definition:</b> channel.hpp:81</div></div>
+<div class="ttc" id="classChanneling_1_1ChannelFactory_html"><div class="ttname"><a href="classChanneling_1_1ChannelFactory.html">Channeling::ChannelFactory</a></div><div class="ttdef"><b>Definition:</b> channel.hpp:150</div></div>
+<div class="ttc" id="classChanneling_1_1Channel_html_af68955db4e1b5b0d33e0e91b63f370a0"><div class="ttname"><a href="classChanneling_1_1Channel.html#af68955db4e1b5b0d33e0e91b63f370a0">Channeling::Channel::~Channel</a></div><div class="ttdeci">virtual ~Channel()</div><div class="ttdef"><b>Definition:</b> channel.hpp:89</div></div>
 <div class="ttc" id="classConfig_1_1ConfigParser_html"><div class="ttname"><a href="classConfig_1_1ConfigParser.html">Config::ConfigParser</a></div><div class="ttdef"><b>Definition:</b> config.hpp:102</div></div>
 <div class="ttc" id="hub_8hpp_html"><div class="ttname"><a href="hub_8hpp.html">hub.hpp</a></div></div>
 <div class="ttc" id="classHub_1_1Hub_html"><div class="ttname"><a href="classHub_1_1Hub.html">Hub::Hub</a></div><div class="ttdef"><b>Definition:</b> hub.hpp:24</div></div>
 <div class="ttc" id="classChanneling_1_1Channel_html_a2a3dccef74972f2946c188f6599049d0"><div class="ttname"><a href="classChanneling_1_1Channel.html#a2a3dccef74972f2946c188f6599049d0">Channeling::Channel::_thread</a></div><div class="ttdeci">std::unique_ptr&lt; std::thread &gt; _thread</div><div class="ttdef"><b>Definition:</b> channel.hpp:42</div></div>
 <div class="ttc" id="namespaceChanneling_html_a55b8672b8710070db3c834f4d8425378"><div class="ttname"><a href="namespaceChanneling.html#a55b8672b8710070db3c834f4d8425378">Channeling::ChannelDirection</a></div><div class="ttdeci">ChannelDirection</div><div class="ttdef"><b>Definition:</b> config.hpp:13</div></div>
-<div class="ttc" id="classChanneling_1_1ChannelCreator_html"><div class="ttname"><a href="classChanneling_1_1ChannelCreator.html">Channeling::ChannelCreator</a></div><div class="ttdef"><b>Definition:</b> channel.hpp:126</div></div>
+<div class="ttc" id="classChanneling_1_1ChannelCreator_html"><div class="ttname"><a href="classChanneling_1_1ChannelCreator.html">Channeling::ChannelCreator</a></div><div class="ttdef"><b>Definition:</b> channel.hpp:134</div></div>
 <div class="ttc" id="classChanneling_1_1Channel_html_ac6ea082f1aefb4a2efd07ed1343f39ca"><div class="ttname"><a href="classChanneling_1_1Channel.html#ac6ea082f1aefb4a2efd07ed1343f39ca">Channeling::Channel::_name</a></div><div class="ttdeci">const std::string _name</div><div class="ttdef"><b>Definition:</b> channel.hpp:48</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
@@ -218,7 +220,7 @@ $(document).ready(function(){initNavTree('channel_8hpp_source.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="channel_8hpp.html">channel.hpp</a></li>
-    <li class="footer">Generated on Fri Feb 20 2015 11:46:54 for Chatsync by
+    <li class="footer">Generated on Wed Feb 25 2015 08:34:26 for Chatsync by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9 </li>
   </ul>

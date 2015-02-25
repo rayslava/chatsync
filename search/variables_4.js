@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['msg_5fexiting',['MSG_EXITING',['../messages_8hpp.html#ac3a08cfb2a8d4a13ee717d3eecacbf0a',1,'messages.hpp']]]
+  ['irc_5fmessage_5fmax',['irc_message_max',['../namespaceircChannel.html#adb15ce104dba0f33a9e7743ed2295322',1,'ircChannel']]]
 ];

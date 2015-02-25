@@ -6,6 +6,7 @@ var classircChannel_1_1IrcChannel =
     [ "connect", "classircChannel_1_1IrcChannel.html#a52e2baace598d46bac765f02ebe1b985", null ],
     [ "disconnect", "classircChannel_1_1IrcChannel.html#aa67e184b6ccf59acb994c40c3446546b", null ],
     [ "incoming", "classircChannel_1_1IrcChannel.html#a98e21bb4f7c9de81fceebd8a4ecdd1ce", null ],
+    [ "parse", "classircChannel_1_1IrcChannel.html#ab48781b1151b1b678246964b1fe6c613", null ],
     [ "registerConnection", "classircChannel_1_1IrcChannel.html#a50d2857561905d6b9a03f815614aa1ba", null ],
     [ "sendMessage", "classircChannel_1_1IrcChannel.html#ae76f069ffef1ac326d467263592e9044", null ],
     [ "type", "classircChannel_1_1IrcChannel.html#a56d7ca5d0be35a5ebf563fd357c51a81", null ],
