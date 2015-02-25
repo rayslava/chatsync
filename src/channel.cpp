@@ -112,10 +112,7 @@ namespace Channeling {
 	if (err != bytes)
 	  throw std::runtime_error(ERR_SOCK_READ);
 	// Dump read data
-	const auto msg = std::make_shared<const messaging::Message>(
-	    std::move(std::make_shared<const messaging::User>(messaging::User(_name.c_str()))),
-	    line);
-	_hub->newMessage(std::move(msg));
+	_hub->newMessage(parse(line));
 	delete[] line;
       }
     }

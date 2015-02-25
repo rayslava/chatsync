@@ -4,6 +4,7 @@
 
 namespace ircChannel {
 
+    constexpr size_t irc_message_max = 256;
     /**
     * IRC connection channel
     *
@@ -29,6 +30,7 @@ namespace ircChannel {
 	int disconnect();
 	int sendMessage(const std::string& msg);
 	std::future<void> activate() override;
+        const messaging::message_ptr parse(const char* line) const override;
 
 	static const Channeling::ChannelCreatorImpl<IrcChannel> creator;
 	

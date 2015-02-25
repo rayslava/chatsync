@@ -117,6 +117,19 @@ namespace toxChannel {
 	channel->_hub->newMessage(std::move(newMessage));
     }
 
+    const messaging::message_ptr ToxChannel::parse(const char* line) const
+    {
+        const std::string s(line);
+        const auto name = s.substr(0, s.find(":"));
+        const auto text = s.substr(s.find(":"), s.length());
+
+        const auto msg = std::make_shared<const messaging::Message>(
+            std::move(std::make_shared<const messaging::User>(messaging::User(name.c_str()))),
+	    text.c_str());
+        return msg;
+    }
+
+
     int ToxChannel::toxInit() {
 	int result = 0;
 

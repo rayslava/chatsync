@@ -2,7 +2,10 @@
 #include "hub.hpp"
 #include "messages.hpp"
 #include <stdexcept>
+#include <utility>
 #include <typeinfo>
+#include <regex>
+#include <memory>
 
 namespace ircChannel {
     IrcChannel::IrcChannel(Hub::Hub* hub, const std::string&& config):
@@ -15,7 +18,7 @@ namespace ircChannel {
 
     std::future<void> IrcChannel::activate() {
 	return std::async(std::launch::async, [this]() {
-		if (_direction == Channeling::ChannelDirection::Input) {
+		if (_direction == Channeling::ChannelDirection::Input || _direction == Channeling::ChannelDirection::Output) {
 		    _fd = connect();
 		    startPolling();
 		    registerConnection();
@@ -28,8 +31,34 @@ namespace ircChannel {
     }
 
     void IrcChannel::incoming(const messaging::message_ptr&& msg) {
+	char message[irc_message_max];
+
+	snprintf(message, 256, "PRIVMSG #chatsync :[%s]: %s\r\n", msg->user()->name().c_str(), msg->data().c_str());
         std::cerr << "[DEBUG] #irc" << _name << " " << msg->data() << " inside " << _name << std::endl;
+	sendMessage(message);
     }
+
+    const messaging::message_ptr IrcChannel::parse(const char* line) const
+    {
+        // :rayslava!~v.barinov@212.44.150.238 PRIVMSG #chatsync :ololo
+        const std::string toParse(line);
+        std::cerr << "[DEBUG] Parsing irc line:" << toParse << std::endl;
+	std::regex msgRe("^:(\\S+)!~(\\S+)\\s+PRIVMSG\\s+#(\\S+)\\s+:(.*)\r\n$");
+	std::smatch msgMatches;
+        std::string name = "irc";
+        std::string text = "parse error";
+        if (std::regex_match(toParse, msgMatches, msgRe)) {
+            name = msgMatches[1].str();
+            text = msgMatches[4].str();
+            std::cerr << "[DEBUG] #irc:" << name << ": " << text << std::endl;
+        }
+
+        const auto msg = std::make_shared<const messaging::Message>(
+	    std::move(std::make_shared<const messaging::User>(messaging::User(name.c_str()))),
+	    text.c_str());
+        return msg;
+    }
+
 
     int IrcChannel::registerConnection() {
 	const std::string nick = _config.get("nickname", "chatsyncbot");
@@ -90,9 +119,9 @@ namespace ircChannel {
 	if (server == NULL)
 	    throw Channeling::activate_error(ERR_HOST_NOT_FOUND);
 
-	net::bzero((char *) &serv_addr, sizeof(serv_addr));
+	::bzero((char *) &serv_addr, sizeof(serv_addr));
 	serv_addr.sin_family = AF_INET;
-	net::bcopy((char *)server->h_addr,
+	::bcopy((char *)server->h_addr,
 	      (char *)&serv_addr.sin_addr.s_addr,
 	      server->h_length);
 	serv_addr.sin_port = net::htons(_port);

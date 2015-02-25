@@ -29,6 +29,7 @@ namespace toxChannel {
 	static void groupMessageCallback(Tox *tox, int32_t groupnumber, int32_t peernumber, const uint8_t * message, uint16_t length, void *userdata);
 	static const Channeling::ChannelCreatorImpl<ToxChannel> creator;
 
+        const messaging::message_ptr parse(const char* line) const override;
 	void pollThread() override; /**< Thread for tox infinite loop */
     public:
 	explicit ToxChannel(Hub::Hub* hub, const std::string&& config);

@@ -10,7 +10,8 @@
 #include <netinet/in.h>
 
 constexpr auto port = 33445;
-const char testLine[] = "Testing file writing";
+const char testLine[] = "Testing file writing\r\n";
+const char ircTestLine[] = ":testuser!~testhost PRIVMSG #chatsync :message\r\n";
 
 
 TEST(FileChannel, name)
@@ -30,8 +31,8 @@ TEST(FileChannel, files)
     const auto hub = new Hub::Hub ("Hub");
 
     const auto ich = Channeling::ChannelFactory::create("file", hub, "data://direction=input\nname=infile");
-    const int buffer_size = sizeof(testLine) + ich->name().length() + 2;
-    const std::string valid_line = ich->name() + ": " + testLine;    
+    const int buffer_size = sizeof(testLine) + ich->name().length() + 2 + 5; // file: and ": " sizes
+    const std::string valid_line = "file:" + ich->name() + ": " + testLine;
     const auto buffer = new char[buffer_size];
 
     Channeling::ChannelFactory::create("file", hub, "data://direction=output\nname=outfile");
@@ -99,7 +100,7 @@ void sockListen() {
 
 	bzero(buffer,256);
 
-	n = write(newsockfd, testLine, sizeof(testLine));
+	n = write(newsockfd, ircTestLine, sizeof(ircTestLine));
 	if (n < 0) {
 	    perror("ERROR writing to socket");
 	    exit(1);
@@ -128,8 +129,8 @@ TEST(IrcChannel, socket)
     std::this_thread::sleep_for( std::chrono::milliseconds (50) );  // Give time to open socket 
     const auto ich = Channeling::ChannelFactory::create("irc", hub, "data://direction=input\nname=ircin\nserver=127.0.0.1\nport=" + std::to_string(port) + "\nchannel=test");
     Channeling::ChannelFactory::create("file", hub, "data://direction=output\nname=outfile");
-    const int buffer_size = sizeof(testLine) + ich->name().length() + 2;
-    const std::string valid_line = ich->name() + ": " + testLine;    
+    const std::string valid_line = "testuser: message";
+    const int buffer_size = valid_line.length() + 1;
     const auto buffer = new char[buffer_size];
 
     hub->activate();

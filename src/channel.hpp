@@ -58,6 +58,14 @@ namespace Channeling {
 	 */ 
 	virtual void incoming(const message_ptr&& msg) = 0;
 
+        /**
+         * Parse a text line and generate a corresponding Message
+         * TODO: Decide if it should throw something
+         *
+         * @param line Text line from socket
+         */
+        virtual const message_ptr parse(const char* line) const = 0;
+
 	/**
 	 * Start thread which polls the descriptor Channel::_fd
 	 *
