@@ -6,17 +6,17 @@
 namespace fileChannel {
 
     FileChannel::FileChannel(Hub::Hub* hub, const std::string&& config):
-	Channeling::Channel(hub, std::move(config))
+	channeling::Channel(hub, std::move(config))
     {
     }
 
     std::future<void> FileChannel::activate() {
 	return std::async(std::launch::async,
 			  [this]() {
-			      if (_direction == Channeling::ChannelDirection::Input) {
+			      if (_direction == channeling::ChannelDirection::Input) {
 				  _fd = openPipe("input");
 				  startPolling();
-			      } else if (_direction == Channeling::ChannelDirection::Output) {
+			      } else if (_direction == channeling::ChannelDirection::Output) {
 				  _file.clear();
 				  _file.open("output", std::ios::out);
 			      };
@@ -58,7 +58,7 @@ namespace fileChannel {
     int FileChannel::openPipe(const std::string &filename) {
         int ret_val = mkfifo(filename.c_str(), 0666);
         if ((ret_val == -1) && (errno != EEXIST))
-            throw Channeling::activate_error(ERR_FILE_OPEN);
+            throw channeling::activate_error(ERR_FILE_OPEN);
             /* Open both ends within this process in on-blocking mode
                Must do like this otherwise open call will wait
                till other end of pipe is opened by another process */

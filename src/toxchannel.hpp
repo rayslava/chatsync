@@ -18,7 +18,7 @@ namespace toxChannel {
     /**
     * Tox channel
     */
-    class ToxChannel: public Channeling::Channel {
+    class ToxChannel: public channeling::Channel {
 	Tox* const _tox;    /**< Main tox structure */
 	int toxInit();
 	std::future<void> activate() override;
@@ -27,7 +27,7 @@ namespace toxChannel {
 	static void friendRequestCallback(Tox *tox, const uint8_t * public_key, const uint8_t * data, uint16_t length, void *userdata);
 	static void messageCallback(Tox *tox, int32_t friendnumber, const uint8_t * message, uint16_t length, void *userdata);
 	static void groupMessageCallback(Tox *tox, int32_t groupnumber, int32_t peernumber, const uint8_t * message, uint16_t length, void *userdata);
-	static const Channeling::ChannelCreatorImpl<ToxChannel> creator;
+	static const channeling::ChannelCreatorImpl<ToxChannel> creator;
 
         const messaging::message_ptr parse(const char* line) const override;
 	void pollThread() override; /**< Thread for tox infinite loop */
@@ -40,5 +40,5 @@ namespace toxChannel {
     protected:
 	void incoming(const messaging::message_ptr&& msg) override;
     };
-    const Channeling::ChannelCreatorImpl<ToxChannel> ToxChannel::creator("tox");
+    const channeling::ChannelCreatorImpl<ToxChannel> ToxChannel::creator("tox");
 }

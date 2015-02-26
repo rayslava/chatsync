@@ -15,28 +15,28 @@ namespace Hub {
     {
     }
 
-    void Hub::addInput(Channeling::Channel * const channel) {
+    void Hub::addInput(channeling::Channel * const channel) {
         if (!_inputChannels.empty() &&
              std::find_if(std::begin(_inputChannels), std::end(_inputChannels),
                 [&channel](chanPtr const& p)->bool {return p.get() == channel;}) != std::end(_inputChannels))
             throw std::logic_error(ERR_HUB_CHAN_CANT_BE_IN_OUT);
-        _inputChannels.push_back(std::unique_ptr<Channeling::Channel> (channel));
+        _inputChannels.push_back(std::unique_ptr<channeling::Channel> (channel));
     }
 
-    void Hub::addOutput(Channeling::Channel * const channel) {
+    void Hub::addOutput(channeling::Channel * const channel) {
         if (!_outputChannels.empty() &&
                 std::find_if(std::begin(_outputChannels), std::end(_outputChannels),
                 [&channel](chanPtr const& p)->bool {return p.get() == channel;}) != std::end(_outputChannels))
             throw std::logic_error(ERR_HUB_CHAN_CANT_BE_IN_OUT);
-        _outputChannels.push_back(std::unique_ptr<Channeling::Channel> (channel));
+        _outputChannels.push_back(std::unique_ptr<channeling::Channel> (channel));
     }
 
-    void Hub::addChannel(Channeling::Channel * const channel) {
+    void Hub::addChannel(channeling::Channel * const channel) {
         switch (channel->direction()) {
-            case Channeling::ChannelDirection::Input:
+            case channeling::ChannelDirection::Input:
                 addInput(channel);
                 break;
-            case Channeling::ChannelDirection::Output:
+            case channeling::ChannelDirection::Output:
                 addOutput(channel);
                 break;
             default:

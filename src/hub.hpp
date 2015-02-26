@@ -9,13 +9,13 @@
 #include <condition_variable>
 #include <atomic>
 
-namespace Channeling {
+namespace channeling {
     class Channel;
 }
 
 namespace Hub {
 
-    typedef std::unique_ptr<Channeling::Channel> chanPtr;
+    typedef std::unique_ptr<channeling::Channel> chanPtr;
 
     /**
     * A thread-safe implementation of two connected channels sets.
@@ -37,12 +37,12 @@ namespace Hub {
         /**
         * Append one more input channel to list taking ownership
         */
-        void addInput(Channeling::Channel * const);
+        void addInput(channeling::Channel * const);
 
         /**
         * Append one more output channel to list taking ownership
         */
-        void addOutput(Channeling::Channel * const);
+        void addOutput(channeling::Channel * const);
 
         /*
         * Queue operations
@@ -64,7 +64,7 @@ namespace Hub {
         /**
         * Append channel accordingly to its direction
         */
-        void addChannel(Channeling::Channel * const);
+        void addChannel(channeling::Channel * const);
 
         /**
         * New message receiving callback

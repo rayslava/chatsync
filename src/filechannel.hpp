@@ -9,7 +9,7 @@ namespace fileChannel {
     *
     * May be useful for logging
     */
-    class FileChannel: public Channeling::Channel {
+    class FileChannel: public channeling::Channel {
 	std::fstream _file;                         /**< File stream to save log */
 
 	/**
@@ -24,7 +24,7 @@ namespace fileChannel {
 
 	std::future<void> activate() override;
         const messaging::message_ptr parse(const char* line) const override;
-	static const Channeling::ChannelCreatorImpl<FileChannel> creator;
+	static const channeling::ChannelCreatorImpl<FileChannel> creator;
     public:
 	explicit FileChannel(Hub::Hub* hub, const std::string&& config);
         ~FileChannel();
@@ -34,5 +34,5 @@ namespace fileChannel {
     protected:
 	void incoming(const messaging::message_ptr&& msg) override;
     };
-    const Channeling::ChannelCreatorImpl<FileChannel> FileChannel::creator("file");
+    const channeling::ChannelCreatorImpl<FileChannel> FileChannel::creator("file");
 }

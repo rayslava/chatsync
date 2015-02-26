@@ -5,7 +5,7 @@
 #include "config.hpp"
 #include "messages.hpp"
 
-namespace Config {
+namespace config {
     ConfigParser::ConfigParser(const std::string&& path):
 	_config(std::move(parseConfig(openConfig(path))))
     {
@@ -17,11 +17,11 @@ namespace Config {
 	return std::stoi(_value);
     }
 
-    ConfigOption::operator Channeling::ChannelDirection() const {
+    ConfigOption::operator channeling::ChannelDirection() const {
 	if (_value == "input")
-	    return Channeling::ChannelDirection::Input;
+	    return channeling::ChannelDirection::Input;
 	else if (_value == "output")
-	    return Channeling::ChannelDirection::Output;
+	    return channeling::ChannelDirection::Output;
 
 	throw option_error(ERR_WRONG_DIR + ": " + _value);
     }

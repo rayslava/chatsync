@@ -7,7 +7,7 @@
 
 #include "messages.hpp"
 
-namespace Channeling {
+namespace channeling {
   Channel::Channel(Hub::Hub* const hub, const std::string&& config):
     _thread(nullptr),
     _pipeRunning(ATOMIC_FLAG_INIT),
@@ -26,7 +26,7 @@ namespace Channeling {
   }
  
   Channel& operator>> (const message_ptr msg,  Channel& channel) {
-    if (channel.direction() == Channeling::ChannelDirection::Input)
+    if (channel.direction() == channeling::ChannelDirection::Input)
       throw std::logic_error("Can't write data to input channel " + channel.name());
     if (msg->type() == messaging::MessageType::Text) {
         const auto message = messaging::TextMessage::fromMessage(msg);

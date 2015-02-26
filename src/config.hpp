@@ -5,7 +5,7 @@
 #include <memory>
 #include <vector>
 
-namespace Channeling {
+namespace channeling {
 
     /**
      * Channel direction
@@ -23,7 +23,7 @@ namespace Channeling {
     };
 }
 
-namespace Config {
+namespace config {
 
     /**
      * Generic configuration error
@@ -71,7 +71,7 @@ namespace Config {
 	/**
 	 * Channel direction
 	 */
-	operator Channeling::ChannelDirection() const;
+	operator channeling::ChannelDirection() const;
     };
 
     /**

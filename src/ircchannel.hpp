@@ -11,7 +11,7 @@ namespace ircChannel {
     * Capable of connection an IRC server, joining one single channel and message transmission/receiving.
     * Responds to PING with PONG to maintain connection.
     */
-    class IrcChannel: public Channeling::Channel {
+    class IrcChannel: public channeling::Channel {
 
 	const std::string _server;                       /**< Server address */
 	const uint32_t _port;                            /**< Connection port */
@@ -32,7 +32,7 @@ namespace ircChannel {
 	std::future<void> activate() override;
         const messaging::message_ptr parse(const char* line) const override;
 
-	static const Channeling::ChannelCreatorImpl<IrcChannel> creator;
+	static const channeling::ChannelCreatorImpl<IrcChannel> creator;
 	
     public:
 	explicit IrcChannel(Hub::Hub* hub, const std::string&& config);
@@ -43,5 +43,5 @@ namespace ircChannel {
     protected:
 	void incoming(const messaging::message_ptr&& msg) override;
     };
-    const Channeling::ChannelCreatorImpl<IrcChannel> IrcChannel::creator("irc");
+    const channeling::ChannelCreatorImpl<IrcChannel> IrcChannel::creator("irc");
 }

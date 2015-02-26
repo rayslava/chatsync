@@ -9,7 +9,7 @@
 #include "hub.hpp"
 #include "config.hpp"
 
-namespace Channeling {
+namespace channeling {
     using namespace messaging;
     /**
      * Thrown during Channel::activate in case of activation problems
@@ -44,7 +44,7 @@ namespace Channeling {
 	virtual void pollThread();                  /**< Thread which selects the descriptor and send messages when new ones come */
         int _fd;                                    /**< File descriptor to select */
 
-	const Config::ConfigParser _config;         /**< Configuration storage */
+	const config::ConfigParser _config;         /**< Configuration storage */
         const std::string _name;                    /**< The channel name in config file */
         const ChannelDirection _direction;          /**< The channel direction for the whole transmission task */
         Hub::Hub* const _hub;                       /**< Hub the channel is attached to */

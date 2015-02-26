@@ -50,7 +50,7 @@ namespace toxChannel {
     }
 
     ToxChannel::ToxChannel(Hub::Hub* hub, const std::string&& config):
-	Channeling::Channel(hub, std::move(config)),
+	channeling::Channel(hub, std::move(config)),
 	_tox(tox_new(NULL)),    /** TODO: make options handling */
 	wasConnected(false)
     {
@@ -145,22 +145,22 @@ namespace toxChannel {
 	const uint8_t* nickData = reinterpret_cast<const uint8_t*>(nick.c_str());
 	result = tox_set_name(_tox, nickData, nick.length());
 	if (result < 0)
-	    throw Channeling::activate_error(ERR_TOX_INIT + "(tox_set_name)");
+	    throw channeling::activate_error(ERR_TOX_INIT + "(tox_set_name)");
 	
 	const std::string statusMsg = _config.get("status_message", defaultStatusMessage);
 	const uint8_t* statusData = reinterpret_cast<const uint8_t*>(statusMsg.c_str());
 
 	result = tox_set_status_message(_tox, statusData, statusMsg.length());
 	if (result < 0)
-	    throw Channeling::activate_error(ERR_TOX_INIT + "(tox_set_status_message)");
+	    throw channeling::activate_error(ERR_TOX_INIT + "(tox_set_status_message)");
 
 	result = tox_set_user_status(_tox, defaultBotStatus);
 	if (result < 0)
-	    throw Channeling::activate_error(ERR_TOX_INIT + "(tox_set_user_status)");
+	    throw channeling::activate_error(ERR_TOX_INIT + "(tox_set_user_status)");
 
 	result = tox_bootstrap_from_address(_tox, defaultBootstrapAddress, defaultBootstrapPort, reinterpret_cast<const uint8_t*>(util::hex2bin(defaultBootstrapKey).c_str()));
 	if (result < 1)
-	    throw Channeling::activate_error(ERR_TOX_INIT + ": Can't decode bootstrapping ip");
+	    throw channeling::activate_error(ERR_TOX_INIT + ": Can't decode bootstrapping ip");
 
 	std::cerr << "[DEBUG] Bootstrapping" << std::endl;
 	/* TODO: Make timeout exception handling */
@@ -180,7 +180,7 @@ namespace toxChannel {
 
 	result = tox_add_groupchat (_tox);
 	if (result < 0)
-	    throw Channeling::activate_error(ERR_TOX_INIT + "(tox_add_groupchat) Can't create a group chat");
+	    throw channeling::activate_error(ERR_TOX_INIT + "(tox_add_groupchat) Can't create a group chat");
 
 	return 0;
     }

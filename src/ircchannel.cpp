@@ -9,7 +9,7 @@
 
 namespace ircChannel {
     IrcChannel::IrcChannel(Hub::Hub* hub, const std::string&& config):
-	Channeling::Channel(hub, std::move(config)),
+	channeling::Channel(hub, std::move(config)),
 	_server(_config["server"]),
 	_port(_config["port"]),
 	_channel(_config["channel"])
@@ -18,7 +18,7 @@ namespace ircChannel {
 
     std::future<void> IrcChannel::activate() {
 	return std::async(std::launch::async, [this]() {
-		if (_direction == Channeling::ChannelDirection::Input || _direction == Channeling::ChannelDirection::Output) {
+		if (_direction == channeling::ChannelDirection::Input || _direction == channeling::ChannelDirection::Output) {
 		    _fd = connect();
 		    startPolling();
 		    registerConnection();
@@ -116,11 +116,11 @@ namespace ircChannel {
 	std::cerr << "[DEBUG] Joining" << _channel << std::endl;
 	sockfd = net::socket(AF_INET, net::SOCK_STREAM, 0);
 	if (sockfd < 0)
-	    throw Channeling::activate_error(ERR_SOCK_CREATE);
+	    throw channeling::activate_error(ERR_SOCK_CREATE);
 	server = net::gethostbyname(_server.c_str());
 
 	if (server == NULL)
-	    throw Channeling::activate_error(ERR_HOST_NOT_FOUND);
+	    throw channeling::activate_error(ERR_HOST_NOT_FOUND);
 
 	::bzero((char *) &serv_addr, sizeof(serv_addr));
 	serv_addr.sin_family = AF_INET;
@@ -129,7 +129,7 @@ namespace ircChannel {
 	      server->h_length);
 	serv_addr.sin_port = net::htons(_port);
 	if (net::connect(sockfd,(struct net::sockaddr *) &serv_addr,sizeof(serv_addr)) < 0)
-	    throw Channeling::activate_error(ERR_CONNECTION);
+	    throw channeling::activate_error(ERR_CONNECTION);
 	return sockfd;
     }
 

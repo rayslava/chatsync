@@ -3,7 +3,7 @@
 #include <gtest/gtest-spi.h>
 #include <cstdio>
 
-using namespace Config;
+using namespace config;
 
 TEST(option, create)
 {
@@ -42,9 +42,9 @@ TEST(option, direction)
   const auto& valueWr = "wrong";
   ConfigOption option(valueIn);
 
-  Channeling::ChannelDirection dir = option;
+  channeling::ChannelDirection dir = option;
 
-  ASSERT_EQ(dir, Channeling::ChannelDirection::Input);
+  ASSERT_EQ(dir, channeling::ChannelDirection::Input);
   EXPECT_THROW({
       ConfigOption optionWr(valueWr);
       dir = optionWr;

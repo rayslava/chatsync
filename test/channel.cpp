@@ -17,11 +17,11 @@ const char ircTestLine[] = ":testuser!~testhost PRIVMSG #chatsync :message\r\n";
 TEST(FileChannel, name)
 {
     const auto hub = new Hub::Hub ("Hub");
-    const auto ich = Channeling::ChannelFactory::create("file", hub, "data://direction=input\nname=file\n");
+    const auto ich = channeling::ChannelFactory::create("file", hub, "data://direction=input\nname=file\n");
 
     // Check that at least constructor works
     ASSERT_EQ(ich->name(), "file");
-    ASSERT_EQ(ich->direction(), Channeling::ChannelDirection::Input);
+    ASSERT_EQ(ich->direction(), channeling::ChannelDirection::Input);
 
     delete hub;
 }
@@ -30,16 +30,16 @@ TEST(FileChannel, files)
 {
     const auto hub = new Hub::Hub ("Hub");
 
-    const auto ich = Channeling::ChannelFactory::create("file", hub, "data://direction=input\nname=infile");
+    const auto ich = channeling::ChannelFactory::create("file", hub, "data://direction=input\nname=infile");
     const int buffer_size = sizeof(testLine) + ich->name().length() + 2 + 5; // file: and ": " sizes
     const std::string valid_line = "file:" + ich->name() + ": " + testLine;
     const auto buffer = new char[buffer_size];
 
-    Channeling::ChannelFactory::create("file", hub, "data://direction=output\nname=outfile");
+    channeling::ChannelFactory::create("file", hub, "data://direction=output\nname=outfile");
 
     // Check that at least constructor works
     ASSERT_EQ(ich->name(), "infile");
-    ASSERT_EQ(ich->direction(), Channeling::ChannelDirection::Input);
+    ASSERT_EQ(ich->direction(), channeling::ChannelDirection::Input);
 
     // Open input pipe from file channel
     hub->activate();
@@ -111,13 +111,13 @@ TEST(IrcChannel, sockerr)
 {
     const auto hub = new Hub::Hub ("Hub");
 
-    auto ch = Channeling::ChannelFactory::create("irc", hub, "data://direction=input\nname=ircin\nserver=127.0.0.1\nport=0\nchannel=test");
-    Channeling::ChannelFactory::create("file", hub, "data://direction=output\nname=outfile");
+    auto ch = channeling::ChannelFactory::create("irc", hub, "data://direction=input\nname=ircin\nserver=127.0.0.1\nport=0\nchannel=test");
+    channeling::ChannelFactory::create("file", hub, "data://direction=output\nname=outfile");
 
     // Wait for ERRSOCK on joining the closed socket
     EXPECT_THROW({
         hub->activate();
-    },  Channeling::activate_error);
+    },  channeling::activate_error);
     delete hub;
 }
 
@@ -127,8 +127,8 @@ TEST(IrcChannel, socket)
 
     const auto server = std::make_unique<std::thread>(std::thread(&sockListen));
     std::this_thread::sleep_for( std::chrono::milliseconds (50) );  // Give time to open socket 
-    const auto ich = Channeling::ChannelFactory::create("irc", hub, "data://direction=input\nname=ircin\nserver=127.0.0.1\nport=" + std::to_string(port) + "\nchannel=test");
-    Channeling::ChannelFactory::create("file", hub, "data://direction=output\nname=outfile");
+    const auto ich = channeling::ChannelFactory::create("irc", hub, "data://direction=input\nname=ircin\nserver=127.0.0.1\nport=" + std::to_string(port) + "\nchannel=test");
+    channeling::ChannelFactory::create("file", hub, "data://direction=output\nname=outfile");
     const std::string valid_line = "testuser: message";
     const int buffer_size = valid_line.length() + 1;
     const auto buffer = new char[buffer_size];
