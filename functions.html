@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Chatsync
-   &#160;<span id="projectnumber">22fcef2a571371b982a67b7d5821556a3620fef0</span>
+   &#160;<span id="projectnumber">42005b23d830638563034c3b4b07493d60a841b1</span>
    </div>
   </td>
  </tr>
@@ -150,7 +150,7 @@ $(document).ready(function(){initNavTree('functions.html','');});
 , <a class="el" href="classConfig_1_1ConfigParser.html#a5ff3e2184fd9451895af62870721eae8">Config::ConfigParser</a>
 </li>
 <li>_data
-: <a class="el" href="classmessaging_1_1Message.html#a57813090478b78607e9938ef853a0db3">messaging::Message</a>
+: <a class="el" href="classmessaging_1_1TextMessage.html#a57669679ceffade87e667a4d3c3c94bd">messaging::TextMessage</a>
 </li>
 <li>_direction
 : <a class="el" href="classChanneling_1_1Channel.html#ac64d544a772cb8f6bfe8c9a083440b66">Channeling::Channel</a>
@@ -203,7 +203,7 @@ $(document).ready(function(){initNavTree('functions.html','');});
 : <a class="el" href="classtoxChannel_1_1ToxChannel.html#a21f37a11eddffd62371e36b9e4445eed">toxChannel::ToxChannel</a>
 </li>
 <li>_user
-: <a class="el" href="classmessaging_1_1Message.html#aa71c026cf46f349c3ff082fcf953632b">messaging::Message</a>
+: <a class="el" href="classmessaging_1_1TextMessage.html#a0bfe1313e4d70901c5748ac696801147">messaging::TextMessage</a>
 </li>
 <li>_value
 : <a class="el" href="classConfig_1_1ConfigOption.html#a169fcc25c331d2d40af165051d8997f4">Config::ConfigOption</a>
@@ -274,7 +274,7 @@ $(document).ready(function(){initNavTree('functions.html','');});
 
 <h3><a class="anchor" id="index_d"></a>- d -</h3><ul>
 <li>data()
-: <a class="el" href="classmessaging_1_1Message.html#a5d19b0f8cc2c9e3eb3228489c436d6e7">messaging::Message</a>
+: <a class="el" href="classmessaging_1_1TextMessage.html#a68df75133087f7edd82ef16e2beb67d2">messaging::TextMessage</a>
 </li>
 <li>deactivate()
 : <a class="el" href="classHub_1_1Hub.html#a843709fca28e53907951a4c7783af029">Hub::Hub</a>
@@ -294,6 +294,9 @@ $(document).ready(function(){initNavTree('functions.html','');});
 </li>
 <li>friendRequestCallback()
 : <a class="el" href="classtoxChannel_1_1ToxChannel.html#a4e1cd51a83f6c67fa1e2d5626181560b">toxChannel::ToxChannel</a>
+</li>
+<li>fromMessage()
+: <a class="el" href="classmessaging_1_1TextMessage.html#add28bff97d1b2cb2c804a8a81e4931a9">messaging::TextMessage</a>
 </li>
 </ul>
 
@@ -321,7 +324,7 @@ $(document).ready(function(){initNavTree('functions.html','');});
 <h3><a class="anchor" id="index_i"></a>- i -</h3><ul>
 <li>incoming()
 : <a class="el" href="classChanneling_1_1Channel.html#a7c7e633ec1ccd9180e2abf24e3ca9e7b">Channeling::Channel</a>
-, <a class="el" href="classfileChannel_1_1FileChannel.html#afd4eafcf46ff0a7e87855b179061b693">fileChannel::FileChannel</a>
+, <a class="el" href="classfileChannel_1_1FileChannel.html#aba562ecd1404ec16ed40cad9e61a23c8">fileChannel::FileChannel</a>
 , <a class="el" href="classircChannel_1_1IrcChannel.html#a98e21bb4f7c9de81fceebd8a4ecdd1ce">ircChannel::IrcChannel</a>
 , <a class="el" href="classtoxChannel_1_1ToxChannel.html#a3fdbe267b3e96befe52ae3b2cb19e43f">toxChannel::ToxChannel</a>
 </li>
@@ -332,9 +335,6 @@ $(document).ready(function(){initNavTree('functions.html','');});
 
 
 <h3><a class="anchor" id="index_m"></a>- m -</h3><ul>
-<li>Message()
-: <a class="el" href="classmessaging_1_1Message.html#af829a8a176cf0efcacf2b36618e9df74">messaging::Message</a>
-</li>
 <li>messageCallback()
 : <a class="el" href="classtoxChannel_1_1ToxChannel.html#ae46fd1c3695aac40bb9e67ac4f39b043">toxChannel::ToxChannel</a>
 </li>
@@ -431,6 +431,9 @@ $(document).ready(function(){initNavTree('functions.html','');});
 
 
 <h3><a class="anchor" id="index_t"></a>- t -</h3><ul>
+<li>TextMessage()
+: <a class="el" href="classmessaging_1_1TextMessage.html#af81bc716aea7894454e0285ca0db9015">messaging::TextMessage</a>
+</li>
 <li>ToxChannel()
 : <a class="el" href="classtoxChannel_1_1ToxChannel.html#a177234f8847abd21847483e7c5f645f1">toxChannel::ToxChannel</a>
 </li>
@@ -441,6 +444,8 @@ $(document).ready(function(){initNavTree('functions.html','');});
 : <a class="el" href="classChanneling_1_1Channel.html#af128e17f50cd667e92d773dad2a4cc76">Channeling::Channel</a>
 , <a class="el" href="classfileChannel_1_1FileChannel.html#aa66ff57811aab90fe0cfb89a1c6b9b94">fileChannel::FileChannel</a>
 , <a class="el" href="classircChannel_1_1IrcChannel.html#a56d7ca5d0be35a5ebf563fd357c51a81">ircChannel::IrcChannel</a>
+, <a class="el" href="classmessaging_1_1Message.html#a4a48e16bbfb8cf78c895691be7cd47b6">messaging::Message</a>
+, <a class="el" href="classmessaging_1_1TextMessage.html#add4621cc42b7141e4f0524ebd8d422c2">messaging::TextMessage</a>
 , <a class="el" href="classtoxChannel_1_1ToxChannel.html#aedcd171c13294b16af14563c6c7fb5ff">toxChannel::ToxChannel</a>
 </li>
 </ul>
@@ -448,7 +453,7 @@ $(document).ready(function(){initNavTree('functions.html','');});
 
 <h3><a class="anchor" id="index_u"></a>- u -</h3><ul>
 <li>user()
-: <a class="el" href="classmessaging_1_1Message.html#ae128ecaa00824288d7ca3cedfe28a502">messaging::Message</a>
+: <a class="el" href="classmessaging_1_1TextMessage.html#a38795f4cdf1768d2c744e236a4d1c8cf">messaging::TextMessage</a>
 </li>
 <li>User()
 : <a class="el" href="classmessaging_1_1User.html#ab557a56bb7c3124046830fd3cff158a4">messaging::User</a>
@@ -482,7 +487,7 @@ $(document).ready(function(){initNavTree('functions.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 25 2015 08:34:26 for Chatsync by
+    <li class="footer">Generated on Thu Feb 26 2015 10:49:45 for Chatsync by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9 </li>
   </ul>

@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Chatsync
-   &#160;<span id="projectnumber">22fcef2a571371b982a67b7d5821556a3620fef0</span>
+   &#160;<span id="projectnumber">42005b23d830638563034c3b4b07493d60a841b1</span>
    </div>
   </td>
  </tr>
@@ -107,40 +107,32 @@ $(document).ready(function(){initNavTree('classmessaging_1_1Message.html','');})
 
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pri-attribs">Private Attributes</a>  </div>
+<a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<div class="title">messaging::Message Class Reference</div>  </div>
+<div class="title">messaging::Message Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
 
 <p><code>#include &lt;<a class="el" href="message_8hpp_source.html">message.hpp</a>&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for messaging::Message:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="classmessaging_1_1Message.png" usemap="#messaging::Message_map" alt=""/>
+  <map id="messaging::Message_map" name="messaging::Message_map">
+<area href="classmessaging_1_1TextMessage.html" alt="messaging::TextMessage" shape="rect" coords="0,56,151,80"/>
+</map>
+ </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af829a8a176cf0efcacf2b36618e9df74"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmessaging_1_1Message.html#af829a8a176cf0efcacf2b36618e9df74">Message</a> (const std::shared_ptr&lt; const <a class="el" href="classmessaging_1_1User.html">messaging::User</a> &gt; &amp;&amp;<a class="el" href="classmessaging_1_1Message.html#ae128ecaa00824288d7ca3cedfe28a502">user</a>, const std::string &amp;<a class="el" href="classmessaging_1_1Message.html#a5d19b0f8cc2c9e3eb3228489c436d6e7">data</a>)</td></tr>
-<tr class="separator:af829a8a176cf0efcacf2b36618e9df74"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d19b0f8cc2c9e3eb3228489c436d6e7"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmessaging_1_1Message.html#a5d19b0f8cc2c9e3eb3228489c436d6e7">data</a> () const </td></tr>
-<tr class="separator:a5d19b0f8cc2c9e3eb3228489c436d6e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae128ecaa00824288d7ca3cedfe28a502"><td class="memItemLeft" align="right" valign="top">const std::shared_ptr&lt; const <a class="el" href="classmessaging_1_1User.html">messaging::User</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmessaging_1_1Message.html#ae128ecaa00824288d7ca3cedfe28a502">user</a> () const </td></tr>
-<tr class="separator:ae128ecaa00824288d7ca3cedfe28a502"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
-Private Attributes</h2></td></tr>
-<tr class="memitem:a57813090478b78607e9938ef853a0db3"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmessaging_1_1Message.html#a57813090478b78607e9938ef853a0db3">_data</a></td></tr>
-<tr class="separator:a57813090478b78607e9938ef853a0db3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa71c026cf46f349c3ff082fcf953632b"><td class="memItemLeft" align="right" valign="top">const std::shared_ptr&lt; const <a class="el" href="classmessaging_1_1User.html">messaging::User</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmessaging_1_1Message.html#aa71c026cf46f349c3ff082fcf953632b">_user</a></td></tr>
-<tr class="separator:aa71c026cf46f349c3ff082fcf953632b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a48e16bbfb8cf78c895691be7cd47b6"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespacemessaging.html#a05aa49bb59ef55dbe0621da8d232d737">MessageType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmessaging_1_1Message.html#a4a48e16bbfb8cf78c895691be7cd47b6">type</a> () const =0</td></tr>
+<tr class="separator:a4a48e16bbfb8cf78c895691be7cd47b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Internal message representation</p>
-<p>Lifecycle:</p><ol type="1">
-<li>message_ptr is created inside an input channel and std::move()'d into hub</li>
-<li><a class="el" href="namespaceHub.html">Hub</a> creates message_ptr copies and sends them to each output channel asyncronously</li>
-<li>After every output sends data to receiver <a class="el" href="classmessaging_1_1Message.html">Message</a> dies with last message_ptr </li>
-</ol>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="af829a8a176cf0efcacf2b36618e9df74"></a>
+<div class="textblock"><p>Base class for all messages, needed for general architecture planning </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a4a48e16bbfb8cf78c895691be7cd47b6"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -148,42 +140,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">messaging::Message::Message </td>
-          <td>(</td>
-          <td class="paramtype">const std::shared_ptr&lt; const <a class="el" href="classmessaging_1_1User.html">messaging::User</a> &gt; &amp;&amp;&#160;</td>
-          <td class="paramname"><em>user</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>data</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a5d19b0f8cc2c9e3eb3228489c436d6e7"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const std::string&amp; messaging::Message::data </td>
+          <td class="memname">virtual <a class="el" href="namespacemessaging.html#a05aa49bb59ef55dbe0621da8d232d737">MessageType</a> messaging::Message::type </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -191,76 +148,13 @@ Private Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Created to avoid typeid() calls </p>
 
-</div>
-</div>
-<a class="anchor" id="ae128ecaa00824288d7ca3cedfe28a502"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const std::shared_ptr&lt;const <a class="el" href="classmessaging_1_1User.html">messaging::User</a>&gt; messaging::Message::user </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a57813090478b78607e9938ef853a0db3"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const std::string messaging::Message::_data</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p><a class="el" href="classmessaging_1_1Message.html">Message</a> text </p>
-
-</div>
-</div>
-<a class="anchor" id="aa71c026cf46f349c3ff082fcf953632b"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const std::shared_ptr&lt;const <a class="el" href="classmessaging_1_1User.html">messaging::User</a>&gt; messaging::Message::_user</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p><a class="el" href="classmessaging_1_1Message.html">Message</a> author </p>
+<p>Implemented in <a class="el" href="classmessaging_1_1TextMessage.html#add4621cc42b7141e4f0524ebd8d422c2">messaging::TextMessage</a>.</p>
 
 </div>
 </div>
@@ -273,7 +167,7 @@ Private Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacemessaging.html">messaging</a></li><li class="navelem"><a class="el" href="classmessaging_1_1Message.html">Message</a></li>
-    <li class="footer">Generated on Wed Feb 25 2015 08:34:26 for Chatsync by
+    <li class="footer">Generated on Thu Feb 26 2015 10:49:45 for Chatsync by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9 </li>
   </ul>

@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Chatsync
-   &#160;<span id="projectnumber">22fcef2a571371b982a67b7d5821556a3620fef0</span>
+   &#160;<span id="projectnumber">42005b23d830638563034c3b4b07493d60a841b1</span>
    </div>
   </td>
  </tr>
@@ -106,7 +106,8 @@ $(document).ready(function(){initNavTree('namespacemessaging.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">messaging Namespace Reference</div>  </div>
 </div><!--header-->
@@ -116,6 +117,8 @@ $(document).ready(function(){initNavTree('namespacemessaging.html','');});
 Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmessaging_1_1Message.html">Message</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmessaging_1_1TextMessage.html">TextMessage</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmessaging_1_1User.html">User</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -123,6 +126,12 @@ Data Structures</h2></td></tr>
 Typedefs</h2></td></tr>
 <tr class="memitem:aa012bd42e06013a9d4a4d69a1a9897bc"><td class="memItemLeft" align="right" valign="top">typedef std::shared_ptr&lt; const <a class="el" href="classmessaging_1_1Message.html">Message</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemessaging.html#aa012bd42e06013a9d4a4d69a1a9897bc">message_ptr</a></td></tr>
 <tr class="separator:aa012bd42e06013a9d4a4d69a1a9897bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:a05aa49bb59ef55dbe0621da8d232d737"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemessaging.html#a05aa49bb59ef55dbe0621da8d232d737">MessageType</a> { <a class="el" href="namespacemessaging.html#a05aa49bb59ef55dbe0621da8d232d737a9dffbf69ffba8bc38bc4e01abf4b1675">MessageType::Text</a>
+ }</td></tr>
+<tr class="separator:a05aa49bb59ef55dbe0621da8d232d737"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a class="anchor" id="aa012bd42e06013a9d4a4d69a1a9897bc"></a>
@@ -134,6 +143,39 @@ Typedefs</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>General type to be passed through between internal functions </p>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="a05aa49bb59ef55dbe0621da8d232d737"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="namespacemessaging.html#a05aa49bb59ef55dbe0621da8d232d737">messaging::MessageType</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p><a class="el" href="classmessaging_1_1Message.html">Message</a> type to distinguish different classes</p>
+<p>Lifecycle:</p><ol type="1">
+<li>message_ptr is created inside an input channel and std::move()'d into hub</li>
+<li><a class="el" href="namespaceHub.html">Hub</a> creates message_ptr copies and sends them to each output channel asyncronously</li>
+<li>After every output sends data to receiver <a class="el" href="classmessaging_1_1Message.html">Message</a> dies with last message_ptr </li>
+</ol>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="a05aa49bb59ef55dbe0621da8d232d737a9dffbf69ffba8bc38bc4e01abf4b1675"></a>Text&#160;</td><td class="fielddoc">
+<p>Plaintext message, <a class="el" href="classmessaging_1_1TextMessage.html">TextMessage</a> class conforms this one </p>
+</td></tr>
+</table>
 
 </div>
 </div>
@@ -143,7 +185,7 @@ Typedefs</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacemessaging.html">messaging</a></li>
-    <li class="footer">Generated on Wed Feb 25 2015 08:34:26 for Chatsync by
+    <li class="footer">Generated on Thu Feb 26 2015 10:49:45 for Chatsync by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9 </li>
   </ul>
