@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['channeldirection',['ChannelDirection',['../namespaceChanneling.html#a55b8672b8710070db3c834f4d8425378',1,'Channeling']]]
+  ['channeldirection',['ChannelDirection',['../namespacechanneling.html#a469c576e1963fd3481107d4dcdf6de32',1,'channeling']]]
 ];

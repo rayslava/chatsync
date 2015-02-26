@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['channeling',['Channeling',['../namespaceChanneling.html',1,'']]],
-  ['config',['Config',['../namespaceConfig.html',1,'']]]
+  ['channeling',['channeling',['../namespacechanneling.html',1,'']]],
+  ['config',['config',['../namespaceconfig.html',1,'']]]
 ];

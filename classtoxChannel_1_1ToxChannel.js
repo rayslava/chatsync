@@ -12,6 +12,6 @@ var classtoxChannel_1_1ToxChannel =
     [ "toxInit", "classtoxChannel_1_1ToxChannel.html#afbc1e1b17222b1af6abe9d0ac675a8fa", null ],
     [ "type", "classtoxChannel_1_1ToxChannel.html#aedcd171c13294b16af14563c6c7fb5ff", null ],
     [ "_tox", "classtoxChannel_1_1ToxChannel.html#a21f37a11eddffd62371e36b9e4445eed", null ],
-    [ "creator", "classtoxChannel_1_1ToxChannel.html#a85592fd76db06e78483042076d9f6ac3", null ],
+    [ "creator", "classtoxChannel_1_1ToxChannel.html#a47659c8a03b724048bf61fff0674868f", null ],
     [ "wasConnected", "classtoxChannel_1_1ToxChannel.html#ae8a52bbfb2dbe37312b4f9eaf2e9aab5", null ]
 ];

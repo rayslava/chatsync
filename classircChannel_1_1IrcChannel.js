@@ -13,5 +13,5 @@ var classircChannel_1_1IrcChannel =
     [ "_channel", "classircChannel_1_1IrcChannel.html#a5cb40ec3010c67e4180efa045b91dfaf", null ],
     [ "_port", "classircChannel_1_1IrcChannel.html#ab68f31d628fae4ad985c24a3cc3ee05c", null ],
     [ "_server", "classircChannel_1_1IrcChannel.html#afded0c90bc90f3bdae8f73fc64aaac27", null ],
-    [ "creator", "classircChannel_1_1IrcChannel.html#a263dc2abd533b96a31f91f92eaa7f71f", null ]
+    [ "creator", "classircChannel_1_1IrcChannel.html#a1d45dec4bac4aa6fc571436a4a382301", null ]
 ];

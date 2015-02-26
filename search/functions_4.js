@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['get',['get',['../classConfig_1_1ConfigParser.html#a747239203f943fa0729a9063451c0a86',1,'Config::ConfigParser']]],
-  ['get_5ftable',['get_table',['../classChanneling_1_1ChannelFactory.html#a1f6de9367d2a56dc839a0a7ed4cddb9f',1,'Channeling::ChannelFactory']]],
+  ['get',['get',['../classconfig_1_1ConfigParser.html#ae528d19f9d9abf080cc746f47c5a432b',1,'config::ConfigParser']]],
+  ['get_5ftable',['get_table',['../classchanneling_1_1ChannelFactory.html#a1e78214dbb5bcb0bef8cd4aec0b9c154',1,'channeling::ChannelFactory']]],
   ['groupmessagecallback',['groupMessageCallback',['../classtoxChannel_1_1ToxChannel.html#a099079c7f8864d48670dee35e35f7eaa',1,'toxChannel::ToxChannel']]]
 ];

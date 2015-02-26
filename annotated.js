@@ -1,7 +1,7 @@
 var annotated =
 [
-    [ "Channeling", "namespaceChanneling.html", "namespaceChanneling" ],
-    [ "Config", "namespaceConfig.html", "namespaceConfig" ],
+    [ "channeling", "namespacechanneling.html", "namespacechanneling" ],
+    [ "config", "namespaceconfig.html", "namespaceconfig" ],
     [ "fileChannel", "namespacefileChannel.html", "namespacefileChannel" ],
     [ "Hub", "namespaceHub.html", "namespaceHub" ],
     [ "ircChannel", "namespaceircChannel.html", "namespaceircChannel" ],

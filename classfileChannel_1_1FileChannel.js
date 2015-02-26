@@ -8,5 +8,5 @@ var classfileChannel_1_1FileChannel =
     [ "parse", "classfileChannel_1_1FileChannel.html#affaaad64ae3784f33c184aed21c5ee0b", null ],
     [ "type", "classfileChannel_1_1FileChannel.html#aa66ff57811aab90fe0cfb89a1c6b9b94", null ],
     [ "_file", "classfileChannel_1_1FileChannel.html#a7a75f50ad82b510af5ddaaa69088ea96", null ],
-    [ "creator", "classfileChannel_1_1FileChannel.html#a2f04a5ef7bce871eeb58c814eb3db4eb", null ]
+    [ "creator", "classfileChannel_1_1FileChannel.html#a3f6e94e96861f8b1c65f5c51e45cd827", null ]
 ];
