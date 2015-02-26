@@ -32,7 +32,7 @@ namespace fileChannel {
 	std::string type() const override { return "file"; };
 
     protected:
-	void incoming(const std::shared_ptr<const messaging::Message>&& msg) override;
+	void incoming(const messaging::message_ptr&& msg) override;
     };
     const Channeling::ChannelCreatorImpl<FileChannel> FileChannel::creator("file");
 }

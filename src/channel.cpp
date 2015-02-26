@@ -3,6 +3,7 @@
 #include <typeinfo>
 #include <sstream>
 #include <utility>
+#include <memory>
 
 #include "messages.hpp"
 
@@ -27,9 +28,12 @@ namespace Channeling {
   Channel& operator>> (const message_ptr msg,  Channel& channel) {
     if (channel.direction() == Channeling::ChannelDirection::Input)
       throw std::logic_error("Can't write data to input channel " + channel.name());
-    std::cerr << "[DEBUG] Incoming message " << msg->data() << std::endl;
-    std::async(std::launch::async, [&channel, msg=std::move(msg)]()
-	       {channel.incoming(std::move(msg));});
+    if (msg->type() == messaging::MessageType::Text) {
+        const auto message = messaging::TextMessage::fromMessage(msg);
+        std::cerr << "[DEBUG] Incoming message " << message->data() << std::endl;
+        std::async(std::launch::async, [&channel, msg=std::move(msg)]()
+                                        {channel.incoming(std::move(msg));});
+    }
     return channel;
   }
 

@@ -33,9 +33,12 @@ namespace ircChannel {
     void IrcChannel::incoming(const messaging::message_ptr&& msg) {
 	char message[irc_message_max];
 
-	snprintf(message, 256, "PRIVMSG #chatsync :[%s]: %s\r\n", msg->user()->name().c_str(), msg->data().c_str());
-        std::cerr << "[DEBUG] #irc" << _name << " " << msg->data() << " inside " << _name << std::endl;
-	sendMessage(message);
+        if (msg->type() == messaging::MessageType::Text) {
+            const auto textmsg = messaging::TextMessage::fromMessage(msg);
+            snprintf(message, 256, "PRIVMSG #chatsync :[%s]: %s\r\n", textmsg->user()->name().c_str(), textmsg->data().c_str());
+            std::cerr << "[DEBUG] #irc" << _name << " " << textmsg->data() << " inside " << _name << std::endl;
+            sendMessage(message);
+        }
     }
 
     const messaging::message_ptr IrcChannel::parse(const char* line) const
@@ -53,7 +56,7 @@ namespace ircChannel {
             std::cerr << "[DEBUG] #irc:" << name << ": " << text << std::endl;
         }
 
-        const auto msg = std::make_shared<const messaging::Message>(
+        const auto msg = std::make_shared<const messaging::TextMessage>(
 	    std::move(std::make_shared<const messaging::User>(messaging::User(name.c_str()))),
 	    text.c_str());
         return msg;

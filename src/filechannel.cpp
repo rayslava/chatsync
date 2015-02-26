@@ -22,14 +22,17 @@ namespace fileChannel {
 			      };
 			  });}
 
-    void FileChannel::incoming(const std::shared_ptr<const messaging::Message>&& msg) {
-	_file << msg->user()->name() << ": " << msg->data() << std::endl;
-        std::cerr << "[DEBUG] #file " << _name << " " << msg->data() << std::endl;
+    void FileChannel::incoming(const messaging::message_ptr&& msg) {
+        if (msg->type() == messaging::MessageType::Text) {
+            const auto textmsg = messaging::TextMessage::fromMessage(msg);
+            _file << textmsg->user()->name() << ": " << textmsg->data() << std::endl;
+            std::cerr << "[DEBUG] #file " << _name << " " << textmsg->data() << std::endl;
+        }
     }
 
     const messaging::message_ptr FileChannel::parse(const char* line) const
     {
-        const auto msg = std::make_shared<const messaging::Message>(
+        const auto msg = std::make_shared<const messaging::TextMessage>(
 	    std::move(std::make_shared<const messaging::User>(messaging::User("file:" + _name))),
 	    line);
         return msg;

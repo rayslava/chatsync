@@ -64,7 +64,10 @@ namespace toxChannel {
 	    });}
 
     void ToxChannel::incoming(const messaging::message_ptr&& msg) {
-	std::cerr << "[DEBUG] #tox " << _name << " " << msg->data() << std::endl;
+        if (msg->type() == messaging::MessageType::Text) {
+            const auto textmsg = messaging::TextMessage::fromMessage(msg);
+            std::cerr << "[DEBUG] #tox " << _name << " " << textmsg->data() << std::endl;
+        }
     }
 
     void ToxChannel::pollThread() {
@@ -110,7 +113,7 @@ namespace toxChannel {
 	const auto msg = std::make_unique<char*>(new char[length + 2]);
 	snprintf(*msg, length + 1, "%s", message);
 
-	const auto newMessage = std::make_shared<const messaging::Message>(
+	const auto newMessage = std::make_shared<const messaging::TextMessage>(
 	    std::move(std::make_shared<const messaging::User>(messaging::User(*name))),
 	    *msg);
 	std::cerr << "[DEBUG] tox Group msg " << newMessage->user()->name() << "> " << newMessage->data() << std::endl;	
@@ -123,7 +126,7 @@ namespace toxChannel {
         const auto name = s.substr(0, s.find(":"));
         const auto text = s.substr(s.find(":"), s.length());
 
-        const auto msg = std::make_shared<const messaging::Message>(
+        const auto msg = std::make_shared<const messaging::TextMessage>(
             std::move(std::make_shared<const messaging::User>(messaging::User(name.c_str()))),
 	    text.c_str());
         return msg;
