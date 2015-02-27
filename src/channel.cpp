@@ -116,7 +116,8 @@ namespace channeling {
 	if (err != bytes)
 	  throw std::runtime_error(ERR_SOCK_READ);
 	// Dump read data
-	_hub->newMessage(parse(line));
+        if (direction() == ChannelDirection::Input || direction() == ChannelDirection::Bidirectional)
+            _hub->newMessage(parse(line));
 	delete[] line;
       }
     }
