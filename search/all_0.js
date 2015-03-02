@@ -8,6 +8,7 @@ var searchData=
   ['_5ffd',['_fd',['../classchanneling_1_1Channel.html#a26ff34b9437cdc074004426fd636873e',1,'channeling::Channel']]],
   ['_5ffile',['_file',['../classfileChannel_1_1FileChannel.html#a7a75f50ad82b510af5ddaaa69088ea96',1,'fileChannel::FileChannel']]],
   ['_5fhub',['_hub',['../classchanneling_1_1Channel.html#a6a047aed6edfa6973c0a451c70254b8c',1,'channeling::Channel']]],
+  ['_5fid',['_id',['../classchanneling_1_1Channel.html#ad6c8e11ef6573578bd8afed0b2b4c912',1,'channeling::Channel']]],
   ['_5finputchannels',['_inputChannels',['../classHub_1_1Hub.html#a4c0e1a3ab97b966fb2686069d796ca42',1,'Hub::Hub']]],
   ['_5flooprunning',['_loopRunning',['../classHub_1_1Hub.html#a1c89f0b1f1644a623b21c8fd7badb7fe',1,'Hub::Hub']]],
   ['_5fmessages',['_messages',['../classHub_1_1Hub.html#a972b709b7fa75e6c80db9619fa093375',1,'Hub::Hub']]],

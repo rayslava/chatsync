@@ -2,5 +2,7 @@ var classchanneling_1_1ChannelFactory =
 [
     [ "create", "classchanneling_1_1ChannelFactory.html#a3c09fc58176c46bf69317b9beec33fee", null ],
     [ "get_table", "classchanneling_1_1ChannelFactory.html#a1e78214dbb5bcb0bef8cd4aec0b9c154", null ],
-    [ "registerClass", "classchanneling_1_1ChannelFactory.html#a41631f90ecfaccd3ba3fc6fdcbe7f3b9", null ]
+    [ "nextId", "classchanneling_1_1ChannelFactory.html#a236cb4558e5ece5eb43a65a6e60cf9b0", null ],
+    [ "registerClass", "classchanneling_1_1ChannelFactory.html#a41631f90ecfaccd3ba3fc6fdcbe7f3b9", null ],
+    [ "id", "classchanneling_1_1ChannelFactory.html#a97434f3cfd9544688b8a911648e5ec99", null ]
 ];

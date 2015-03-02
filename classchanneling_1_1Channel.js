@@ -16,6 +16,7 @@ var classchanneling_1_1Channel =
     [ "_direction", "classchanneling_1_1Channel.html#ad9d63430a74f073172fd0b702683d9c7", null ],
     [ "_fd", "classchanneling_1_1Channel.html#a26ff34b9437cdc074004426fd636873e", null ],
     [ "_hub", "classchanneling_1_1Channel.html#a6a047aed6edfa6973c0a451c70254b8c", null ],
+    [ "_id", "classchanneling_1_1Channel.html#ad6c8e11ef6573578bd8afed0b2b4c912", null ],
     [ "_name", "classchanneling_1_1Channel.html#ab71902360f53639f041db422cf49cae3", null ],
     [ "_pipeRunning", "classchanneling_1_1Channel.html#ab5745eab177ac1dbebf1923c2b35889e", null ],
     [ "_thread", "classchanneling_1_1Channel.html#ac38e865ae299a182bffdaa946770ea74", null ]
