@@ -38,6 +38,8 @@ namespace channeling {
      */
     class Channel {
     protected:
+        const uint16_t _id;                         /**< Unique channel id */
+
 	/* Polling functions */
 	std::unique_ptr<std::thread> _thread;       /**< Pointer to reader thread in case of input channel */
 	std::atomic_bool _pipeRunning;              /**< Pipe reading thread is running */
@@ -152,7 +154,10 @@ namespace channeling {
     public:
 	static Channel* create(const std::string& classname, Hub::Hub* const hub, const std::string&& config);
 	static void registerClass(const std::string& classname, ChannelCreator* creator);
+        static uint16_t nextId() { return id++; }
+
     private:
+        static std::atomic_int id;
 	static std::map<std::string, ChannelCreator*>& get_table();
     };
 }
