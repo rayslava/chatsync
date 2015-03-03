@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Chatsync
-   &#160;<span id="projectnumber">e9ac0725dee9b5539acced08434db6083cb341e3</span>
+   &#160;<span id="projectnumber">feac10bf38263067d783dda260de0f0b215c4526</span>
    </div>
   </td>
  </tr>
@@ -165,6 +165,8 @@ Protected Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
+<tr class="memitem:acc365f57c3deec7c75f9baf2f0e09f4a"><td class="memItemLeft" align="right" valign="top">std::atomic_bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchanneling_1_1Channel.html#acc365f57c3deec7c75f9baf2f0e09f4a">_active</a></td></tr>
+<tr class="separator:acc365f57c3deec7c75f9baf2f0e09f4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac38e865ae299a182bffdaa946770ea74"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; std::thread &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchanneling_1_1Channel.html#ac38e865ae299a182bffdaa946770ea74">_thread</a></td></tr>
 <tr class="separator:ac38e865ae299a182bffdaa946770ea74"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab5745eab177ac1dbebf1923c2b35889e"><td class="memItemLeft" align="right" valign="top">std::atomic_bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchanneling_1_1Channel.html#ab5745eab177ac1dbebf1923c2b35889e">_pipeRunning</a></td></tr>
@@ -187,7 +189,7 @@ Friends</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A channel to connect to input or output</p>
-<p>The deriving class <em>must</em> override: void void incoming(const message_ptr msg) = 0; &mdash; for data input in case of output channel void <a class="el" href="classchanneling_1_1Channel.html#a7be2d5c0489c17529af4252cb803c0f8">activate()</a>; &mdash; to implement specific activities for channel work starting</p>
+<p>The deriving class <em>must</em> override: void void incoming(const message_ptr msg) = 0; &mdash; for data input in case of output channel void <a class="el" href="classchanneling_1_1Channel.html#a7be2d5c0489c17529af4252cb803c0f8">activate()</a>; &mdash; to implement specific activities for channel work starting, _active should be set</p>
 <p>Input channel should send message to hub-&gt;newMessage()</p>
 <p>If channel implementation depends on any abstraction represented by file descriptor the <a class="el" href="classchanneling_1_1Channel.html#a0455bae661fc31c385d8bcfda05cbd87">pollThread()</a> can be used: _fd : file descriptor, should be prepared during <a class="el" href="classchanneling_1_1Channel.html#a7be2d5c0489c17529af4252cb803c0f8">activate()</a> <a class="el" href="classchanneling_1_1Channel.html#a3a98ed307d751858672f491939811d69">startPolling()</a> and <a class="el" href="classchanneling_1_1Channel.html#abc9e3ab8a477c1d29f648e3448f8bd7f">stopPolling()</a> functions start and stop the pollThread which reads _fd (using select()) and sends messages to _hub.</p>
 <p>If channel has own abstraction then it can override _pollThread() and implement own message loop. </p>
@@ -563,6 +565,27 @@ Friends</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Field Documentation</h2>
+<a class="anchor" id="acc365f57c3deec7c75f9baf2f0e09f4a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::atomic_bool channeling::Channel::_active</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p><a class="el" href="classchanneling_1_1Channel.html">Channel</a> is prepared and active </p>
+
+</div>
+</div>
 <a class="anchor" id="a6126067913ffcdc7f333e2ed1da0d4b3"></a>
 <div class="memitem">
 <div class="memproto">
@@ -733,7 +756,7 @@ Friends</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacechanneling.html">channeling</a></li><li class="navelem"><a class="el" href="classchanneling_1_1Channel.html">Channel</a></li>
-    <li class="footer">Generated on Tue Mar 3 2015 09:02:22 for Chatsync by
+    <li class="footer">Generated on Tue Mar 3 2015 11:52:22 for Chatsync by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9 </li>
   </ul>

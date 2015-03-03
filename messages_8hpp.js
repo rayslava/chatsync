@@ -5,7 +5,7 @@ var messages_8hpp =
     [ "ERR_FD", "messages_8hpp.html#ad342e84b3262a7d98f10086b85af2fba", null ],
     [ "ERR_FILE_OPEN", "messages_8hpp.html#a9ffde7fe2d8df3127ea78b2dbab642ea", null ],
     [ "ERR_HOST_NOT_FOUND", "messages_8hpp.html#a0b26b27a71ff70c96ce6024c29826aa3", null ],
-    [ "ERR_HUB_CHAN_CANT_BE_IN_OUT", "messages_8hpp.html#a8e500c0bea11b4da23ce493342d12b68", null ],
+    [ "ERR_HUB_CHANNEL_ALREADY_IN", "messages_8hpp.html#a67fc6809da411858554951aac011c59e", null ],
     [ "ERR_NO_OPTION", "messages_8hpp.html#a325700e5f774ccc25b8ff2f3dbcb5fdb", null ],
     [ "ERR_NOT_IMPL", "messages_8hpp.html#ab4be188e30c7463122e69c7e5584c16d", null ],
     [ "ERR_SOCK_CREATE", "messages_8hpp.html#ae48c9bc570268ec367049d7d1e5da490", null ],

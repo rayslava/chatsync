@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['_5factive',['_active',['../classchanneling_1_1Channel.html#acc365f57c3deec7c75f9baf2f0e09f4a',1,'channeling::Channel']]],
   ['_5fchannel',['_channel',['../classircChannel_1_1IrcChannel.html#a5cb40ec3010c67e4180efa045b91dfaf',1,'ircChannel::IrcChannel']]],
   ['_5fcond',['_cond',['../classHub_1_1Hub.html#a2fd921dde24809a7befabab2c2ff7818',1,'Hub::Hub']]],
   ['_5fconfig',['_config',['../classchanneling_1_1Channel.html#a6126067913ffcdc7f333e2ed1da0d4b3',1,'channeling::Channel::_config()'],['../classconfig_1_1ConfigParser.html#a1e9e8627a3024755b076e7432a019f4c',1,'config::ConfigParser::_config()']]],

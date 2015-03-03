@@ -12,6 +12,7 @@ var classchanneling_1_1Channel =
     [ "stopPolling", "classchanneling_1_1Channel.html#abc9e3ab8a477c1d29f648e3448f8bd7f", null ],
     [ "type", "classchanneling_1_1Channel.html#ab827a29fb06ac0569e7f054e04bc8121", null ],
     [ "operator>>", "classchanneling_1_1Channel.html#a99f7c6763b4b9c7a11ee80ea1513dd11", null ],
+    [ "_active", "classchanneling_1_1Channel.html#acc365f57c3deec7c75f9baf2f0e09f4a", null ],
     [ "_config", "classchanneling_1_1Channel.html#a6126067913ffcdc7f333e2ed1da0d4b3", null ],
     [ "_direction", "classchanneling_1_1Channel.html#ad9d63430a74f073172fd0b702683d9c7", null ],
     [ "_fd", "classchanneling_1_1Channel.html#a26ff34b9437cdc074004426fd636873e", null ],
