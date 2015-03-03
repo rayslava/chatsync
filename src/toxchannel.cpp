@@ -113,7 +113,7 @@ namespace toxChannel {
 	const auto msg = std::make_unique<char*>(new char[length + 2]);
 	snprintf(*msg, length + 1, "%s", message);
 
-	const auto newMessage = std::make_shared<const messaging::TextMessage>(
+	const auto newMessage = std::make_shared<const messaging::TextMessage>(channel->_id,
 	    std::move(std::make_shared<const messaging::User>(messaging::User(*name))),
 	    *msg);
 	std::cerr << "[DEBUG] tox Group msg " << newMessage->user()->name() << "> " << newMessage->data() << std::endl;	
@@ -126,7 +126,7 @@ namespace toxChannel {
         const auto name = s.substr(0, s.find(":"));
         const auto text = s.substr(s.find(":"), s.length());
 
-        const auto msg = std::make_shared<const messaging::TextMessage>(
+        const auto msg = std::make_shared<const messaging::TextMessage>(_id,
             std::move(std::make_shared<const messaging::User>(messaging::User(name.c_str()))),
 	    text.c_str());
         return msg;

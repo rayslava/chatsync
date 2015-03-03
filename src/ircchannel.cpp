@@ -56,7 +56,7 @@ namespace ircChannel {
             std::cerr << "[DEBUG] #irc:" << name << ": " << text << std::endl;
         }
 
-        const auto msg = std::make_shared<const messaging::TextMessage>(
+        const auto msg = std::make_shared<const messaging::TextMessage>(_id,
 	    std::move(std::make_shared<const messaging::User>(messaging::User(name.c_str()))),
 	    text.c_str());
         return msg;

@@ -20,7 +20,9 @@ namespace messaging {
      * Base class for all messages, needed for general architecture planning
      */
     class Message {
+        const uint16_t _originId;                                   /**< Id of channel produced the message */
     public:
+        Message(const uint16_t id): _originId(id) {};
         /**
          * Created to avoid typeid() calls
          */
@@ -41,7 +43,8 @@ namespace messaging {
         const std::string _data;                                    /**< Message text */
         const std::shared_ptr<const messaging::User> _user;         /**< Message author */
     public:
-        TextMessage(const std::shared_ptr<const messaging::User>&& user, const std::string& data):
+        TextMessage(const uint16_t origin, std::shared_ptr<const messaging::User>&& user, const std::string& data):
+            Message(origin),
             _data(data),
             _user(std::move(user)) {};
 
