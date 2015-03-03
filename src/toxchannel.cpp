@@ -58,15 +58,23 @@ namespace toxChannel {
 
     std::future<void> ToxChannel::activate() {
 	return std::async(std::launch::async, [this]() {
+		if (_active)
+                    return;
 		_pipeRunning = true;
 		toxInit();
 		_thread = std::make_unique<std::thread> (std::thread(&ToxChannel::pollThread, this));
+                _active = true;
 	    });}
 
     void ToxChannel::incoming(const messaging::message_ptr&& msg) {
         if (msg->type() == messaging::MessageType::Text) {
             const auto textmsg = messaging::TextMessage::fromMessage(msg);
             std::cerr << "[DEBUG] #tox " << _name << " " << textmsg->data() << std::endl;
+            static uint8_t msg[TOX_MAX_MESSAGE_LENGTH];
+            const auto len = snprintf(reinterpret_cast<char*>(msg), TOX_MAX_MESSAGE_LENGTH,
+                                      "[%s]: %s",
+                                      textmsg->user()->name().c_str(), textmsg->data().c_str());
+            tox_group_message_send(_tox, 0, msg, len);
         }
     }
 
@@ -113,11 +121,13 @@ namespace toxChannel {
 	const auto msg = std::make_unique<char*>(new char[length + 2]);
 	snprintf(*msg, length + 1, "%s", message);
 
-	const auto newMessage = std::make_shared<const messaging::TextMessage>(channel->_id,
-	    std::move(std::make_shared<const messaging::User>(messaging::User(*name))),
-	    *msg);
-	std::cerr << "[DEBUG] tox Group msg " << newMessage->user()->name() << "> " << newMessage->data() << std::endl;	
-	channel->_hub->newMessage(std::move(newMessage));
+        if (std::string(*name) != std::string(channel->_config.get("nickname", defaultBotName))) {
+		const auto newMessage = std::make_shared<const messaging::TextMessage>(channel->_id,
+		    std::move(std::make_shared<const messaging::User>(messaging::User(*name))),
+		    *msg);
+		std::cerr << "[DEBUG] tox Group msg " << newMessage->user()->name() << "> " << newMessage->data() << std::endl;	
+		channel->_hub->newMessage(std::move(newMessage));
+        }
     }
 
     const messaging::message_ptr ToxChannel::parse(const char* line) const

@@ -24,7 +24,7 @@ namespace channeling {
      *
      * The deriving class *must* override:
      *   void void incoming(const message_ptr msg) = 0; --- for data input in case of output channel
-     *   void activate(); --- to implement specific activities for channel work starting
+     *   void activate(); --- to implement specific activities for channel work starting, _active should be set
      *
      * Input channel should send message to hub->newMessage()
      *
@@ -38,6 +38,8 @@ namespace channeling {
      */
     class Channel {
     protected:
+        std::atomic_bool _active;                   /**< Channel is prepared and active */
+
 	/* Polling functions */
 	std::unique_ptr<std::thread> _thread;       /**< Pointer to reader thread in case of input channel */
 	std::atomic_bool _pipeRunning;              /**< Pipe reading thread is running */

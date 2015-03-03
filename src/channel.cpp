@@ -11,6 +11,7 @@ namespace channeling {
   std::atomic_int ChannelFactory::id{ATOMIC_FLAG_INIT};
 
   Channel::Channel(Hub::Hub* const hub, const std::string&& config):
+    _active(ATOMIC_FLAG_INIT),
     _thread(nullptr),
     _pipeRunning(ATOMIC_FLAG_INIT),
     _fd(-1),
@@ -27,7 +28,7 @@ namespace channeling {
   std::string const & Channel::name() const {
     return _name;
   }
- 
+
   Channel& operator>> (const message_ptr msg,  Channel& channel) {
     if (channel.direction() == channeling::ChannelDirection::Input)
       throw std::logic_error("Can't write data to input channel " + channel.name());

@@ -39,15 +39,25 @@ TEST(option, integer)
 TEST(option, direction)
 {
   const auto& valueIn = "input";
+  const auto& valueOut = "output";
+  const auto& valueInOut = "inout";
   const auto& valueWr = "wrong";
-  ConfigOption option(valueIn);
+  ConfigOption optionIn(valueIn);
+  ConfigOption optionOut(valueOut);
+  ConfigOption optionInOut(valueInOut);
+  ConfigOption optionWr(valueWr);
 
-  channeling::ChannelDirection dir = option;
+  channeling::ChannelDirection dirIn = optionIn;
+  channeling::ChannelDirection dirOut = optionOut;
+  channeling::ChannelDirection dirInOut = optionInOut;
+  channeling::ChannelDirection dirWr;
 
-  ASSERT_EQ(dir, channeling::ChannelDirection::Input);
+  ASSERT_EQ(dirIn, channeling::ChannelDirection::Input);
+  ASSERT_EQ(dirOut, channeling::ChannelDirection::Output);
+  ASSERT_EQ(dirInOut, channeling::ChannelDirection::Bidirectional);
   EXPECT_THROW({
       ConfigOption optionWr(valueWr);
-      dir = optionWr;
+      dirWr = optionWr;
     }, option_error);
 }
 

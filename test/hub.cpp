@@ -33,3 +33,21 @@ TEST(hub, name)
     delete hub;
 }
 
+
+TEST(hub, tox_bidir)
+{
+    hub = new Hub::Hub(hubName);
+
+    ASSERT_EQ(hub->name(), hubName);
+    const auto inch = channeling::ChannelFactory::create("tox", hub, "data://direction=inout\nname=toxconnect");
+
+    const auto msg = std::make_shared<const messaging::TextMessage>(0xFFFF,
+	    std::move(std::make_shared<const messaging::User>(messaging::User("system"))),
+	    "test");
+
+    std::this_thread::sleep_for(std::chrono::milliseconds (150));
+    hub->deactivate();
+
+    delete hub;
+}
+

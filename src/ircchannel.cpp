@@ -18,11 +18,12 @@ namespace ircChannel {
 
     std::future<void> IrcChannel::activate() {
 	return std::async(std::launch::async, [this]() {
-		if (_direction == channeling::ChannelDirection::Input || _direction == channeling::ChannelDirection::Output) {
-		    _fd = connect();
-		    startPolling();
-		    registerConnection();
-		};
+		if (_active)
+                    return;
+                _fd = connect();
+                startPolling();
+                registerConnection();
+                _active = true;
 	    });}
 
     IrcChannel::~IrcChannel() {

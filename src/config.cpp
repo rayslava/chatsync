@@ -22,6 +22,8 @@ namespace config {
 	    return channeling::ChannelDirection::Input;
 	else if (_value == "output")
 	    return channeling::ChannelDirection::Output;
+	else if (_value == "inout")
+	    return channeling::ChannelDirection::Bidirectional;
 
 	throw option_error(ERR_WRONG_DIR + ": " + _value);
     }

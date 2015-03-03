@@ -19,7 +19,7 @@ namespace Hub {
         if (!_inputChannels.empty() &&
              std::find_if(std::begin(_inputChannels), std::end(_inputChannels),
                 [&channel](chanPtr const& p)->bool {return p.get() == channel;}) != std::end(_inputChannels))
-            throw std::logic_error(ERR_HUB_CHAN_CANT_BE_IN_OUT);
+            throw std::logic_error(ERR_HUB_CHANNEL_ALREADY_IN);
         _inputChannels.push_back(std::unique_ptr<channeling::Channel> (channel));
     }
 
@@ -27,7 +27,7 @@ namespace Hub {
         if (!_outputChannels.empty() &&
                 std::find_if(std::begin(_outputChannels), std::end(_outputChannels),
                 [&channel](chanPtr const& p)->bool {return p.get() == channel;}) != std::end(_outputChannels))
-            throw std::logic_error(ERR_HUB_CHAN_CANT_BE_IN_OUT);
+            throw std::logic_error(ERR_HUB_CHANNEL_ALREADY_IN);
         _outputChannels.push_back(std::unique_ptr<channeling::Channel> (channel));
     }
 
@@ -37,6 +37,9 @@ namespace Hub {
                 addInput(channel);
                 break;
             case channeling::ChannelDirection::Output:
+                addOutput(channel);
+                break;
+            case channeling::ChannelDirection::Bidirectional:
                 addOutput(channel);
                 break;
             default:
