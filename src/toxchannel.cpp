@@ -49,8 +49,8 @@ namespace toxChannel {
 #include <string.h>
     }
 
-    ToxChannel::ToxChannel(Hub::Hub* hub, const std::string&& config):
-	channeling::Channel(hub, std::move(config)),
+    ToxChannel::ToxChannel(Hub::Hub* hub, const std::string& config):
+	channeling::Channel(hub, config),
 	_tox(tox_new(NULL)),    /** TODO: make options handling */
 	wasConnected(false)
     {

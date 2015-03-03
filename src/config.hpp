@@ -24,7 +24,17 @@ namespace channeling {
 }
 
 namespace config {
+    namespace strutil {
+        /**
+         * Predicate for case insensetive comparison
+         */
+        bool cipred(unsigned char a, unsigned char b);
 
+        /**
+         * Case insensetive comparison function
+         */
+        bool cistrcmp(const std::string& a, const std::string& b);
+    }
     /**
      * Generic configuration error
      */
@@ -123,7 +133,7 @@ namespace config {
 	 *
 	 * @param path Configuration file name and path
 	 */
-        ConfigParser(const std::string&& path);
+        ConfigParser(const std::string& path);
 
 	/**
 	 * Get option from storage

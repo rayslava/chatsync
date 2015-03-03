@@ -6,7 +6,17 @@
 #include "messages.hpp"
 
 namespace config {
-    ConfigParser::ConfigParser(const std::string&& path):
+    namespace strutil {
+        bool cipred(unsigned char a, unsigned char b) {
+            return std::tolower(a) == std::tolower(b);
+        }
+
+        bool cistrcmp(const std::string& a, const std::string& b) {
+            return std::lexicographical_compare(a.begin(), a.end(),
+                                                b.begin(), b.end(), cipred);
+        }
+    }
+    ConfigParser::ConfigParser(const std::string& path):
 	_config(std::move(parseConfig(openConfig(path))))
     {
 	/* TODO: config data path parsing and data reading */

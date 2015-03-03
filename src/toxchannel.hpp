@@ -32,7 +32,7 @@ namespace toxChannel {
         const messaging::message_ptr parse(const char* line) const override;
 	void pollThread() override; /**< Thread for tox infinite loop */
     public:
-	explicit ToxChannel(Hub::Hub* hub, const std::string&& config);
+	explicit ToxChannel(Hub::Hub* hub, const std::string& config);
         ~ToxChannel();
 
 	std::string type() const override { return "tox"; };

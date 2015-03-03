@@ -8,8 +8,8 @@
 #include <memory>
 
 namespace ircChannel {
-    IrcChannel::IrcChannel(Hub::Hub* hub, const std::string&& config):
-	channeling::Channel(hub, std::move(config)),
+    IrcChannel::IrcChannel(Hub::Hub* hub, const std::string& config):
+	channeling::Channel(hub, config),
 	_server(_config["server"]),
 	_port(_config["port"]),
 	_channel(_config["channel"])

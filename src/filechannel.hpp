@@ -26,7 +26,7 @@ namespace fileChannel {
         const messaging::message_ptr parse(const char* line) const override;
 	static const channeling::ChannelCreatorImpl<FileChannel> creator;
     public:
-	explicit FileChannel(Hub::Hub* hub, const std::string&& config);
+	explicit FileChannel(Hub::Hub* hub, const std::string& config);
         ~FileChannel();
 
 	std::string type() const override { return "file"; };

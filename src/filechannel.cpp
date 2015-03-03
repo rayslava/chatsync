@@ -5,8 +5,8 @@
 
 namespace fileChannel {
 
-    FileChannel::FileChannel(Hub::Hub* hub, const std::string&& config):
-	channeling::Channel(hub, std::move(config))
+    FileChannel::FileChannel(Hub::Hub* hub, const std::string& config):
+	channeling::Channel(hub, config)
     {
     }
 

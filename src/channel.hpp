@@ -88,7 +88,7 @@ namespace channeling {
 	 * @param hub Hub to add channel to
 	 * @param config configuration data or path (see config.hpp for details)
 	 */
-        Channel(Hub::Hub* const hub, const std::string&& config);
+        Channel(Hub::Hub* const hub, const std::string& config);
 
         virtual ~Channel() {};
 
@@ -139,7 +139,7 @@ namespace channeling {
     {
     public:
 	ChannelCreator(const std::string& classname);
-	virtual Channel* create(Hub::Hub* const hub, const std::string&& config) = 0;
+	virtual Channel* create(Hub::Hub* const hub, const std::string& config) = 0;
     };
 
     template <class T>
@@ -148,13 +148,13 @@ namespace channeling {
     public:
 	ChannelCreatorImpl(const std::string& classname) : ChannelCreator(classname) {}
 
-	virtual Channel* create(Hub::Hub* const hub, const std::string&& config) { return new T(hub, std::move(config)); }
+	virtual Channel* create(Hub::Hub* const hub, const std::string& config) { return new T(hub, config); }
     };
 
     class ChannelFactory
     {
     public:
-	static Channel* create(const std::string& classname, Hub::Hub* const hub, const std::string&& config);
+	static Channel* create(const std::string& classname, Hub::Hub* const hub, const std::string& config);
 	static void registerClass(const std::string& classname, ChannelCreator* creator);
         static uint16_t nextId() { return id++; }
 

@@ -10,12 +10,12 @@
 namespace channeling {
   std::atomic_int ChannelFactory::id{ATOMIC_FLAG_INIT};
 
-  Channel::Channel(Hub::Hub* const hub, const std::string&& config):
+  Channel::Channel(Hub::Hub* const hub, const std::string& config):
     _active(ATOMIC_FLAG_INIT),
     _thread(nullptr),
     _pipeRunning(ATOMIC_FLAG_INIT),
     _fd(-1),
-    _config(std::move(config)),
+    _config(config),
     _name(_config["name"]),
     _direction(_config["direction"]),
     _hub(hub),
@@ -56,12 +56,12 @@ namespace channeling {
   }
 
   
-  Channel* ChannelFactory::create(const std::string& classname, Hub::Hub* const hub, const std::string&& config) {
+  Channel* ChannelFactory::create(const std::string& classname, Hub::Hub* const hub, const std::string& config) {
     std::map<std::string, ChannelCreator*>::iterator i;
     i = get_table().find(classname);
 
     if (i != get_table().end())
-      return i->second->create(hub, std::move(config));
+      return i->second->create(hub, config);
     else
       return (Channel*)NULL;
   }

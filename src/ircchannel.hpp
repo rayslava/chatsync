@@ -35,7 +35,7 @@ namespace ircChannel {
 	static const channeling::ChannelCreatorImpl<IrcChannel> creator;
 	
     public:
-	explicit IrcChannel(Hub::Hub* hub, const std::string&& config);
+	explicit IrcChannel(Hub::Hub* hub, const std::string& config);
         ~IrcChannel();
 
 	std::string type() const override {return "irc";};
