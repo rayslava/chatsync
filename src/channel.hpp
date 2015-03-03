@@ -38,8 +38,6 @@ namespace channeling {
      */
     class Channel {
     protected:
-        const uint16_t _id;                         /**< Unique channel id */
-
 	/* Polling functions */
 	std::unique_ptr<std::thread> _thread;       /**< Pointer to reader thread in case of input channel */
 	std::atomic_bool _pipeRunning;              /**< Pipe reading thread is running */
@@ -82,6 +80,8 @@ namespace channeling {
 	void stopPolling();
 
     public:
+        const uint16_t _id;                         /**< Unique channel id */
+
         /**
 	 * @param hub Hub to add channel to
 	 * @param config configuration data or path (see config.hpp for details)

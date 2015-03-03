@@ -20,8 +20,8 @@ namespace messaging {
      * Base class for all messages, needed for general architecture planning
      */
     class Message {
-        const uint16_t _originId;                                   /**< Id of channel produced the message */
     public:
+        const uint16_t _originId;                                   /**< Id of channel produced the message */
         Message(const uint16_t id): _originId(id) {};
         /**
          * Created to avoid typeid() calls

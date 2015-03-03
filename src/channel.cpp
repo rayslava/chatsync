@@ -11,14 +11,14 @@ namespace channeling {
   std::atomic_int ChannelFactory::id{ATOMIC_FLAG_INIT};
 
   Channel::Channel(Hub::Hub* const hub, const std::string&& config):
-    _id(ChannelFactory::nextId()),
     _thread(nullptr),
     _pipeRunning(ATOMIC_FLAG_INIT),
     _fd(-1),
     _config(std::move(config)),
     _name(_config["name"]),
     _direction(_config["direction"]),
-    _hub(hub)
+    _hub(hub),
+    _id(ChannelFactory::nextId())
   {
     std::cout << _name << " : " << _id << std::endl;
     _hub->addChannel(this);

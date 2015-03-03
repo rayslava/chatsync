@@ -69,7 +69,8 @@ namespace Hub {
         while (_loopRunning) {
 	    const auto msg = popMessage();
 	    for (auto& out : _outputChannels)
-		msg >> *out;
+                if (msg->_originId != out->_id)
+                    msg >> *out;
         }
     }
 
