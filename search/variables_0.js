@@ -15,6 +15,7 @@ var searchData=
   ['_5fmsgloop',['_msgLoop',['../classHub_1_1Hub.html#a4c497369b9a908c10860f30caf5cf29d',1,'Hub::Hub']]],
   ['_5fmutex',['_mutex',['../classHub_1_1Hub.html#a06dd4f3aee8f1b7e9b3eec6ae012cc3e',1,'Hub::Hub']]],
   ['_5fname',['_name',['../classchanneling_1_1Channel.html#ab71902360f53639f041db422cf49cae3',1,'channeling::Channel::_name()'],['../classHub_1_1Hub.html#a3223ce3fa9b2d1e4960f75fa26b69856',1,'Hub::Hub::_name()'],['../classmessaging_1_1User.html#aef494a0acd7d4cca2401d21c6b3b9070',1,'messaging::User::_name()']]],
+  ['_5foriginid',['_originId',['../classmessaging_1_1Message.html#a0296dc545eba35b12b5c01b521d8c3b0',1,'messaging::Message']]],
   ['_5foutputchannels',['_outputChannels',['../classHub_1_1Hub.html#acc1b02d2715c90d66d6f58c5c3912a5e',1,'Hub::Hub']]],
   ['_5fpiperunning',['_pipeRunning',['../classchanneling_1_1Channel.html#ab5745eab177ac1dbebf1923c2b35889e',1,'channeling::Channel']]],
   ['_5fport',['_port',['../classircChannel_1_1IrcChannel.html#ab68f31d628fae4ad985c24a3cc3ee05c',1,'ircChannel::IrcChannel']]],

@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Chatsync
-   &#160;<span id="projectnumber">9e9edde6504f8f7b5862fbb2a81eb6ce7b8ca92f</span>
+   &#160;<span id="projectnumber">047adc03bcd9295f6ba2ce4f332557e4e00f22a4</span>
    </div>
   </td>
  </tr>
@@ -107,7 +107,8 @@ $(document).ready(function(){initNavTree('classmessaging_1_1Message.html','');})
 
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Public Member Functions</a>  </div>
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a>  </div>
   <div class="headertitle">
 <div class="title">messaging::Message Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
@@ -126,12 +127,44 @@ Inheritance diagram for messaging::Message:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a2acc94cbf688eb6bfc6541a0c7b24f67"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmessaging_1_1Message.html#a2acc94cbf688eb6bfc6541a0c7b24f67">Message</a> (const uint16_t id)</td></tr>
+<tr class="separator:a2acc94cbf688eb6bfc6541a0c7b24f67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4a48e16bbfb8cf78c895691be7cd47b6"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespacemessaging.html#a05aa49bb59ef55dbe0621da8d232d737">MessageType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmessaging_1_1Message.html#a4a48e16bbfb8cf78c895691be7cd47b6">type</a> () const =0</td></tr>
 <tr class="separator:a4a48e16bbfb8cf78c895691be7cd47b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a0296dc545eba35b12b5c01b521d8c3b0"><td class="memItemLeft" align="right" valign="top">const uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmessaging_1_1Message.html#a0296dc545eba35b12b5c01b521d8c3b0">_originId</a></td></tr>
+<tr class="separator:a0296dc545eba35b12b5c01b521d8c3b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base class for all messages, needed for general architecture planning </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a2acc94cbf688eb6bfc6541a0c7b24f67"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">messaging::Message::Message </td>
+          <td>(</td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a4a48e16bbfb8cf78c895691be7cd47b6"></a>
 <div class="memitem">
 <div class="memproto">
@@ -158,6 +191,28 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<h2 class="groupheader">Field Documentation</h2>
+<a class="anchor" id="a0296dc545eba35b12b5c01b521d8c3b0"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const uint16_t messaging::Message::_originId</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Id of channel produced the message </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>src/<a class="el" href="message_8hpp_source.html">message.hpp</a></li>
 </ul>
@@ -167,7 +222,7 @@ Public Member Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacemessaging.html">messaging</a></li><li class="navelem"><a class="el" href="classmessaging_1_1Message.html">Message</a></li>
-    <li class="footer">Generated on Mon Mar 2 2015 17:24:11 for Chatsync by
+    <li class="footer">Generated on Tue Mar 3 2015 08:55:26 for Chatsync by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9 </li>
   </ul>

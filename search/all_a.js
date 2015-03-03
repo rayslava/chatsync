@@ -3,6 +3,7 @@ var searchData=
   ['main',['main',['../main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main.cpp']]],
   ['main_2ecpp',['main.cpp',['../main_8cpp.html',1,'']]],
   ['message',['Message',['../classmessaging_1_1Message.html',1,'messaging']]],
+  ['message',['Message',['../classmessaging_1_1Message.html#a2acc94cbf688eb6bfc6541a0c7b24f67',1,'messaging::Message']]],
   ['message_2ehpp',['message.hpp',['../message_8hpp.html',1,'']]],
   ['message_5fptr',['message_ptr',['../namespacemessaging.html#aa012bd42e06013a9d4a4d69a1a9897bc',1,'messaging']]],
   ['messagecallback',['messageCallback',['../classtoxChannel_1_1ToxChannel.html#ae46fd1c3695aac40bb9e67ac4f39b043',1,'toxChannel::ToxChannel']]],
