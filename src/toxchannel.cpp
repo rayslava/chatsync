@@ -142,6 +142,12 @@ namespace toxChannel {
         return msg;
     }
 
+  namespace linux {
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+  }
 
     int ToxChannel::toxInit() {
 	int result = 0;
@@ -159,6 +165,23 @@ namespace toxChannel {
 	
 	const std::string statusMsg = _config.get("status_message", defaultStatusMessage);
 	const uint8_t* statusData = reinterpret_cast<const uint8_t*>(statusMsg.c_str());
+
+	try {
+          const auto dataFileName = std::string(_config["datafile"]).c_str();
+	  struct linux::stat sb;
+	  if ((stat(dataFileName, &sb) == -1))
+	    throw config::option_error("No such file");
+	  if ((sb.st_mode & S_IFMT) != S_IFREG)
+	    throw config::option_error("Not a file");
+	  const size_t filesize = sb.st_size;
+	  const auto toxData = std::make_unique<uint8_t*>(new uint8_t[filesize]);
+          const int toxfd = linux::open(dataFileName, O_RDONLY);
+          int result = linux::read(toxfd, *toxData, filesize);
+          result = linux::close(toxfd);
+	  result = tox_load(_tox, *toxData, filesize);
+	} catch (config::option_error e) {
+	  std::cerr << "[DEBUG] Can't open save file: " << e.what() << std::endl;
+	}
 
 	result = tox_set_status_message(_tox, statusData, statusMsg.length());
 	if (result < 0)
