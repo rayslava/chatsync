@@ -1,6 +1,6 @@
 var classtoxChannel_1_1ToxChannel =
 [
-    [ "ToxChannel", "classtoxChannel_1_1ToxChannel.html#a177234f8847abd21847483e7c5f645f1", null ],
+    [ "ToxChannel", "classtoxChannel_1_1ToxChannel.html#a1a659d2cb24ade42773c2181233e3ac9", null ],
     [ "~ToxChannel", "classtoxChannel_1_1ToxChannel.html#a555c640bcd54e658f5da0f94586db372", null ],
     [ "activate", "classtoxChannel_1_1ToxChannel.html#a8f74922080684a5718261e89dc569861", null ],
     [ "friendRequestCallback", "classtoxChannel_1_1ToxChannel.html#a4e1cd51a83f6c67fa1e2d5626181560b", null ],

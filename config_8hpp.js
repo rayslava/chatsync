@@ -9,6 +9,8 @@ var config_8hpp =
       [ "Output", "config_8hpp.html#a469c576e1963fd3481107d4dcdf6de32a29c2c02a361c9d7028472e5d92cd4a54", null ],
       [ "Bidirectional", "config_8hpp.html#a469c576e1963fd3481107d4dcdf6de32aabd4328c725637aabedbd02d3b7ffd40", null ]
     ] ],
+    [ "cipred", "config_8hpp.html#a38930dc292d4d273d69c6725656966ad", null ],
+    [ "cistrcmp", "config_8hpp.html#ad16022c624fbe67ecb14bfce46c4e89d", null ],
     [ "ChannelDirectionName", "config_8hpp.html#a40a1e162d01241b1462294927875520a", null ],
     [ "configPrefixData", "config_8hpp.html#aa115b81841b8b3e5a254f02f710d4f81", null ],
     [ "configPrefixFile", "config_8hpp.html#a6b3bf8de83fc951bd01035bc67ad9417", null ]

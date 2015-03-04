@@ -5,7 +5,7 @@ var searchData=
   ['input',['Input',['../namespacechanneling.html#a469c576e1963fd3481107d4dcdf6de32a324118a6721dd6b8a9b9f4e327df2bf5',1,'channeling']]],
   ['irc_5fmessage_5fmax',['irc_message_max',['../namespaceircChannel.html#adb15ce104dba0f33a9e7743ed2295322',1,'ircChannel']]],
   ['ircchannel',['IrcChannel',['../classircChannel_1_1IrcChannel.html',1,'ircChannel']]],
-  ['ircchannel',['ircChannel',['../namespaceircChannel.html',1,'ircChannel'],['../classircChannel_1_1IrcChannel.html#a1ee1d21e6a80831c29329c4c29d13d48',1,'ircChannel::IrcChannel::IrcChannel()']]],
+  ['ircchannel',['ircChannel',['../namespaceircChannel.html',1,'ircChannel'],['../classircChannel_1_1IrcChannel.html#a9d65635b86fd770120322ff3b4cb7640',1,'ircChannel::IrcChannel::IrcChannel()']]],
   ['ircchannel_2ecpp',['ircchannel.cpp',['../ircchannel_8cpp.html',1,'']]],
   ['ircchannel_2ehpp',['ircchannel.hpp',['../ircchannel_8hpp.html',1,'']]],
   ['net',['net',['../namespaceircChannel_1_1net.html',1,'ircChannel']]]

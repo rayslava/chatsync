@@ -8,7 +8,7 @@ var dir_68267d1309a1af8e8297ef4c3efbcdba =
       [ "ChannelCreatorImpl", "classchanneling_1_1ChannelCreatorImpl.html", "classchanneling_1_1ChannelCreatorImpl" ],
       [ "ChannelFactory", "classchanneling_1_1ChannelFactory.html", "classchanneling_1_1ChannelFactory" ]
     ] ],
-    [ "config.cpp", "config_8cpp.html", null ],
+    [ "config.cpp", "config_8cpp.html", "config_8cpp" ],
     [ "config.hpp", "config_8hpp.html", "config_8hpp" ],
     [ "filechannel.cpp", "filechannel_8cpp.html", null ],
     [ "filechannel.hpp", "filechannel_8hpp.html", [

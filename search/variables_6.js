@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['wasconnected',['wasConnected',['../classtoxChannel_1_1ToxChannel.html#ae8a52bbfb2dbe37312b4f9eaf2e9aab5',1,'toxChannel::ToxChannel']]]
+  ['running',['running',['../main_8cpp.html#a1287f154880e6125edc511f9a6da0726',1,'main.cpp']]]
 ];

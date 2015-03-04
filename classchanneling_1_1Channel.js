@@ -1,6 +1,6 @@
 var classchanneling_1_1Channel =
 [
-    [ "Channel", "classchanneling_1_1Channel.html#aaf48d633e80c20ad91a485f26e348b0a", null ],
+    [ "Channel", "classchanneling_1_1Channel.html#acd4715707ec8cc949bb5000c50966b27", null ],
     [ "~Channel", "classchanneling_1_1Channel.html#a7811310c25bd65e6541ba198fdaa6fc8", null ],
     [ "activate", "classchanneling_1_1Channel.html#a7be2d5c0489c17529af4252cb803c0f8", null ],
     [ "direction", "classchanneling_1_1Channel.html#ae56d232c2cf48246c07269ca786ae67f", null ],

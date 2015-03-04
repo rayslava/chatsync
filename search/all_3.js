@@ -1,7 +1,7 @@
 var searchData=
 [
   ['channel',['Channel',['../classchanneling_1_1Channel.html',1,'channeling']]],
-  ['channel',['Channel',['../classchanneling_1_1Channel.html#aaf48d633e80c20ad91a485f26e348b0a',1,'channeling::Channel']]],
+  ['channel',['Channel',['../classchanneling_1_1Channel.html#acd4715707ec8cc949bb5000c50966b27',1,'channeling::Channel']]],
   ['channel_2ecpp',['channel.cpp',['../channel_8cpp.html',1,'']]],
   ['channel_2ehpp',['channel.hpp',['../channel_8hpp.html',1,'']]],
   ['channelcreator',['ChannelCreator',['../classchanneling_1_1ChannelCreator.html',1,'channeling']]],
@@ -16,6 +16,8 @@ var searchData=
   ['channelfactory',['ChannelFactory',['../classchanneling_1_1ChannelFactory.html',1,'channeling']]],
   ['channeling',['channeling',['../namespacechanneling.html',1,'']]],
   ['chanptr',['chanPtr',['../namespaceHub.html#a9d9cbe0770b5f5fb86aa86f8bf05e060',1,'Hub']]],
+  ['cipred',['cipred',['../namespaceconfig_1_1strutil.html#a38930dc292d4d273d69c6725656966ad',1,'config::strutil']]],
+  ['cistrcmp',['cistrcmp',['../namespaceconfig_1_1strutil.html#ad16022c624fbe67ecb14bfce46c4e89d',1,'config::strutil']]],
   ['cmd_5finvite',['cmd_invite',['../namespacetoxChannel.html#a9384a831c8b8b06889327f77a0c4c440',1,'toxChannel']]],
   ['config',['config',['../namespaceconfig.html',1,'']]],
   ['config_2ecpp',['config.cpp',['../config_8cpp.html',1,'']]],
@@ -24,12 +26,13 @@ var searchData=
   ['config_5ferror',['config_error',['../classconfig_1_1config__error.html#ac595798fdd856300e68753bc918cc284',1,'config::config_error']]],
   ['configoption',['ConfigOption',['../classconfig_1_1ConfigOption.html',1,'config']]],
   ['configoption',['ConfigOption',['../classconfig_1_1ConfigOption.html#a06bd0a7d9c39c9316ad1c670c4924789',1,'config::ConfigOption::ConfigOption(const std::string &amp;&amp;value)'],['../classconfig_1_1ConfigOption.html#a2cb38b9964af5ff6c287baab19713df4',1,'config::ConfigOption::ConfigOption(const char *value)']]],
-  ['configparser',['ConfigParser',['../classconfig_1_1ConfigParser.html#ae6ea2f7fd914d63e5b08187507c1ca7a',1,'config::ConfigParser']]],
   ['configparser',['ConfigParser',['../classconfig_1_1ConfigParser.html',1,'config']]],
+  ['configparser',['ConfigParser',['../classconfig_1_1ConfigParser.html#a2017fcd2e6d147536e7e7d8dbe82ff20',1,'config::ConfigParser']]],
   ['configprefixdata',['configPrefixData',['../namespaceconfig.html#aa115b81841b8b3e5a254f02f710d4f81',1,'config']]],
   ['configprefixfile',['configPrefixFile',['../namespaceconfig.html#a6b3bf8de83fc951bd01035bc67ad9417',1,'config']]],
   ['connect',['connect',['../classircChannel_1_1IrcChannel.html#a52e2baace598d46bac765f02ebe1b985',1,'ircChannel::IrcChannel']]],
-  ['create',['create',['../classchanneling_1_1ChannelCreator.html#a7367316f6f8b745edc599a7185bda08a',1,'channeling::ChannelCreator::create()'],['../classchanneling_1_1ChannelCreatorImpl.html#aecab965af6a76adeda5fbad403cdb159',1,'channeling::ChannelCreatorImpl::create()'],['../classchanneling_1_1ChannelFactory.html#a3c09fc58176c46bf69317b9beec33fee',1,'channeling::ChannelFactory::create()']]],
+  ['create',['create',['../classchanneling_1_1ChannelCreator.html#a36a8439d92e19fef0d83525bd48c8982',1,'channeling::ChannelCreator::create()'],['../classchanneling_1_1ChannelCreatorImpl.html#ab48ae885f08f8d35560aacff92b7cec5',1,'channeling::ChannelCreatorImpl::create()'],['../classchanneling_1_1ChannelFactory.html#a7731c5ffd09a692193a039e9dbc2088c',1,'channeling::ChannelFactory::create()']]],
   ['creator',['creator',['../classfileChannel_1_1FileChannel.html#a3f6e94e96861f8b1c65f5c51e45cd827',1,'fileChannel::FileChannel::creator()'],['../classircChannel_1_1IrcChannel.html#a1d45dec4bac4aa6fc571436a4a382301',1,'ircChannel::IrcChannel::creator()'],['../classtoxChannel_1_1ToxChannel.html#a47659c8a03b724048bf61fff0674868f',1,'toxChannel::ToxChannel::creator()']]],
-  ['chatsync',['chatsync',['../index.html',1,'']]]
+  ['chatsync',['chatsync',['../index.html',1,'']]],
+  ['strutil',['strutil',['../namespaceconfig_1_1strutil.html',1,'config']]]
 ];

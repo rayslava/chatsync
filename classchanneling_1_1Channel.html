@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Chatsync
-   &#160;<span id="projectnumber">feac10bf38263067d783dda260de0f0b215c4526</span>
+   &#160;<span id="projectnumber">0be54c0395e12a0adcde9b77606c094759151097</span>
    </div>
   </td>
  </tr>
@@ -132,8 +132,8 @@ Inheritance diagram for channeling::Channel:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aaf48d633e80c20ad91a485f26e348b0a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchanneling_1_1Channel.html#aaf48d633e80c20ad91a485f26e348b0a">Channel</a> (<a class="el" href="classHub_1_1Hub.html">Hub::Hub</a> *const hub, const std::string &amp;&amp;config)</td></tr>
-<tr class="separator:aaf48d633e80c20ad91a485f26e348b0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd4715707ec8cc949bb5000c50966b27"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchanneling_1_1Channel.html#acd4715707ec8cc949bb5000c50966b27">Channel</a> (<a class="el" href="classHub_1_1Hub.html">Hub::Hub</a> *const hub, const std::string &amp;config)</td></tr>
+<tr class="separator:acd4715707ec8cc949bb5000c50966b27"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7811310c25bd65e6541ba198fdaa6fc8"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchanneling_1_1Channel.html#a7811310c25bd65e6541ba198fdaa6fc8">~Channel</a> ()</td></tr>
 <tr class="separator:a7811310c25bd65e6541ba198fdaa6fc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a290aeea4ad50cfa0478c98109ba35d67"><td class="memItemLeft" align="right" valign="top">virtual std::string const &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchanneling_1_1Channel.html#a290aeea4ad50cfa0478c98109ba35d67">name</a> () const </td></tr>
@@ -194,7 +194,7 @@ Friends</h2></td></tr>
 <p>If channel implementation depends on any abstraction represented by file descriptor the <a class="el" href="classchanneling_1_1Channel.html#a0455bae661fc31c385d8bcfda05cbd87">pollThread()</a> can be used: _fd : file descriptor, should be prepared during <a class="el" href="classchanneling_1_1Channel.html#a7be2d5c0489c17529af4252cb803c0f8">activate()</a> <a class="el" href="classchanneling_1_1Channel.html#a3a98ed307d751858672f491939811d69">startPolling()</a> and <a class="el" href="classchanneling_1_1Channel.html#abc9e3ab8a477c1d29f648e3448f8bd7f">stopPolling()</a> functions start and stop the pollThread which reads _fd (using select()) and sends messages to _hub.</p>
 <p>If channel has own abstraction then it can override _pollThread() and implement own message loop. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="aaf48d633e80c20ad91a485f26e348b0a"></a>
+<a class="anchor" id="acd4715707ec8cc949bb5000c50966b27"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -207,7 +207,7 @@ Friends</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::string &amp;&amp;&#160;</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -756,7 +756,7 @@ Friends</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacechanneling.html">channeling</a></li><li class="navelem"><a class="el" href="classchanneling_1_1Channel.html">Channel</a></li>
-    <li class="footer">Generated on Tue Mar 3 2015 12:32:01 for Chatsync by
+    <li class="footer">Generated on Wed Mar 4 2015 05:27:58 for Chatsync by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9 </li>
   </ul>
