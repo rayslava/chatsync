@@ -1,8 +1,9 @@
 var searchData=
 [
+  ['linux',['linux',['../namespacetoxChannel_1_1linux.html',1,'toxChannel']]],
   ['text',['Text',['../namespacemessaging.html#a05aa49bb59ef55dbe0621da8d232d737a9dffbf69ffba8bc38bc4e01abf4b1675',1,'messaging']]],
-  ['textmessage',['TextMessage',['../classmessaging_1_1TextMessage.html',1,'messaging']]],
   ['textmessage',['TextMessage',['../classmessaging_1_1TextMessage.html#affd6da3c47639c01d416686b7995abf7',1,'messaging::TextMessage']]],
+  ['textmessage',['TextMessage',['../classmessaging_1_1TextMessage.html',1,'messaging']]],
   ['toxchannel',['ToxChannel',['../classtoxChannel_1_1ToxChannel.html',1,'toxChannel']]],
   ['toxchannel',['toxChannel',['../namespacetoxChannel.html',1,'toxChannel'],['../classtoxChannel_1_1ToxChannel.html#a1a659d2cb24ade42773c2181233e3ac9',1,'toxChannel::ToxChannel::ToxChannel()']]],
   ['toxchannel_2ecpp',['toxchannel.cpp',['../toxchannel_8cpp.html',1,'']]],
