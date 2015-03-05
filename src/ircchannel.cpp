@@ -60,6 +60,7 @@ namespace ircChannel {
             std::cerr << "[DEBUG] #irc:" << name << ": " << text << std::endl;
         } else if (std::regex_match(toParse, msgMatches, pingRe)) {
             const std::string pong = "PONG " + msgMatches[1].str();
+            std::cerr << "[DEBUG] #irc: sending" << pong << std::endl;	    
             sendMessage(pong);
         }
 
