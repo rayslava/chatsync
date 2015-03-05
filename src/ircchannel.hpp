@@ -28,7 +28,7 @@ namespace ircChannel {
 	 */
 	int registerConnection();
 	int disconnect();
-	int sendMessage(const std::string& msg);
+	int sendMessage(const std::string& msg) const;
 	std::future<void> activate() override;
         const messaging::message_ptr parse(const char* line) const override;
 

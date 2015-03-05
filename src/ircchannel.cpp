@@ -59,10 +59,8 @@ namespace ircChannel {
             text = msgMatches[4].str();
             std::cerr << "[DEBUG] #irc:" << name << ": " << text << std::endl;
         } else if (std::regex_match(toParse, msgMatches, pingRe)) {
-            const auto server = msgMatches[1].str();
-	    char message[irc_message_max];
-	    snprintf(message, irc_message_max, "PONG %s\r\n", server.c_str());
-            sendMessage(message);
+            const std::string pong = "PONG " + msgMatches[1].str();
+            sendMessage(pong);
         }
 
         const auto msg = std::make_shared<const messaging::TextMessage>(_id,
@@ -148,7 +146,7 @@ namespace ircChannel {
 	return sockfd;
     }
 
-    int IrcChannel::sendMessage(const std::string &msg) {
+    int IrcChannel::sendMessage(const std::string &msg) const {
 	const int n = net::write(_fd,msg.c_str(),msg.length());
 
 	if (n < 0)
