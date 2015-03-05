@@ -36,7 +36,7 @@ namespace ircChannel {
 
         if (msg->type() == messaging::MessageType::Text) {
             const auto textmsg = messaging::TextMessage::fromMessage(msg);
-            snprintf(message, 256, "PRIVMSG #%s :[%s]: %s\r\n", _channel.c_str(), textmsg->user()->name().c_str(), textmsg->data().c_str());
+            snprintf(message, irc_message_max, "PRIVMSG #%s :[%s]: %s\r\n", _channel.c_str(), textmsg->user()->name().c_str(), textmsg->data().c_str());
             std::cerr << "[DEBUG] #irc" << _name << " " << textmsg->data() << " inside " << _name << std::endl;
             sendMessage(message);
         }
@@ -47,7 +47,10 @@ namespace ircChannel {
         // :rayslava!~v.barinov@212.44.150.238 PRIVMSG #chatsync :ololo
         const std::string toParse(line);
         std::cerr << "[DEBUG] Parsing irc line:" << toParse << std::endl;
+
 	std::regex msgRe("^:(\\S+)!~(\\S+)\\s+PRIVMSG\\s+#(\\S+)\\s+:(.*)\r\n$");
+	std::regex pingRe("^PING\\s+:(.*)\r\n$");
+
 	std::smatch msgMatches;
         std::string name = "irc";
         std::string text = "parse error";
@@ -55,6 +58,11 @@ namespace ircChannel {
             name = msgMatches[1].str();
             text = msgMatches[4].str();
             std::cerr << "[DEBUG] #irc:" << name << ": " << text << std::endl;
+        } else if (std::regex_match(toParse, msgMatches, pingRe)) {
+            const auto server = msgMatches[1].str();
+	    char message[irc_message_max];
+	    snprintf(message, irc_message_max, "PONG %s\r\n", server.c_str());
+            sendMessage(message);
         }
 
         const auto msg = std::make_shared<const messaging::TextMessage>(_id,
