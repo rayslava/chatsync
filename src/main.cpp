@@ -18,8 +18,10 @@ static void sighandler(int signum)
 
 int main(int argc, char* argv[])
 {
-    if (argc < 2)
+    if (argc < 2) {
+	std::cerr << "Please use " << argv[0] << " config.ini" << std::endl;
         return 1;
+    }
     std::string filename = argv[1];
 
     std::list<std::shared_ptr<Hub::Hub>> hublist;

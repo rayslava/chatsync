@@ -36,7 +36,7 @@ namespace ircChannel {
 
         if (msg->type() == messaging::MessageType::Text) {
             const auto textmsg = messaging::TextMessage::fromMessage(msg);
-            snprintf(message, 256, "PRIVMSG #chatsync :[%s]: %s\r\n", textmsg->user()->name().c_str(), textmsg->data().c_str());
+            snprintf(message, 256, "PRIVMSG #%s :[%s]: %s\r\n", _channel.c_str(), textmsg->user()->name().c_str(), textmsg->data().c_str());
             std::cerr << "[DEBUG] #irc" << _name << " " << textmsg->data() << " inside " << _name << std::endl;
             sendMessage(message);
         }
@@ -73,7 +73,7 @@ namespace ircChannel {
 	const auto passline = "PASS *\r\n";
 	const auto nickline = "NICK " + nick + "\r\n";
 	const auto userline = "USER " + nick + " " + hostname + " " + servername + ":"  + realname + "\r\n";
-	const auto joinline = "JOIN " + _channel + "  \r\n";
+	const auto joinline = "JOIN #" + _channel + "  \r\n";
 
 	sendMessage(passline);
 	sendMessage(nickline);
@@ -82,7 +82,7 @@ namespace ircChannel {
 
 	sendMessage(joinline);
 	std::this_thread::sleep_for(std::chrono::milliseconds (500));
-	sendMessage("PRIVMSG #chatsync :Hello there\r\n");
+	sendMessage("PRIVMSG #" + _channel + " :Hello there\r\n");
 	return 0;
     }
     /* OS interaction code begins here */
