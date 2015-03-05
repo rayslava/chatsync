@@ -1,6 +1,13 @@
 #include "toxchannel.hpp"
 #include "messages.hpp"
 
+  namespace linux {
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+  }
+
 namespace toxChannel {
 
     namespace util {
@@ -92,6 +99,21 @@ namespace toxChannel {
 	    _pipeRunning = false;
 	    _thread->join();
 	}
+	try {
+          const auto dataFileName = std::string(_config["datafile"]).c_str();
+	  const size_t filesize = tox_size(_tox);
+	  const auto toxData = std::make_unique<uint8_t*>(new uint8_t[filesize]);
+	  tox_save(_tox, *toxData);
+          const int toxfd = linux::open(dataFileName, O_WRONLY | O_CREAT, 0644);
+          int result = linux::write(toxfd, *toxData, filesize);
+	  if (result < 0)
+	    throw config::option_error("Error writing file");
+          result = linux::close(toxfd);
+	  if (result < 0)
+	    throw config::option_error("Error closing file");
+	} catch (config::option_error e) {
+	  std::cerr << "[DEBUG] Can't save tox data: " << e.what() << std::endl;
+	}
 	tox_kill(_tox);
     }
 
@@ -142,13 +164,6 @@ namespace toxChannel {
         return msg;
     }
 
-  namespace linux {
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <unistd.h>
-  }
-
     int ToxChannel::toxInit() {
 	int result = 0;
 
@@ -177,10 +192,18 @@ namespace toxChannel {
 	  const auto toxData = std::make_unique<uint8_t*>(new uint8_t[filesize]);
           const int toxfd = linux::open(dataFileName, O_RDONLY);
           int result = linux::read(toxfd, *toxData, filesize);
+	  if (result < 0)
+	    throw config::option_error("Error reading file");
           result = linux::close(toxfd);
+	  if (result < 0)
+	    throw config::option_error("Error closing file");
 	  result = tox_load(_tox, *toxData, filesize);
+	  if (result < 0)
+	    throw config::option_error("Error loading tox data");
+	  if (result > 0)
+	    throw config::option_error("Tox data is encrypted");
 	} catch (config::option_error e) {
-	  std::cerr << "[DEBUG] Can't open save file: " << e.what() << std::endl;
+	  std::cerr << "[DEBUG] Can't open tox data: " << e.what() << std::endl;
 	}
 
 	result = tox_set_status_message(_tox, statusData, statusMsg.length());

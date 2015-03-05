@@ -88,6 +88,7 @@ namespace ircChannel {
     /* OS interaction code begins here */
     namespace net {
 	extern "C" {
+#include <arpa/inet.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -103,7 +104,6 @@ namespace ircChannel {
 #include <unistd.h>
 #include <sys/ioctl.h>
 #include <stropts.h>
-#include <arpa/inet.h>	   
 	}
     }
     int IrcChannel::connect() {
@@ -128,7 +128,13 @@ namespace ircChannel {
 	::bcopy((char *)server->h_addr,
 	      (char *)&serv_addr.sin_addr.s_addr,
 	      server->h_length);
-	serv_addr.sin_port = net::htons(_port);
+	{
+	  /* Ugly workaround to use different optimization levels for compiler */
+#ifndef htons
+	  using net::htons;
+#endif
+	  serv_addr.sin_port = htons(_port);
+	}
 	if (net::connect(sockfd,(struct net::sockaddr *) &serv_addr,sizeof(serv_addr)) < 0)
 	    throw channeling::activate_error(ERR_CONNECTION);
 	return sockfd;
