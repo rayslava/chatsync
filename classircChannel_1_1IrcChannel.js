@@ -8,7 +8,7 @@ var classircChannel_1_1IrcChannel =
     [ "incoming", "classircChannel_1_1IrcChannel.html#a98e21bb4f7c9de81fceebd8a4ecdd1ce", null ],
     [ "parse", "classircChannel_1_1IrcChannel.html#ab48781b1151b1b678246964b1fe6c613", null ],
     [ "registerConnection", "classircChannel_1_1IrcChannel.html#a50d2857561905d6b9a03f815614aa1ba", null ],
-    [ "sendMessage", "classircChannel_1_1IrcChannel.html#ae76f069ffef1ac326d467263592e9044", null ],
+    [ "sendMessage", "classircChannel_1_1IrcChannel.html#a8376709cb6510e7152e6947b7a09a6be", null ],
     [ "type", "classircChannel_1_1IrcChannel.html#a56d7ca5d0be35a5ebf563fd357c51a81", null ],
     [ "_channel", "classircChannel_1_1IrcChannel.html#a5cb40ec3010c67e4180efa045b91dfaf", null ],
     [ "_port", "classircChannel_1_1IrcChannel.html#ab68f31d628fae4ad985c24a3cc3ee05c", null ],
