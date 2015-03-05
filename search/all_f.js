@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['sendmessage',['sendMessage',['../classircChannel_1_1IrcChannel.html#ae76f069ffef1ac326d467263592e9044',1,'ircChannel::IrcChannel']]],
-  ['sighandler',['sighandler',['../main_8cpp.html#a8c3b11e8f6bdd36ec82e5332c667ea7b',1,'main.cpp']]],
-  ['startpolling',['startPolling',['../classchanneling_1_1Channel.html#a3a98ed307d751858672f491939811d69',1,'channeling::Channel']]],
-  ['stoppolling',['stopPolling',['../classchanneling_1_1Channel.html#abc9e3ab8a477c1d29f648e3448f8bd7f',1,'channeling::Channel']]]
+  ['readme_2emd',['README.md',['../README_8md.html',1,'']]],
+  ['registerclass',['registerClass',['../classchanneling_1_1ChannelFactory.html#a41631f90ecfaccd3ba3fc6fdcbe7f3b9',1,'channeling::ChannelFactory']]],
+  ['registerconnection',['registerConnection',['../classircChannel_1_1IrcChannel.html#a50d2857561905d6b9a03f815614aa1ba',1,'ircChannel::IrcChannel']]],
+  ['running',['running',['../main_8cpp.html#a1287f154880e6125edc511f9a6da0726',1,'main.cpp']]]
 ];

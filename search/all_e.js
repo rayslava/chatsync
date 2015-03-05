@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['readme_2emd',['README.md',['../README_8md.html',1,'']]],
-  ['registerclass',['registerClass',['../classchanneling_1_1ChannelFactory.html#a41631f90ecfaccd3ba3fc6fdcbe7f3b9',1,'channeling::ChannelFactory']]],
-  ['registerconnection',['registerConnection',['../classircChannel_1_1IrcChannel.html#a50d2857561905d6b9a03f815614aa1ba',1,'ircChannel::IrcChannel']]],
-  ['running',['running',['../main_8cpp.html#a1287f154880e6125edc511f9a6da0726',1,'main.cpp']]]
+  ['parse',['parse',['../classchanneling_1_1Channel.html#a24b10fc673c7789acd523663926c4e1d',1,'channeling::Channel::parse()'],['../classfileChannel_1_1FileChannel.html#affaaad64ae3784f33c184aed21c5ee0b',1,'fileChannel::FileChannel::parse()'],['../classircChannel_1_1IrcChannel.html#ab48781b1151b1b678246964b1fe6c613',1,'ircChannel::IrcChannel::parse()'],['../classtoxChannel_1_1ToxChannel.html#a15bd57c28dd55dbe040dfd3042b902c6',1,'toxChannel::ToxChannel::parse()']]],
+  ['parseconfig',['parseConfig',['../classconfig_1_1ConfigParser.html#ab6052d63bb81b9da20f465c75dc03548',1,'config::ConfigParser']]],
+  ['pollthread',['pollThread',['../classchanneling_1_1Channel.html#a0455bae661fc31c385d8bcfda05cbd87',1,'channeling::Channel::pollThread()'],['../classtoxChannel_1_1ToxChannel.html#ae9313cf6fd430d6cce838f847f64f394',1,'toxChannel::ToxChannel::pollThread()']]],
+  ['popmessage',['popMessage',['../classHub_1_1Hub.html#a5762262058841a39a0f928103a18e2ea',1,'Hub::Hub']]],
+  ['pushmessage',['pushMessage',['../classHub_1_1Hub.html#affe6e6b8d653a70d3c5bf9d77941ee6c',1,'Hub::Hub']]]
 ];

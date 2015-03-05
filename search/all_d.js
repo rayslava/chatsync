@@ -1,8 +1,13 @@
 var searchData=
 [
-  ['parse',['parse',['../classchanneling_1_1Channel.html#a24b10fc673c7789acd523663926c4e1d',1,'channeling::Channel::parse()'],['../classfileChannel_1_1FileChannel.html#affaaad64ae3784f33c184aed21c5ee0b',1,'fileChannel::FileChannel::parse()'],['../classircChannel_1_1IrcChannel.html#ab48781b1151b1b678246964b1fe6c613',1,'ircChannel::IrcChannel::parse()'],['../classtoxChannel_1_1ToxChannel.html#a15bd57c28dd55dbe040dfd3042b902c6',1,'toxChannel::ToxChannel::parse()']]],
-  ['parseconfig',['parseConfig',['../classconfig_1_1ConfigParser.html#ab6052d63bb81b9da20f465c75dc03548',1,'config::ConfigParser']]],
-  ['pollthread',['pollThread',['../classchanneling_1_1Channel.html#a0455bae661fc31c385d8bcfda05cbd87',1,'channeling::Channel::pollThread()'],['../classtoxChannel_1_1ToxChannel.html#ae9313cf6fd430d6cce838f847f64f394',1,'toxChannel::ToxChannel::pollThread()']]],
-  ['popmessage',['popMessage',['../classHub_1_1Hub.html#a5762262058841a39a0f928103a18e2ea',1,'Hub::Hub']]],
-  ['pushmessage',['pushMessage',['../classHub_1_1Hub.html#affe6e6b8d653a70d3c5bf9d77941ee6c',1,'Hub::Hub']]]
+  ['channeldirection',['ChannelDirection',['../classconfig_1_1ConfigOption.html#a1b1cc5548c7ac674ebac4ce374840f38',1,'config::ConfigOption']]],
+  ['openconfig',['openConfig',['../classconfig_1_1ConfigParser.html#a5bf21f884af9ebf40e0b4e0f287f13c3',1,'config::ConfigParser']]],
+  ['openpipe',['openPipe',['../classfileChannel_1_1FileChannel.html#a0c61411622c87ad37b8b2bb7c1ad5948',1,'fileChannel::FileChannel']]],
+  ['operator_20int',['operator int',['../classconfig_1_1ConfigOption.html#a0cd31a1fd8928dd95e13ddb89437cc27',1,'config::ConfigOption']]],
+  ['operator_3e_3e',['operator&gt;&gt;',['../classchanneling_1_1Channel.html#a99f7c6763b4b9c7a11ee80ea1513dd11',1,'channeling::Channel::operator&gt;&gt;()'],['../namespacechanneling.html#ae7c5180674ec5f9c82d3d648b17a67dd',1,'channeling::operator&gt;&gt;()']]],
+  ['operator_5b_5d',['operator[]',['../classconfig_1_1ConfigParser.html#adca1624f4611475618770f5d0b479b8e',1,'config::ConfigParser']]],
+  ['option_5ferror',['option_error',['../classconfig_1_1option__error.html',1,'config']]],
+  ['option_5ferror',['option_error',['../classconfig_1_1option__error.html#a4504c019b2fc1f44dc5f222371b968c0',1,'config::option_error']]],
+  ['output',['Output',['../namespacechanneling.html#a469c576e1963fd3481107d4dcdf6de32a29c2c02a361c9d7028472e5d92cd4a54',1,'channeling']]],
+  ['string',['string',['../classconfig_1_1ConfigOption.html#a7abc4c9984674ba46fb0d5173eab001a',1,'config::ConfigOption']]]
 ];
