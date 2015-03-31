@@ -22,7 +22,10 @@ namespace ircChannel {
                     return;
                 _fd = connect();
                 startPolling();
-                registerConnection();
+		std::async(std::launch::async, [this]() {
+		    std::this_thread::sleep_for(std::chrono::milliseconds (1000));
+		    registerConnection();
+		  });
                 _active = true;
 	    });}
 
@@ -79,7 +82,7 @@ namespace ircChannel {
 	const std::string realname = _config.get("realname", "Chat Sync");
 	const auto passline = "PASS *\r\n";
 	const auto nickline = "NICK " + nick + "\r\n";
-	const auto userline = "USER " + nick + " " + hostname + " " + servername + ":"  + realname + "\r\n";
+	const auto userline = "USER " + nick + " " + hostname + " " + servername + " :"  + realname + "\r\n";
 	const auto joinline = "JOIN #" + _channel + "  \r\n";
 
 	sendMessage(passline);
