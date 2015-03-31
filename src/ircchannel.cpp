@@ -51,7 +51,7 @@ namespace ircChannel {
         const std::string toParse(line);
         std::cerr << "[DEBUG] Parsing irc line:" << toParse << std::endl;
 
-	std::regex msgRe(":(\\S+)!~(\\S+)\\s+PRIVMSG\\s+#(\\S+)\\s+:(.*)\r\n$");
+	std::regex msgRe(":(\\S+)!(\\S+)\\s+PRIVMSG\\s+#(\\S+)\\s+:(.*)\r\n$");
 	std::regex pingRe("PING\\s+:(.*)\r\n$");
 
 	std::smatch msgMatches;
