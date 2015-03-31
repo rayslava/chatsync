@@ -23,7 +23,7 @@ namespace ircChannel {
                 _fd = connect();
                 startPolling();
 		std::async(std::launch::async, [this]() {
-		    std::this_thread::sleep_for(std::chrono::milliseconds (1000));
+		    std::this_thread::sleep_for(std::chrono::milliseconds (2000));
 		    registerConnection();
 		  });
                 _active = true;
@@ -85,7 +85,7 @@ namespace ircChannel {
 	const auto passline = "PASS *\r\n";
 	const auto nickline = "NICK " + nick + "\r\n";
 	const auto userline = "USER " + nick + " " + hostname + " " + servername + " :"  + realname + "\r\n";
-	const auto loginline = "PRIVMSG nickserv :id " + servicePassword + " \r\n";
+	const auto loginline = "PRIVMSG nickserv :id " + servicePassword + "\r\n";
 	const auto joinline = "JOIN #" + _channel + "  \r\n";
 
 	sendMessage(passline);
@@ -94,6 +94,7 @@ namespace ircChannel {
 	std::this_thread::sleep_for(std::chrono::milliseconds (1000));
 	if (servicePassword.length() > 0) {
 	  std::async(std::launch::async, [this,loginline]() {
+	      sendMessage(loginline);
 	      std::this_thread::sleep_for(std::chrono::milliseconds (1000));
 	      sendMessage(loginline);
 	    });
