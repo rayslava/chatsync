@@ -139,7 +139,7 @@ namespace toxChannel {
 	const auto nameLen = tox_group_peername(tox, groupnumber, peernumber, *nameBuffer);
 	const auto name = std::make_unique<char*>(new char[nameLen + 2]);
 	snprintf(*name, nameLen + 1, "%s", *nameBuffer);
-	
+
 	const auto msg = std::make_unique<char*>(new char[length + 2]);
 	snprintf(*msg, length + 1, "%s", message);
 
@@ -147,7 +147,7 @@ namespace toxChannel {
 		const auto newMessage = std::make_shared<const messaging::TextMessage>(channel->_id,
 		    std::move(std::make_shared<const messaging::User>(messaging::User(*name))),
 		    *msg);
-		std::cerr << "[DEBUG] tox Group msg " << newMessage->user()->name() << "> " << newMessage->data() << std::endl;	
+		std::cerr << "[DEBUG] tox Group msg " << newMessage->user()->name() << "> " << newMessage->data() << std::endl;
 		channel->_hub->newMessage(std::move(newMessage));
         }
     }
@@ -177,7 +177,7 @@ namespace toxChannel {
 	result = tox_set_name(_tox, nickData, nick.length());
 	if (result < 0)
 	    throw channeling::activate_error(ERR_TOX_INIT + "(tox_set_name)");
-	
+
 	const std::string statusMsg = _config.get("status_message", defaultStatusMessage);
 	const uint8_t* statusData = reinterpret_cast<const uint8_t*>(statusMsg.c_str());
 

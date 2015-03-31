@@ -56,7 +56,7 @@ namespace ircChannel {
 
 	std::smatch msgMatches;
         std::string name = "irc";
-        std::string text = "parse error";
+        std::string text = toParse;
         if (std::regex_search(toParse, msgMatches, msgRe)) {
             name = msgMatches[1].str();
             text = msgMatches[4].str();
@@ -85,15 +85,19 @@ namespace ircChannel {
 	const auto passline = "PASS *\r\n";
 	const auto nickline = "NICK " + nick + "\r\n";
 	const auto userline = "USER " + nick + " " + hostname + " " + servername + " :"  + realname + "\r\n";
-	const auto loginline = "PRIVMSG nickserv :id " + servicePassword + "\r\n";
+	const auto loginline = "PRIVMSG nickserv :id " + servicePassword + " \r\n";
 	const auto joinline = "JOIN #" + _channel + "  \r\n";
 
 	sendMessage(passline);
 	sendMessage(nickline);
 	sendMessage(userline);
-	std::this_thread::sleep_for(std::chrono::milliseconds (500));
-	if (servicePassword.length() > 0)
-	  sendMessage(loginline);
+	std::this_thread::sleep_for(std::chrono::milliseconds (1000));
+	if (servicePassword.length() > 0) {
+	  std::async(std::launch::async, [this,loginline]() {
+	      std::this_thread::sleep_for(std::chrono::milliseconds (1000));
+	      sendMessage(loginline);
+	    });
+	}
 	sendMessage(joinline);
 	std::this_thread::sleep_for(std::chrono::milliseconds (500));
 	sendMessage("PRIVMSG #" + _channel + " :Hello there\r\n");
