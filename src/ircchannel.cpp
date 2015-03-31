@@ -52,20 +52,21 @@ namespace ircChannel {
         std::cerr << "[DEBUG] Parsing irc line:" << toParse << std::endl;
 
 	std::regex msgRe("^:(\\S+)!~(\\S+)\\s+PRIVMSG\\s+#(\\S+)\\s+:(.*)\r\n$");
-	std::regex pingRe("^PING\\s+:(.*)\r\n$");
+	std::regex pingRe("PING\\s+:(.*)\r\n$");
 
 	std::smatch msgMatches;
         std::string name = "irc";
         std::string text = "parse error";
-        if (std::regex_match(toParse, msgMatches, msgRe)) {
+        if (std::regex_search(toParse, msgMatches, msgRe)) {
             name = msgMatches[1].str();
             text = msgMatches[4].str();
             std::cerr << "[DEBUG] #irc:" << name << ": " << text << std::endl;
-        } else if (std::regex_match(toParse, msgMatches, pingRe)) {
+        };
+	if (std::regex_search(toParse, msgMatches, pingRe)) {
             const std::string pong = "PONG " + msgMatches[1].str();
-            std::cerr << "[DEBUG] #irc: sending" << pong << std::endl;
+            std::cerr << "[DEBUG] #irc: sending " << pong << std::endl;
             sendMessage(pong);
-        }
+        };
 
         const auto msg = std::make_shared<const messaging::TextMessage>(_id,
 	    std::move(std::make_shared<const messaging::User>(messaging::User(name.c_str()))),
@@ -80,16 +81,19 @@ namespace ircChannel {
 	const std::string hostname = _config.get("hostname", "chatsynchost");
 	const std::string servername = _config.get("servername", "chatsyncserver");
 	const std::string realname = _config.get("realname", "Chat Sync");
+	const std::string servicePassword = _config.get("servicepassword", "");
 	const auto passline = "PASS *\r\n";
 	const auto nickline = "NICK " + nick + "\r\n";
 	const auto userline = "USER " + nick + " " + hostname + " " + servername + " :"  + realname + "\r\n";
+	const auto loginline = "PRIVMSG nickserv :id " + servicePassword + "\r\n";
 	const auto joinline = "JOIN #" + _channel + "  \r\n";
 
 	sendMessage(passline);
 	sendMessage(nickline);
 	sendMessage(userline);
 	std::this_thread::sleep_for(std::chrono::milliseconds (500));
-
+	if (servicePassword.length() > 0)
+	  sendMessage(loginline);
 	sendMessage(joinline);
 	std::this_thread::sleep_for(std::chrono::milliseconds (500));
 	sendMessage("PRIVMSG #" + _channel + " :Hello there\r\n");
