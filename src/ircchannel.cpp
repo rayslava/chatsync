@@ -60,7 +60,7 @@ namespace ircChannel {
             std::cerr << "[DEBUG] #irc:" << name << ": " << text << std::endl;
         } else if (std::regex_match(toParse, msgMatches, pingRe)) {
             const std::string pong = "PONG " + msgMatches[1].str();
-            std::cerr << "[DEBUG] #irc: sending" << pong << std::endl;	    
+            std::cerr << "[DEBUG] #irc: sending" << pong << std::endl;
             sendMessage(pong);
         }
 
@@ -76,7 +76,7 @@ namespace ircChannel {
 	const std::string mode = _config.get("mode", "*");
 	const std::string hostname = _config.get("hostname", "chatsynchost");
 	const std::string servername = _config.get("servername", "chatsyncserver");
-	const std::string realname = _config.get("realname", "Chat Sync");	
+	const std::string realname = _config.get("realname", "Chat Sync");
 	const auto passline = "PASS *\r\n";
 	const auto nickline = "NICK " + nick + "\r\n";
 	const auto userline = "USER " + nick + " " + hostname + " " + servername + ":"  + realname + "\r\n";
@@ -116,34 +116,62 @@ namespace ircChannel {
     int IrcChannel::connect() {
 
 	int sockfd, n;
-	struct net::sockaddr_in serv_addr;
 	struct net::hostent *server;
 
 	char buffer[256];
 
 	std::cerr << "[DEBUG] Joining" << _channel << std::endl;
-	sockfd = net::socket(AF_INET, net::SOCK_STREAM, 0);
-	if (sockfd < 0)
+
+	/* IPv4 resolution */
+	server = net::gethostbyname2(_server.c_str(), AF_INET);
+	if (server != NULL) {
+	  struct net::sockaddr_in serv_addr;
+	  sockfd = net::socket(AF_INET, net::SOCK_STREAM, 0);
+	  if (sockfd < 0)
 	    throw channeling::activate_error(ERR_SOCK_CREATE);
-	server = net::gethostbyname(_server.c_str());
 
-	if (server == NULL)
-	    throw channeling::activate_error(ERR_HOST_NOT_FOUND);
-
-	::bzero((char *) &serv_addr, sizeof(serv_addr));
-	serv_addr.sin_family = AF_INET;
-	::bcopy((char *)server->h_addr,
-	      (char *)&serv_addr.sin_addr.s_addr,
-	      server->h_length);
-	{
-	  /* Ugly workaround to use different optimization levels for compiler */
+	  ::bzero((char *) &serv_addr, sizeof(serv_addr));
+	  serv_addr.sin_family = AF_INET;
+	  ::bcopy((char *)server->h_addr,
+		  (char *)&serv_addr.sin_addr.s_addr,
+		  server->h_length);
+	  {
+	    /* Ugly workaround to use different optimization levels for compiler */
 #ifndef htons
-	  using net::htons;
+	    using net::htons;
 #endif
-	  serv_addr.sin_port = htons(_port);
-	}
+	    serv_addr.sin_port = htons(_port);
+	  }
 	if (net::connect(sockfd,(struct net::sockaddr *) &serv_addr,sizeof(serv_addr)) < 0)
 	    throw channeling::activate_error(ERR_CONNECTION);
+	} else {
+	  /* IPv6 resolution */
+	  struct net::sockaddr_in6 serv_addr;
+	  struct servent *sp;
+	  server = net::gethostbyname2(_server.c_str(), AF_INET6);
+	  if (server == NULL)
+	    throw channeling::activate_error(ERR_HOST_NOT_FOUND);
+
+	  sockfd = net::socket(AF_INET6, net::SOCK_STREAM, 0);
+	  if (sockfd < 0)
+	    throw channeling::activate_error(ERR_SOCK_CREATE);
+
+	  ::bzero((char *) &serv_addr, sizeof(serv_addr));
+	  serv_addr.sin6_family = AF_INET;
+	  ::bcopy((char *)server->h_addr,
+		  (char *)&serv_addr.sin6_addr.s6_addr,
+		  server->h_length);
+	  {
+	    /* Ugly workaround to use different optimization levels for compiler */
+#ifndef htons
+	    using net::htons;
+#endif
+	    serv_addr.sin6_port = htons(_port);
+	  }
+	  if (net::connect(sockfd,(struct net::sockaddr *) &serv_addr,sizeof(serv_addr)) < 0)
+	    throw channeling::activate_error(ERR_CONNECTION);
+	}
+
 	return sockfd;
     }
 
