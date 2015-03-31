@@ -120,17 +120,16 @@ namespace ircChannel {
 
 	char buffer[256];
 
-	std::cerr << "[DEBUG] Joining" << _channel << std::endl;
-
 	/* IPv4 resolution */
 	server = net::gethostbyname2(_server.c_str(), AF_INET);
 	if (server != NULL) {
+	  std::cerr << "[DEBUG] Connecting through IPv4" << std::endl;
 	  struct net::sockaddr_in serv_addr;
 	  sockfd = net::socket(AF_INET, net::SOCK_STREAM, 0);
 	  if (sockfd < 0)
 	    throw channeling::activate_error(ERR_SOCK_CREATE);
 
-	  ::bzero((char *) &serv_addr, sizeof(serv_addr));
+	  ::bzero((char *) &serv_addr, sizeof(struct net::sockaddr_in));
 	  serv_addr.sin_family = AF_INET;
 	  ::bcopy((char *)server->h_addr,
 		  (char *)&serv_addr.sin_addr.s_addr,
@@ -146,6 +145,7 @@ namespace ircChannel {
 	    throw channeling::activate_error(ERR_CONNECTION);
 	} else {
 	  /* IPv6 resolution */
+	  std::cerr << "[DEBUG] Connecting through IPv6" << std::endl;
 	  struct net::sockaddr_in6 serv_addr;
 	  struct servent *sp;
 	  server = net::gethostbyname2(_server.c_str(), AF_INET6);
@@ -156,10 +156,10 @@ namespace ircChannel {
 	  if (sockfd < 0)
 	    throw channeling::activate_error(ERR_SOCK_CREATE);
 
-	  ::bzero((char *) &serv_addr, sizeof(serv_addr));
-	  serv_addr.sin6_family = AF_INET;
+	  ::bzero((char *) &serv_addr, sizeof(struct net::sockaddr_in6));
+	  serv_addr.sin6_family = AF_INET6;
 	  ::bcopy((char *)server->h_addr,
-		  (char *)&serv_addr.sin6_addr.s6_addr,
+		  (char *)&serv_addr.sin6_addr,
 		  server->h_length);
 	  {
 	    /* Ugly workaround to use different optimization levels for compiler */
