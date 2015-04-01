@@ -156,6 +156,7 @@ namespace channeling {
 
         /**
 	 * Send a line msg to a default socket _fd
+	 *
 	 * @param msg line to send
 	 */
         virtual int send(const std::string& msg) const {return send(_fd, msg);};
@@ -164,10 +165,13 @@ namespace channeling {
 	 * Close a socket
 	 *
 	 * @param fd Socket descriptor
-	 *
-	 * @throws activate_error with message in case of problems
 	 */
         virtual int disconnect(const uint32_t fd) const;
+
+	/**
+	 * Close an _fd socket
+	 */
+        virtual int disconnect() const {return disconnect(_fd);};
     };
 
     class ChannelCreator

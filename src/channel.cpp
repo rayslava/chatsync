@@ -211,7 +211,7 @@ namespace channeling {
 
   int Channel::disconnect(const uint32_t fd) const {
     if (_fd > 0)
-	net::close(_fd);
+	net::close(fd);
     return 0;
   }
 

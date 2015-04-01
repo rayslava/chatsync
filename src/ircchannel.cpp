@@ -30,7 +30,7 @@ namespace ircChannel {
 	    });}
 
     IrcChannel::~IrcChannel() {
-	disconnect(_fd);
+	disconnect();
 	stopPolling();
     }
 
