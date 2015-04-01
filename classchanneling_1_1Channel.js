@@ -6,6 +6,7 @@ var classchanneling_1_1Channel =
     [ "connect", "classchanneling_1_1Channel.html#ace5e2aff2b229a567cbd8b0e66127191", null ],
     [ "direction", "classchanneling_1_1Channel.html#ae56d232c2cf48246c07269ca786ae67f", null ],
     [ "disconnect", "classchanneling_1_1Channel.html#afb500b31ab68e4891666002dccdecb2f", null ],
+    [ "disconnect", "classchanneling_1_1Channel.html#a6589b1d7f7bd81d11aab665f0cb23945", null ],
     [ "incoming", "classchanneling_1_1Channel.html#a5fceb07d7eddbc57ca86e425dafb6f14", null ],
     [ "name", "classchanneling_1_1Channel.html#a290aeea4ad50cfa0478c98109ba35d67", null ],
     [ "parse", "classchanneling_1_1Channel.html#a24b10fc673c7789acd523663926c4e1d", null ],

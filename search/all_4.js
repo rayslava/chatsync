@@ -9,5 +9,5 @@ var searchData=
   ['defaultbotstatus',['defaultBotStatus',['../namespacetoxChannel.html#a90ec20d3aa2d4720cab18cdd4a26315b',1,'toxChannel']]],
   ['defaultstatusmessage',['defaultStatusMessage',['../namespacetoxChannel.html#a48fe13f16c0915dc695eda4a72782a92',1,'toxChannel']]],
   ['direction',['direction',['../classchanneling_1_1Channel.html#ae56d232c2cf48246c07269ca786ae67f',1,'channeling::Channel']]],
-  ['disconnect',['disconnect',['../classchanneling_1_1Channel.html#afb500b31ab68e4891666002dccdecb2f',1,'channeling::Channel']]]
+  ['disconnect',['disconnect',['../classchanneling_1_1Channel.html#afb500b31ab68e4891666002dccdecb2f',1,'channeling::Channel::disconnect(const uint32_t fd) const '],['../classchanneling_1_1Channel.html#a6589b1d7f7bd81d11aab665f0cb23945',1,'channeling::Channel::disconnect() const ']]]
 ];
