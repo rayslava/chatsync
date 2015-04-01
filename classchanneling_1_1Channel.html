@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Chatsync
-   &#160;<span id="projectnumber">35014d522050d2b1a565b316640f27e4438261d1</span>
+   &#160;<span id="projectnumber">5541dded63999e28315b9d8eb444065f7a124b04</span>
    </div>
   </td>
  </tr>
@@ -144,6 +144,14 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae56d232c2cf48246c07269ca786ae67f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7be2d5c0489c17529af4252cb803c0f8"><td class="memItemLeft" align="right" valign="top">virtual std::future&lt; void &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchanneling_1_1Channel.html#a7be2d5c0489c17529af4252cb803c0f8">activate</a> ()=0</td></tr>
 <tr class="separator:a7be2d5c0489c17529af4252cb803c0f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace5e2aff2b229a567cbd8b0e66127191"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchanneling_1_1Channel.html#ace5e2aff2b229a567cbd8b0e66127191">connect</a> (const std::string &amp;hostname, const uint32_t port) const </td></tr>
+<tr class="separator:ace5e2aff2b229a567cbd8b0e66127191"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace9560ace8aa973184e49998d6412209"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchanneling_1_1Channel.html#ace9560ace8aa973184e49998d6412209">send</a> (const uint32_t fd, const std::string &amp;msg) const </td></tr>
+<tr class="separator:ace9560ace8aa973184e49998d6412209"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a462b0ae528a63c56829e5e887ed0aaa0"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchanneling_1_1Channel.html#a462b0ae528a63c56829e5e887ed0aaa0">send</a> (const std::string &amp;msg) const </td></tr>
+<tr class="separator:a462b0ae528a63c56829e5e887ed0aaa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb500b31ab68e4891666002dccdecb2f"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchanneling_1_1Channel.html#afb500b31ab68e4891666002dccdecb2f">disconnect</a> (const uint32_t fd) const </td></tr>
+<tr class="separator:afb500b31ab68e4891666002dccdecb2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
@@ -280,7 +288,55 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classircChannel_1_1IrcChannel.html#a3b8e2e68fd1f87d5473fbd4f4e32f5fd">ircChannel::IrcChannel</a>, <a class="el" href="classfileChannel_1_1FileChannel.html#a03fb11fe8d9dce534b2191c5855c6ffe">fileChannel::FileChannel</a>, and <a class="el" href="classtoxChannel_1_1ToxChannel.html#a8f74922080684a5718261e89dc569861">toxChannel::ToxChannel</a>.</p>
+<p>Implemented in <a class="el" href="classfileChannel_1_1FileChannel.html#a03fb11fe8d9dce534b2191c5855c6ffe">fileChannel::FileChannel</a>, <a class="el" href="classtoxChannel_1_1ToxChannel.html#a8f74922080684a5718261e89dc569861">toxChannel::ToxChannel</a>, and <a class="el" href="classircChannel_1_1IrcChannel.html#a3b8e2e68fd1f87d5473fbd4f4e32f5fd">ircChannel::IrcChannel</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ace5e2aff2b229a567cbd8b0e66127191"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int channeling::Channel::connect </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>hostname</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint32_t&#160;</td>
+          <td class="paramname"><em>port</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Open socket to server:port using IPv4 and then (if failed) IPv6</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">hostname</td><td>hostname to connect to </td></tr>
+    <tr><td class="paramname">port</td><td>port to use</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classchanneling_1_1activate__error.html">activate_error</a></td><td>with message in case of problems </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -308,6 +364,43 @@ Friends</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">Transmission</td><td>direction </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="afb500b31ab68e4891666002dccdecb2f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int channeling::Channel::disconnect </td>
+          <td>(</td>
+          <td class="paramtype">const uint32_t&#160;</td>
+          <td class="paramname"><em>fd</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Close a socket</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fd</td><td>Socket descriptor</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classchanneling_1_1activate__error.html">activate_error</a></td><td>with message in case of problems </td></tr>
   </table>
   </dd>
 </dl>
@@ -343,7 +436,7 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classircChannel_1_1IrcChannel.html#a98e21bb4f7c9de81fceebd8a4ecdd1ce">ircChannel::IrcChannel</a>, <a class="el" href="classtoxChannel_1_1ToxChannel.html#a3fdbe267b3e96befe52ae3b2cb19e43f">toxChannel::ToxChannel</a>, and <a class="el" href="classfileChannel_1_1FileChannel.html#aba562ecd1404ec16ed40cad9e61a23c8">fileChannel::FileChannel</a>.</p>
+<p>Implemented in <a class="el" href="classtoxChannel_1_1ToxChannel.html#a3fdbe267b3e96befe52ae3b2cb19e43f">toxChannel::ToxChannel</a>, <a class="el" href="classfileChannel_1_1FileChannel.html#aba562ecd1404ec16ed40cad9e61a23c8">fileChannel::FileChannel</a>, and <a class="el" href="classircChannel_1_1IrcChannel.html#a98e21bb4f7c9de81fceebd8a4ecdd1ce">ircChannel::IrcChannel</a>.</p>
 
 </div>
 </div>
@@ -406,7 +499,7 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classircChannel_1_1IrcChannel.html#ab48781b1151b1b678246964b1fe6c613">ircChannel::IrcChannel</a>, <a class="el" href="classtoxChannel_1_1ToxChannel.html#a15bd57c28dd55dbe040dfd3042b902c6">toxChannel::ToxChannel</a>, and <a class="el" href="classfileChannel_1_1FileChannel.html#affaaad64ae3784f33c184aed21c5ee0b">fileChannel::FileChannel</a>.</p>
+<p>Implemented in <a class="el" href="classtoxChannel_1_1ToxChannel.html#a15bd57c28dd55dbe040dfd3042b902c6">toxChannel::ToxChannel</a>, <a class="el" href="classfileChannel_1_1FileChannel.html#affaaad64ae3784f33c184aed21c5ee0b">fileChannel::FileChannel</a>, and <a class="el" href="classircChannel_1_1IrcChannel.html#ab48781b1151b1b678246964b1fe6c613">ircChannel::IrcChannel</a>.</p>
 
 </div>
 </div>
@@ -433,6 +526,84 @@ Friends</h2></td></tr>
 <p>Thread which selects the descriptor and send messages when new ones come </p>
 
 <p>Reimplemented in <a class="el" href="classtoxChannel_1_1ToxChannel.html#ae9313cf6fd430d6cce838f847f64f394">toxChannel::ToxChannel</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ace9560ace8aa973184e49998d6412209"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int channeling::Channel::send </td>
+          <td>(</td>
+          <td class="paramtype">const uint32_t&#160;</td>
+          <td class="paramname"><em>fd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>msg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Send a line msg to a socket fd</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fd</td><td>Socket descriptor </td></tr>
+    <tr><td class="paramname">msg</td><td>line to send</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>with message if socket fails </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a462b0ae528a63c56829e5e887ed0aaa0"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual int channeling::Channel::send </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>msg</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Send a line msg to a default socket _fd </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">msg</td><td>line to send </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -517,7 +688,7 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classircChannel_1_1IrcChannel.html#a56d7ca5d0be35a5ebf563fd357c51a81">ircChannel::IrcChannel</a>, <a class="el" href="classtoxChannel_1_1ToxChannel.html#aedcd171c13294b16af14563c6c7fb5ff">toxChannel::ToxChannel</a>, and <a class="el" href="classfileChannel_1_1FileChannel.html#aa66ff57811aab90fe0cfb89a1c6b9b94">fileChannel::FileChannel</a>.</p>
+<p>Implemented in <a class="el" href="classtoxChannel_1_1ToxChannel.html#aedcd171c13294b16af14563c6c7fb5ff">toxChannel::ToxChannel</a>, <a class="el" href="classfileChannel_1_1FileChannel.html#aa66ff57811aab90fe0cfb89a1c6b9b94">fileChannel::FileChannel</a>, and <a class="el" href="classircChannel_1_1IrcChannel.html#a56d7ca5d0be35a5ebf563fd357c51a81">ircChannel::IrcChannel</a>.</p>
 
 </div>
 </div>
@@ -756,7 +927,7 @@ Friends</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacechanneling.html">channeling</a></li><li class="navelem"><a class="el" href="classchanneling_1_1Channel.html">Channel</a></li>
-    <li class="footer">Generated on Tue Mar 31 2015 11:45:34 for Chatsync by
+    <li class="footer">Generated on Wed Apr 1 2015 10:13:17 for Chatsync by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9 </li>
   </ul>

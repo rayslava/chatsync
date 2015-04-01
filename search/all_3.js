@@ -24,15 +24,16 @@ var searchData=
   ['config_2ehpp',['config.hpp',['../config_8hpp.html',1,'']]],
   ['config_5ferror',['config_error',['../classconfig_1_1config__error.html',1,'config']]],
   ['config_5ferror',['config_error',['../classconfig_1_1config__error.html#ac595798fdd856300e68753bc918cc284',1,'config::config_error']]],
-  ['configoption',['ConfigOption',['../classconfig_1_1ConfigOption.html',1,'config']]],
   ['configoption',['ConfigOption',['../classconfig_1_1ConfigOption.html#a06bd0a7d9c39c9316ad1c670c4924789',1,'config::ConfigOption::ConfigOption(const std::string &amp;&amp;value)'],['../classconfig_1_1ConfigOption.html#a2cb38b9964af5ff6c287baab19713df4',1,'config::ConfigOption::ConfigOption(const char *value)']]],
+  ['configoption',['ConfigOption',['../classconfig_1_1ConfigOption.html',1,'config']]],
   ['configparser',['ConfigParser',['../classconfig_1_1ConfigParser.html',1,'config']]],
   ['configparser',['ConfigParser',['../classconfig_1_1ConfigParser.html#a2017fcd2e6d147536e7e7d8dbe82ff20',1,'config::ConfigParser']]],
   ['configprefixdata',['configPrefixData',['../namespaceconfig.html#aa115b81841b8b3e5a254f02f710d4f81',1,'config']]],
   ['configprefixfile',['configPrefixFile',['../namespaceconfig.html#a6b3bf8de83fc951bd01035bc67ad9417',1,'config']]],
-  ['connect',['connect',['../classircChannel_1_1IrcChannel.html#a52e2baace598d46bac765f02ebe1b985',1,'ircChannel::IrcChannel']]],
+  ['connect',['connect',['../classchanneling_1_1Channel.html#ace5e2aff2b229a567cbd8b0e66127191',1,'channeling::Channel']]],
   ['create',['create',['../classchanneling_1_1ChannelCreator.html#a36a8439d92e19fef0d83525bd48c8982',1,'channeling::ChannelCreator::create()'],['../classchanneling_1_1ChannelCreatorImpl.html#ab48ae885f08f8d35560aacff92b7cec5',1,'channeling::ChannelCreatorImpl::create()'],['../classchanneling_1_1ChannelFactory.html#a7731c5ffd09a692193a039e9dbc2088c',1,'channeling::ChannelFactory::create()']]],
   ['creator',['creator',['../classfileChannel_1_1FileChannel.html#a3f6e94e96861f8b1c65f5c51e45cd827',1,'fileChannel::FileChannel::creator()'],['../classircChannel_1_1IrcChannel.html#a1d45dec4bac4aa6fc571436a4a382301',1,'ircChannel::IrcChannel::creator()'],['../classtoxChannel_1_1ToxChannel.html#a47659c8a03b724048bf61fff0674868f',1,'toxChannel::ToxChannel::creator()']]],
   ['chatsync',['chatsync',['../index.html',1,'']]],
+  ['net',['net',['../namespacechanneling_1_1net.html',1,'channeling']]],
   ['strutil',['strutil',['../namespaceconfig_1_1strutil.html',1,'config']]]
 ];
