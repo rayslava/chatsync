@@ -55,9 +55,9 @@ namespace channeling {
 	/**
 	 * Parse line and send it to needed output place in case of Output direction
 	 *
-	 * @param msg Incoming message from hub. Passed by value to preserve ownership 
+	 * @param msg Incoming message from hub. Passed by value to preserve ownership
 	 *            and ensure existence during processing in all output channels.
-	 */ 
+	 */
 	virtual void incoming(const message_ptr&& msg) = 0;
 
         /**
@@ -104,7 +104,7 @@ namespace channeling {
 	 * Returns channel "type" --- unique string to identify channel in config file
 	 * @retval std::string Type line
 	 */
-	virtual std::string type() const = 0;	
+	virtual std::string type() const = 0;
 
         /**
 	 * Returns a channel direction
@@ -133,6 +133,41 @@ namespace channeling {
 	 * @throws std::logic_error on writing to input channel
 	 */
         friend Channel& operator>> (const message_ptr, Channel& channel);
+
+        /**
+	 * Open socket to server:port using IPv4 and then (if failed) IPv6
+	 *
+	 * @param hostname hostname to connect to
+	 * @param port port to use
+	 *
+	 * @throws activate_error with message in case of problems
+	 */
+        virtual int connect(const std::string& hostname, const uint32_t port) const;
+
+        /**
+	 * Send a line msg to a socket fd
+	 *
+	 * @param fd Socket descriptor
+	 * @param msg line to send
+	 *
+	 * @throws std::runtime_error with message if socket fails
+	 */
+        virtual int send(const uint32_t fd, const std::string& msg) const;
+
+        /**
+	 * Send a line msg to a default socket _fd
+	 * @param msg line to send
+	 */
+        virtual int send(const std::string& msg) const {return send(_fd, msg);};
+
+	/**
+	 * Close a socket
+	 *
+	 * @param fd Socket descriptor
+	 *
+	 * @throws activate_error with message in case of problems
+	 */
+        virtual int disconnect(const uint32_t fd) const;
     };
 
     class ChannelCreator

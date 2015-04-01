@@ -17,23 +17,13 @@ namespace ircChannel {
 	const uint32_t _port;                            /**< Connection port */
 	const std::string _channel;                      /**< Channel name (starting with #) */
 	/**
-	 * Makes a connection to socket
-	 *
-	 * @retval socket fd
-	 */
-	int connect();
-
-	/**
 	 * Sends PASS, NICK and USER commands to register irc connection
 	 */
 	int registerConnection();
-	int disconnect();
-	int sendMessage(const std::string& msg) const;
 	std::future<void> activate() override;
         const messaging::message_ptr parse(const char* line) const override;
 
 	static const channeling::ChannelCreatorImpl<IrcChannel> creator;
-	
     public:
 	explicit IrcChannel(Hub::Hub* hub, const std::string& config);
         ~IrcChannel();
