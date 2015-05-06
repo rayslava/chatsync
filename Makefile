@@ -25,7 +25,7 @@ clang-release:
 	$(call build-dir, $@) && CXX=clang++ CC=clang cmake .. -DCMAKE_BUILD_TYPE=Release && $(MAKE) chatsync
 
 analyzed:
-	$(call build-dir, $@) && scan-build cmake ..  && scan-build $(MAKE) all
+	$(call build-dir, $@) && scan-build cmake ..  && scan-build $(MAKE) chatsync
 
 clean:
 	rm -rf *-build

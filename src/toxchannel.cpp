@@ -56,9 +56,52 @@ namespace toxChannel {
 #include <string.h>
     }
 
+    static Tox* toxInit(const std::string& datafile)
+    {
+        TOX_ERR_NEW tox_error;
+        Tox* retval;
+	struct Tox_Options options;
+	tox_options_default(&options);
+
+       	try {
+          const auto dataFileName = datafile.c_str();
+	  struct linux::stat sb;
+	  if ((stat(dataFileName, &sb) == -1))
+	    throw config::option_error("No such file");
+	  if ((sb.st_mode & S_IFMT) != S_IFREG)
+	    throw config::option_error("Not a file");
+	  const size_t filesize = sb.st_size;
+	  const auto toxData = std::make_unique<uint8_t[]>(filesize);
+          const int toxfd = linux::open(dataFileName, O_RDONLY);
+          int result = linux::read(toxfd, toxData.get(), filesize);
+	  if (result < 0)
+	    throw config::option_error("Error reading file");
+          result = linux::close(toxfd);
+	  if (result < 0)
+	    throw config::option_error("Error closing file");
+	  if (result > 0)
+	    throw config::option_error("Tox data is encrypted");
+          retval = tox_new(&options, toxData.get(), filesize, &tox_error);
+	} catch (config::option_error e) {
+	  std::cerr << "[DEBUG] Can't open tox data: " << e.what() << std::endl;
+          retval = tox_new(&options, nullptr, 0, &tox_error);
+	}
+	switch (tox_error) {
+	case TOX_ERR_NEW_OK:
+	    std::cerr << "[DEBUG] toxdata successfully loaded" << std::endl;
+	    break;
+	case TOX_ERR_NEW_LOAD_BAD_FORMAT:
+	    std::cerr << "[DEBUG] toxdata file is damaged" << std::endl;
+	    break;
+	default:
+	    std::cerr << "[DEBUG] tox_new error: " << tox_error << std::endl;
+	}
+	return retval;
+    }
+
     ToxChannel::ToxChannel(Hub::Hub* hub, const std::string& config):
 	channeling::Channel(hub, config),
-	_tox(tox_new(NULL)),    /** TODO: make options handling */
+	_tox(toxInit(std::string(_config["datafile"]))),    /** TODO: make options handling */
 	wasConnected(false)
     {
     }
@@ -68,7 +111,7 @@ namespace toxChannel {
 		if (_active)
                     return;
 		_pipeRunning = true;
-		toxInit();
+		toxStart();
 		_thread = std::make_unique<std::thread> (std::thread(&ToxChannel::pollThread, this));
                 _active = true;
 	    });}
@@ -88,8 +131,8 @@ namespace toxChannel {
     void ToxChannel::pollThread() {
 	std::cerr << "[DEBUG] Starting tox thread" << std::endl;
 	while (_pipeRunning) {
-	    tox_do(_tox);
-	    auto wait = tox_do_interval(_tox);
+	    tox_iterate(_tox);
+	    auto wait = tox_iteration_interval(_tox);
 	    std::this_thread::sleep_for( std::chrono::milliseconds (wait));
 	}
     }
@@ -101,11 +144,11 @@ namespace toxChannel {
 	}
 	try {
           const auto dataFileName = std::string(_config["datafile"]).c_str();
-	  const size_t filesize = tox_size(_tox);
-	  const auto toxData = std::make_unique<uint8_t*>(new uint8_t[filesize]);
-	  tox_save(_tox, *toxData);
+	  const size_t filesize = tox_get_savedata_size(_tox);
+	  const auto toxData = std::make_unique<uint8_t[]>(filesize);
+	  tox_get_savedata(_tox, toxData.get());
           const int toxfd = linux::open(dataFileName, O_WRONLY | O_CREAT, 0644);
-          int result = linux::write(toxfd, *toxData, filesize);
+          int result = linux::write(toxfd, toxData.get(), filesize);
 	  if (result < 0)
 	    throw config::option_error("Error writing file");
           result = linux::close(toxfd);
@@ -117,19 +160,29 @@ namespace toxChannel {
 	tox_kill(_tox);
     }
 
-    void ToxChannel::friendRequestCallback(Tox *tox, const uint8_t * public_key, const uint8_t * data, uint16_t length, void *userdata) {
+    void ToxChannel::friendRequestCallback(Tox *tox, const uint8_t * public_key, const uint8_t * data, size_t length, void *userdata) {
+        TOX_ERR_FRIEND_ADD friend_error;
 	const auto channel = static_cast<ToxChannel*>(userdata);
-	const auto friendNum = tox_add_friend_norequest(tox, public_key);
-	std::cerr << "[DEBUG] tox id with data" << data << " of " << length << " bytes "  << util::ToxId2HR<TOX_FRIEND_ADDRESS_SIZE>(public_key) << " wants to be your friend. Added with #" << friendNum << std::endl;
+	const auto friendNum = tox_friend_add_norequest(tox, public_key, &friend_error); /** TODO: check friend_error */
+	std::cerr << "[DEBUG] tox id with data" << data << " of " << length << " bytes "  << util::ToxId2HR<TOX_ADDRESS_SIZE>(public_key) << " wants to be your friend. Added with #" << friendNum << std::endl;
     }
 
-    void ToxChannel::messageCallback(Tox *tox, int32_t friendnumber, const uint8_t * message, uint16_t length, void *userdata) {
+    void ToxChannel::messageCallback(Tox *tox, uint32_t friendnumber, TOX_MESSAGE_TYPE type, const uint8_t * message, size_t length, void *userdata) {
 	const auto channel = static_cast<ToxChannel*>(userdata);
 	const auto buffer = std::make_unique<char*>(new char[length+1]);
 	snprintf(*buffer, length+1, "%s", message);
-	std::cerr << "[DEBUG] Message from friend #" << friendnumber << "> " << *buffer << std::endl;
-	if (util::strncmp(cmd_invite, *buffer, length) == 0)
+	switch (type) {
+	case TOX_MESSAGE_TYPE_NORMAL:
+	  std::cerr << "[DEBUG] Message from friend #" << friendnumber << "> " << *buffer << std::endl;
+	  if (util::strncmp(cmd_invite, *buffer, length) == 0)
 	    tox_invite_friend(tox, friendnumber, 0);
+	  break;
+	case TOX_MESSAGE_TYPE_ACTION:
+	  std::cerr << "[DEBUG] Action from friend #" << friendnumber << "> " << *buffer << std::endl;
+	  break;
+	default:
+	  std::cerr << "[DEBUG] Unknown message type from " << friendnumber << "> " << *buffer << std::endl;
+	}
     }
 
     void ToxChannel::groupMessageCallback(Tox *tox, int32_t groupnumber, int32_t peernumber, const uint8_t * message, uint16_t length, void *userdata) {
@@ -164,69 +217,44 @@ namespace toxChannel {
         return msg;
     }
 
-    int ToxChannel::toxInit() {
-	int result = 0;
+   int ToxChannel::toxStart() {
+	TOX_ERR_SET_INFO result;
+	TOX_ERR_BOOTSTRAP bootstrap_result;
 
-	std::unique_ptr<uint8_t[]> pubKey(new uint8_t[TOX_CLIENT_ID_SIZE]);
+	//std::unique_ptr<uint8_t[]> pubKey(new uint8_t[TOX_CLIENT_ID_SIZE]);
 	tox_callback_friend_request(_tox, friendRequestCallback, this);
 	tox_callback_friend_message(_tox, messageCallback, this);
 	tox_callback_group_message(_tox, groupMessageCallback, this);
 
 	const std::string nick = _config.get("nickname", defaultBotName);
 	const uint8_t* nickData = reinterpret_cast<const uint8_t*>(nick.c_str());
-	result = tox_set_name(_tox, nickData, nick.length());
-	if (result < 0)
+	tox_self_set_name(_tox, nickData, nick.length(), &result);
+	if (result)
 	    throw channeling::activate_error(ERR_TOX_INIT + "(tox_set_name)");
 
 	const std::string statusMsg = _config.get("status_message", defaultStatusMessage);
 	const uint8_t* statusData = reinterpret_cast<const uint8_t*>(statusMsg.c_str());
 
-	try {
-          const auto dataFileName = std::string(_config["datafile"]).c_str();
-	  struct linux::stat sb;
-	  if ((stat(dataFileName, &sb) == -1))
-	    throw config::option_error("No such file");
-	  if ((sb.st_mode & S_IFMT) != S_IFREG)
-	    throw config::option_error("Not a file");
-	  const size_t filesize = sb.st_size;
-	  const auto toxData = std::make_unique<uint8_t*>(new uint8_t[filesize]);
-          const int toxfd = linux::open(dataFileName, O_RDONLY);
-          int result = linux::read(toxfd, *toxData, filesize);
-	  if (result < 0)
-	    throw config::option_error("Error reading file");
-          result = linux::close(toxfd);
-	  if (result < 0)
-	    throw config::option_error("Error closing file");
-	  result = tox_load(_tox, *toxData, filesize);
-	  if (result < 0)
-	    throw config::option_error("Error loading tox data");
-	  if (result > 0)
-	    throw config::option_error("Tox data is encrypted");
-	} catch (config::option_error e) {
-	  std::cerr << "[DEBUG] Can't open tox data: " << e.what() << std::endl;
-	}
-
-	result = tox_set_status_message(_tox, statusData, statusMsg.length());
-	if (result < 0)
+	tox_self_set_status_message(_tox, statusData, statusMsg.length(), &result);
+	if (result)
 	    throw channeling::activate_error(ERR_TOX_INIT + "(tox_set_status_message)");
 
-	result = tox_set_user_status(_tox, defaultBotStatus);
-	if (result < 0)
-	    throw channeling::activate_error(ERR_TOX_INIT + "(tox_set_user_status)");
+	tox_self_set_status(_tox, defaultBotStatus);
 
-	result = tox_bootstrap_from_address(_tox, defaultBootstrapAddress, defaultBootstrapPort, reinterpret_cast<const uint8_t*>(util::hex2bin(defaultBootstrapKey).c_str()));
-	if (result < 1)
+	tox_bootstrap(_tox, defaultBootstrapAddress, defaultBootstrapPort, reinterpret_cast<const uint8_t*>(util::hex2bin(defaultBootstrapKey).c_str()), &bootstrap_result);
+	if (bootstrap_result)
 	    throw channeling::activate_error(ERR_TOX_INIT + ": Can't decode bootstrapping ip");
 
 	std::cerr << "[DEBUG] Bootstrapping" << std::endl;
 	/* TODO: Make timeout exception handling */
 
 	while (!wasConnected) {
-	    tox_do(_tox);
-	    auto wait = tox_do_interval(_tox);
-	    if (! wasConnected && tox_isconnected(_tox)) {
-		std::array<uint8_t, TOX_FRIEND_ADDRESS_SIZE> address;
-		tox_get_address (_tox, address.data ());
+            TOX_CONNECTION status;
+	    tox_iterate(_tox);
+	    auto wait = tox_iteration_interval(_tox);
+	    if (! wasConnected && (TOX_CONNECTION_NONE != tox_self_get_connection_status(_tox))) {
+		std::array<uint8_t, TOX_ADDRESS_SIZE> address;
+		tox_self_get_address (_tox, address.data ());
 		std::cerr << "[DEBUG] Tox is connected with id " << util::ToxId2HR (address) << std::endl
 ;
 		wasConnected = true;
@@ -234,9 +262,7 @@ namespace toxChannel {
 	    std::this_thread::sleep_for( std::chrono::milliseconds (wait));
 	}
 
-	result = tox_add_groupchat (_tox);
-	if (result < 0)
-	    throw channeling::activate_error(ERR_TOX_INIT + "(tox_add_groupchat) Can't create a group chat");
+	tox_add_groupchat (_tox);
 
 	return 0;
     }

@@ -4,7 +4,7 @@
 TEST(ToxChannel, name)
 {
     const auto hub = new Hub::Hub ("Hub");
-    const auto ich = channeling::ChannelFactory::create("tox", hub, "data://direction=input\nname=tox\n");
+    const auto ich = channeling::ChannelFactory::create("tox", hub, "data://direction=input\nname=tox\ndatafile=/tmp/toxdata\n");
 
     // Check that at least constructor works
     ASSERT_EQ(ich->name(), "tox");
@@ -16,7 +16,7 @@ TEST(ToxChannel, name)
 TEST(ToxChannel, running)
 {
     const auto hub = new Hub::Hub ("Hub");
-    channeling::ChannelFactory::create("tox", hub, "data://direction=input\nname=tox\n");
+    channeling::ChannelFactory::create("tox", hub, "data://direction=input\nname=tox\ndatafile=/tmp/toxdata\n");
     channeling::ChannelFactory::create("file", hub, "data://direction=output\nname=outfile");
 
     hub->activate();
@@ -25,4 +25,3 @@ TEST(ToxChannel, running)
 
     delete hub;
 }
-

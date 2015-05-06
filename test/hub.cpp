@@ -17,7 +17,7 @@ TEST(hub, name)
     hub = new Hub::Hub(hubName);
 
     ASSERT_EQ(hub->name(), hubName);
-    const auto inch = channeling::ChannelFactory::create("file", hub, "data://direction=input\nname=file\n");    
+    const auto inch = channeling::ChannelFactory::create("file", hub, "data://direction=input\nname=file\n");
 
     EXPECT_THROW({hub->activate();}, std::logic_error);
     auto ouch = channeling::ChannelFactory::create("irc", hub, "data://direction=output\nname=ircin\nserver=127.0.0.1\nport=0\nchannel=test");
@@ -39,7 +39,7 @@ TEST(hub, tox_bidir)
     hub = new Hub::Hub(hubName);
 
     ASSERT_EQ(hub->name(), hubName);
-    const auto inch = channeling::ChannelFactory::create("tox", hub, "data://direction=inout\nname=toxconnect");
+    const auto inch = channeling::ChannelFactory::create("tox", hub, "data://direction=inout\nname=toxconnect\ndatafile=/tmp/toxdata\n");
 
     const auto msg = std::make_shared<const messaging::TextMessage>(0xFFFF,
 	    std::move(std::make_shared<const messaging::User>(messaging::User("system"))),
@@ -50,4 +50,3 @@ TEST(hub, tox_bidir)
 
     delete hub;
 }
-
