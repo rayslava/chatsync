@@ -81,10 +81,14 @@ namespace toxChannel {
 	    throw config::option_error("Error closing file");
 	  if (result > 0)
 	    throw config::option_error("Tox data is encrypted");
-          retval = tox_new(&options, toxData.get(), filesize, &tox_error);
+	  options.savedata_data = toxData.get();
+	  options.savedata_length = filesize;
+          retval = tox_new(&options, &tox_error);
 	} catch (config::option_error e) {
 	  std::cerr << "[DEBUG] Can't open tox data: " << e.what() << std::endl;
-          retval = tox_new(&options, nullptr, 0, &tox_error);
+	  options.savedata_data = nullptr;
+	  options.savedata_length = 0;
+          retval = tox_new(&options, &tox_error);
 	}
 	switch (tox_error) {
 	case TOX_ERR_NEW_OK:
@@ -151,6 +155,7 @@ namespace toxChannel {
           int result = linux::write(toxfd, toxData.get(), filesize);
 	  if (result < 0)
 	    throw config::option_error("Error writing file");
+	  std::cerr << "[DEBUG] #tox " << _name << " Successfully saved " << result << " bytes of tox data" << std::endl;
           result = linux::close(toxfd);
 	  if (result < 0)
 	    throw config::option_error("Error closing file");

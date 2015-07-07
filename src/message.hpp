@@ -49,7 +49,7 @@ namespace messaging {
             _user(std::move(user)) {};
 
         const std::string& data() const { return _data; };
-        const std::shared_ptr<const messaging::User> user() const { return _user; };	
+        const std::shared_ptr<const messaging::User> user() const { return _user; };
 
         MessageType type() const override { return MessageType::Text;};
 
