@@ -120,7 +120,7 @@ namespace Hub {
 	    return;
 	_loopRunning = false;
 	const auto msg = std::make_shared<const messaging::TextMessage>(0xFFFF,
-	    std::move(std::make_shared<const messaging::User>(messaging::User("system"))),
+	    std::make_shared<const messaging::User>(messaging::User("system")),
 	    MSG_EXITING);
 	pushMessage(std::move(msg));
 	_msgLoop->join();

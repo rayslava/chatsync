@@ -203,7 +203,7 @@ namespace toxChannel {
 
         if (std::string(*name) != std::string(channel->_config.get("nickname", defaultBotName))) {
 		const auto newMessage = std::make_shared<const messaging::TextMessage>(channel->_id,
-		    std::move(std::make_shared<const messaging::User>(messaging::User(*name))),
+		    std::make_shared<const messaging::User>(messaging::User(*name)),
 		    *msg);
 		std::cerr << "[DEBUG] tox Group msg " << newMessage->user()->name() << "> " << newMessage->data() << std::endl;
 		channel->_hub->newMessage(std::move(newMessage));
@@ -217,7 +217,7 @@ namespace toxChannel {
         const auto text = s.substr(s.find(":"), s.length());
 
         const auto msg = std::make_shared<const messaging::TextMessage>(_id,
-            std::move(std::make_shared<const messaging::User>(messaging::User(name.c_str()))),
+            std::make_shared<const messaging::User>(messaging::User(name.c_str())),
 	    text.c_str());
         return msg;
     }

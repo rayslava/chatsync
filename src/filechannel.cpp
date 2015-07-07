@@ -33,7 +33,7 @@ namespace fileChannel {
     const messaging::message_ptr FileChannel::parse(const char* line) const
     {
         const auto msg = std::make_shared<const messaging::TextMessage>(_id,
-	    std::move(std::make_shared<const messaging::User>(messaging::User("file:" + _name))),
+	    std::make_shared<const messaging::User>(messaging::User("file:" + _name)),
 	    line);
         return msg;
     }

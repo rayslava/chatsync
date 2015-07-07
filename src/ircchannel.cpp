@@ -69,7 +69,7 @@ namespace ircChannel {
         };
 
         const auto msg = std::make_shared<const messaging::TextMessage>(_id,
-	    std::move(std::make_shared<const messaging::User>(messaging::User(name.c_str()))),
+	    std::make_shared<const messaging::User>(messaging::User(name.c_str())),
 	    text.c_str());
         return msg;
     }

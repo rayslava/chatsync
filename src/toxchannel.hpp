@@ -10,6 +10,7 @@ namespace toxChannel {
     constexpr auto defaultBootstrapKey = "F404ABAA1C99A9D37D61AB54898F56793E1DEF8BD46B1038B9D822E8460FAB67";
 
     constexpr auto cmd_invite = "invite";
+    constexpr auto cmd_conference = "conference";
 
 
     constexpr auto defaultBotName = "chatsyncbot"; /**< Default bot nickname */
