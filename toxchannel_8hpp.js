@@ -1,6 +1,7 @@
 var toxchannel_8hpp =
 [
     [ "ToxChannel", "classtoxChannel_1_1ToxChannel.html", "classtoxChannel_1_1ToxChannel" ],
+    [ "cmd_conference", "toxchannel_8hpp.html#a24b79c18aeb47d320fa87ae38a673a0f", null ],
     [ "cmd_invite", "toxchannel_8hpp.html#a9384a831c8b8b06889327f77a0c4c440", null ],
     [ "defaultBootstrapAddress", "toxchannel_8hpp.html#ad9b48598ea2c88403aada33e6150c58b", null ],
     [ "defaultBootstrapKey", "toxchannel_8hpp.html#a986e74fe09d1bc624aee112419da086f", null ],

@@ -1,6 +1,7 @@
 var searchData=
 [
   ['channeldirectionname',['ChannelDirectionName',['../namespacechanneling.html#a40a1e162d01241b1462294927875520a',1,'channeling']]],
+  ['cmd_5fconference',['cmd_conference',['../namespacetoxChannel.html#a24b79c18aeb47d320fa87ae38a673a0f',1,'toxChannel']]],
   ['cmd_5finvite',['cmd_invite',['../namespacetoxChannel.html#a9384a831c8b8b06889327f77a0c4c440',1,'toxChannel']]],
   ['configprefixdata',['configPrefixData',['../namespaceconfig.html#aa115b81841b8b3e5a254f02f710d4f81',1,'config']]],
   ['configprefixfile',['configPrefixFile',['../namespaceconfig.html#a6b3bf8de83fc951bd01035bc67ad9417',1,'config']]],

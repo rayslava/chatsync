@@ -18,6 +18,7 @@ var searchData=
   ['chanptr',['chanPtr',['../namespaceHub.html#a9d9cbe0770b5f5fb86aa86f8bf05e060',1,'Hub']]],
   ['cipred',['cipred',['../namespaceconfig_1_1strutil.html#a38930dc292d4d273d69c6725656966ad',1,'config::strutil']]],
   ['cistrcmp',['cistrcmp',['../namespaceconfig_1_1strutil.html#ad16022c624fbe67ecb14bfce46c4e89d',1,'config::strutil']]],
+  ['cmd_5fconference',['cmd_conference',['../namespacetoxChannel.html#a24b79c18aeb47d320fa87ae38a673a0f',1,'toxChannel']]],
   ['cmd_5finvite',['cmd_invite',['../namespacetoxChannel.html#a9384a831c8b8b06889327f77a0c4c440',1,'toxChannel']]],
   ['config',['config',['../namespaceconfig.html',1,'']]],
   ['config_2ecpp',['config.cpp',['../config_8cpp.html',1,'']]],

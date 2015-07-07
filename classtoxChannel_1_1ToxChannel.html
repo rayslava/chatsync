@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Chatsync
-   &#160;<span id="projectnumber">979523e2824d36187ff0ad4ebf6b3153db6f28f6</span>
+   &#160;<span id="projectnumber">5547c31d36d9c042fcbad172cb4751a08684074f</span>
    </div>
   </td>
  </tr>
@@ -169,8 +169,8 @@ Protected Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
-<tr class="memitem:afbc1e1b17222b1af6abe9d0ac675a8fa"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtoxChannel_1_1ToxChannel.html#afbc1e1b17222b1af6abe9d0ac675a8fa">toxInit</a> ()</td></tr>
-<tr class="separator:afbc1e1b17222b1af6abe9d0ac675a8fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f7b87df08419596a010235fb2a9abae"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtoxChannel_1_1ToxChannel.html#a9f7b87df08419596a010235fb2a9abae">toxStart</a> ()</td></tr>
+<tr class="separator:a9f7b87df08419596a010235fb2a9abae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8f74922080684a5718261e89dc569861"><td class="memItemLeft" align="right" valign="top">std::future&lt; void &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtoxChannel_1_1ToxChannel.html#a8f74922080684a5718261e89dc569861">activate</a> () override</td></tr>
 <tr class="separator:a8f74922080684a5718261e89dc569861"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a15bd57c28dd55dbe040dfd3042b902c6"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespacemessaging.html#aa012bd42e06013a9d4a4d69a1a9897bc">messaging::message_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtoxChannel_1_1ToxChannel.html#a15bd57c28dd55dbe040dfd3042b902c6">parse</a> (const char *line) const override</td></tr>
@@ -180,10 +180,10 @@ Private Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-methods"></a>
 Static Private Member Functions</h2></td></tr>
-<tr class="memitem:a4e1cd51a83f6c67fa1e2d5626181560b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtoxChannel_1_1ToxChannel.html#a4e1cd51a83f6c67fa1e2d5626181560b">friendRequestCallback</a> (Tox *tox, const uint8_t *public_key, const uint8_t *data, uint16_t length, void *userdata)</td></tr>
-<tr class="separator:a4e1cd51a83f6c67fa1e2d5626181560b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae46fd1c3695aac40bb9e67ac4f39b043"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtoxChannel_1_1ToxChannel.html#ae46fd1c3695aac40bb9e67ac4f39b043">messageCallback</a> (Tox *tox, int32_t friendnumber, const uint8_t *message, uint16_t length, void *userdata)</td></tr>
-<tr class="separator:ae46fd1c3695aac40bb9e67ac4f39b043"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08a2d8780adb9b6a10a40abccc50a339"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtoxChannel_1_1ToxChannel.html#a08a2d8780adb9b6a10a40abccc50a339">friendRequestCallback</a> (Tox *tox, const uint8_t *public_key, const uint8_t *data, size_t length, void *userdata)</td></tr>
+<tr class="separator:a08a2d8780adb9b6a10a40abccc50a339"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02850e4dec8811f1cecdb614b40185dd"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtoxChannel_1_1ToxChannel.html#a02850e4dec8811f1cecdb614b40185dd">messageCallback</a> (Tox *tox, uint32_t friendnumber, TOX_MESSAGE_TYPE <a class="el" href="classtoxChannel_1_1ToxChannel.html#aedcd171c13294b16af14563c6c7fb5ff">type</a>, const uint8_t *message, size_t length, void *userdata)</td></tr>
+<tr class="separator:a02850e4dec8811f1cecdb614b40185dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a099079c7f8864d48670dee35e35f7eaa"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtoxChannel_1_1ToxChannel.html#a099079c7f8864d48670dee35e35f7eaa">groupMessageCallback</a> (Tox *tox, int32_t groupnumber, int32_t peernumber, const uint8_t *message, uint16_t length, void *userdata)</td></tr>
 <tr class="separator:a099079c7f8864d48670dee35e35f7eaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -309,7 +309,7 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a4e1cd51a83f6c67fa1e2d5626181560b"></a>
+<a class="anchor" id="a08a2d8780adb9b6a10a40abccc50a339"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -337,7 +337,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramtype">size_t&#160;</td>
           <td class="paramname"><em>length</em>, </td>
         </tr>
         <tr>
@@ -358,6 +358,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>TODO: check friend_error </p>
 
 </div>
 </div>
@@ -452,7 +453,7 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ae46fd1c3695aac40bb9e67ac4f39b043"></a>
+<a class="anchor" id="a02850e4dec8811f1cecdb614b40185dd"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -468,8 +469,14 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>friendnumber</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TOX_MESSAGE_TYPE&#160;</td>
+          <td class="paramname"><em>type</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -480,7 +487,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramtype">size_t&#160;</td>
           <td class="paramname"><em>length</em>, </td>
         </tr>
         <tr>
@@ -563,7 +570,7 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="afbc1e1b17222b1af6abe9d0ac675a8fa"></a>
+<a class="anchor" id="a9f7b87df08419596a010235fb2a9abae"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -571,7 +578,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">int toxChannel::ToxChannel::toxInit </td>
+          <td class="memname">int toxChannel::ToxChannel::toxStart </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -689,7 +696,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacetoxChannel.html">toxChannel</a></li><li class="navelem"><a class="el" href="classtoxChannel_1_1ToxChannel.html">ToxChannel</a></li>
-    <li class="footer">Generated on Wed Apr 1 2015 10:38:38 for Chatsync by
+    <li class="footer">Generated on Tue Jul 7 2015 11:34:34 for Chatsync by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9 </li>
   </ul>
