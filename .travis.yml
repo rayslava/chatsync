@@ -5,10 +5,11 @@ compiler:
 before_install:
     - sudo add-apt-repository --yes ppa:h-rayflood/llvm
     - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
+    - sudo add-apt-repository --yes ppa:yjwong/cmake
     - sudo add-apt-repository --yes 'deb http://llvm.org/apt/precise/ llvm-toolchain-precise-3.6 main'
     - wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key | sudo apt-key add -
     - sudo apt-get -qq update
-    - sudo apt-get -qq --yes --force-yes install libclang-3.6-dev clang-3.6 gcc-5 g++-5 libgtest-dev valgrind lcov
+    - sudo apt-get -qq --yes --force-yes install libclang-3.6-dev clang-3.6 gcc-5 g++-5 libgtest-dev valgrind lcov cmake cmake-data
     - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 40 --slave /usr/bin/g++ g++ /usr/bin/g++-5
     - sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-5 40
     - sudo update-alternatives --config gcc
@@ -22,10 +23,10 @@ before_install:
     - sudo mv libgtest.a /usr/lib/
     - sudo mv libgtest_main.a /usr/lib
     - cd $(mktemp -d)
-    - wget 'http://ftp.stack.nl/pub/users/dimitri/doxygen-1.8.9.src.tar.gz'
-    - tar xf doxygen-1.8.9.src.tar.gz
-    - cd doxygen-1.8.9
-    - ./configure --prefix /usr
+    - wget 'http://ftp.stack.nl/pub/users/dimitri/doxygen-1.8.10.src.tar.gz'
+    - tar xf doxygen-1.8.10.src.tar.gz
+    - cd doxygen-1.8.10 && mkdir build && cd build
+    - cmake -G "Unix Makefiles" ..
     - make -j4
     - sudo make install
     - cd $TRAVIS_BUILD_DIR
@@ -41,6 +42,11 @@ matrix:
               - secure: "mRyQKieh/WCxeSmANDeXxzEt+ARvk+m+ypg5Xevi8ykZXMQJsUskFE4vde7+OrfB/4E4ByE8PTqaAdudw3AGUOfetwqXLBs3yLp4J+nw4m3uyUmu8ugbgbuvKVl5+puRRpDX6CFCeq9qAZwuYoAJ/pCTyXhWx4MknqtkSarTIdc="
         - compiler: gcc
           env: COVERAGE="true" CMAKE_BUILD_TYPE="Debug"
+        - compiler: gcc
+          env: STATIC="true" CMAKE_BUILD_TYPE="Release"
+        - compiler: clang
+          env: STATIC="true" CMAKE_BUILD_TYPE="Release"
+
 script:
     - mkdir build
     - cd build
