@@ -1,4 +1,4 @@
-var annotated =
+var annotated_dup =
 [
     [ "channeling", "namespacechanneling.html", "namespacechanneling" ],
     [ "config", "namespaceconfig.html", "namespaceconfig" ],

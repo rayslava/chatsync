@@ -11,8 +11,8 @@ var NAVTREE =
         [ "Enumerations", "namespacemembers_enum.html", null ]
       ] ]
     ] ],
-    [ "Data Structures", null, [
-      [ "Data Structures", "annotated.html", "annotated" ],
+    [ "Data Structures", "annotated.html", [
+      [ "Data Structures", "annotated.html", "annotated_dup" ],
       [ "Data Structure Index", "classes.html", null ],
       [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
       [ "Data Fields", "functions.html", [
