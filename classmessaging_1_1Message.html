@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Chatsync
-   &#160;<span id="projectnumber">a299e60eaeab411d20a14568c0288a39383a044b</span>
+   &#160;<span id="projectnumber">cf9642c0eaca4bac2da8cba2b5c7bed4ee99773b</span>
    </div>
   </td>
  </tr>
@@ -138,7 +138,12 @@ Data Fields</h2></td></tr>
 <tr class="separator:a0296dc545eba35b12b5c01b521d8c3b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Base class for all messages, needed for general architecture planning </p>
+<div class="textblock"><p>Base class for all messages, needed for general architecture planning</p>
+<p>Lifecycle:</p><ol type="1">
+<li>message_ptr is created inside an input channel and std::move()'d into hub</li>
+<li><a class="el" href="namespaceHub.html">Hub</a> creates message_ptr copies and sends them to each output channel asyncronously</li>
+<li>After every output sends data to receiver <a class="el" href="classmessaging_1_1Message.html">Message</a> dies with last message_ptr </li>
+</ol>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a2acc94cbf688eb6bfc6541a0c7b24f67"></a>
 <div class="memitem">
@@ -214,7 +219,7 @@ Data Fields</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacemessaging.html">messaging</a></li><li class="navelem"><a class="el" href="classmessaging_1_1Message.html">Message</a></li>
-    <li class="footer">Generated on Wed Aug 19 2015 07:46:36 for Chatsync by
+    <li class="footer">Generated on Thu Aug 20 2015 10:49:33 for Chatsync by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>
   </ul>
