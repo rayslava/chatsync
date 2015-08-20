@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.4)
+cmake_minimum_required(VERSION 2.8.12)
 project(chatsync)
 
 enable_language(C CXX)
@@ -8,9 +8,10 @@ set(CMAKE_MODULE_PATH
   ${CMAKE_CURRENT_SOURCE_DIR}/cmake
   )
 
-find_package (Tox REQUIRED)
 find_package (Threads REQUIRED)
-find_package (Sodium REQUIRED)
+
+# Optional plugins
+option (FEATURE_TOX "Build Tox support" ON)
 
 set(SOURCE_FILES
   src/config.cpp
@@ -27,7 +28,10 @@ set(TEST_FILES
   test/config.cpp
   )
 
-if (DEFINED TOX_FOUND)
+if (FEATURE_TOX)
+  message ("Compiling with Tox support")
+  find_package (Tox REQUIRED)
+  find_package (Sodium REQUIRED)
   set(SOURCE_FILES
     ${SOURCE_FILES}
     src/toxchannel.cpp
