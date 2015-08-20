@@ -32,3 +32,12 @@ clean:
 
 memcheck:
 	$(call build-dir, $@) && cmake .. -DCMAKE_BUILD_TYPE=Debug && $(MAKE) &&  (valgrind --tool=memcheck --track-origins=yes --leak-check=full --trace-children=yes --db-attach=yes --show-reachable=yes ./unit_tests 2>/tmp/unit-test-valg.log)</dev/null && sed '/in use/!d;s/.*exit:\s\([[:digit:]]\+\)\sbytes.*/\1/' /tmp/unit-test-valg.log | sort -n | uniq
+
+chatsync.tar.gz:
+	git archive --format=tar.gz -o dockerbuild/chatsync.tar.gz --prefix=chatsync/ HEAD
+
+builddocker: chatsync.tar.gz
+	cd dockerbuild && docker build -t chatsync-deploy .
+
+deploy: debug release clang clang-release analyzed memcheck builddocker
+	cd dockerbuild && docker run -v "$(shell pwd):/mnt/host" chatsync-deploy /bin/bash -c 'cd tar xfz /root/chatsync.tar.gz && cd chatsync && mkdir build && cd build && cmake -DSTATIC=True .. && make chatsync && cp chatsync /mnt/host'

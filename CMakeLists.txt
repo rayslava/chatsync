@@ -92,6 +92,7 @@ endif()
 
 if (STATIC)
   SET (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static")
+  SET (STATIC_LIBRT "-lrt")
 endif()
 
 add_executable(chatsync src/main.cpp ${SOURCE_FILES})
@@ -123,6 +124,7 @@ target_link_libraries(
   ${CMAKE_THREAD_LIBS_INIT}
   ${TOX_LIBRARY}
   ${SODIUM_LIBRARY}
+  ${STATIC_LIBRT}
   )
 
 include(CTest)

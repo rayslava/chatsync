@@ -9,7 +9,7 @@ before_install:
     - sudo add-apt-repository --yes 'deb http://llvm.org/apt/precise/ llvm-toolchain-precise-3.6 main'
     - wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key | sudo apt-key add -
     - sudo apt-get -qq update
-    - sudo apt-get -qq --yes --force-yes install libclang-3.6-dev clang-3.6 gcc-5 g++-5 libgtest-dev valgrind lcov cmake cmake-data
+    - sudo apt-get -qq --yes --force-yes install libclang-3.6-dev clang-3.6 gcc-5 g++-5 libgtest-dev valgrind lcov cmake cmake-data build-essential libtool autotools-dev automake checkinstall check git yasm
     - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 40 --slave /usr/bin/g++ g++ /usr/bin/g++-5
     - sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-5 40
     - sudo update-alternatives --config gcc
@@ -29,6 +29,8 @@ before_install:
     - cmake -G "Unix Makefiles" ..
     - make -j4
     - sudo make install
+    - cd $(mktemp -d) && git clone git://github.com/jedisct1/libsodium.git && cd libsodium &&  git checkout tags/1.0.3 &&  ./autogen.sh &&  ./configure --enable-static && make check &&  checkinstall --install --pkgname libsodium --pkgversion 1.0.3 --nodoc && ldconfig
+    - cd $(mktemp -d) && git clone git://github.com/irungentoo/toxcore.git && cd toxcore &&  autoreconf -i && ./configure --enable-static && make && make install
     - cd $TRAVIS_BUILD_DIR
 matrix:
     include:
