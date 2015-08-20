@@ -6,11 +6,6 @@
 namespace messaging {
     /**
      * Message type to distinguish different classes
-     *
-     * Lifecycle:
-     * 1. message_ptr is created inside an input channel and std::move()'d into hub
-     * 2. Hub creates message_ptr copies and sends them to each output channel asyncronously
-     * 3. After every output sends data to receiver Message dies with last message_ptr
      */
     enum class MessageType  {
         Text                                                        /**< Plaintext message, TextMessage class conforms this one */
@@ -18,6 +13,11 @@ namespace messaging {
 
     /**
      * Base class for all messages, needed for general architecture planning
+     *
+     * Lifecycle:
+     * 1. message_ptr is created inside an input channel and std::move()'d into hub
+     * 2. Hub creates message_ptr copies and sends them to each output channel asyncronously
+     * 3. After every output sends data to receiver Message dies with last message_ptr
      */
     class Message {
     public:
