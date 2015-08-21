@@ -49,6 +49,10 @@ if (DEFINED GTEST_INCLUDE_DIRS)
   include_directories(${GTEST_INCLUDE_DIRS})
 endif()
 
+if (TRAVIS_BUILD)
+  add_definitions(-DTRAVIS_BUILD)
+endif()
+
 set(STANDARD "-std=c++14")
 
 set(CMAKE_CXX_FLAGS         "-Wall -Wno-unknown-pragmas -Wno-sign-compare -Woverloaded-virtual -Wwrite-strings -Wno-unused ${STANDARD} -Wextra -pedantic -Werror -pthread")

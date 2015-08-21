@@ -40,4 +40,4 @@ builddocker: chatsync.tar.gz
 	cd dockerbuild && docker build -t chatsync-deploy .
 
 deploy: debug release clang clang-release analyzed memcheck builddocker
-	cd dockerbuild && docker run -v "$(shell pwd):/mnt/host" chatsync-deploy /bin/bash -c 'cd tar xfz /root/chatsync.tar.gz && cd chatsync && mkdir build && cd build && cmake -DSTATIC=True .. && make chatsync && cp chatsync /mnt/host'
+	cd dockerbuild && docker run -v "$(shell pwd):/mnt/host" chatsync-deploy /bin/bash -c 'cd tar xfz /root/chatsync.tar.gz && cd chatsync && mkdir build && cd build && cmake -DSTATIC=True -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make chatsync && cp chatsync /mnt/host'

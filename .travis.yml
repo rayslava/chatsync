@@ -52,9 +52,9 @@ matrix:
 script:
     - mkdir build
     - cd build
-    - cmake .. -DGTEST_BOTH_LIBRARIES="/usr/lib/libgtest.a /usr/lib/libgtest_main.a" -DCOVERALLS=${COVERAGE}
+    - cmake .. -DGTEST_BOTH_LIBRARIES="/usr/lib/libgtest.a /usr/lib/libgtest_main.a" -DCOVERALLS=${COVERAGE} -DSTATIC=${STATIC} -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DTRAVIS_BUILD=True
     - make VERBOSE=1
-    - "./unit_tests"
+    - ctest -V
     - if [ "x$VALGRIND" != "x" ]; then (valgrind --tool=memcheck --track-origins=yes --leak-check=full --trace-children=yes --db-attach=yes --show-reachable=yes ./unit_tests 2>/tmp/unit-test-valg.log)</dev/null && sed '/in use/!d;s/,//;s/.*in\s\([[:digit:]]\+\)\sblocks.*/\1/' /tmp/unit-test-valg.log | sort -n | { read lines; test $lines -eq 1; }; fi
     - if [ "x$COVERAGE" != "x" ]; then make coveralls; fi
 after_success:
