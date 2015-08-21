@@ -121,6 +121,7 @@ target_link_libraries(
   ${CMAKE_THREAD_LIBS_INIT}
   ${TOX_LIBRARY}
   ${SODIUM_LIBRARY}
+  ${STATIC_LIBRT}
   )
 
 target_link_libraries(

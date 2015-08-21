@@ -44,11 +44,6 @@ matrix:
               - secure: "mRyQKieh/WCxeSmANDeXxzEt+ARvk+m+ypg5Xevi8ykZXMQJsUskFE4vde7+OrfB/4E4ByE8PTqaAdudw3AGUOfetwqXLBs3yLp4J+nw4m3uyUmu8ugbgbuvKVl5+puRRpDX6CFCeq9qAZwuYoAJ/pCTyXhWx4MknqtkSarTIdc="
         - compiler: gcc
           env: COVERAGE="true" CMAKE_BUILD_TYPE="Debug"
-        - compiler: gcc
-          env: STATIC="true" CMAKE_BUILD_TYPE="Release"
-        - compiler: clang
-          env: STATIC="true" CMAKE_BUILD_TYPE="Release"
-
 script:
     - mkdir build
     - cd build
