@@ -27,6 +27,9 @@ clang-release:
 analyzed:
 	$(call build-dir, $@) && scan-build cmake ..  && scan-build $(MAKE) chatsync
 
+tidy:
+	$(call build-dir, $@) && cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=True ..  && clang-tidy -p debug-build ../src/*.cpp
+
 clean:
 	rm -rf *-build
 
