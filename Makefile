@@ -1,4 +1,4 @@
-all: doxygen asan tsan clang release clang-release analyzed
+all: stylecheck doxygen asan tsan clang release clang-release analyzed
 
 doxygen:
 	doxygen Doxyfile
@@ -42,6 +42,12 @@ dockerimage:
 
 chatsync.tar.gz: dockerimage
 	git archive --format=tar.gz -o dockerbuild/chatsync.tar.gz --prefix=chatsync/ HEAD
+
+stylecheck:
+	uncrustify -c uncrustify.cfg src/*.cpp src/*.hpp --check
+
+stylefix:
+	uncrustify -c uncrustify.cfg src/*.cpp src/*.hpp --replace
 
 deploy: debug release clang clang-release analyzed memcheck chatsync.tar.gz
 	cd dockerbuild && docker run -v "$(shell pwd):/mnt/host" chatsync-deploy /bin/bash -c 'cd /root && tar xfz /root/chatsync.tar.gz && cd chatsync && mkdir build && cd build && cmake -DSTATIC=True -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make chatsync && cp chatsync /mnt/host'
