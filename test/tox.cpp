@@ -36,7 +36,7 @@ TEST(ToxChannel, name)
     delete hub;
 }
 
-#ifndef TRAVIS_BUILD
+#if !defined(TRAVIS_BUILD)
 TEST(ToxChannel, running)
 {
     const auto hub = new Hub::Hub ("Hub");

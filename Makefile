@@ -7,16 +7,16 @@ build-dir = \
 	rm -rf $1-build && mkdir $1-build && cd $1-build
 
 debug:
-	$(call build-dir, $@) && cmake .. -DCMAKE_BUILD_TYPE=Debug && $(MAKE)
+	$(call build-dir, $@) && cmake .. -DCMAKE_BUILD_TYPE=Debug && $(MAKE) && ctest
 
 release:
-	$(call build-dir, $@) && cmake .. -DCMAKE_BUILD_TYPE=Release && $(MAKE) chatsync
+	$(call build-dir, $@) && cmake .. -DCMAKE_BUILD_TYPE=Release && $(MAKE) && ctest
 
 asan:
-	$(call build-dir, $@) && CXXFLAGS="-fsanitize=address" CXX=clang++ CC=clang cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo && $(MAKE) chatsync
+	$(call build-dir, $@) && CXX=clang++ CC=clang cmake .. -DCMAKE_CXX_FLAGS="-fsanitize=address" -DCMAKE_BUILD_TYPE=RelWithDebInfo && $(MAKE) chatsync
 
 tsan:
-	$(call build-dir, $@) && CXXFLAGS="-fsanitize=thread" CXX=clang++ CC=clang cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo && $(MAKE) chatsync
+	$(call build-dir, $@) && CXX=clang++ CC=clang cmake .. -DCMAKE_CXX_FLAGS="-fsanitize=thread"  -DCMAKE_BUILD_TYPE=RelWithDebInfo && $(MAKE) chatsync
 
 clang:
 	$(call build-dir, $@) && CXX=clang++ CC=clang cmake .. && $(MAKE) chatsync
@@ -35,7 +35,6 @@ clean:
 
 memcheck:
 	$(call build-dir, $@) && cmake .. -DCMAKE_BUILD_TYPE=Debug && $(MAKE) &&  (valgrind --tool=memcheck --track-origins=yes --leak-check=full --trace-children=yes --db-attach=yes --show-reachable=yes ./unit_tests 2>/tmp/unit-test-valg.log)</dev/null && sed '/in use/!d;s/.*exit:\s\([[:digit:]]\+\)\sbytes.*/\1/' /tmp/unit-test-valg.log | sort -n | uniq
-
 
 dockerimage:
 	cd dockerbuild && (docker images | grep chatsync-deploy) || docker build -t chatsync-deploy .

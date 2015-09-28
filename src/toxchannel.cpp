@@ -83,6 +83,7 @@ namespace toxChannel {
         throw config::option_error("Tox data is encrypted");
       options.savedata_data = toxData.get();
       options.savedata_length = filesize;
+      options.savedata_type = TOX_SAVEDATA_TYPE_TOX_SAVE;
       retval = tox_new(&options, &tox_error);
     } catch (config::option_error e) {
       std::cerr << "[DEBUG] Can't open tox data: " << e.what() << std::endl;
@@ -246,7 +247,9 @@ namespace toxChannel {
 
     tox_self_set_status(_tox, defaultBotStatus);
 
-    tox_bootstrap(_tox, defaultBootstrapAddress, defaultBootstrapPort, reinterpret_cast<const uint8_t *>(util::hex2bin(defaultBootstrapKey).c_str()), &bootstrap_result);
+    if (tox_self_get_connection_status(_tox) == TOX_CONNECTION_NONE)
+      tox_bootstrap(_tox, defaultBootstrapAddress, defaultBootstrapPort, reinterpret_cast<const uint8_t *>(util::hex2bin(defaultBootstrapKey).c_str()), &bootstrap_result);
+
     if (bootstrap_result)
       throw channeling::activate_error(ERR_TOX_INIT + ": Can't decode bootstrapping ip");
 

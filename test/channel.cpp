@@ -126,7 +126,7 @@ TEST(IrcChannel, socket)
     const auto hub = new Hub::Hub ("Hub");
 
     const auto server = std::make_unique<std::thread>(std::thread(&sockListen));
-    std::this_thread::sleep_for( std::chrono::milliseconds (50) );  // Give time to open socket 
+    std::this_thread::sleep_for( std::chrono::milliseconds (50) );  // Give time to open socket
     const auto ich = channeling::ChannelFactory::create("irc", hub, "data://direction=input\nname=ircin\nserver=127.0.0.1\nport=" + std::to_string(port) + "\nchannel=test");
     channeling::ChannelFactory::create("file", hub, "data://direction=output\nname=outfile");
     const std::string valid_line = "testuser: message";
