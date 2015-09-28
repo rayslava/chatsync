@@ -225,7 +225,6 @@ namespace toxChannel {
 
   int ToxChannel::toxStart() {
     TOX_ERR_SET_INFO result;
-    TOX_ERR_BOOTSTRAP bootstrap_result;
 
     //std::unique_ptr<uint8_t[]> pubKey(new uint8_t[TOX_CLIENT_ID_SIZE]);
     tox_callback_friend_request(_tox, friendRequestCallback, this);
@@ -247,11 +246,13 @@ namespace toxChannel {
 
     tox_self_set_status(_tox, defaultBotStatus);
 
-    if (tox_self_get_connection_status(_tox) == TOX_CONNECTION_NONE)
+    if (tox_self_get_connection_status(_tox) == TOX_CONNECTION_NONE) {
+      TOX_ERR_BOOTSTRAP bootstrap_result;
       tox_bootstrap(_tox, defaultBootstrapAddress, defaultBootstrapPort, reinterpret_cast<const uint8_t *>(util::hex2bin(defaultBootstrapKey).c_str()), &bootstrap_result);
 
-    if (bootstrap_result)
-      throw channeling::activate_error(ERR_TOX_INIT + ": Can't decode bootstrapping ip");
+      if (bootstrap_result)
+	throw channeling::activate_error(ERR_TOX_INIT + ": Can't decode bootstrapping ip");
+    }
 
     std::cerr << "[DEBUG] Bootstrapping" << std::endl;
     /* TODO: Make timeout exception handling */
