@@ -5,7 +5,7 @@
 namespace toxChannel {
 
   constexpr auto defaultBootstrapAddress = "23.226.230.47";   /**< Tox bootstrap address TODO: enable grabbing from gist */
-  constexpr uint32_t defaultBootstrapPort = 33445;   /**< Tox bootstrap server port */
+  constexpr auto defaultBootstrapPort = "33445";   /**< Tox bootstrap server port */
 //    constexpr auto defaultBootstrapKey = "A09162D68618E742FFBCA1C2C70385E6679604B2D80EA6E84AD0996A1AC8A074"; /**< Tox default bootstrap key */
   constexpr auto defaultBootstrapKey = "F404ABAA1C99A9D37D61AB54898F56793E1DEF8BD46B1038B9D822E8460FAB67";
 

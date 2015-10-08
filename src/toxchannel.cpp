@@ -56,7 +56,7 @@ namespace toxChannel {
 #include <string.h>
   }
 
-  static Tox * toxInit(const std::string& datafile)
+  static Tox * toxInit(const config::ConfigParser& config)
   {
     TOX_ERR_NEW tox_error;
     Tox* retval;
@@ -64,15 +64,15 @@ namespace toxChannel {
     tox_options_default(&options);
 
     try {
-      const auto dataFileName = datafile.c_str();
+      const std::string dataFileName = config["datafile"];
       struct linux::stat sb;
-      if ((stat(dataFileName, &sb) == -1))
+      if ((stat(dataFileName.c_str(), &sb) == -1))
         throw config::option_error("No such file");
       if ((sb.st_mode & S_IFMT) != S_IFREG)
         throw config::option_error("Not a file");
       const size_t filesize = sb.st_size;
       const auto toxData = std::make_unique<uint8_t[]>(filesize);
-      const int toxfd = linux::open(dataFileName, O_RDONLY);
+      const int toxfd = linux::open(dataFileName.c_str(), O_RDONLY);
       int result = linux::read(toxfd, toxData.get(), filesize);
       if (result < 0)
         throw config::option_error("Error reading file");
@@ -89,6 +89,7 @@ namespace toxChannel {
       std::cerr << "[DEBUG] Can't open tox data: " << e.what() << std::endl;
       options.savedata_data = nullptr;
       options.savedata_length = 0;
+      options.ipv6_enabled = config.get("ipv6", "false");
       retval = tox_new(&options, &tox_error);
     }
     switch (tox_error) {
@@ -106,7 +107,7 @@ namespace toxChannel {
 
   ToxChannel::ToxChannel(Hub::Hub* hub, const std::string& config) :
     channeling::Channel(hub, config),
-    _tox(toxInit(std::string(_config["datafile"]))),        /** TODO: make options handling */
+    _tox(toxInit(_config)),
     wasConnected(false)
   {}
 
@@ -248,7 +249,12 @@ namespace toxChannel {
 
     if (tox_self_get_connection_status(_tox) == TOX_CONNECTION_NONE) {
       TOX_ERR_BOOTSTRAP bootstrap_result;
-      tox_bootstrap(_tox, defaultBootstrapAddress, defaultBootstrapPort, reinterpret_cast<const uint8_t *>(util::hex2bin(defaultBootstrapKey).c_str()), &bootstrap_result);
+      const std::string bsAddr = _config.get("bootstrap_address", defaultBootstrapAddress);
+      const uint32_t bsPort = _config.get("bootstrap_port", defaultBootstrapPort);
+      const std::string bsKey = _config.get("bootstrap_key", defaultBootstrapKey);
+      tox_bootstrap(_tox, bsAddr.c_str(), bsPort,
+                    reinterpret_cast<const uint8_t *>(util::hex2bin(bsKey).c_str()),
+                    &bootstrap_result);
 
       if (bootstrap_result)
         throw channeling::activate_error(ERR_TOX_INIT + ": Can't decode bootstrapping ip");
