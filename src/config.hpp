@@ -75,6 +75,8 @@ namespace config {
 
     /**
      * Implicit conversion to int
+     *
+     * Can parse "true" and "false" values.
      */
     operator int() const;
 

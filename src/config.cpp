@@ -2,6 +2,8 @@
 #include <string>
 #include <fstream>
 #include <streambuf>
+#include <algorithm>
+#include <string>
 #include "config.hpp"
 #include "messages.hpp"
 
@@ -23,8 +25,14 @@ namespace config {
   }
 
   ConfigOption::operator int() const {
-    /* TODO: exception handling */
-    return std::stoi(_value);
+    try {
+      return std::stoi(_value);
+    } catch (std::invalid_argument) {
+      if ((strutil::cistrcmp(_value, "true"))
+          || (strutil::cistrcmp(_value, "false")))
+        return (strutil::cistrcmp(_value, "true"));
+      throw option_error(ERR_MALFORMED_VAL + ": " + _value);
+    }
   }
 
   ConfigOption::operator channeling::ChannelDirection() const {

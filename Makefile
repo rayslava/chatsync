@@ -34,7 +34,7 @@ clean:
 	rm -rf *-build
 
 memcheck:
-	$(call build-dir, $@) && cmake .. -DCMAKE_BUILD_TYPE=Debug && $(MAKE) &&  (valgrind --tool=memcheck --track-origins=yes --leak-check=full --trace-children=yes --db-attach=yes --show-reachable=yes ./unit_tests 2>/tmp/unit-test-valg.log)</dev/null && sed '/in use/!d;s/.*exit:\s\([[:digit:]]\+\)\sbytes.*/\1/' /tmp/unit-test-valg.log | sort -n | uniq
+	$(call build-dir, $@) && cmake .. -DCMAKE_BUILD_TYPE=Debug && $(MAKE) &&  (valgrind --tool=memcheck --track-origins=yes --leak-check=full --trace-children=yes --show-reachable=yes ./unit_tests 2>/tmp/unit-test-valg.log)</dev/null && sed '/in use/!d;s/.*exit:\s\([[:digit:]]\+\)\sbytes.*/\1/' /tmp/unit-test-valg.log | sort -n | uniq
 
 dockerimage:
 	cd dockerbuild && (docker images | grep chatsync-deploy) || docker build -t chatsync-deploy .
@@ -43,10 +43,10 @@ chatsync.tar.gz: dockerimage
 	git archive --format=tar.gz -o dockerbuild/chatsync.tar.gz --prefix=chatsync/ HEAD
 
 stylecheck:
-	uncrustify -c uncrustify.cfg src/*.cpp src/*.hpp --check
+	uncrustify -c uncrustify.cfg src/*.cpp src/*.hpp test/*.cpp --check
 
 stylefix:
-	uncrustify -c uncrustify.cfg src/*.cpp src/*.hpp --replace
+	uncrustify -c uncrustify.cfg src/*.cpp src/*.hpp test/*.cpp --replace
 
 deploy: debug release clang clang-release analyzed memcheck chatsync.tar.gz
 	cd dockerbuild && docker run -v "$(shell pwd):/mnt/host" chatsync-deploy /bin/bash -c 'cd /root && tar xfz /root/chatsync.tar.gz && cd chatsync && mkdir build && cd build && cmake -DSTATIC=True -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make chatsync && cp chatsync /mnt/host'

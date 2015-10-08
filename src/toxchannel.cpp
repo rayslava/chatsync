@@ -251,7 +251,7 @@ namespace toxChannel {
       tox_bootstrap(_tox, defaultBootstrapAddress, defaultBootstrapPort, reinterpret_cast<const uint8_t *>(util::hex2bin(defaultBootstrapKey).c_str()), &bootstrap_result);
 
       if (bootstrap_result)
-	throw channeling::activate_error(ERR_TOX_INIT + ": Can't decode bootstrapping ip");
+        throw channeling::activate_error(ERR_TOX_INIT + ": Can't decode bootstrapping ip");
     }
 
     std::cerr << "[DEBUG] Bootstrapping" << std::endl;
