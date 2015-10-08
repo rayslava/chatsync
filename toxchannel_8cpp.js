@@ -3,5 +3,5 @@ var toxchannel_8cpp =
     [ "hex2bin", "toxchannel_8cpp.html#a15ab598833bb9035f71ec9703fafd27a", null ],
     [ "ToxId2HR", "toxchannel_8cpp.html#afd92a49e0e2a87b1569343646551efe3", null ],
     [ "ToxId2HR", "toxchannel_8cpp.html#ad344f08bb026bb75db1751fe46b6875b", null ],
-    [ "toxInit", "toxchannel_8cpp.html#a6417b399a935e4aa25132c373abe7deb", null ]
+    [ "toxInit", "toxchannel_8cpp.html#ab13dfdf2a7e319324980a0f036899e55", null ]
 ];
