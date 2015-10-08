@@ -6,6 +6,7 @@ before_install:
     - sudo add-apt-repository --yes ppa:h-rayflood/llvm
     - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
     - sudo add-apt-repository --yes ppa:yjwong/cmake
+    - sudo add-apt-repository --yes ppa:george-edison55/precise-backports
     - sudo add-apt-repository --yes 'deb http://llvm.org/apt/precise/ llvm-toolchain-precise-3.6 main'
     - wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key | sudo apt-key add -
     - sudo apt-get -qq update
@@ -50,8 +51,8 @@ script:
     - cmake .. -DGTEST_BOTH_LIBRARIES="/usr/lib/libgtest.a /usr/lib/libgtest_main.a" -DCOVERALLS=${COVERAGE} -DSTATIC=${STATIC} -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DTRAVIS_BUILD=True
     - make VERBOSE=1
     - ctest -V
-    - if [ "x$VALGRIND" != "x" ]; then (valgrind --tool=memcheck --track-origins=yes --leak-check=full --trace-children=yes --db-attach=yes --show-reachable=yes ./unit_tests 2>/tmp/unit-test-valg.log)</dev/null && sed '/in use/!d;s/,//;s/.*in\s\([[:digit:]]\+\)\sblocks.*/\1/' /tmp/unit-test-valg.log | sort -n | { read lines; test $lines -eq 1; }; fi
-    - if [ "x$COVERAGE" != "x" ]; then make coveralls; fi
+    - if [ "x$VALGRIND" != "x" ]; then (valgrind --tool=memcheck --track-origins=yes --leak-check=full --trace-children=yes --show-reachable=yes ./unit_tests 2>/tmp/unit-test-valg-unit_tests.log)</dev/null && sed '/in use/!d;s/.*exit:.*\s\([[:digit:]]\+\)\sblocks.*/\1/' /tmp/unit-test-valg-unit_tests.log | { read lines; test $$lines -eq 1 || cat /tmp/unit-test-valg-unit_tests.log; }; fi
+    - if [ "x$COVERAGE" != "x" ]; then make V=1 VERBOSE=1 coveralls; fi
 after_success:
     - if [ "x$COVERAGE" != "x" ]; then bash coveralls-upload || coveralls --root .. -E ".*external.*" -E ".*CMakeFiles.*" -E ".*test/.*.cpp.*" ; fi
     - if [ "x$DOCS" != "x" ]; then cd .. && bash scripts/publish-doxygen.sh; fi

@@ -1,5 +1,6 @@
-cmake_minimum_required(VERSION 2.8.12)
+cmake_minimum_required(VERSION 3.2)
 project(chatsync)
+cmake_policy(SET CMP0049 OLD)
 
 enable_language(C CXX)
 
@@ -21,24 +22,50 @@ set(SOURCE_FILES
   src/hub.cpp
   )
 
-set(TEST_FILES
-  test/main.cpp
-  test/channel.cpp
-  test/hub.cpp
-  test/config.cpp
-  )
+macro(create_test name files)
+  message("-- Creating test '${name}' of ${files}")
+
+  if (NOT (${name} STREQUAL "unit"))
+    # Collecting names for globas "unit_tests" binary
+    list(APPEND all_test_files
+      "${files}")
+  endif()
+
+  set(${name}_TEST_FILES
+    test/main.cpp
+    ${files}
+    )
+
+  set(test_files
+    "\${${name}_TEST_FILES}"
+    )
+
+  add_executable(
+    ${name}_tests
+    ${SOURCE_FILES}
+    ${GTEST_SOURCES}
+    ${test_files}
+    )
+
+  target_link_libraries(
+    ${name}_tests
+    ${GTEST_BOTH_LIBRARIES}
+    ${CMAKE_THREAD_LIBS_INIT}
+    ${TOX_LIBRARY}
+    ${SODIUM_LIBRARY}
+    ${STATIC_LIBRT}
+    )
+
+  add_test(${name} ${name}_tests)
+endmacro(create_test)
 
 if (FEATURE_TOX)
-  message ("Compiling with Tox support")
+  message ("-- Compiling with Tox support")
   find_package (Tox REQUIRED)
   find_package (Sodium REQUIRED)
   set(SOURCE_FILES
     ${SOURCE_FILES}
     src/toxchannel.cpp
-    )
-  set(TEST_FILES
-    ${TEST_FILES}
-    test/tox.cpp
     )
 endif()
 
@@ -86,12 +113,6 @@ if ((COVERALLS OR COVERAGE) AND CMAKE_BUILD_TYPE STREQUAL "Debug")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ggdb -O0 -Wall -W -fprofile-arcs -ftest-coverage --coverage")
   set(CMAKE_SHARED_LINKER_FLAGS="${CMAKE_SHARED_LINKER_FLAGS} -fprofile-arcs -ftest-coverage -lgcov")
   set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fprofile-arcs -ftest-coverage -lgcov")
-  if (COVERAGE)
-    setup_target_for_coverage(coverage unit_tests src coverage)
-  endif()
-  if (COVERALLS)
-    setup_target_for_coveralls(coveralls unit_tests src)
-  endif()
 endif()
 
 if (STATIC)
@@ -108,22 +129,6 @@ include_directories(
   ${TOX_INCLUDE_DIR}
   )
 
-add_executable(
-  unit_tests
-  ${SOURCE_FILES}
-  ${GTEST_SOURCES}
-  ${TEST_FILES}
-  )
-
-target_link_libraries(
-  unit_tests
-  ${GTEST_BOTH_LIBRARIES}
-  ${CMAKE_THREAD_LIBS_INIT}
-  ${TOX_LIBRARY}
-  ${SODIUM_LIBRARY}
-  ${STATIC_LIBRT}
-  )
-
 target_link_libraries(
   chatsync
   ${CMAKE_THREAD_LIBS_INIT}
@@ -135,4 +140,22 @@ target_link_libraries(
 include(CTest)
 enable_testing()
 
-add_test(unit unit_tests)
+create_test(channel test/channel.cpp)
+
+create_test(hub test/hub.cpp)
+
+create_test(config test/config.cpp)
+
+if (FEATURE_TOX)
+  create_test(tox test/tox.cpp)
+endif()
+
+create_test(unit "${all_test_files}")
+
+if (COVERAGE)
+  setup_target_for_coverage(coverage unit_tests src coverage)
+endif()
+
+if (COVERALLS)
+  setup_target_for_coveralls(coveralls unit_tests src)
+endif()
