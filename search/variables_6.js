@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['running',['running',['../main_8cpp.html#a1287f154880e6125edc511f9a6da0726',1,'main.cpp']]]
+  ['ping_5ftime',['ping_time',['../classircChannel_1_1IrcChannel.html#a318258a469674cfdd4cc444eaa556ffb',1,'ircChannel::IrcChannel']]]
 ];
