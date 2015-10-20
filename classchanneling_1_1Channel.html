@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Chatsync
-   &#160;<span id="projectnumber">0259d617bf83d27f4d119bdfcae0597e354f5fbe</span>
+   &#160;<span id="projectnumber">4111b145a7248f729caa267259f157cc4b76dcaf</span>
    </div>
   </td>
  </tr>
@@ -515,7 +515,14 @@ Friends</h2></td></tr>
 <p>Parse a text line and generate a corresponding Message </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>Decide if it should throw something</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">line</td><td>Text line from socket </td></tr>
+    <tr><td class="paramname">line</td><td>Text line from socket. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">nullptr</td><td>If message was technical for protocol. </td></tr>
+    <tr><td class="paramname">message_ptr</td><td>If useful payload found. </td></tr>
   </table>
   </dd>
 </dl>
@@ -652,7 +659,7 @@ Friends</h2></td></tr>
 <p>Start thread which polls the descriptor <a class="el" href="classchanneling_1_1Channel.html#a26ff34b9437cdc074004426fd636873e">Channel::_fd</a></p>
 <p>Descriptor must be opened before running. </p><dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::runtime_error(ERR_FD)</td><td>If descriptor is not opened </td></tr>
+    <tr><td class="paramname">std::runtime_error(ERR_FD)</td><td>If descriptor is not opened. </td></tr>
   </table>
   </dd>
 </dl>
@@ -949,7 +956,7 @@ Friends</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacechanneling.html">channeling</a></li><li class="navelem"><a class="el" href="classchanneling_1_1Channel.html">Channel</a></li>
-    <li class="footer">Generated on Tue Oct 20 2015 13:42:28 for Chatsync by
+    <li class="footer">Generated on Tue Oct 20 2015 14:39:20 for Chatsync by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>
   </ul>
