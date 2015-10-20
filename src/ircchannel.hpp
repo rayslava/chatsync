@@ -1,4 +1,5 @@
 #pragma once
+#include <chrono>
 #include "channel.hpp"
 #include "hub.hpp"
 
@@ -16,12 +17,15 @@ namespace ircChannel {
     const std::string _server;                           /**< Server address */
     const uint32_t _port;                                /**< Connection port */
     const std::string _channel;                          /**< Channel name (starting with #) */
+    std::chrono::time_point<std::chrono::high_resolution_clock> ping_time; /**< Ping to server in microseconds */
+
     /**
      * Sends PASS, NICK and USER commands to register irc connection
      */
     int registerConnection();
     std::future<void> activate() override;
     const messaging::message_ptr parse(const char* line) const override;
+    void ping();
 
     static const channeling::ChannelCreatorImpl<IrcChannel> creator;
   public:

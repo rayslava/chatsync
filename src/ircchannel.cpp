@@ -53,10 +53,17 @@ namespace ircChannel {
 
     std::regex msgRe(":(\\S+)!(\\S+)\\s+PRIVMSG\\s+#(\\S+)\\s+:(.*)\r\n$");
     std::regex pingRe("PING\\s+:(.*)\r\n$");
+    std::regex pongRe("PONG\\s+(.*)\r\n$");
 
     std::smatch msgMatches;
     std::string name = "irc";
     std::string text = toParse;
+    if (std::regex_search(toParse, msgMatches, pongRe)) {
+      const auto ping_end = std::chrono::high_resolution_clock::now();
+      std::chrono::duration<double> diff = ping_end - ping_time;
+
+      std::cerr << "[DEBUG] #irc: " << name << "Server ping: " << diff.count() << std::endl;
+    }
     if (std::regex_search(toParse, msgMatches, msgRe)) {
       name = msgMatches[1].str();
       text = msgMatches[4].str();
@@ -102,7 +109,16 @@ namespace ircChannel {
     send(joinline);
     std::this_thread::sleep_for(std::chrono::milliseconds (500));
     send("PRIVMSG #" + _channel + " :Hello there\r\n");
+    std::async(std::launch::async, [this, loginline]() {
+        std::this_thread::sleep_for(std::chrono::milliseconds (45000));
+	ping();
+      });
     return 0;
   }
 
+  void IrcChannel::ping() {
+    ping_time = std::chrono::high_resolution_clock::now();
+    std::cerr << "[DEBUG] #irc: Sending ping " << std::endl;
+    send("PING " + _server + "\r\n");
+  }
 }
