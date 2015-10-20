@@ -170,7 +170,7 @@ namespace toxChannel {
   void ToxChannel::friendRequestCallback(Tox* tox, const uint8_t* public_key, const uint8_t* data, size_t length, void* userdata) {
     TOX_ERR_FRIEND_ADD friend_error;
     const auto channel = static_cast<ToxChannel *>(userdata);
-    const auto friendNum = tox_friend_add_norequest(tox, public_key, &friend_error);     /** TODO: check friend_error */
+    const auto friendNum = tox_friend_add_norequest(tox, public_key, &friend_error);     /** @todo check friend_error */
     std::cerr << "[DEBUG] tox id with data" << data << " of " << length << " bytes " << util::ToxId2HR<TOX_ADDRESS_SIZE>(public_key) << " wants to be your friend. Added with #" << friendNum << std::endl;
   }
 
@@ -261,7 +261,7 @@ namespace toxChannel {
     }
 
     std::cerr << "[DEBUG] Bootstrapping" << std::endl;
-    /* TODO: Make timeout exception handling */
+    /* @todo Make timeout exception handling */
 
     while (!wasConnected) {
       TOX_CONNECTION status;

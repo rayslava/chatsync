@@ -62,7 +62,7 @@ namespace channeling {
 
     /**
      * Parse a text line and generate a corresponding Message
-     * TODO: Decide if it should throw something
+     * @todo Decide if it should throw something
      *
      * @param line Text line from socket
      */

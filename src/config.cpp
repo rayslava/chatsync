@@ -21,7 +21,7 @@ namespace config {
   ConfigParser::ConfigParser(const std::string& path) :
     _config(std::move(parseConfig(openConfig(path))))
   {
-    /* TODO: config data path parsing and data reading */
+    /* @todo config data path parsing and data reading */
   }
 
   ConfigOption::operator int() const {

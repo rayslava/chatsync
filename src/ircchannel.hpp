@@ -18,16 +18,24 @@ namespace ircChannel {
     const std::string _server;                           /**< Server address */
     const uint32_t _port;                                /**< Connection port */
     const std::string _channel;                          /**< Channel name (starting with #) */
-    std::chrono::time_point<std::chrono::high_resolution_clock> ping_time; /**< Ping to server in microseconds */
+    std::chrono::time_point<std::chrono::high_resolution_clock> _ping_time; /**< Ping to server in microseconds */
 
     /**
      * Sends PASS, NICK and USER commands to register irc connection
      */
     int registerConnection();
+    /**
+     * Sends PING message to server
+     */
+    void ping();
+    /**
+     * Checks if max_timeout is reached and calls ping()
+     *
+     * @todo Add heuristics of timeout
+     */
+    void checkTimeout();
     std::future<void> activate() override;
     const messaging::message_ptr parse(const char* line) const override;
-    void ping();
-    void checkTimeout();
 
     static const channeling::ChannelCreatorImpl<IrcChannel> creator;
   public:

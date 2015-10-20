@@ -52,7 +52,7 @@ TEST(FileChannel, files)
   hub->deactivate();
   delete hub;
 
-  close(fd);    // TODO: move after adding file close support in poll thread
+  close(fd);    /** @todo move after adding file close support in poll thread */
 
   fd = open("output", O_RDONLY | O_SYNC);
   ASSERT_NE(fd, -1);
