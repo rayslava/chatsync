@@ -64,18 +64,19 @@ namespace ircChannel {
       const auto ping_end = std::chrono::high_resolution_clock::now();
       std::chrono::duration<double> diff = ping_end - _ping_time;
       std::cerr << "[DEBUG] #irc: " << name << "Server pong reply: '" << msgMatches[1].str() << "' in " << diff.count() << "s" << std::endl;
+      return nullptr;
     }
+    if (std::regex_search(toParse, msgMatches, pingRe)) {
+      const std::string pong = "PONG " + msgMatches[1].str();
+      std::cerr << "[DEBUG] #irc: sending " << pong << std::endl;
+      send(pong);
+      return nullptr;
+    };
     if (std::regex_search(toParse, msgMatches, msgRe)) {
       name = msgMatches[1].str();
       text = msgMatches[4].str();
       std::cerr << "[DEBUG] #irc:" << name << ": " << text << std::endl;
     };
-    if (std::regex_search(toParse, msgMatches, pingRe)) {
-      const std::string pong = "PONG " + msgMatches[1].str();
-      std::cerr << "[DEBUG] #irc: sending " << pong << std::endl;
-      send(pong);
-    };
-
     const auto msg = std::make_shared<const messaging::TextMessage>(_id,
                                                                     std::make_shared<const messaging::User>(messaging::User(name.c_str())),
                                                                     text.c_str());

@@ -64,7 +64,9 @@ namespace channeling {
      * Parse a text line and generate a corresponding Message
      * @todo Decide if it should throw something
      *
-     * @param line Text line from socket
+     * @param line Text line from socket.
+     * @retval nullptr If message was technical for protocol.
+     * @retval message_ptr If useful payload found.
      */
     virtual const message_ptr parse(const char* line) const = 0;
 
@@ -72,7 +74,7 @@ namespace channeling {
      * Start thread which polls the descriptor Channel::_fd
      *
      * Descriptor must be opened before running.
-     * @throws std::runtime_error(ERR_FD) If descriptor is not opened
+     * @throws std::runtime_error(ERR_FD) If descriptor is not opened.
      */
     void startPolling();
 
