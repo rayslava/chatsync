@@ -10,8 +10,8 @@ var classircChannel_1_1IrcChannel =
     [ "registerConnection", "classircChannel_1_1IrcChannel.html#a50d2857561905d6b9a03f815614aa1ba", null ],
     [ "type", "classircChannel_1_1IrcChannel.html#ae0a628432b78a52652e8e6c56046b967", null ],
     [ "_channel", "classircChannel_1_1IrcChannel.html#a5cb40ec3010c67e4180efa045b91dfaf", null ],
+    [ "_ping_time", "classircChannel_1_1IrcChannel.html#abeef498c7d235f99849fa0834974790f", null ],
     [ "_port", "classircChannel_1_1IrcChannel.html#ab68f31d628fae4ad985c24a3cc3ee05c", null ],
     [ "_server", "classircChannel_1_1IrcChannel.html#afded0c90bc90f3bdae8f73fc64aaac27", null ],
-    [ "creator", "classircChannel_1_1IrcChannel.html#a1d45dec4bac4aa6fc571436a4a382301", null ],
-    [ "ping_time", "classircChannel_1_1IrcChannel.html#a318258a469674cfdd4cc444eaa556ffb", null ]
+    [ "creator", "classircChannel_1_1IrcChannel.html#a1d45dec4bac4aa6fc571436a4a382301", null ]
 ];
