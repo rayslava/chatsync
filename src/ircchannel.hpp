@@ -6,6 +6,7 @@
 namespace ircChannel {
 
   constexpr size_t irc_message_max = 256;
+  constexpr std::chrono::duration<double> max_timeout(2.0);
   /**
    * IRC connection channel
    *
@@ -26,6 +27,7 @@ namespace ircChannel {
     std::future<void> activate() override;
     const messaging::message_ptr parse(const char* line) const override;
     void ping();
+    void checkTimeout();
 
     static const channeling::ChannelCreatorImpl<IrcChannel> creator;
   public:

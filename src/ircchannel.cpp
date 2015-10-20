@@ -37,6 +37,7 @@ namespace ircChannel {
   void IrcChannel::incoming(const messaging::message_ptr&& msg) {
     char message[irc_message_max];
 
+    checkTimeout();
     if (msg->type() == messaging::MessageType::Text) {
       const auto textmsg = messaging::TextMessage::fromMessage(msg);
       snprintf(message, irc_message_max, "PRIVMSG #%s :[%s]: %s\r\n", _channel.c_str(), textmsg->user()->name().c_str(), textmsg->data().c_str());
@@ -61,7 +62,6 @@ namespace ircChannel {
     if (std::regex_search(toParse, msgMatches, pongRe)) {
       const auto ping_end = std::chrono::high_resolution_clock::now();
       std::chrono::duration<double> diff = ping_end - ping_time;
-
       std::cerr << "[DEBUG] #irc: " << name << "Server ping: " << diff.count() << std::endl;
     }
     if (std::regex_search(toParse, msgMatches, msgRe)) {
@@ -120,5 +120,14 @@ namespace ircChannel {
     ping_time = std::chrono::high_resolution_clock::now();
     std::cerr << "[DEBUG] #irc: Sending ping " << std::endl;
     send("PING " + _server + "\r\n");
+  }
+
+  void IrcChannel::checkTimeout() {
+    const auto timestamp = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> diff = timestamp - ping_time;
+    if (diff > max_timeout) {
+      ping();
+      std::this_thread::sleep_for(std::chrono::milliseconds (150));
+    }
   }
 }
