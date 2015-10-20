@@ -3,6 +3,7 @@ var classircChannel_1_1IrcChannel =
     [ "IrcChannel", "classircChannel_1_1IrcChannel.html#a9d65635b86fd770120322ff3b4cb7640", null ],
     [ "~IrcChannel", "classircChannel_1_1IrcChannel.html#a43c4028f4ed72cb1203c2151b4fb2f91", null ],
     [ "activate", "classircChannel_1_1IrcChannel.html#a3b8e2e68fd1f87d5473fbd4f4e32f5fd", null ],
+    [ "checkTimeout", "classircChannel_1_1IrcChannel.html#a6d13ae52ff2e037843a58c00fb89e196", null ],
     [ "incoming", "classircChannel_1_1IrcChannel.html#a98e21bb4f7c9de81fceebd8a4ecdd1ce", null ],
     [ "parse", "classircChannel_1_1IrcChannel.html#a67c25a6d6940bec24e59fb11ccbfa4fe", null ],
     [ "ping", "classircChannel_1_1IrcChannel.html#a58010ff3cb2fc29387e7ed957a11dbb9", null ],
