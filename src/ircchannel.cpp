@@ -53,7 +53,9 @@ namespace ircChannel {
     const std::string toParse(line);
     std::cerr << "[DEBUG] Parsing irc line:" << toParse << std::endl;
 
-    std::regex msgRe(":(\\S+)!(\\S+)\\s+PRIVMSG\\s+#(\\S+)\\s+:(.*)\r\n$");
+    std::regex msgRe (":(\\S+)!(\\S+)\\s+PRIVMSG\\s+#(\\S+)\\s+:(.*)\r\n$");
+    std::regex joinRe(":(\\S+)!(\\S+)\\s+JOIN\\s+:#(\\S+)$");
+    std::regex quitRe(":(\\S+)!(\\S+)\\s+QUIT\\s+:#(\\S+)$");
     std::regex pingRe("PING\\s+:(.*)\r\n$");
     std::regex pongRe("PONG\\s+(.*)\r\n$");
 
@@ -64,23 +66,34 @@ namespace ircChannel {
       const auto ping_end = std::chrono::high_resolution_clock::now();
       std::chrono::duration<double> diff = ping_end - _ping_time;
       std::cerr << "[DEBUG] #irc: " << name << "Server pong reply: '" << msgMatches[1].str() << "' in " << diff.count() << "s" << std::endl;
-      return nullptr;
     }
     if (std::regex_search(toParse, msgMatches, pingRe)) {
       const std::string pong = "PONG " + msgMatches[1].str();
       std::cerr << "[DEBUG] #irc: sending " << pong << std::endl;
       send(pong);
-      return nullptr;
+    };
+    if (std::regex_search(toParse, msgMatches, joinRe)) {
+      const auto name = msgMatches[1].str();
+      const auto host = msgMatches[2].str();
+      const auto chan = msgMatches[3].str();
+      std::cerr << "[DEBUG] #irc: user " << name << " has joined " << chan << " from " << host << std::endl;
+    };
+    if (std::regex_search(toParse, msgMatches, quitRe)) {
+      const auto name = msgMatches[1].str();
+      const auto host = msgMatches[2].str();
+      const auto msg = msgMatches[3].str();
+      std::cerr << "[DEBUG] #irc: user " << name << " has left because of " << msg << std::endl;
     };
     if (std::regex_search(toParse, msgMatches, msgRe)) {
       name = msgMatches[1].str();
       text = msgMatches[4].str();
       std::cerr << "[DEBUG] #irc:" << name << ": " << text << std::endl;
+      const auto msg = std::make_shared<const messaging::TextMessage>(_id,
+                                                                      std::make_shared<const messaging::User>(messaging::User(name.c_str())),
+                                                                      text.c_str());
+      return msg;
     };
-    const auto msg = std::make_shared<const messaging::TextMessage>(_id,
-                                                                    std::make_shared<const messaging::User>(messaging::User(name.c_str())),
-                                                                    text.c_str());
-    return msg;
+    return nullptr;
   }
 
   int IrcChannel::registerConnection() {
