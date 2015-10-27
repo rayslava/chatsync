@@ -20,6 +20,7 @@ var hierarchy =
     ] ],
     [ "runtime_error", null, [
       [ "channeling::activate_error", "classchanneling_1_1activate__error.html", null ],
+      [ "channeling::connection_error", "classchanneling_1_1connection__error.html", null ],
       [ "config::config_error", "classconfig_1_1config__error.html", [
         [ "config::option_error", "classconfig_1_1option__error.html", null ]
       ] ]

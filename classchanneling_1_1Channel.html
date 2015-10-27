@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Chatsync
-   &#160;<span id="projectnumber">687fd9413ddb8384f851513260455d784fcead11</span>
+   &#160;<span id="projectnumber">cdacbe19a6f37956ecd21af9cf3bf5917d145555</span>
    </div>
   </td>
  </tr>
@@ -112,6 +112,8 @@ $(document).ready(function(){initNavTree('classchanneling_1_1Channel.html','');}
 <a href="#pub-attribs">Data Fields</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="#friends">Friends</a>  </div>
   <div class="headertitle">
 <div class="title">channeling::Channel Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -192,6 +194,16 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:ad9d63430a74f073172fd0b702683d9c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6a047aed6edfa6973c0a451c70254b8c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classHub_1_1Hub.html">Hub::Hub</a> *const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchanneling_1_1Channel.html#a6a047aed6edfa6973c0a451c70254b8c">_hub</a></td></tr>
 <tr class="separator:a6a047aed6edfa6973c0a451c70254b8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a00fd03f47645cdb87ee289193bd2d39c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchanneling_1_1Channel.html#a00fd03f47645cdb87ee289193bd2d39c">reconnect</a> ()</td></tr>
+<tr class="separator:a00fd03f47645cdb87ee289193bd2d39c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a37822d40112432c55cb323deb0988c73"><td class="memItemLeft" align="right" valign="top">std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchanneling_1_1Channel.html#a37822d40112432c55cb323deb0988c73">_reconnect_timeout</a></td></tr>
+<tr class="separator:a37822d40112432c55cb323deb0988c73"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
@@ -363,7 +375,7 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Returns a channel direction</p>
+<p>Return a channel direction</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">Transmission</td><td>direction </td></tr>
@@ -481,7 +493,7 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Returns channel name</p>
+<p>Return channel name</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname"><a class="el" href="classchanneling_1_1Channel.html">Channel</a></td><td>name </td></tr>
@@ -554,6 +566,31 @@ Friends</h2></td></tr>
 <p>Thread which selects the descriptor and send messages when new ones come </p>
 
 <p>Reimplemented in <a class="el" href="classtoxChannel_1_1ToxChannel.html#ae9313cf6fd430d6cce838f847f64f394">toxChannel::ToxChannel</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a00fd03f47645cdb87ee289193bd2d39c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void channeling::Channel::reconnect </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Wait for _reconnect_timeout and try to call <a class="el" href="classchanneling_1_1Channel.html#a7be2d5c0489c17529af4252cb803c0f8">activate()</a></p>
+<p>Function is called when descriptor _fd suddenly closes from outside. </p>
 
 </div>
 </div>
@@ -686,7 +723,7 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Stops and joins polling thread </p>
+<p>Stop and join polling thread </p>
 
 </div>
 </div>
@@ -710,7 +747,7 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Returns channel "type" &mdash; unique string to identify channel in config file </p><dl class="retval"><dt>Return values</dt><dd>
+<p>Return channel "type" &mdash; unique string to identify channel in config file </p><dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">std::string</td><td>Type line </td></tr>
   </table>
@@ -925,6 +962,27 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a37822d40112432c55cb323deb0988c73"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::chrono::milliseconds channeling::Channel::_reconnect_timeout</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Timeout for next reconnect </p>
+
+</div>
+</div>
 <a class="anchor" id="ac38e865ae299a182bffdaa946770ea74"></a>
 <div class="memitem">
 <div class="memproto">
@@ -956,7 +1014,7 @@ Friends</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacechanneling.html">channeling</a></li><li class="navelem"><a class="el" href="classchanneling_1_1Channel.html">Channel</a></li>
-    <li class="footer">Generated on Thu Oct 22 2015 07:24:00 for Chatsync by
+    <li class="footer">Generated on Tue Oct 27 2015 14:08:41 for Chatsync by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>
   </ul>

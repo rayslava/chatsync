@@ -21,6 +21,7 @@ var searchData=
   ['_5fping_5ftime',['_ping_time',['../classircChannel_1_1IrcChannel.html#abeef498c7d235f99849fa0834974790f',1,'ircChannel::IrcChannel']]],
   ['_5fpiperunning',['_pipeRunning',['../classchanneling_1_1Channel.html#ab5745eab177ac1dbebf1923c2b35889e',1,'channeling::Channel']]],
   ['_5fport',['_port',['../classircChannel_1_1IrcChannel.html#ab68f31d628fae4ad985c24a3cc3ee05c',1,'ircChannel::IrcChannel']]],
+  ['_5freconnect_5ftimeout',['_reconnect_timeout',['../classchanneling_1_1Channel.html#a37822d40112432c55cb323deb0988c73',1,'channeling::Channel']]],
   ['_5fserver',['_server',['../classircChannel_1_1IrcChannel.html#afded0c90bc90f3bdae8f73fc64aaac27',1,'ircChannel::IrcChannel']]],
   ['_5fthread',['_thread',['../classchanneling_1_1Channel.html#ac38e865ae299a182bffdaa946770ea74',1,'channeling::Channel']]],
   ['_5ftox',['_tox',['../classtoxChannel_1_1ToxChannel.html#a21f37a11eddffd62371e36b9e4445eed',1,'toxChannel::ToxChannel']]],

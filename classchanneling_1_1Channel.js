@@ -11,6 +11,7 @@ var classchanneling_1_1Channel =
     [ "name", "classchanneling_1_1Channel.html#a290aeea4ad50cfa0478c98109ba35d67", null ],
     [ "parse", "classchanneling_1_1Channel.html#aa04ed1c25512b3a0828302a23c9660d0", null ],
     [ "pollThread", "classchanneling_1_1Channel.html#a0455bae661fc31c385d8bcfda05cbd87", null ],
+    [ "reconnect", "classchanneling_1_1Channel.html#a00fd03f47645cdb87ee289193bd2d39c", null ],
     [ "send", "classchanneling_1_1Channel.html#ace9560ace8aa973184e49998d6412209", null ],
     [ "send", "classchanneling_1_1Channel.html#a462b0ae528a63c56829e5e887ed0aaa0", null ],
     [ "startPolling", "classchanneling_1_1Channel.html#a3a98ed307d751858672f491939811d69", null ],
@@ -25,5 +26,6 @@ var classchanneling_1_1Channel =
     [ "_id", "classchanneling_1_1Channel.html#ad6c8e11ef6573578bd8afed0b2b4c912", null ],
     [ "_name", "classchanneling_1_1Channel.html#ab71902360f53639f041db422cf49cae3", null ],
     [ "_pipeRunning", "classchanneling_1_1Channel.html#ab5745eab177ac1dbebf1923c2b35889e", null ],
+    [ "_reconnect_timeout", "classchanneling_1_1Channel.html#a37822d40112432c55cb323deb0988c73", null ],
     [ "_thread", "classchanneling_1_1Channel.html#ac38e865ae299a182bffdaa946770ea74", null ]
 ];

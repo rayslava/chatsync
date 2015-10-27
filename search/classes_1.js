@@ -9,5 +9,6 @@ var searchData=
   ['channelfactory',['ChannelFactory',['../classchanneling_1_1ChannelFactory.html',1,'channeling']]],
   ['config_5ferror',['config_error',['../classconfig_1_1config__error.html',1,'config']]],
   ['configoption',['ConfigOption',['../classconfig_1_1ConfigOption.html',1,'config']]],
-  ['configparser',['ConfigParser',['../classconfig_1_1ConfigParser.html',1,'config']]]
+  ['configparser',['ConfigParser',['../classconfig_1_1ConfigParser.html',1,'config']]],
+  ['connection_5ferror',['connection_error',['../classchanneling_1_1connection__error.html',1,'channeling']]]
 ];
