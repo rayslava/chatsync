@@ -96,7 +96,7 @@ namespace ircChannel {
     return nullptr;
   }
 
-  int IrcChannel::registerConnection() {
+  void IrcChannel::registerConnection() {
     const std::string nick = _config.get("nickname", "chatsyncbot");
     const std::string mode = _config.get("mode", "*");
     const std::string hostname = _config.get("hostname", "chatsynchost");
@@ -123,7 +123,6 @@ namespace ircChannel {
     send(joinline);
     std::this_thread::sleep_for(std::chrono::milliseconds (500));
     send("PRIVMSG #" + _channel + " :Hello there\r\n");
-    return 0;
   }
 
   void IrcChannel::ping() {

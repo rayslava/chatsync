@@ -133,8 +133,10 @@ TEST(IrcChannel, socket)
   const int buffer_size = valid_line.length() + 1;
   const auto buffer = new char[buffer_size];
 
+  perror("Activating");
   hub->activate();
-  std::this_thread::sleep_for( std::chrono::milliseconds (50) );
+  std::this_thread::sleep_for( std::chrono::milliseconds (150) );
+  perror("Deactivating");
   hub->deactivate();
   delete hub;
   server->join();

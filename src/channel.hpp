@@ -20,6 +20,14 @@ namespace channeling {
   };
 
   /**
+   * Thrown during runtime in case of problems with connection to _fd
+   */
+  class connection_error: public std::runtime_error {
+  public:
+    connection_error(std::string const& message) : std::runtime_error(message) {};
+  };
+
+  /**
    * A channel to connect to input or output
    *
    * The deriving class *must* override:
@@ -37,6 +45,14 @@ namespace channeling {
    * If channel has own abstraction then it can override _pollThread() and implement own message loop.
    */
   class Channel {
+    std::chrono::milliseconds _reconnect_timeout;   /**< Timeout for next reconnect */
+
+    /**
+     * Wait for _reconnect_timeout and try to call activate()
+     *
+     * Function is called when descriptor _fd suddenly closes from outside.
+     */
+    void reconnect();
   protected:
     std::atomic_bool _active;                       /**< Channel is prepared and active */
 
@@ -79,7 +95,7 @@ namespace channeling {
     void startPolling();
 
     /**
-     * Stops and joins polling thread
+     * Stop and join polling thread
      */
     void stopPolling();
 
@@ -95,7 +111,7 @@ namespace channeling {
     virtual ~Channel() {};
 
     /**
-     * Returns channel name
+     * Return channel name
      *
      * @retval Channel name
      */
@@ -103,13 +119,13 @@ namespace channeling {
 
 
     /**
-     * Returns channel "type" --- unique string to identify channel in config file
+     * Return channel "type" --- unique string to identify channel in config file
      * @retval std::string Type line
      */
     virtual std::string type() const = 0;
 
     /**
-     * Returns a channel direction
+     * Return a channel direction
      *
      * @retval Transmission direction
      */

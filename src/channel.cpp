@@ -11,6 +11,7 @@ namespace channeling {
   std::atomic_int ChannelFactory::id {ATOMIC_FLAG_INIT};
 
   Channel::Channel(Hub::Hub * const hub, const std::string& config) :
+    _reconnect_timeout(5000),
     _active(ATOMIC_FLAG_INIT),
     _thread(nullptr),
     _pipeRunning(ATOMIC_FLAG_INIT),
@@ -44,8 +45,11 @@ namespace channeling {
   }
 
   void Channel::startPolling() {
-    if (_fd < 0)
-      throw std::runtime_error(ERR_FD);
+    if (_fd < 0) {
+      std::cerr << "[DEBUG] Channel " << _name << " fd < 0, reconnecting" << std::endl;
+      reconnect();
+      return;
+    }
     _pipeRunning = true;
     _thread = std::make_unique<std::thread>(std::thread(&Channel::pollThread, this));
   }
@@ -57,6 +61,32 @@ namespace channeling {
     }
   }
 
+  void Channel::reconnect() {
+    const unsigned int timeout = _config.get("reconnect_timeout", "5000");
+    const unsigned int max_repeats = _config.get("max_reconnects", "3");
+    if (_reconnect_timeout.count() > timeout * max_repeats)
+      throw connection_error("Maximum number of reconnections reached");
+    stopPolling();
+    disconnect();
+
+    std::cerr << "[DEBUG] Channel " << name() << ": file descriptor closed" << std::endl;
+
+    if (_pipeRunning) {
+      // Successfully reconnected
+      const unsigned int timeout = _config.get("reconnect_timeout", "5000");
+      _reconnect_timeout = std::chrono::milliseconds(timeout);
+      return;
+    }
+
+    _reconnect_timeout *= 2;
+
+    std::async(std::launch::async, [this]() {
+      std::this_thread::sleep_for(std::chrono::milliseconds(_reconnect_timeout));
+      reconnect();
+    });
+
+    activate();
+  }
 
   Channel * ChannelFactory::create(const std::string& classname, Hub::Hub * const hub, const std::string& config) {
     std::map<std::string, ChannelCreator *>::iterator i;
@@ -105,7 +135,6 @@ namespace channeling {
   }
 
   void Channel::pollThread() {
-    // Form descriptor
     const int readFd = _fd;
     fd_set readset;
     int err = 0;
@@ -120,7 +149,11 @@ namespace channeling {
       FD_SET(readFd, &readset);
       // Now, check for readability
       err = select(readFd + 1, &readset, NULL, NULL, &tv);
-      std::cerr << "[DEBUG] Selected fd " << err << std::endl;
+      std::cerr << "[DEBUG] Channel " << name() << ": Selected fds " << err << std::endl;
+      if (err < 0) {
+        std::cerr << "[DEBUG] Reconnecting channel " << name() << std::endl;
+        reconnect();
+      }
       if (err > 0 && FD_ISSET(readFd, &readset)) {
         // Clear flags
         FD_CLR(readFd, &readset);
