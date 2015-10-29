@@ -120,6 +120,7 @@ namespace ircChannel {
         send(loginline);
       });
     }
+
     send(joinline);
     std::this_thread::sleep_for(std::chrono::milliseconds (500));
     send("PRIVMSG #" + _channel + " :Hello there\r\n");

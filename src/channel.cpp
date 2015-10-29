@@ -138,20 +138,20 @@ namespace channeling {
     const int readFd = _fd;
     fd_set readset;
     int err = 0;
+    const unsigned int select_timeout = _config.get("poll_time", "5");
     // Implement the receiver loop
     while (_pipeRunning) {
       // Initialize time out struct for select()
       struct timeval tv;
-      tv.tv_sec = _config.get("poll_time", "5");
+      tv.tv_sec = select_timeout;
       tv.tv_usec = 0;
       // Initialize the set
       FD_ZERO(&readset);
       FD_SET(readFd, &readset);
       // Now, check for readability
       err = select(readFd + 1, &readset, NULL, NULL, &tv);
-      std::cerr << "[DEBUG] Channel " << name() << ": Selected fds " << err << std::endl;
       if (err < 0) {
-        std::cerr << "[DEBUG] Reconnecting channel " << name() << std::endl;
+        std::cerr << "[DEBUG] select() failed. Reconnecting channel " << name() << std::endl;
         reconnect();
       }
       if (err > 0 && FD_ISSET(readFd, &readset)) {
@@ -159,21 +159,24 @@ namespace channeling {
         FD_CLR(readFd, &readset);
         // Check available size
         int bytes;
-        net::ioctl(readFd, FIONREAD, &bytes);
+        err = net::ioctl(readFd, FIONREAD, &bytes);
+        if (err < 0) {
+          std::cerr << "[DEBUG] ioctl() failed. Reconnecting channel " << name() << std::endl;
+          reconnect();
+        }
         auto line = new char[bytes + 1];
         line[bytes] = 0;
         // Do a simple read on data
         err = net::read(readFd, line, bytes);
         if (err != bytes)
           throw std::runtime_error(ERR_SOCK_READ);
-        // Dump read data
+        // Parse received data
         if (direction() == ChannelDirection::Input || direction() == ChannelDirection::Bidirectional)
           _hub->newMessage(parse(line));
         delete[] line;
       }
     }
   }
-
 
   int Channel::connect(const std::string& hostname, const uint32_t port) const {
     int sockfd, n;

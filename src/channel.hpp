@@ -117,7 +117,6 @@ namespace channeling {
      */
     virtual std::string const& name() const;
 
-
     /**
      * Return channel "type" --- unique string to identify channel in config file
      * @retval std::string Type line
