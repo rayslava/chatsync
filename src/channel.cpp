@@ -62,6 +62,11 @@ namespace channeling {
   }
 
   void Channel::reconnect() {
+    if (!_pipeRunning) {
+      std::cerr << "[DEBUG] Channel " << _name << " trying to reconnect after stop." << std::endl;
+      return;
+    }
+
     const unsigned int timeout = _config.get("reconnect_timeout", "5000");
     const unsigned int max_repeats = _config.get("max_reconnects", "3");
     if (_reconnect_timeout.count() > timeout * max_repeats)
@@ -149,8 +154,9 @@ namespace channeling {
       FD_ZERO(&readset);
       FD_SET(readFd, &readset);
       // Now, check for readability
+      errno = 0;
       err = select(readFd + 1, &readset, NULL, NULL, &tv);
-      if (err < 0) {
+      if (err < 0 || net::fcntl(readFd, F_GETFD) == -1 || errno == EBADF) {
         std::cerr << "[DEBUG] select() failed. Reconnecting channel " << name() << std::endl;
         reconnect();
       }

@@ -16,16 +16,26 @@ namespace ircChannel {
     _ping_time(std::chrono::high_resolution_clock::now())
   {}
 
+  namespace sys {
+    extern "C" {
+#include <unistd.h>
+#include <fcntl.h>
+    }
+  }
+
   std::future<void> IrcChannel::activate() {
     return std::async(std::launch::async, [this]() {
       if (_active)
         return;
       _fd = connect(_server, _port);
+      // Wait for server
+      int retval = -1;
+      while (retval < 0) {
+        retval = sys::fcntl(_fd, F_GETFD);
+        std::this_thread::sleep_for(std::chrono::milliseconds (100));
+      }
+      registerConnection();
       startPolling();
-      std::async(std::launch::async, [this]() {
-        std::this_thread::sleep_for(std::chrono::milliseconds (2000));
-        registerConnection();
-      });
       _active = true;
     });
   }
@@ -97,6 +107,8 @@ namespace ircChannel {
   }
 
   void IrcChannel::registerConnection() {
+    std::cerr << "[DEBUG] Registering IRC connection" << std::endl;
+
     const std::string nick = _config.get("nickname", "chatsyncbot");
     const std::string mode = _config.get("mode", "*");
     const std::string hostname = _config.get("hostname", "chatsynchost");
