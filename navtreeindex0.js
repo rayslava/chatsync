@@ -219,16 +219,17 @@ var NAVTREEINDEX0 =
 "namespaceconfig_1_1strutil.html":[1,0,1,0],
 "namespacefileChannel.html":[1,0,2],
 "namespacefileChannel.html":[2,0,2],
-"namespaceircChannel.html":[2,0,4],
 "namespaceircChannel.html":[1,0,4],
+"namespaceircChannel.html":[2,0,4],
+"namespaceircChannel_1_1sys.html":[1,0,4,0],
 "namespacelinux.html":[1,0,5],
 "namespacemembers.html":[1,1,0],
 "namespacemembers_enum.html":[1,1,4],
 "namespacemembers_func.html":[1,1,1],
 "namespacemembers_type.html":[1,1,3],
 "namespacemembers_vars.html":[1,1,2],
-"namespacemessaging.html":[2,0,5],
 "namespacemessaging.html":[1,0,6],
+"namespacemessaging.html":[2,0,5],
 "namespaces.html":[1,0],
 "namespacetoxChannel.html":[2,0,6],
 "namespacetoxChannel.html":[1,0,7],
@@ -248,6 +249,5 @@ var NAVTREEINDEX0 =
 "toxchannel_8hpp.html#a9384a831c8b8b06889327f77a0c4c440":[3,0,0,14,2],
 "toxchannel_8hpp.html#a986e74fe09d1bc624aee112419da086f":[3,0,0,14,4],
 "toxchannel_8hpp.html#acea9e6b9dccf3d746cbd66ee5080c84b":[3,0,0,14,5],
-"toxchannel_8hpp.html#ad9b48598ea2c88403aada33e6150c58b":[3,0,0,14,3],
-"toxchannel_8hpp_source.html":[3,0,0,14]
+"toxchannel_8hpp.html#ad9b48598ea2c88403aada33e6150c58b":[3,0,0,14,3]
 };
