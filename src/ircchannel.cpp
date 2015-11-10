@@ -56,7 +56,7 @@ namespace ircChannel {
       send(message);
     } else if (msg->type() == messaging::MessageType::Action) {
       const auto actionmsg = messaging::ActionMessage::fromMessage(msg);
-      snprintf(message, irc_message_max, "PRIVMSG #%s :\001ACTION[%s]: %s\001\r\n", _channel.c_str(), actionmsg->user()->name().c_str(), actionmsg->data().c_str());
+      snprintf(message, irc_message_max, "PRIVMSG #%s :\001ACTION [%s]: %s\001\r\n", _channel.c_str(), actionmsg->user()->name().c_str(), actionmsg->data().c_str());
       std::cerr << "[DEBUG] #irc " << _name << " performes an action: " << actionmsg->data() << std::endl;
       send(message);
     } else {
