@@ -33,14 +33,12 @@ namespace channeling {
   Channel& operator>> (const message_ptr msg, Channel& channel) {
     if (channel.direction() == channeling::ChannelDirection::Input)
       throw std::logic_error("Can't write data to input channel " + channel.name());
-    if (msg->type() == messaging::MessageType::Text) {
-      const auto message = messaging::TextMessage::fromMessage(msg);
-      std::cerr << "[DEBUG] Incoming message " << message->data() << std::endl;
-      std::async(std::launch::async, [&channel, msg = std::move(msg)]()
-      {
-        channel.incoming(std::move(msg));
-      });
-    }
+    const auto message = messaging::TextMessage::fromMessage(msg);
+    std::cerr << "[DEBUG] Incoming message " << message->data() << std::endl;
+    std::async(std::launch::async, [&channel, msg = std::move(msg)]()
+    {
+      channel.incoming(std::move(msg));
+    });
     return channel;
   }
 

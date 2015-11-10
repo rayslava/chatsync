@@ -27,10 +27,11 @@ namespace toxChannel {
 
     static void friendRequestCallback(Tox* tox, const uint8_t* public_key, const uint8_t* data, size_t length, void* userdata);
     static void messageCallback(Tox* tox, uint32_t friendnumber, TOX_MESSAGE_TYPE type, const uint8_t* message, size_t length, void* userdata);
+    template <typename MsgType>
     static void groupMessageCallback(Tox* tox, int32_t groupnumber, int32_t peernumber, const uint8_t* message, uint16_t length, void* userdata);
     static const channeling::ChannelCreatorImpl<ToxChannel> creator;
 
-    const messaging::message_ptr parse(const char* line) const override;
+    const messaging::message_ptr parse(const char* line) const override; /**< This would be useful if Tox read something from socket */
     void pollThread() override;     /**< Thread for tox infinite loop */
   public:
     explicit ToxChannel(Hub::Hub* hub, const std::string& config);

@@ -8,7 +8,8 @@ namespace messaging {
    * Message type to distinguish different classes
    */
   enum class MessageType {
-    Text                                                            /**< Plaintext message, TextMessage class conforms this one */
+    Text,                                                           /**< Plain text message, TextMessage class conforms this one */
+    Action                                                          /**< Action message (created with /me), ActionMessage class conforms this one */
   };
 
   /**
@@ -58,6 +59,33 @@ namespace messaging {
      */
     static auto fromMessage(const message_ptr msg) {
       return static_cast<typename std::shared_ptr<const TextMessage>::element_type *>(msg.get());
+    }
+  };
+
+  /**
+   * Action message representation
+   *
+   * /me messages
+   */
+  class ActionMessage: public Message {
+    const std::string _data;                                        /**< Message text */
+    const std::shared_ptr<const messaging::User> _user;             /**< Message author */
+  public:
+    ActionMessage(const uint16_t origin, std::shared_ptr<const messaging::User>&& user, const std::string& data) :
+      Message(origin),
+      _data(data),
+      _user(std::move(user)) {};
+
+    const std::string& data() const { return _data; };
+    const std::shared_ptr<const messaging::User> user() const { return _user; };
+
+    MessageType type() const override { return MessageType::Action; };
+
+    /**
+     * Convertor from general Message class
+     */
+    static auto fromMessage(const message_ptr msg) {
+      return static_cast<typename std::shared_ptr<const ActionMessage>::element_type *>(msg.get());
     }
   };
 }

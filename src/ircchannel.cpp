@@ -52,9 +52,17 @@ namespace ircChannel {
     if (msg->type() == messaging::MessageType::Text) {
       const auto textmsg = messaging::TextMessage::fromMessage(msg);
       snprintf(message, irc_message_max, "PRIVMSG #%s :[%s]: %s\r\n", _channel.c_str(), textmsg->user()->name().c_str(), textmsg->data().c_str());
-      std::cerr << "[DEBUG] #irc " << _name << " " << textmsg->data() << " inside " << _name << std::endl;
+      std::cerr << "[DEBUG] #irc " << _name << " " << textmsg->data() << " inside " << std::endl;
       send(message);
+    } else if (msg->type() == messaging::MessageType::Action) {
+      const auto actionmsg = messaging::ActionMessage::fromMessage(msg);
+      snprintf(message, irc_message_max, "PRIVMSG #%s :\001ACTION[%s]: %s\001\r\n", _channel.c_str(), actionmsg->user()->name().c_str(), actionmsg->data().c_str());
+      std::cerr << "[DEBUG] #irc " << _name << " performes an action: " << actionmsg->data() << std::endl;
+      send(message);
+    } else {
+      throw std::runtime_error("Unknown message type");
     }
+
   }
 
   const messaging::message_ptr IrcChannel::parse(const char* line) const
@@ -97,6 +105,16 @@ namespace ircChannel {
     if (std::regex_search(toParse, msgMatches, msgRe)) {
       name = msgMatches[1].str();
       text = msgMatches[4].str();
+      std::regex actionRe("\001ACTION (.*)\001");
+      if (std::regex_search(text, msgMatches, actionRe)) {
+        text = msgMatches[1].str();
+        std::cerr << "[DEBUG] #irc:" << name << "[ACTION]: " << text << std::endl;
+
+        const auto msg = std::make_shared<const messaging::ActionMessage>(_id,
+                                                                          std::make_shared<const messaging::User>(messaging::User(name.c_str())),
+                                                                          text.c_str());
+        return msg;
+      }
       std::cerr << "[DEBUG] #irc:" << name << ": " << text << std::endl;
       const auto msg = std::make_shared<const messaging::TextMessage>(_id,
                                                                       std::make_shared<const messaging::User>(messaging::User(name.c_str())),

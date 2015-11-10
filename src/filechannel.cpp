@@ -23,10 +23,17 @@ namespace fileChannel {
   }
 
   void FileChannel::incoming(const messaging::message_ptr&& msg) {
+    std::cerr << "[DEBUG] #file " << _name << " incoming message: " << std::endl;
     if (msg->type() == messaging::MessageType::Text) {
       const auto textmsg = messaging::TextMessage::fromMessage(msg);
       _file << textmsg->user()->name() << ": " << textmsg->data() << std::endl;
       std::cerr << "[DEBUG] #file " << _name << " " << textmsg->data() << std::endl;
+    } else if (msg->type() == messaging::MessageType::Action) {
+      const auto actionmsg = messaging::ActionMessage::fromMessage(msg);
+      _file << actionmsg->user()->name() << "[ACTION]: " << actionmsg->data() << std::endl;
+      std::cerr << "[DEBUG] #file " << _name << " performes an action: " << actionmsg->data() << std::endl;
+    } else {
+      throw std::runtime_error("Unknown message type");
     }
   }
 

@@ -131,6 +131,17 @@ namespace toxChannel {
                                 "[%s]: %s",
                                 textmsg->user()->name().c_str(), textmsg->data().c_str());
       tox_group_message_send(_tox, 0, msg, len);
+    } else if (msg->type() == messaging::MessageType::Action) {
+      const auto actionmsg = messaging::ActionMessage::fromMessage(msg);
+
+      std::cerr << "[DEBUG] #tox " << _name << " performs action " << actionmsg->data() << std::endl;
+      static uint8_t msg[TOX_MAX_MESSAGE_LENGTH];
+      const auto len = snprintf(reinterpret_cast<char *>(msg), TOX_MAX_MESSAGE_LENGTH,
+                                "[%s]: %s",
+                                actionmsg->user()->name().c_str(), actionmsg->data().c_str());
+      tox_group_action_send(_tox, 0, msg, len);
+    } else {
+      throw std::runtime_error("Unknown message type");
     }
   }
 
@@ -192,6 +203,7 @@ namespace toxChannel {
     }
   }
 
+  template <typename MsgType>
   void ToxChannel::groupMessageCallback(Tox* tox, int32_t groupnumber, int32_t peernumber, const uint8_t* message, uint16_t length, void* userdata) {
     const auto channel = static_cast<ToxChannel *>(userdata);
 
@@ -204,9 +216,9 @@ namespace toxChannel {
     snprintf(*msg,  length + 1,	 "%s", message);
 
     if (std::string(*name) != std::string(channel->_config.get("nickname", defaultBotName))) {
-      const auto newMessage = std::make_shared<const messaging::TextMessage>(channel->_id,
-                                                                             std::make_shared<const messaging::User>(messaging::User(*name)),
-                                                                             *msg);
+      const auto newMessage = std::make_shared<MsgType>(channel->_id,
+                                                        std::make_shared<const messaging::User>(messaging::User(*name)),
+                                                        *msg);
       std::cerr << "[DEBUG] tox Group msg " << newMessage->user()->name() << "> " << newMessage->data() << std::endl;
       channel->_hub->newMessage(std::move(newMessage));
     }
@@ -230,7 +242,8 @@ namespace toxChannel {
     //std::unique_ptr<uint8_t[]> pubKey(new uint8_t[TOX_CLIENT_ID_SIZE]);
     tox_callback_friend_request(_tox, friendRequestCallback, this);
     tox_callback_friend_message(_tox, messageCallback, this);
-    tox_callback_group_message(_tox, groupMessageCallback, this);
+    tox_callback_group_message(_tox, groupMessageCallback<const messaging::TextMessage>, this);
+    tox_callback_group_action(_tox, groupMessageCallback<const messaging::ActionMessage>, this);
 
     const std::string nick = _config.get("nickname", defaultBotName);
     const uint8_t* nickData = reinterpret_cast<const uint8_t *>(nick.c_str());
