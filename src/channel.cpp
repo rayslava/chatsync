@@ -166,7 +166,7 @@ namespace channeling {
         // Check available size
         int bytes;
         err = net::ioctl(readFd, FIONREAD, &bytes);
-        if (err < 0) {
+        if (err < 0 || bytes == 0) {
           std::cerr << "[DEBUG] ioctl() failed. Reconnecting channel " << name() << std::endl;
           reconnect();
         }
