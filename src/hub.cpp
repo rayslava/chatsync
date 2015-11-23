@@ -55,12 +55,18 @@ namespace Hub {
   }
 
   const messaging::message_ptr Hub::popMessage() {
-    std::unique_lock<std::mutex> mlock(_mutex);
-    while (_messages.empty() && _loopRunning)
-      _cond.wait(mlock);
+    std::unique_lock<std::mutex> mlock;
+    while (_messages.empty())
+      if (_loopRunning) {
+	mlock = std::unique_lock<std::mutex>(_mutex);
+        _cond.wait(mlock);
+      } else
+        std::this_thread::sleep_for(std::chrono::milliseconds (1000));
 
     const auto item = _messages.front();
     _messages.pop();
+    if (mlock.owns_lock())
+      mlock.unlock();
     return item;
   }
 

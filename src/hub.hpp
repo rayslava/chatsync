@@ -27,7 +27,7 @@ namespace Hub {
     std::list<chanPtr> _inputChannels;              /**< Container for all input channels */
     std::list<chanPtr> _outputChannels;             /**< Container for all output channels */
 
-    std::queue<messaging::message_ptr> _messages;       /**< Message queue */
+    std::queue<messaging::message_ptr> _messages;   /**< Message queue */
     std::mutex _mutex;                              /**< Message queue lock */
     std::condition_variable _cond;                  /**< Lock condvar */
 
@@ -48,6 +48,11 @@ namespace Hub {
      * Queue operations
      */
 
+    /**
+     * Sleeps on _cond waiting for messages. When the message comes returns it.
+     *
+     * @return Incoming message from _messages queue.
+     */
     const messaging::message_ptr popMessage();
     void pushMessage(const messaging::message_ptr&& item);
 
