@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['data',['data',['../classmessaging_1_1TextMessage.html#a68df75133087f7edd82ef16e2beb67d2',1,'messaging::TextMessage']]],
+  ['data',['data',['../classmessaging_1_1TextMessage.html#a68df75133087f7edd82ef16e2beb67d2',1,'messaging::TextMessage::data()'],['../classmessaging_1_1ActionMessage.html#a7328d2aec39cee0ffeeed4c0518be96f',1,'messaging::ActionMessage::data()']]],
   ['deactivate',['deactivate',['../classHub_1_1Hub.html#a843709fca28e53907951a4c7783af029',1,'Hub::Hub']]],
   ['defaultbootstrapaddress',['defaultBootstrapAddress',['../namespacetoxChannel.html#ad9b48598ea2c88403aada33e6150c58b',1,'toxChannel']]],
   ['defaultbootstrapkey',['defaultBootstrapKey',['../namespacetoxChannel.html#a986e74fe09d1bc624aee112419da086f',1,'toxChannel']]],

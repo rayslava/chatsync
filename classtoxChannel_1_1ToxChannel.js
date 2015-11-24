@@ -4,7 +4,7 @@ var classtoxChannel_1_1ToxChannel =
     [ "~ToxChannel", "classtoxChannel_1_1ToxChannel.html#a555c640bcd54e658f5da0f94586db372", null ],
     [ "activate", "classtoxChannel_1_1ToxChannel.html#a8f74922080684a5718261e89dc569861", null ],
     [ "friendRequestCallback", "classtoxChannel_1_1ToxChannel.html#a08a2d8780adb9b6a10a40abccc50a339", null ],
-    [ "groupMessageCallback", "classtoxChannel_1_1ToxChannel.html#a099079c7f8864d48670dee35e35f7eaa", null ],
+    [ "groupMessageCallback", "classtoxChannel_1_1ToxChannel.html#a5254882f74ee40b7d54dbf500c7e426f", null ],
     [ "incoming", "classtoxChannel_1_1ToxChannel.html#a3fdbe267b3e96befe52ae3b2cb19e43f", null ],
     [ "messageCallback", "classtoxChannel_1_1ToxChannel.html#a02850e4dec8811f1cecdb614b40185dd", null ],
     [ "parse", "classtoxChannel_1_1ToxChannel.html#aee8db0a02b7f9806406f96bec21c6fbd", null ],

@@ -2,6 +2,7 @@ var dir_68267d1309a1af8e8297ef4c3efbcdba =
 [
     [ "channel.cpp", "channel_8cpp.html", "channel_8cpp" ],
     [ "channel.hpp", "channel_8hpp.html", [
+      [ "channel_error", "classchanneling_1_1channel__error.html", "classchanneling_1_1channel__error" ],
       [ "activate_error", "classchanneling_1_1activate__error.html", "classchanneling_1_1activate__error" ],
       [ "connection_error", "classchanneling_1_1connection__error.html", "classchanneling_1_1connection__error" ],
       [ "Channel", "classchanneling_1_1Channel.html", "classchanneling_1_1Channel" ],

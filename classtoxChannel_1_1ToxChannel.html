@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Chatsync
-   &#160;<span id="projectnumber">03c71c65a34474a82f0f966253797cf97b0754a0</span>
+   &#160;<span id="projectnumber">e3545d9a8fa72bb0ae18fcab5ac937148f75b798</span>
    </div>
   </td>
  </tr>
@@ -185,8 +185,9 @@ Static Private Member Functions</h2></td></tr>
 <tr class="separator:a08a2d8780adb9b6a10a40abccc50a339"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a02850e4dec8811f1cecdb614b40185dd"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtoxChannel_1_1ToxChannel.html#a02850e4dec8811f1cecdb614b40185dd">messageCallback</a> (Tox *tox, uint32_t friendnumber, TOX_MESSAGE_TYPE <a class="el" href="classtoxChannel_1_1ToxChannel.html#a668fdf5e88b41c332c16c71be3c26822">type</a>, const uint8_t *message, size_t length, void *userdata)</td></tr>
 <tr class="separator:a02850e4dec8811f1cecdb614b40185dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a099079c7f8864d48670dee35e35f7eaa"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtoxChannel_1_1ToxChannel.html#a099079c7f8864d48670dee35e35f7eaa">groupMessageCallback</a> (Tox *tox, int32_t groupnumber, int32_t peernumber, const uint8_t *message, uint16_t length, void *userdata)</td></tr>
-<tr class="separator:a099079c7f8864d48670dee35e35f7eaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5254882f74ee40b7d54dbf500c7e426f"><td class="memTemplParams" colspan="2">template&lt;typename MsgType &gt; </td></tr>
+<tr class="memitem:a5254882f74ee40b7d54dbf500c7e426f"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classtoxChannel_1_1ToxChannel.html#a5254882f74ee40b7d54dbf500c7e426f">groupMessageCallback</a> (Tox *tox, int32_t groupnumber, int32_t peernumber, const uint8_t *message, uint16_t length, void *userdata)</td></tr>
+<tr class="separator:a5254882f74ee40b7d54dbf500c7e426f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -362,9 +363,11 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a099079c7f8864d48670dee35e35f7eaa"></a>
+<a class="anchor" id="a5254882f74ee40b7d54dbf500c7e426f"></a>
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename MsgType &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -532,20 +535,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Parse a text line and generate a corresponding Message </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>Decide if it should throw something</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">line</td><td>Text line from socket. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">nullptr</td><td>If message was technical for protocol. </td></tr>
-    <tr><td class="paramname">message_ptr</td><td>If useful payload found. </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>This would be useful if Tox read something from socket </p>
 
 <p>Implements <a class="el" href="classchanneling_1_1Channel.html#aa04ed1c25512b3a0828302a23c9660d0">channeling::Channel</a>.</p>
 
@@ -703,7 +693,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacetoxChannel.html">toxChannel</a></li><li class="navelem"><a class="el" href="classtoxChannel_1_1ToxChannel.html">ToxChannel</a></li>
-    <li class="footer">Generated on Tue Nov 10 2015 08:31:58 for Chatsync by
+    <li class="footer">Generated on Tue Nov 24 2015 07:14:00 for Chatsync by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>
   </ul>

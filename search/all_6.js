@@ -5,5 +5,5 @@ var searchData=
   ['filechannel_2ecpp',['filechannel.cpp',['../filechannel_8cpp.html',1,'']]],
   ['filechannel_2ehpp',['filechannel.hpp',['../filechannel_8hpp.html',1,'']]],
   ['friendrequestcallback',['friendRequestCallback',['../classtoxChannel_1_1ToxChannel.html#a08a2d8780adb9b6a10a40abccc50a339',1,'toxChannel::ToxChannel']]],
-  ['frommessage',['fromMessage',['../classmessaging_1_1TextMessage.html#add28bff97d1b2cb2c804a8a81e4931a9',1,'messaging::TextMessage']]]
+  ['frommessage',['fromMessage',['../classmessaging_1_1TextMessage.html#add28bff97d1b2cb2c804a8a81e4931a9',1,'messaging::TextMessage::fromMessage()'],['../classmessaging_1_1ActionMessage.html#aa91267ae798624278679a28d9708573f',1,'messaging::ActionMessage::fromMessage()']]]
 ];

@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Chatsync
-   &#160;<span id="projectnumber">03c71c65a34474a82f0f966253797cf97b0754a0</span>
+   &#160;<span id="projectnumber">e3545d9a8fa72bb0ae18fcab5ac937148f75b798</span>
    </div>
   </td>
  </tr>
@@ -121,18 +121,28 @@ Inheritance diagram for channeling::connection_error:</div>
  <div class="center">
   <img src="classchanneling_1_1connection__error.png" usemap="#channeling::connection_error_map" alt=""/>
   <map id="channeling::connection_error_map" name="channeling::connection_error_map">
+<area href="classchanneling_1_1channel__error.html" alt="channeling::channel_error" shape="rect" coords="0,56,178,80"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aa43664af8ed5243a15e44b16394dd2af"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchanneling_1_1connection__error.html#aa43664af8ed5243a15e44b16394dd2af">connection_error</a> (std::string const &amp;message)</td></tr>
-<tr class="separator:aa43664af8ed5243a15e44b16394dd2af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a373af6ad41080aa61f64bbc464c2f226"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchanneling_1_1connection__error.html#a373af6ad41080aa61f64bbc464c2f226">connection_error</a> (std::string const &amp;name, std::string const &amp;message)</td></tr>
+<tr class="separator:a373af6ad41080aa61f64bbc464c2f226"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classchanneling_1_1channel__error"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classchanneling_1_1channel__error')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classchanneling_1_1channel__error.html">channeling::channel_error</a></td></tr>
+<tr class="memitem:a43620569758d116a01dd162186163449 inherit pub_methods_classchanneling_1_1channel__error"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchanneling_1_1channel__error.html#a43620569758d116a01dd162186163449">channel_error</a> (std::string const &amp;name, std::string const &amp;message)</td></tr>
+<tr class="separator:a43620569758d116a01dd162186163449 inherit pub_methods_classchanneling_1_1channel__error"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pub_attribs_classchanneling_1_1channel__error"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_classchanneling_1_1channel__error')"><img src="closed.png" alt="-"/>&#160;Data Fields inherited from <a class="el" href="classchanneling_1_1channel__error.html">channeling::channel_error</a></td></tr>
+<tr class="memitem:a2f2155a9e63c7e49c6bc0122597c1ebc inherit pub_attribs_classchanneling_1_1channel__error"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchanneling_1_1channel__error.html#a2f2155a9e63c7e49c6bc0122597c1ebc">_name</a></td></tr>
+<tr class="separator:a2f2155a9e63c7e49c6bc0122597c1ebc inherit pub_attribs_classchanneling_1_1channel__error"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Thrown during runtime in case of problems with connection to _fd </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="aa43664af8ed5243a15e44b16394dd2af"></a>
+<a class="anchor" id="a373af6ad41080aa61f64bbc464c2f226"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -143,8 +153,18 @@ Public Member Functions</h2></td></tr>
           <td class="memname">channeling::connection_error::connection_error </td>
           <td>(</td>
           <td class="paramtype">std::string const &amp;&#160;</td>
-          <td class="paramname"><em>message</em></td><td>)</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>message</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -165,7 +185,7 @@ Public Member Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacechanneling.html">channeling</a></li><li class="navelem"><a class="el" href="classchanneling_1_1connection__error.html">connection_error</a></li>
-    <li class="footer">Generated on Tue Nov 10 2015 08:31:58 for Chatsync by
+    <li class="footer">Generated on Tue Nov 24 2015 07:14:00 for Chatsync by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>
   </ul>

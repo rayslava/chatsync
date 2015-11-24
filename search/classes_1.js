@@ -1,6 +1,7 @@
 var searchData=
 [
   ['channel',['Channel',['../classchanneling_1_1Channel.html',1,'channeling']]],
+  ['channel_5ferror',['channel_error',['../classchanneling_1_1channel__error.html',1,'channeling']]],
   ['channelcreator',['ChannelCreator',['../classchanneling_1_1ChannelCreator.html',1,'channeling']]],
   ['channelcreatorimpl',['ChannelCreatorImpl',['../classchanneling_1_1ChannelCreatorImpl.html',1,'channeling']]],
   ['channelcreatorimpl_3c_20filechannel_3a_3afilechannel_20_3e',['ChannelCreatorImpl&lt; fileChannel::FileChannel &gt;',['../classchanneling_1_1ChannelCreatorImpl.html',1,'channeling']]],

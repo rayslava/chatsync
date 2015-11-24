@@ -1,4 +1,4 @@
 var classchanneling_1_1connection__error =
 [
-    [ "connection_error", "classchanneling_1_1connection__error.html#aa43664af8ed5243a15e44b16394dd2af", null ]
+    [ "connection_error", "classchanneling_1_1connection__error.html#a373af6ad41080aa61f64bbc464c2f226", null ]
 ];
