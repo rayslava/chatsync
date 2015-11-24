@@ -68,7 +68,7 @@ namespace channeling {
     const unsigned int timeout = _config.get("reconnect_timeout", "5000");
     const unsigned int max_repeats = _config.get("max_reconnects", "3");
     if (_reconnect_timeout.count() > timeout * max_repeats)
-      throw connection_error("Maximum number of reconnections reached");
+      throw connection_error(_name, "Maximum number of reconnections reached");
     stopPolling();
     disconnect();
 
@@ -195,7 +195,7 @@ namespace channeling {
       struct net::sockaddr_in serv_addr;
       sockfd = net::socket(AF_INET, net::SOCK_STREAM, 0);
       if (sockfd < 0)
-        throw channeling::activate_error(ERR_SOCK_CREATE);
+        throw channeling::activate_error(_name, ERR_SOCK_CREATE);
 
       net::bzero((char *) &serv_addr, sizeof(struct net::sockaddr_in));
       serv_addr.sin_family = AF_INET;
@@ -210,7 +210,7 @@ namespace channeling {
         serv_addr.sin_port = htons(port);
       }
       if (net::connect(sockfd, (struct net::sockaddr *) &serv_addr, sizeof(serv_addr)) < 0)
-        throw channeling::activate_error(ERR_CONNECTION);
+        throw channeling::activate_error(_name, ERR_CONNECTION);
     } else {
       /* IPv6 resolution */
       std::cerr << "[DEBUG] Connecting through IPv6" << std::endl;
@@ -218,11 +218,11 @@ namespace channeling {
       struct servent* sp;
       server = net::gethostbyname2(hostname.c_str(), AF_INET6);
       if (server == NULL)
-        throw channeling::activate_error(ERR_HOST_NOT_FOUND);
+        throw channeling::activate_error(_name, ERR_HOST_NOT_FOUND);
 
       sockfd = net::socket(AF_INET6, net::SOCK_STREAM, 0);
       if (sockfd < 0)
-        throw channeling::activate_error(ERR_SOCK_CREATE);
+        throw channeling::activate_error(_name, ERR_SOCK_CREATE);
 
       net::bzero((char *) &serv_addr, sizeof(struct net::sockaddr_in6));
       serv_addr.sin6_family = AF_INET6;
@@ -237,7 +237,7 @@ namespace channeling {
         serv_addr.sin6_port = htons(port);
       }
       if (net::connect(sockfd, (struct net::sockaddr *) &serv_addr, sizeof(serv_addr)) < 0)
-        throw channeling::activate_error(ERR_CONNECTION);
+        throw channeling::activate_error(_name, ERR_CONNECTION);
     }
 
     return sockfd;

@@ -249,14 +249,14 @@ namespace toxChannel {
     const uint8_t* nickData = reinterpret_cast<const uint8_t *>(nick.c_str());
     tox_self_set_name(_tox, nickData, nick.length(), &result);
     if (result)
-      throw channeling::activate_error(ERR_TOX_INIT + "(tox_set_name)");
+      throw channeling::activate_error(_name, ERR_TOX_INIT + "(tox_set_name)");
 
     const std::string statusMsg = _config.get("status_message", defaultStatusMessage);
     const uint8_t* statusData = reinterpret_cast<const uint8_t *>(statusMsg.c_str());
 
     tox_self_set_status_message(_tox, statusData, statusMsg.length(), &result);
     if (result)
-      throw channeling::activate_error(ERR_TOX_INIT + "(tox_set_status_message)");
+      throw channeling::activate_error(_name, ERR_TOX_INIT + "(tox_set_status_message)");
 
     tox_self_set_status(_tox, defaultBotStatus);
 
@@ -270,7 +270,7 @@ namespace toxChannel {
                     &bootstrap_result);
 
       if (bootstrap_result)
-        throw channeling::activate_error(ERR_TOX_INIT + ": Can't decode bootstrapping ip");
+        throw channeling::activate_error(_name, ERR_TOX_INIT + ": Can't decode bootstrapping ip");
     }
 
     std::cerr << "[DEBUG] Bootstrapping" << std::endl;

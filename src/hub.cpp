@@ -58,7 +58,7 @@ namespace Hub {
     std::unique_lock<std::mutex> mlock;
     while (_messages.empty())
       if (_loopRunning) {
-	mlock = std::unique_lock<std::mutex>(_mutex);
+        mlock = std::unique_lock<std::mutex>(_mutex);
         _cond.wait(mlock);
       } else
         std::this_thread::sleep_for(std::chrono::milliseconds (1000));
@@ -96,15 +96,20 @@ namespace Hub {
       activators.push_back(out->activate());
 
     bool ready = true;
-    do {
-      ready = true;
-      for (auto& ch : activators) {
-        ready &= ch.valid();
-        if (ch.valid())
-          ch.get();
-      }
-    } while (!ready);
-    activators.clear();
+    try {
+      do {
+        ready = true;
+        for (auto& ch : activators) {
+          ready &= ch.valid();
+          if (ch.valid())
+            ch.get();
+        }
+      } while (!ready);
+      activators.clear();
+    } catch(const channeling::channel_error& ce) {
+      std::cerr << "Can't run channel " << ce._name << ":" << ce.what() << std::endl;
+      throw std::runtime_error("Failed to activate hub " + _name);
+    }
 
     for (auto& in : _inputChannels)
       activators.push_back(in->activate());

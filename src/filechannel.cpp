@@ -65,7 +65,7 @@ namespace fileChannel {
   int FileChannel::openPipe(const std::string& filename) {
     int ret_val = mkfifo(filename.c_str(), 0666);
     if ((ret_val == -1) && (errno != EEXIST))
-      throw channeling::activate_error(ERR_FILE_OPEN);
+      throw channeling::activate_error(_name, ERR_FILE_OPEN);
     /* Open both ends within this process in on-blocking mode
        Must do like this otherwise open call will wait
        till other end of pipe is opened by another process */

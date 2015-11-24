@@ -11,20 +11,35 @@
 
 namespace channeling {
   using namespace messaging;
+
+  /**
+   * Generic channel error
+   */
+  class channel_error: public std::runtime_error {
+  public:
+    const std::string _name;   /**< Name of channel where error happened */
+    channel_error(std::string const& name, std::string const& message) :
+      std::runtime_error(message),
+      _name(name)
+    {};
+  };
+
   /**
    * Thrown during Channel::activate in case of activation problems
    */
-  class activate_error: public std::runtime_error {
+  class activate_error: public channel_error  {
   public:
-    activate_error(std::string const& message) : std::runtime_error(message) {};
+    activate_error(std::string const& name, std::string const& message) :
+      channel_error(name, message) {};
   };
 
   /**
    * Thrown during runtime in case of problems with connection to _fd
    */
-  class connection_error: public std::runtime_error {
+  class connection_error: public channel_error {
   public:
-    connection_error(std::string const& message) : std::runtime_error(message) {};
+    connection_error(std::string const& name, std::string const& message) :
+      channel_error(name, message) {};
   };
 
   /**
