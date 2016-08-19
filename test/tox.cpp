@@ -52,7 +52,7 @@ TEST(ToxChannel, running)
     finished.set_value(true);
   }, std::ref(promisedFinished), std::ref(hub)).detach();
 
-  EXPECT_TRUE(futureResult.wait_for(std::chrono::milliseconds(30000)) != std::future_status::timeout);
+  EXPECT_TRUE(futureResult.wait_for(std::chrono::milliseconds(60000)) != std::future_status::timeout);
 
   delete hub;
 }

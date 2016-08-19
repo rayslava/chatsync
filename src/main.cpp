@@ -16,7 +16,7 @@ static void sighandler(int signum)
   if (signum == SIGINT) {
     running = false;
     std::cout << "SIGINT caught. Finalizing data. "
-	      << "Will exit after next tick." << std::endl;
+              << "Will exit after next tick." << std::endl;
   }
 }
 
@@ -84,7 +84,7 @@ int main(int argc, char* argv[])
     std::cerr << "Couldn't set up signal handling, continuing without graceful death possibility" << std::endl;
 
   running = true;
-  for (auto& c : hublist)
+  for (auto & c : hublist)
     c->activate();
 
   while (running) {
@@ -94,7 +94,7 @@ int main(int argc, char* argv[])
     std::cout << "[" << std::put_time(std::localtime(&now_c), "%F0 %T0") << "] tick" << std::endl;
   }
 
-  for (auto& c : hublist)
+  for (auto & c : hublist)
     c->deactivate();
   return 0;
 }

@@ -80,7 +80,7 @@ namespace Hub {
   void Hub::msgLoop() {
     while (_loopRunning) {
       const auto msg = popMessage();
-      for (auto& out : _outputChannels)
+      for (auto & out : _outputChannels)
         if ((nullptr != msg) && (msg->_originId != out->_id))
           msg >> *out;
     }
@@ -92,14 +92,14 @@ namespace Hub {
 
     std::vector<std::future<void> > activators;
 
-    for (auto& out : _outputChannels)
+    for (auto & out : _outputChannels)
       activators.push_back(out->activate());
 
     bool ready = true;
     try {
       do {
         ready = true;
-        for (auto& ch : activators) {
+        for (auto & ch : activators) {
           ready &= ch.valid();
           if (ch.valid())
             ch.get();
@@ -111,12 +111,12 @@ namespace Hub {
       throw std::runtime_error("Failed to activate hub " + _name);
     }
 
-    for (auto& in : _inputChannels)
+    for (auto & in : _inputChannels)
       activators.push_back(in->activate());
 
     do {
       ready = true;
-      for (auto& ch : activators) {
+      for (auto & ch : activators) {
         ready &= ch.valid();
         if (ch.valid())
           ch.get();
