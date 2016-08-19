@@ -5,7 +5,7 @@ RUN apt-get -qq dist-upgrade -y
 RUN apt-get -qq update -y
 RUN apt-get -qq --yes --force-yes install python-software-properties
 RUN add-apt-repository --yes ppa:ubuntu-toolchain-r/test
-RUN add-apt-repository --yes ppa:yjwong/cmake
+RUN add-apt-repository --yes ppa:george-edison55/precise-backports
 RUN apt-get -qq update -y
 # Setting up build environment
 RUN apt-get -qq --yes --force-yes install gcc-5 g++-5 libgtest-dev valgrind lcov cmake cmake-data curl build-essential libtool autotools-dev automake checkinstall check git yasm
@@ -18,5 +18,3 @@ RUN cd $(mktemp -d) && cmake /usr/src/gtest &&  make -j4 && sudo mv libgtest.a l
 RUN cd $(mktemp -d) && git clone git://github.com/jedisct1/libsodium.git && cd libsodium &&  git checkout tags/1.0.3 &&  ./autogen.sh &&  ./configure --enable-static && make check &&  checkinstall --install --pkgname libsodium --pkgversion 1.0.3 --nodoc && ldconfig
 # Building tox
 RUN cd $(mktemp -d) && git clone git://github.com/irungentoo/toxcore.git && cd toxcore &&  autoreconf -i && ./configure --enable-static && make && checkinstall --install --pkgname libtoxcore --pkgversion 1.0.0 --nodoc && ldconfig
-# Now release is preparing
-COPY chatsync.tar.gz /root/chatsync.tar.gz

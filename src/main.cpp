@@ -2,6 +2,7 @@
 #include <fstream>
 #include <regex>
 #include <memory>
+#include <iomanip>
 #include "channel.hpp"
 #include "config.hpp"
 #include <signal.h>
@@ -12,8 +13,11 @@ static std::atomic_bool running = ATOMIC_FLAG_INIT;
 
 static void sighandler(int signum)
 {
-  if (signum == SIGINT)
+  if (signum == SIGINT) {
     running = false;
+    std::cout << "SIGINT caught. Finalizing data. "
+	      << "Will exit after next tick." << std::endl;
+  }
 }
 
 int main(int argc, char* argv[])
@@ -84,8 +88,10 @@ int main(int argc, char* argv[])
     c->activate();
 
   while (running) {
-    std::this_thread::sleep_for(std::chrono::milliseconds (30000));
-    std::cout << "[TICK] Half minute tick" << std::endl;
+    const auto now = std::chrono::system_clock::now();
+    std::this_thread::sleep_for(std::chrono::milliseconds (1200000));
+    std::time_t now_c = std::chrono::system_clock::to_time_t(now);
+    std::cout << "[" << std::put_time(std::localtime(&now_c), "%F0 %T0") << "] tick" << std::endl;
   }
 
   for (auto& c : hublist)
