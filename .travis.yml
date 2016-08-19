@@ -17,7 +17,7 @@ before_install:
     - sudo update-alternatives --config gcov
     - export LD_LIBRARY_PATH=/usr/lib/llvm-3.6/lib/
     - export PATH=/usr/lib/llvm-3.6/bin:$PATH
-    - sudo pip install cpp-coveralls --use-mirrors
+    - sudo pip install cpp-coveralls
     - cd $(mktemp -d)
     - cmake /usr/src/gtest
     - make -j4
