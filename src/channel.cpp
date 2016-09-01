@@ -74,6 +74,7 @@ namespace channeling {
 
     std::cerr << "[DEBUG] Channel " << name() << ": file descriptor closed" << std::endl;
 
+    activate().wait();
     if (_pipeRunning) {
       // Successfully reconnected
       const unsigned int timeout = _config.get("reconnect_timeout", "5000");
@@ -87,8 +88,6 @@ namespace channeling {
       std::this_thread::sleep_for(std::chrono::milliseconds(_reconnect_timeout));
       reconnect();
     });
-
-    activate();
   }
 
   Channel * ChannelFactory::create(const std::string& classname, Hub::Hub * const hub, const std::string& config) {
@@ -167,6 +166,7 @@ namespace channeling {
         if (err < 0 || bytes == 0) {
           std::cerr << "[DEBUG] ioctl() failed. Reconnecting channel " << name() << std::endl;
           reconnect();
+          break;
         }
         auto line = new char[bytes + 1];
         line[bytes] = 0;
