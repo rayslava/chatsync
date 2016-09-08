@@ -55,13 +55,17 @@ namespace Hub {
   }
 
   const messaging::message_ptr Hub::popMessage() {
+    /* We'll sleep here during the reconnection attempts to prevent resource
+       deadlock while the channel tries to reach the server and start
+       messaging again */
+    while (!_loopRunning)
+      std::this_thread::sleep_for(std::chrono::milliseconds (1000));
+
     std::unique_lock<std::mutex> mlock;
-    while (_messages.empty())
-      if (_loopRunning) {
-        mlock = std::unique_lock<std::mutex>(_mutex);
-        _cond.wait(mlock);
-      } else
-        std::this_thread::sleep_for(std::chrono::milliseconds (1000));
+    while (_messages.empty()) {
+      mlock = std::unique_lock<std::mutex>(_mutex);
+      _cond.wait(mlock);
+    }
 
     const auto item = _messages.front();
     _messages.pop();
@@ -71,9 +75,12 @@ namespace Hub {
   }
 
   void Hub::pushMessage(const messaging::message_ptr&& item) {
-    std::unique_lock<std::mutex> mlock(_mutex);
-    _messages.push(std::move(item));
-    mlock.unlock();
+    {
+      std::unique_lock<std::mutex> mlock(_mutex);
+      _messages.push(std::move(item));
+      mlock.unlock();
+    }
+    /* Notifying doesn't require mutex lock */
     _cond.notify_one();
   }
 
