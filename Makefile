@@ -22,7 +22,10 @@ asan:
 	$(call build-dir, $@) && cmake .. -DCMAKE_CXX_FLAGS="-fsanitize=address" -DCMAKE_BUILD_TYPE=RelWithDebInfo && $(MAKE) -j $(JOBS) && ctest -j 1
 
 tsan:
-	$(call build-dir, $@) && CXX=clang++ CC=clang cmake .. -DCMAKE_CXX_FLAGS="-fsanitize=thread"  -DCMAKE_BUILD_TYPE=RelWithDebInfo && $(MAKE) -j $(JOBS)
+	$(call build-dir, $@) && CXX=clang++ CC=clang cmake .. -DCMAKE_CXX_FLAGS="-fsanitize=thread"  -DCMAKE_BUILD_TYPE=RelWithDebInfo && $(MAKE) -j $(JOBS) && ./unit_tests
+
+msan:
+	$(call build-dir, $@) && CXX=clang++ CC=clang cmake .. -DCMAKE_CXX_FLAGS="-fsanitize=memory -fsanitize-memory-track-origins=2 -fsanitize-memory-use-after-dtor -fno-omit-frame-pointer -fno-optimize-sibling-calls -O0 -fsanitize-blacklist=$(shell pwd)/scripts/msan_blacklist.txt"  -DCMAKE_BUILD_TYPE=Debug && $(MAKE) -j $(JOBS) VERBOSE=1 && MSAN_OPTIONS=poison_in_dtor=1 ./unit_tests
 
 lsan:
 	$(call build-dir, $@) && CXX=clang++ CC=clang cmake .. -DCMAKE_CXX_FLAGS="-fsanitize=leak"  -DCMAKE_BUILD_TYPE=RelWithDebInfo && $(MAKE) -j $(JOBS)

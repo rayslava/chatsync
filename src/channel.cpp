@@ -100,16 +100,15 @@ namespace channeling {
       return (Channel *) NULL;
   }
 
-  void ChannelFactory::registerClass(const std::string& classname, ChannelCreator* creator) {
-    get_table()[classname] = creator;
-  }
-
   std::map<std::string, ChannelCreator *>& ChannelFactory::get_table() {
     static std::map<std::string, ChannelCreator *> table;
     return table;
   }
 
-  // have the creator's constructor do the registration
+  void ChannelFactory::registerClass(const std::string& classname, ChannelCreator* creator) {
+    get_table()[classname] = creator;
+  }
+
   ChannelCreator::ChannelCreator(const std::string& classname) {
     ChannelFactory::registerClass(classname, this);
   }
