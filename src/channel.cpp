@@ -54,16 +54,16 @@ namespace channeling {
 
   void Channel::stopPolling() {
     if (_thread) {
+      _active = false;
       _pipeRunning = false;
-      _thread->join();
+      _thread->detach();
+      _thread.release();
     }
   }
 
   void Channel::reconnect() {
-    if (!_pipeRunning) {
+    if (!_pipeRunning)
       std::cerr << "[DEBUG] Channel " << _name << " trying to reconnect after stop." << std::endl;
-      return;
-    }
 
     const unsigned int timeout = _config.get("reconnect_timeout", "5000");
     const unsigned int max_repeats = _config.get("max_reconnects", "3");
@@ -164,8 +164,10 @@ namespace channeling {
         err = net::ioctl(readFd, FIONREAD, &bytes);
         if (err < 0 || bytes == 0) {
           std::cerr << "[DEBUG] ioctl() failed. Reconnecting channel " << name() << std::endl;
-          reconnect();
-          break;
+          std::async(std::launch::async, [this]() {
+            reconnect();
+          });
+          return;
         }
         auto line = new char[bytes + 1];
         line[bytes] = 0;
