@@ -61,10 +61,16 @@ namespace Hub {
      */
     void msgLoop();
 
+    /**
+     * Shows the hub is still alive and channels should continue work
+     */
+    std::shared_ptr<std::atomic<bool> > _alive;
   public:
     Hub(std::string const& name);
+    ~Hub() { _alive.reset(); };
 
     const std::string& name() const {return _name; };
+    std::shared_ptr<std::atomic<bool> > alive() const {return _alive; };
 
     /**
      * Append channel accordingly to its direction

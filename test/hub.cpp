@@ -32,7 +32,7 @@ TEST(hub, name)
                   });
   std::this_thread::sleep_for(std::chrono::milliseconds (50));
   hub->deactivate();
-
+  std::this_thread::sleep_for(std::chrono::milliseconds (50));
   delete hub;
 }
 
@@ -50,6 +50,6 @@ TEST(hub, tox_bidir)
 
   std::this_thread::sleep_for(std::chrono::milliseconds (150));
   hub->deactivate();
-
+  std::this_thread::sleep_for(std::chrono::milliseconds (50));
   delete hub;
 }

@@ -68,6 +68,8 @@ namespace channeling {
      * Function is called when descriptor _fd suddenly closes from outside.
      */
     void reconnect();
+
+    std::shared_ptr<std::atomic<bool> > _hub_alive;  /**< The hub is alive and we can try reconnecting */
   protected:
     std::atomic_bool _active;                       /**< Channel is prepared and active */
 
@@ -123,7 +125,7 @@ namespace channeling {
      */
     Channel(Hub::Hub * const hub, const std::string& config);
 
-    virtual ~Channel() {};
+    virtual ~Channel();
 
     /**
      * Return channel name

@@ -12,6 +12,7 @@ namespace channeling {
 
   Channel::Channel(Hub::Hub * const hub, const std::string& config) :
     _reconnect_timeout(5000),
+    _hub_alive(hub->alive()),
     _active(ATOMIC_FLAG_INIT),
     _thread(nullptr),
     _pipeRunning(ATOMIC_FLAG_INIT),
@@ -24,6 +25,10 @@ namespace channeling {
   {
     std::cout << _name << " : " << _id << std::endl;
     _hub->addChannel(this);
+  }
+
+  Channel::~Channel() {
+    std::cerr << "[DEBUG] Destroying " << _name << " : " << _id << std::endl;
   }
 
   std::string const& Channel::name() const {
@@ -57,13 +62,17 @@ namespace channeling {
       _active = false;
       _pipeRunning = false;
       _thread->detach();
-      _thread.release();
+      _thread.reset();
+      std::cerr << "[DEBUG] Thread " << _name << " joined." << std::endl;
     }
   }
 
   void Channel::reconnect() {
-    if (!_pipeRunning)
-      std::cerr << "[DEBUG] Channel " << _name << " trying to reconnect after stop." << std::endl;
+    if (!*_hub_alive) {
+      std::cerr << "[DEBUG] Hub is dead. Aborting reconnect" << std::endl;
+      return;
+    }
+    std::cerr << "[DEBUG] Channel trying to reconnect after stop. @" << this << std::endl;
 
     const unsigned int timeout = _config.get("reconnect_timeout", "5000");
     const unsigned int max_repeats = _config.get("max_reconnects", "3");
@@ -137,6 +146,7 @@ namespace channeling {
 
   void Channel::pollThread() {
     const int readFd = _fd;
+    auto _alive = _hub_alive;
     fd_set readset;
     int err = 0;
     const unsigned int select_timeout = _config.get("poll_time", "5");
@@ -152,9 +162,15 @@ namespace channeling {
       // Now, check for readability
       errno = 0;
       err = select(readFd + 1, &readset, NULL, NULL, &tv);
-      if (err < 0 || net::fcntl(readFd, F_GETFD) == -1 || errno == EBADF) {
+      if (!*_alive) return;
+      if (_pipeRunning && (err < 0 || net::fcntl(readFd, F_GETFD) == -1 || errno == EBADF)) {
+        if (!*_alive) return;
         std::cerr << "[DEBUG] select() failed. Reconnecting channel " << name() << std::endl;
-        reconnect();
+        std::async(std::launch::async, [this]() {
+          std::this_thread::sleep_for(std::chrono::milliseconds(_reconnect_timeout));
+          reconnect();
+        });
+        return;
       }
       if (err > 0 && FD_ISSET(readFd, &readset)) {
         // Clear flags
@@ -163,8 +179,10 @@ namespace channeling {
         int bytes;
         err = net::ioctl(readFd, FIONREAD, &bytes);
         if (err < 0 || bytes == 0) {
-          std::cerr << "[DEBUG] ioctl() failed. Reconnecting channel " << name() << std::endl;
+          if (!*_alive) return;
           std::async(std::launch::async, [this]() {
+            std::this_thread::sleep_for(std::chrono::milliseconds(_reconnect_timeout));
+            std::cerr << "[DEBUG] ioctl() failed. Reconnecting channel " << name() << std::endl;
             reconnect();
           });
           return;

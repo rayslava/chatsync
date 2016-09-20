@@ -20,7 +20,8 @@ TEST(FileChannel, name)
   // Check that at least constructor works
   ASSERT_EQ(ich->name(),      "file");
   ASSERT_EQ(ich->direction(), channeling::ChannelDirection::Input);
-
+  hub->deactivate();
+  std::this_thread::sleep_for( std::chrono::milliseconds (50) );
   delete hub;
 }
 
@@ -48,9 +49,10 @@ TEST(FileChannel, files)
   ASSERT_EQ(err, sizeof(testLine));
   std::this_thread::sleep_for( std::chrono::milliseconds (50) );
   hub->deactivate();
+  std::this_thread::sleep_for( std::chrono::milliseconds (50) );
   delete hub;
 
-  close(fd);    /** @todo move after adding file close support in poll thread */
+  close(fd);    // @todo move after adding file close support in poll thread
 
   fd = open("output", O_RDONLY | O_SYNC);
   ASSERT_NE(fd, -1);
@@ -116,6 +118,9 @@ TEST(IrcChannel, sockerr)
   EXPECT_THROW({
     hub->activate();
   }, channeling::activate_error);
+
+  hub->deactivate();
+  std::this_thread::sleep_for( std::chrono::milliseconds (50) );
   delete hub;
 }
 
@@ -139,6 +144,7 @@ TEST(IrcChannel, socket)
   std::this_thread::sleep_for( std::chrono::milliseconds (150) );
   perror("Deactivating");
   hub->deactivate();
+  std::this_thread::sleep_for( std::chrono::milliseconds (50) );
   delete hub;
   server->join();
 
@@ -172,6 +178,7 @@ TEST(IrcChannel, Action)
   std::this_thread::sleep_for( std::chrono::milliseconds (150) );
   perror("Deactivating");
   hub->deactivate();
+  std::this_thread::sleep_for( std::chrono::milliseconds (50) );
   delete hub;
   server->join();
 

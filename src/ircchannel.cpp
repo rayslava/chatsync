@@ -41,8 +41,8 @@ namespace ircChannel {
   }
 
   IrcChannel::~IrcChannel() {
-    disconnect();
     stopPolling();
+    disconnect();
   }
 
   void IrcChannel::incoming(const messaging::message_ptr&& msg) {

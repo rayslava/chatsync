@@ -11,8 +11,11 @@
 namespace Hub {
   Hub::Hub(std::string const& name) :
     _name(name),
-    _loopRunning(ATOMIC_FLAG_INIT)
-  {}
+    _loopRunning(ATOMIC_FLAG_INIT),
+    _alive(new std::atomic<bool>(ATOMIC_FLAG_INIT))
+  {
+    *_alive = true;
+  }
 
   void Hub::addInput(channeling::Channel * const channel) {
     if (!_inputChannels.empty() &&
@@ -140,6 +143,7 @@ namespace Hub {
     if (!_loopRunning)
       return;
     _loopRunning = false;
+    *_alive = false;
     const auto msg = std::make_shared<const messaging::TextMessage>(0xFFFF,
                                                                     std::make_shared<const messaging::User>(messaging::User("system")),
                                                                     MSG_EXITING);
