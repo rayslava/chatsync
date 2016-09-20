@@ -1,7 +1,7 @@
 var classchanneling_1_1Channel =
 [
     [ "Channel", "classchanneling_1_1Channel.html#acd4715707ec8cc949bb5000c50966b27", null ],
-    [ "~Channel", "classchanneling_1_1Channel.html#a7811310c25bd65e6541ba198fdaa6fc8", null ],
+    [ "~Channel", "classchanneling_1_1Channel.html#a049f3e78b99e22c7c99bc45e4129277a", null ],
     [ "activate", "classchanneling_1_1Channel.html#a7be2d5c0489c17529af4252cb803c0f8", null ],
     [ "connect", "classchanneling_1_1Channel.html#ace5e2aff2b229a567cbd8b0e66127191", null ],
     [ "direction", "classchanneling_1_1Channel.html#ae56d232c2cf48246c07269ca786ae67f", null ],
@@ -23,6 +23,7 @@ var classchanneling_1_1Channel =
     [ "_direction", "classchanneling_1_1Channel.html#ad9d63430a74f073172fd0b702683d9c7", null ],
     [ "_fd", "classchanneling_1_1Channel.html#a26ff34b9437cdc074004426fd636873e", null ],
     [ "_hub", "classchanneling_1_1Channel.html#a6a047aed6edfa6973c0a451c70254b8c", null ],
+    [ "_hub_alive", "classchanneling_1_1Channel.html#a3266b2558f5e0089dcce3a2ac1dfc802", null ],
     [ "_id", "classchanneling_1_1Channel.html#ad6c8e11ef6573578bd8afed0b2b4c912", null ],
     [ "_name", "classchanneling_1_1Channel.html#ab71902360f53639f041db422cf49cae3", null ],
     [ "_pipeRunning", "classchanneling_1_1Channel.html#ab5745eab177ac1dbebf1923c2b35889e", null ],

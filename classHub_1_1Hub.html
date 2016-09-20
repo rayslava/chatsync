@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Chatsync
-   &#160;<span id="projectnumber">aa150fd80c479e1655be11ec43e86f1a6c428943</span>
+   &#160;<span id="projectnumber">1da3dd243ba5b0d077a689b06b6eb66cf3e0d19c</span>
    </div>
   </td>
  </tr>
@@ -122,8 +122,12 @@ $(document).ready(function(){initNavTree('classHub_1_1Hub.html','');});
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ab5b591861acf98e4c5f7175ff940f051"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHub_1_1Hub.html#ab5b591861acf98e4c5f7175ff940f051">Hub</a> (std::string const &amp;<a class="el" href="classHub_1_1Hub.html#a8be8d16bf0348819033a27e903ab8735">name</a>)</td></tr>
 <tr class="separator:ab5b591861acf98e4c5f7175ff940f051"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f79bb6c7fd35c0af246b51d5fa1efc7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHub_1_1Hub.html#a1f79bb6c7fd35c0af246b51d5fa1efc7">~Hub</a> ()</td></tr>
+<tr class="separator:a1f79bb6c7fd35c0af246b51d5fa1efc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8be8d16bf0348819033a27e903ab8735"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHub_1_1Hub.html#a8be8d16bf0348819033a27e903ab8735">name</a> () const </td></tr>
 <tr class="separator:a8be8d16bf0348819033a27e903ab8735"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad06c8dbed36b73f2e14013a45088017a"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; std::atomic&lt; bool &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHub_1_1Hub.html#ad06c8dbed36b73f2e14013a45088017a">alive</a> () const </td></tr>
+<tr class="separator:ad06c8dbed36b73f2e14013a45088017a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d1493cf6eb9aa370d4cf81ba5de73ac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHub_1_1Hub.html#a4d1493cf6eb9aa370d4cf81ba5de73ac">addChannel</a> (<a class="el" href="classchanneling_1_1Channel.html">channeling::Channel</a> *const)</td></tr>
 <tr class="separator:a4d1493cf6eb9aa370d4cf81ba5de73ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1cfd2b86835eab78bd43d86e3afd5b28"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHub_1_1Hub.html#a1cfd2b86835eab78bd43d86e3afd5b28">newMessage</a> (const <a class="el" href="namespacemessaging.html#aa012bd42e06013a9d4a4d69a1a9897bc">messaging::message_ptr</a> &amp;&amp;msg)</td></tr>
@@ -166,6 +170,8 @@ Private Attributes</h2></td></tr>
 <tr class="separator:a4c497369b9a908c10860f30caf5cf29d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c89f0b1f1644a623b21c8fd7badb7fe"><td class="memItemLeft" align="right" valign="top">std::atomic_bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHub_1_1Hub.html#a1c89f0b1f1644a623b21c8fd7badb7fe">_loopRunning</a></td></tr>
 <tr class="separator:a1c89f0b1f1644a623b21c8fd7badb7fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b583320a0bc97482691b7920f58f3c8"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; std::atomic&lt; bool &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHub_1_1Hub.html#a9b583320a0bc97482691b7920f58f3c8">_alive</a></td></tr>
+<tr class="separator:a9b583320a0bc97482691b7920f58f3c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A thread-safe implementation of two connected channels sets. All input channels are redirected to every output channel. </p>
@@ -182,6 +188,29 @@ Private Attributes</h2></td></tr>
           <td></td>
         </tr>
       </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a1f79bb6c7fd35c0af246b51d5fa1efc7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Hub::Hub::~Hub </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>
@@ -291,6 +320,29 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Append one more output channel to list taking ownership </p>
+
+</div>
+</div>
+<a class="anchor" id="ad06c8dbed36b73f2e14013a45088017a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;std::atomic&lt;bool&gt; &gt; Hub::Hub::alive </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -430,6 +482,27 @@ Private Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Field Documentation</h2>
+<a class="anchor" id="a9b583320a0bc97482691b7920f58f3c8"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;std::atomic&lt;bool&gt; &gt; Hub::Hub::_alive</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Shows the hub is still alive and channels should continue work </p>
+
+</div>
+</div>
 <a class="anchor" id="a2fd921dde24809a7befabab2c2ff7818"></a>
 <div class="memitem">
 <div class="memproto">
@@ -608,7 +681,7 @@ Private Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceHub.html">Hub</a></li><li class="navelem"><a class="el" href="classHub_1_1Hub.html">Hub</a></li>
-    <li class="footer">Generated on Fri Aug 19 2016 10:44:43 for Chatsync by
+    <li class="footer">Generated on Tue Sep 20 2016 14:42:33 for Chatsync by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>
   </ul>

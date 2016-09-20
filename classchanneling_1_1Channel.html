@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Chatsync
-   &#160;<span id="projectnumber">aa150fd80c479e1655be11ec43e86f1a6c428943</span>
+   &#160;<span id="projectnumber">1da3dd243ba5b0d077a689b06b6eb66cf3e0d19c</span>
    </div>
   </td>
  </tr>
@@ -137,8 +137,8 @@ Inheritance diagram for channeling::Channel:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:acd4715707ec8cc949bb5000c50966b27"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchanneling_1_1Channel.html#acd4715707ec8cc949bb5000c50966b27">Channel</a> (<a class="el" href="classHub_1_1Hub.html">Hub::Hub</a> *const hub, const std::string &amp;config)</td></tr>
 <tr class="separator:acd4715707ec8cc949bb5000c50966b27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7811310c25bd65e6541ba198fdaa6fc8"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchanneling_1_1Channel.html#a7811310c25bd65e6541ba198fdaa6fc8">~Channel</a> ()</td></tr>
-<tr class="separator:a7811310c25bd65e6541ba198fdaa6fc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a049f3e78b99e22c7c99bc45e4129277a"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchanneling_1_1Channel.html#a049f3e78b99e22c7c99bc45e4129277a">~Channel</a> ()</td></tr>
+<tr class="separator:a049f3e78b99e22c7c99bc45e4129277a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a290aeea4ad50cfa0478c98109ba35d67"><td class="memItemLeft" align="right" valign="top">virtual std::string const &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchanneling_1_1Channel.html#a290aeea4ad50cfa0478c98109ba35d67">name</a> () const </td></tr>
 <tr class="separator:a290aeea4ad50cfa0478c98109ba35d67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1815da750d26e76014be2b3b7e7c30be"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchanneling_1_1Channel.html#a1815da750d26e76014be2b3b7e7c30be">type</a> () const  =0</td></tr>
@@ -204,6 +204,8 @@ Private Member Functions</h2></td></tr>
 Private Attributes</h2></td></tr>
 <tr class="memitem:a37822d40112432c55cb323deb0988c73"><td class="memItemLeft" align="right" valign="top">std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchanneling_1_1Channel.html#a37822d40112432c55cb323deb0988c73">_reconnect_timeout</a></td></tr>
 <tr class="separator:a37822d40112432c55cb323deb0988c73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3266b2558f5e0089dcce3a2ac1dfc802"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; std::atomic&lt; bool &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchanneling_1_1Channel.html#a3266b2558f5e0089dcce3a2ac1dfc802">_hub_alive</a></td></tr>
+<tr class="separator:a3266b2558f5e0089dcce3a2ac1dfc802"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
@@ -250,7 +252,7 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a7811310c25bd65e6541ba198fdaa6fc8"></a>
+<a class="anchor" id="a049f3e78b99e22c7c99bc45e4129277a"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -258,7 +260,7 @@ Friends</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual channeling::Channel::~Channel </td>
+          <td class="memname">channeling::Channel::~Channel </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -266,7 +268,7 @@ Friends</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -907,6 +909,27 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a3266b2558f5e0089dcce3a2ac1dfc802"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;std::atomic&lt;bool&gt; &gt; channeling::Channel::_hub_alive</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The hub is alive and we can try reconnecting </p>
+
+</div>
+</div>
 <a class="anchor" id="ad6c8e11ef6573578bd8afed0b2b4c912"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1014,7 +1037,7 @@ Friends</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacechanneling.html">channeling</a></li><li class="navelem"><a class="el" href="classchanneling_1_1Channel.html">Channel</a></li>
-    <li class="footer">Generated on Fri Aug 19 2016 10:44:43 for Chatsync by
+    <li class="footer">Generated on Tue Sep 20 2016 14:42:33 for Chatsync by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>
   </ul>

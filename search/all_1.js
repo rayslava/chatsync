@@ -9,5 +9,6 @@ var searchData=
   ['active',['active',['../classHub_1_1Hub.html#a5b7a5aa9b0145abcc4dc49e8920fdf73',1,'Hub::Hub']]],
   ['addchannel',['addChannel',['../classHub_1_1Hub.html#a4d1493cf6eb9aa370d4cf81ba5de73ac',1,'Hub::Hub']]],
   ['addinput',['addInput',['../classHub_1_1Hub.html#a7fcf7c643f067e2b8a50f943d91bbf4c',1,'Hub::Hub']]],
-  ['addoutput',['addOutput',['../classHub_1_1Hub.html#afac5e6108200c700bb179f4faf14ebb3',1,'Hub::Hub']]]
+  ['addoutput',['addOutput',['../classHub_1_1Hub.html#afac5e6108200c700bb179f4faf14ebb3',1,'Hub::Hub']]],
+  ['alive',['alive',['../classHub_1_1Hub.html#ad06c8dbed36b73f2e14013a45088017a',1,'Hub::Hub']]]
 ];
