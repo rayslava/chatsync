@@ -68,8 +68,9 @@ do
   cat >>coverage.json <<EOF
     {
       "name": "${srcname//$SOURCE_PREFIX\//}",
-      "source": "$(tail -n +3 ${file} | cut -d ':' -f 3- | sed -re 's%\\%\\\\%g; s%"%\\"%g; s%\t%\\t%g; s%$%\\n%' | tr -d $'\n' | sed -re 's%\\n$%%')",
-      "coverage": [$(tail -n +3 ${file} | cut -d ':' -f 1 | sed -re 's%^ +%%g; s%-([0-9]+)%\1%; s%-%null%g; s%^[#=]+$%0%;' | tr $'\n' ',' | sed -re 's%,$%%')]
+      "source_digest": "$(md5sum ../${srcname//$SOURCE_PREFIX\//} | cut -d ' ' -f 1)",
+      "source": "$(tail -n +6 ${file} | cut -d ':' -f 3- | sed -re 's%\\%\\\\%g; s%"%\\"%g; s%\t%\\t%g; s%$%\\n%' | tr -d $'\n' | sed -re 's%\\n$%%')",
+      "coverage": [$(tail -n +6 ${file} | cut -d ':' -f 1 | sed -re 's%^ +%%g; s%-([0-9]+)%\1%; s%-%null%g; s%^[#=]+$%0%;' | tr $'\n' ',' | sed -re 's%,$%%')]
     },
 EOF
 done
