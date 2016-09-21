@@ -153,7 +153,7 @@ endif()
 create_test(unit "${all_test_files}")
 
 if (COVERAGE)
-  setup_target_for_coverage(coverage unit_tests src coverage)
+  setup_target_for_coverage(coverage unit_tests . coverage)
 endif()
 
 if (COVERALLS)
