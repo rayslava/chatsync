@@ -1,5 +1,7 @@
 var NAVTREEINDEX1 =
 {
+"namespacetoxChannel.html":[2,0,6],
+"namespacetoxChannel_1_1util.html":[1,0,7,0],
 "pages.html":[],
 "todo.html":[0],
 "toxchannel_8cpp.html":[3,0,0,13],

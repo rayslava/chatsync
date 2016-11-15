@@ -14,6 +14,7 @@ var classHub_1_1Hub =
     [ "newMessage", "classHub_1_1Hub.html#a1cfd2b86835eab78bd43d86e3afd5b28", null ],
     [ "popMessage", "classHub_1_1Hub.html#a5762262058841a39a0f928103a18e2ea", null ],
     [ "pushMessage", "classHub_1_1Hub.html#affe6e6b8d653a70d3c5bf9d77941ee6c", null ],
+    [ "tick", "classHub_1_1Hub.html#a8cb81ac90fcfb843ba00e00d101e2609", null ],
     [ "_alive", "classHub_1_1Hub.html#a9b583320a0bc97482691b7920f58f3c8", null ],
     [ "_cond", "classHub_1_1Hub.html#a2fd921dde24809a7befabab2c2ff7818", null ],
     [ "_inputChannels", "classHub_1_1Hub.html#a4c0e1a3ab97b966fb2686069d796ca42", null ],
