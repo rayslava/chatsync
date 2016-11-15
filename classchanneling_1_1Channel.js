@@ -16,7 +16,7 @@ var classchanneling_1_1Channel =
     [ "send", "classchanneling_1_1Channel.html#a462b0ae528a63c56829e5e887ed0aaa0", null ],
     [ "startPolling", "classchanneling_1_1Channel.html#a3a98ed307d751858672f491939811d69", null ],
     [ "stopPolling", "classchanneling_1_1Channel.html#abc9e3ab8a477c1d29f648e3448f8bd7f", null ],
-    [ "tick", "classchanneling_1_1Channel.html#aab7f0a035ca4bb6f4cf147691a0dc2ec", null ],
+    [ "tick", "classchanneling_1_1Channel.html#a1ef1d8962d0a63209153ebaaca49f5d7", null ],
     [ "type", "classchanneling_1_1Channel.html#a1815da750d26e76014be2b3b7e7c30be", null ],
     [ "operator>>", "classchanneling_1_1Channel.html#a99f7c6763b4b9c7a11ee80ea1513dd11", null ],
     [ "_active", "classchanneling_1_1Channel.html#acc365f57c3deec7c75f9baf2f0e09f4a", null ],

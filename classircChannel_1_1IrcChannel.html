@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Chatsync
-   &#160;<span id="projectnumber">d8da859e288a7a6a73aed2fc1bdc9da2960feb3d</span>
+   &#160;<span id="projectnumber">1bb629335e61bf6c5422ec9a2d76dae2ca7c88d2</span>
    </div>
   </td>
  </tr>
@@ -156,11 +156,11 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:afb500b31ab68e4891666002dccdecb2f inherit pub_methods_classchanneling_1_1Channel"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6589b1d7f7bd81d11aab665f0cb23945 inherit pub_methods_classchanneling_1_1Channel"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchanneling_1_1Channel.html#a6589b1d7f7bd81d11aab665f0cb23945">disconnect</a> () const </td></tr>
 <tr class="separator:a6589b1d7f7bd81d11aab665f0cb23945 inherit pub_methods_classchanneling_1_1Channel"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab7f0a035ca4bb6f4cf147691a0dc2ec inherit pub_methods_classchanneling_1_1Channel"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchanneling_1_1Channel.html#aab7f0a035ca4bb6f4cf147691a0dc2ec">tick</a> () const </td></tr>
-<tr class="separator:aab7f0a035ca4bb6f4cf147691a0dc2ec inherit pub_methods_classchanneling_1_1Channel"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
+<tr class="memitem:aedc2f20e0679f0ddd6030f021ff2ad60"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classircChannel_1_1IrcChannel.html#aedc2f20e0679f0ddd6030f021ff2ad60">tick</a> () override</td></tr>
+<tr class="separator:aedc2f20e0679f0ddd6030f021ff2ad60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a98e21bb4f7c9de81fceebd8a4ecdd1ce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classircChannel_1_1IrcChannel.html#a98e21bb4f7c9de81fceebd8a4ecdd1ce">incoming</a> (const <a class="el" href="namespacemessaging.html#aa012bd42e06013a9d4a4d69a1a9897bc">messaging::message_ptr</a> &amp;&amp;msg) override</td></tr>
 <tr class="separator:a98e21bb4f7c9de81fceebd8a4ecdd1ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classchanneling_1_1Channel"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classchanneling_1_1Channel')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classchanneling_1_1Channel.html">channeling::Channel</a></td></tr>
@@ -194,6 +194,10 @@ Private Attributes</h2></td></tr>
 <tr class="separator:a5cb40ec3010c67e4180efa045b91dfaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abeef498c7d235f99849fa0834974790f"><td class="memItemLeft" align="right" valign="top">std::chrono::time_point&lt; std::chrono::high_resolution_clock &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classircChannel_1_1IrcChannel.html#abeef498c7d235f99849fa0834974790f">_ping_time</a></td></tr>
 <tr class="separator:abeef498c7d235f99849fa0834974790f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7077238a2b3814cdc8fb61de2230aec9"><td class="memItemLeft" align="right" valign="top">std::chrono::time_point&lt; std::chrono::high_resolution_clock &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classircChannel_1_1IrcChannel.html#a7077238a2b3814cdc8fb61de2230aec9">_last_pong_time</a></td></tr>
+<tr class="separator:a7077238a2b3814cdc8fb61de2230aec9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a644ba90d4f1b320661fa4d0f4e8c2eda"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classircChannel_1_1IrcChannel.html#a644ba90d4f1b320661fa4d0f4e8c2eda">_connection_issue</a></td></tr>
+<tr class="separator:a644ba90d4f1b320661fa4d0f4e8c2eda"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
 Static Private Attributes</h2></td></tr>
@@ -456,6 +460,32 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="aedc2f20e0679f0ddd6030f021ff2ad60"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ircChannel::IrcChannel::tick </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>If during max_timeout*5 we got no PONG we try to reconnect </p>
+
+<p>Reimplemented from <a class="el" href="classchanneling_1_1Channel.html#a1ef1d8962d0a63209153ebaaca49f5d7">channeling::Channel</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="ae0a628432b78a52652e8e6c56046b967"></a>
 <div class="memitem">
 <div class="memproto">
@@ -506,6 +536,48 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Channel name (starting with #) </p>
+
+</div>
+</div>
+<a class="anchor" id="a644ba90d4f1b320661fa4d0f4e8c2eda"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ircChannel::IrcChannel::_connection_issue</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>&lt; The connection issue has been detected, check is ongoing </p>
+
+</div>
+</div>
+<a class="anchor" id="a7077238a2b3814cdc8fb61de2230aec9"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::chrono::time_point&lt;std::chrono::high_resolution_clock&gt; ircChannel::IrcChannel::_last_pong_time</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">mutable</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Last pong received from server </p>
 
 </div>
 </div>
@@ -602,7 +674,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceircChannel.html">ircChannel</a></li><li class="navelem"><a class="el" href="classircChannel_1_1IrcChannel.html">IrcChannel</a></li>
-    <li class="footer">Generated on Tue Nov 15 2016 14:50:39 for Chatsync by
+    <li class="footer">Generated on Tue Nov 15 2016 15:32:26 for Chatsync by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>
   </ul>

@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Chatsync
-   &#160;<span id="projectnumber">d8da859e288a7a6a73aed2fc1bdc9da2960feb3d</span>
+   &#160;<span id="projectnumber">1bb629335e61bf6c5422ec9a2d76dae2ca7c88d2</span>
    </div>
   </td>
  </tr>
@@ -194,7 +194,7 @@ $(document).ready(function(){initNavTree('channel_8hpp_source.html','');});
 <div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;</div>
 <div class="line"><a name="l00208"></a><span class="lineno"><a class="line" href="classchanneling_1_1Channel.html#a6589b1d7f7bd81d11aab665f0cb23945">  208</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classchanneling_1_1Channel.html#a6589b1d7f7bd81d11aab665f0cb23945">disconnect</a>()<span class="keyword"> const </span>{<span class="keywordflow">return</span> <a class="code" href="classchanneling_1_1Channel.html#a6589b1d7f7bd81d11aab665f0cb23945">disconnect</a>(_fd); };</div>
 <div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;</div>
-<div class="line"><a name="l00213"></a><span class="lineno"><a class="line" href="classchanneling_1_1Channel.html#aab7f0a035ca4bb6f4cf147691a0dc2ec">  213</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classchanneling_1_1Channel.html#aab7f0a035ca4bb6f4cf147691a0dc2ec">tick</a>()<span class="keyword"> const </span>{ std::cout &lt;&lt; <span class="stringliteral">&quot;Empty tick in &quot;</span> &lt;&lt; _name &lt;&lt; std::endl; };</div>
+<div class="line"><a name="l00213"></a><span class="lineno"><a class="line" href="classchanneling_1_1Channel.html#a1ef1d8962d0a63209153ebaaca49f5d7">  213</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classchanneling_1_1Channel.html#a1ef1d8962d0a63209153ebaaca49f5d7">tick</a>() { std::cout &lt;&lt; <span class="stringliteral">&quot;Empty tick in &quot;</span> &lt;&lt; _name &lt;&lt; std::endl; };</div>
 <div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;  };</div>
 <div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;</div>
 <div class="line"><a name="l00216"></a><span class="lineno"><a class="line" href="classchanneling_1_1ChannelCreator.html">  216</a></span>&#160;  <span class="keyword">class </span><a class="code" href="classchanneling_1_1ChannelCreator.html">ChannelCreator</a></div>
@@ -250,7 +250,6 @@ $(document).ready(function(){initNavTree('channel_8hpp_source.html','');});
 <div class="ttc" id="message_8hpp_html"><div class="ttname"><a href="message_8hpp.html">message.hpp</a></div></div>
 <div class="ttc" id="classchanneling_1_1connection__error_html"><div class="ttname"><a href="classchanneling_1_1connection__error.html">channeling::connection_error</a></div><div class="ttdef"><b>Definition:</b> channel.hpp:39</div></div>
 <div class="ttc" id="classchanneling_1_1Channel_html_ad6c8e11ef6573578bd8afed0b2b4c912"><div class="ttname"><a href="classchanneling_1_1Channel.html#ad6c8e11ef6573578bd8afed0b2b4c912">channeling::Channel::_id</a></div><div class="ttdeci">const uint16_t _id</div><div class="ttdef"><b>Definition:</b> channel.hpp:120</div></div>
-<div class="ttc" id="classchanneling_1_1Channel_html_aab7f0a035ca4bb6f4cf147691a0dc2ec"><div class="ttname"><a href="classchanneling_1_1Channel.html#aab7f0a035ca4bb6f4cf147691a0dc2ec">channeling::Channel::tick</a></div><div class="ttdeci">virtual void tick() const </div><div class="ttdef"><b>Definition:</b> channel.hpp:213</div></div>
 <div class="ttc" id="classchanneling_1_1Channel_html_a462b0ae528a63c56829e5e887ed0aaa0"><div class="ttname"><a href="classchanneling_1_1Channel.html#a462b0ae528a63c56829e5e887ed0aaa0">channeling::Channel::send</a></div><div class="ttdeci">virtual int send(const std::string &amp;msg) const </div><div class="ttdef"><b>Definition:</b> channel.hpp:196</div></div>
 <div class="ttc" id="namespacemessaging_html"><div class="ttname"><a href="namespacemessaging.html">messaging</a></div><div class="ttdef"><b>Definition:</b> message.hpp:6</div></div>
 <div class="ttc" id="classchanneling_1_1Channel_html_ab5745eab177ac1dbebf1923c2b35889e"><div class="ttname"><a href="classchanneling_1_1Channel.html#ab5745eab177ac1dbebf1923c2b35889e">channeling::Channel::_pipeRunning</a></div><div class="ttdeci">std::atomic_bool _pipeRunning</div><div class="ttdef"><b>Definition:</b> channel.hpp:78</div></div>
@@ -261,6 +260,7 @@ $(document).ready(function(){initNavTree('channel_8hpp_source.html','');});
 <div class="ttc" id="hub_8hpp_html"><div class="ttname"><a href="hub_8hpp.html">hub.hpp</a></div></div>
 <div class="ttc" id="classHub_1_1Hub_html"><div class="ttname"><a href="classHub_1_1Hub.html">Hub::Hub</a></div><div class="ttdef"><b>Definition:</b> hub.hpp:24</div></div>
 <div class="ttc" id="classchanneling_1_1ChannelCreatorImpl_html_a1f7b5549a5f3d072d4c8265d7dada910"><div class="ttname"><a href="classchanneling_1_1ChannelCreatorImpl.html#a1f7b5549a5f3d072d4c8265d7dada910">channeling::ChannelCreatorImpl::ChannelCreatorImpl</a></div><div class="ttdeci">ChannelCreatorImpl(const std::string &amp;classname)</div><div class="ttdef"><b>Definition:</b> channel.hpp:227</div></div>
+<div class="ttc" id="classchanneling_1_1Channel_html_a1ef1d8962d0a63209153ebaaca49f5d7"><div class="ttname"><a href="classchanneling_1_1Channel.html#a1ef1d8962d0a63209153ebaaca49f5d7">channeling::Channel::tick</a></div><div class="ttdeci">virtual void tick()</div><div class="ttdef"><b>Definition:</b> channel.hpp:213</div></div>
 <div class="ttc" id="namespacechanneling_html_ae7c5180674ec5f9c82d3d648b17a67dd"><div class="ttname"><a href="namespacechanneling.html#ae7c5180674ec5f9c82d3d648b17a67dd">channeling::operator&gt;&gt;</a></div><div class="ttdeci">Channel &amp; operator&gt;&gt;(const message_ptr msg, Channel &amp;channel)</div><div class="ttdef"><b>Definition:</b> channel.cpp:38</div></div>
 <div class="ttc" id="classchanneling_1_1ChannelCreatorImpl_html_ab48ae885f08f8d35560aacff92b7cec5"><div class="ttname"><a href="classchanneling_1_1ChannelCreatorImpl.html#ab48ae885f08f8d35560aacff92b7cec5">channeling::ChannelCreatorImpl::create</a></div><div class="ttdeci">virtual Channel * create(Hub::Hub *const hub, const std::string &amp;config)</div><div class="ttdef"><b>Definition:</b> channel.hpp:229</div></div>
 <div class="ttc" id="classconfig_1_1ConfigParser_html"><div class="ttname"><a href="classconfig_1_1ConfigParser.html">config::ConfigParser</a></div><div class="ttdef"><b>Definition:</b> config.hpp:114</div></div>
@@ -272,7 +272,7 @@ $(document).ready(function(){initNavTree('channel_8hpp_source.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="channel_8hpp.html">channel.hpp</a></li>
-    <li class="footer">Generated on Tue Nov 15 2016 14:50:39 for Chatsync by
+    <li class="footer">Generated on Tue Nov 15 2016 15:32:26 for Chatsync by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>
   </ul>
