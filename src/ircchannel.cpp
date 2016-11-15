@@ -13,7 +13,9 @@ namespace ircChannel {
     _server(_config["server"]),
     _port(_config["port"]),
     _channel(_config["channel"]),
-    _ping_time(std::chrono::high_resolution_clock::now())
+    _ping_time(std::chrono::high_resolution_clock::now()),
+    _last_pong_time(std::chrono::high_resolution_clock::now()),
+    _connection_issue(false)
   {}
 
   namespace sys {
@@ -81,8 +83,8 @@ namespace ircChannel {
     std::string name = "irc";
     std::string text = toParse;
     if (std::regex_search(toParse, msgMatches, pongRe)) {
-      const auto ping_end = std::chrono::high_resolution_clock::now();
-      std::chrono::duration<double> diff = ping_end - _ping_time;
+      _last_pong_time = std::chrono::high_resolution_clock::now();
+      std::chrono::duration<double> diff = _last_pong_time - _ping_time;
       std::cerr << "[DEBUG] #irc: " << name << "Server pong reply: '" << msgMatches[1].str() << "' in " << diff.count() << "s" << std::endl;
     }
     if (std::regex_search(toParse, msgMatches, pingRe)) {
@@ -168,6 +170,22 @@ namespace ircChannel {
     if (diff > max_timeout) {
       ping();
       std::this_thread::sleep_for(std::chrono::milliseconds (150));
+    }
+  }
+
+  void IrcChannel::tick() {
+    const auto timestamp = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> diff = timestamp - _last_pong_time;
+    if (diff > max_timeout * 5) {
+      if (!_connection_issue) {
+        /* Something happened to our connection */
+        _connection_issue = true;
+        ping();
+      } else {
+        /* Drop the descriptor to initiate reconnect() */
+        _connection_issue = false;
+        disconnect(_fd);
+      }
     }
   }
 }

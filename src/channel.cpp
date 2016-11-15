@@ -275,5 +275,4 @@ namespace channeling {
       net::close(fd);
     return 0;
   }
-
 }

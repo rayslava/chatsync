@@ -19,6 +19,8 @@ namespace ircChannel {
     const uint32_t _port;                                /**< Connection port */
     const std::string _channel;                          /**< Channel name (starting with #) */
     std::chrono::time_point<std::chrono::high_resolution_clock> _ping_time; /**< Ping to server in microseconds */
+    mutable std::chrono::time_point<std::chrono::high_resolution_clock> _last_pong_time; /**< Last pong received from server */
+    bool _connection_issue /**< The connection issue has been detected, check is ongoing*/;
 
     /**
      * Sends PASS, NICK and USER commands to register irc connection
@@ -45,6 +47,11 @@ namespace ircChannel {
     std::string type() const override {return "irc"; };
 
   protected:
+    /**
+     * If during max_timeout*5 we got no PONG we try to reconnect
+     */
+    void tick() override;
+
     void incoming(const messaging::message_ptr&& msg) override;
   };
   const channeling::ChannelCreatorImpl<IrcChannel> IrcChannel::creator("irc");

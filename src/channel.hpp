@@ -210,7 +210,7 @@ namespace channeling {
     /**
      * Performs heartbeat actions on tick
      */
-    virtual void tick() const { std::cout << "Empty tick in " << _name << std::endl; };
+    virtual void tick() { std::cout << "Empty tick in " << _name << std::endl; };
   };
 
   class ChannelCreator
