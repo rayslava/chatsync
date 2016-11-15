@@ -98,5 +98,10 @@ namespace Hub {
      * Returns whether thread is running
      */
     bool active() {return _loopRunning; };
+
+    /**
+     * Triggered on tick by main thread
+     */
+    void tick();
   };
 }

@@ -150,4 +150,22 @@ namespace Hub {
     pushMessage(std::move(msg));
     _msgLoop->join();
   }
+
+  void Hub::tick() {
+    std::vector<std::future<void> > activators;
+
+    for (auto & out : _outputChannels)
+      activators.push_back(
+        std::async(std::launch::async, [&out]()
+      {
+        out->tick();
+      }));
+    for (auto & in : _inputChannels)
+      activators.push_back(
+        std::async(std::launch::async, [&in]()
+      {
+        in->tick();
+      }));
+  }
+
 }

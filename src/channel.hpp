@@ -206,6 +206,11 @@ namespace channeling {
      * Close an _fd socket
      */
     virtual int disconnect() const {return disconnect(_fd); };
+
+    /**
+     * Performs heartbeat actions on tick
+     */
+    virtual void tick() const { std::cout << "Empty tick in " << _name << std::endl; };
   };
 
   class ChannelCreator

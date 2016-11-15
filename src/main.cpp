@@ -104,6 +104,8 @@ int main(int argc, char* argv[])
     std::this_thread::sleep_for(std::chrono::milliseconds (tick_timeout));
     std::time_t now_c = std::chrono::system_clock::to_time_t(now);
     std::cout << "[" << std::put_time(std::localtime(&now_c), "%F0 %T0") << "] tick" << std::endl;
+    for (auto & c : hublist)
+      c->tick();
   }
 
   for (auto & c : hublist)
