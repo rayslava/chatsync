@@ -22,6 +22,8 @@ static void sighandler(int signum)
 
 int main(int argc, char* argv[])
 {
+  uint64_t tick_timeout = 120000;
+
   if (argc < 2) {
     std::cerr << "Please use " << argv[0] << " config.ini" << std::endl;
     return 1;
@@ -41,6 +43,16 @@ int main(int argc, char* argv[])
 
     /* Hub parsing */
     if (std::regex_match(line, optionMatches, sectionRe)) {
+      if (config::strutil::cistrcmp(optionMatches[1], "general")) {
+        std::string buffer = "data://";
+        do {
+          config_stream >> line;
+          buffer.append(line + "\n");
+        } while(!std::regex_match(line, optionMatches, sectionRe));
+        config::ConfigParser generalOptions(buffer);
+        tick_timeout = generalOptions.get("tick_timeout", "1200000");
+        std::cout << "Tick timeout set to: " << tick_timeout << std::endl;
+      }
       if (config::strutil::cistrcmp(optionMatches[1], "hub")) {
         std::string buffer = "data://";
         /* Hub options */
@@ -89,7 +101,7 @@ int main(int argc, char* argv[])
 
   while (running) {
     const auto now = std::chrono::system_clock::now();
-    std::this_thread::sleep_for(std::chrono::milliseconds (1200000));
+    std::this_thread::sleep_for(std::chrono::milliseconds (tick_timeout));
     std::time_t now_c = std::chrono::system_clock::to_time_t(now);
     std::cout << "[" << std::put_time(std::localtime(&now_c), "%F0 %T0") << "] tick" << std::endl;
   }
