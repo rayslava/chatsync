@@ -6,6 +6,7 @@
 #include <typeinfo>
 #include <regex>
 #include <memory>
+#include <iomanip>
 
 namespace ircChannel {
   IrcChannel::IrcChannel(Hub::Hub* hub, const std::string& config) :
@@ -15,7 +16,7 @@ namespace ircChannel {
     _channel(_config["channel"]),
     _ping_time(std::chrono::high_resolution_clock::now()),
     _last_pong_time(std::chrono::high_resolution_clock::now()),
-    _connection_issue(false)
+    _connection_issue(ATOMIC_FLAG_INIT)
   {}
 
   namespace sys {
@@ -83,9 +84,8 @@ namespace ircChannel {
     std::string name = "irc";
     std::string text = toParse;
     if (std::regex_search(toParse, msgMatches, pongRe)) {
-      _last_pong_time = std::chrono::high_resolution_clock::now();
-      std::chrono::duration<double> diff = _last_pong_time - _ping_time;
-      std::cerr << "[DEBUG] #irc: " << name << "Server pong reply: '" << msgMatches[1].str() << "' in " << diff.count() << "s" << std::endl;
+      std::cerr << "[DEBUG] #irc: " << name << "Server pong reply: '" << msgMatches[1] << std::endl;
+      pong();
     }
     if (std::regex_search(toParse, msgMatches, pingRe)) {
       const std::string pong = "PONG " + msgMatches[1].str();
@@ -155,13 +155,27 @@ namespace ircChannel {
 
     send(joinline);
     std::this_thread::sleep_for(std::chrono::milliseconds (500));
-    send("PRIVMSG #" + _channel + " :Hello there\r\n");
+    std::cerr << "[DEBUG] #irc: Entered channel" << std::endl;
   }
 
   void IrcChannel::ping() {
     _ping_time = std::chrono::high_resolution_clock::now();
     std::cerr << "[DEBUG] #irc: Sending ping" << std::endl;
     send("PING " + _server + "\r\n");
+  }
+
+  void IrcChannel::pong() const {
+    const auto& pong_time = std::chrono::high_resolution_clock::now();
+    {
+      std::unique_lock<std::mutex> lock(_pong_time_mutex);
+      _last_pong_time = pong_time;
+    }
+    _connection_issue = false;
+    std::chrono::duration<double> diff = pong_time - _ping_time;
+    const auto& pong_time_t = std::chrono::system_clock::to_time_t(pong_time);
+    std::cerr << "[DEBUG] #irc: last pong at: '" <<
+      std::put_time(std::localtime(&pong_time_t), "%F %T") <<
+      " and it took " << diff.count() << "s" << std::endl;
   }
 
   void IrcChannel::checkTimeout() {
@@ -175,14 +189,21 @@ namespace ircChannel {
 
   void IrcChannel::tick() {
     const auto timestamp = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> diff = timestamp - _last_pong_time;
+    std::chrono::time_point<std::chrono::high_resolution_clock> last_pong;
+    {
+      std::unique_lock<std::mutex> lock(_pong_time_mutex);
+      last_pong = _last_pong_time;
+    }
+    std::chrono::duration<double> diff = timestamp - last_pong;
     if (diff > max_timeout * 5) {
       if (!_connection_issue) {
         /* Something happened to our connection */
+        std::cerr << "[DEBUG] #irc: Got connection issue" << std::endl;
         _connection_issue = true;
         ping();
       } else {
         /* Drop the descriptor to initiate reconnect() */
+        std::cerr << "[DEBUG] #irc: Connection failure detected. Closing _fd." << std::endl;
         _connection_issue = false;
         disconnect(_fd);
       }
