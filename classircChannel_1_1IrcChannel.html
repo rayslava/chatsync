@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Chatsync
-   &#160;<span id="projectnumber">1bb629335e61bf6c5422ec9a2d76dae2ca7c88d2</span>
+   &#160;<span id="projectnumber">14a90a004cfbec0d80d28c8bba71b8450f428fc6</span>
    </div>
   </td>
  </tr>
@@ -177,6 +177,8 @@ Private Member Functions</h2></td></tr>
 <tr class="separator:aa27c22126c88c3ffcd3e954cf7661812"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a58010ff3cb2fc29387e7ed957a11dbb9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classircChannel_1_1IrcChannel.html#a58010ff3cb2fc29387e7ed957a11dbb9">ping</a> ()</td></tr>
 <tr class="separator:a58010ff3cb2fc29387e7ed957a11dbb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e1df907bd1ee380a876ee7d3e5a1f89"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classircChannel_1_1IrcChannel.html#a1e1df907bd1ee380a876ee7d3e5a1f89">pong</a> () const </td></tr>
+<tr class="separator:a1e1df907bd1ee380a876ee7d3e5a1f89"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6d13ae52ff2e037843a58c00fb89e196"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classircChannel_1_1IrcChannel.html#a6d13ae52ff2e037843a58c00fb89e196">checkTimeout</a> ()</td></tr>
 <tr class="separator:a6d13ae52ff2e037843a58c00fb89e196"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3b8e2e68fd1f87d5473fbd4f4e32f5fd"><td class="memItemLeft" align="right" valign="top">std::future&lt; void &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classircChannel_1_1IrcChannel.html#a3b8e2e68fd1f87d5473fbd4f4e32f5fd">activate</a> () override</td></tr>
@@ -194,10 +196,12 @@ Private Attributes</h2></td></tr>
 <tr class="separator:a5cb40ec3010c67e4180efa045b91dfaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abeef498c7d235f99849fa0834974790f"><td class="memItemLeft" align="right" valign="top">std::chrono::time_point&lt; std::chrono::high_resolution_clock &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classircChannel_1_1IrcChannel.html#abeef498c7d235f99849fa0834974790f">_ping_time</a></td></tr>
 <tr class="separator:abeef498c7d235f99849fa0834974790f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af843162b6fe04849ac44604e1bfa6a56"><td class="memItemLeft" align="right" valign="top">std::mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classircChannel_1_1IrcChannel.html#af843162b6fe04849ac44604e1bfa6a56">_pong_time_mutex</a></td></tr>
+<tr class="separator:af843162b6fe04849ac44604e1bfa6a56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7077238a2b3814cdc8fb61de2230aec9"><td class="memItemLeft" align="right" valign="top">std::chrono::time_point&lt; std::chrono::high_resolution_clock &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classircChannel_1_1IrcChannel.html#a7077238a2b3814cdc8fb61de2230aec9">_last_pong_time</a></td></tr>
 <tr class="separator:a7077238a2b3814cdc8fb61de2230aec9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a644ba90d4f1b320661fa4d0f4e8c2eda"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classircChannel_1_1IrcChannel.html#a644ba90d4f1b320661fa4d0f4e8c2eda">_connection_issue</a></td></tr>
-<tr class="separator:a644ba90d4f1b320661fa4d0f4e8c2eda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a529220acc752ccf493b11fe5edd1c752"><td class="memItemLeft" align="right" valign="top">std::atomic_bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classircChannel_1_1IrcChannel.html#a529220acc752ccf493b11fe5edd1c752">_connection_issue</a></td></tr>
+<tr class="separator:a529220acc752ccf493b11fe5edd1c752"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
 Static Private Attributes</h2></td></tr>
@@ -436,6 +440,30 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a1e1df907bd1ee380a876ee7d3e5a1f89"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ircChannel::IrcChannel::pong </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Reacts to PONG message from server </p>
+
+</div>
+</div>
 <a class="anchor" id="aa27c22126c88c3ffcd3e954cf7661812"></a>
 <div class="memitem">
 <div class="memproto">
@@ -539,7 +567,7 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a644ba90d4f1b320661fa4d0f4e8c2eda"></a>
+<a class="anchor" id="a529220acc752ccf493b11fe5edd1c752"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -547,12 +575,12 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool ircChannel::IrcChannel::_connection_issue</td>
+          <td class="memname">std::atomic_bool ircChannel::IrcChannel::_connection_issue</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">mutable</span><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -599,6 +627,27 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Ping to server in microseconds </p>
+
+</div>
+</div>
+<a class="anchor" id="af843162b6fe04849ac44604e1bfa6a56"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::mutex ircChannel::IrcChannel::_pong_time_mutex</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">mutable</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Lock for _last_pong_time </p>
 
 </div>
 </div>
@@ -674,7 +723,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceircChannel.html">ircChannel</a></li><li class="navelem"><a class="el" href="classircChannel_1_1IrcChannel.html">IrcChannel</a></li>
-    <li class="footer">Generated on Tue Nov 15 2016 15:32:26 for Chatsync by
+    <li class="footer">Generated on Wed Nov 16 2016 09:08:46 for Chatsync by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>
   </ul>

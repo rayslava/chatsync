@@ -1,9 +1,11 @@
 var NAVTREEINDEX1 =
 {
+"namespacemembers_vars.html":[1,1,2],
 "namespacemessaging.html":[2,0,5],
+"namespacemessaging.html":[1,0,6],
 "namespaces.html":[1,0],
-"namespacetoxChannel.html":[2,0,6],
 "namespacetoxChannel.html":[1,0,7],
+"namespacetoxChannel.html":[2,0,6],
 "namespacetoxChannel_1_1util.html":[1,0,7,0],
 "pages.html":[],
 "todo.html":[0],
