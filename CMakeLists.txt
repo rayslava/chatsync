@@ -3,6 +3,7 @@ project(chatsync)
 cmake_policy(SET CMP0049 OLD)
 
 enable_language(C CXX)
+include (CheckCSourceCompiles)
 
 set(CMAKE_MODULE_PATH
   ${CMAKE_MODULE_PATH}
@@ -13,6 +14,10 @@ find_package (Threads REQUIRED)
 
 # Optional plugins
 option (FEATURE_TOX "Build Tox support" ON)
+
+if(FEATURE_TOX)
+  option (USE_C_TOXCORE "Build Tox support using c-toxcore from TokTok" OFF)
+endif()
 
 set(SOURCE_FILES
   src/config.cpp
@@ -60,9 +65,23 @@ macro(create_test name files)
 endmacro(create_test)
 
 if (FEATURE_TOX)
-  message ("-- Compiling with Tox support")
+  message (STATUS "Compiling with Tox support")
   find_package (Tox REQUIRED)
   find_package (Sodium REQUIRED)
+  CHECK_C_SOURCE_COMPILES(
+    "#include \"tox/tox.h\"
+     #if !(TOX_VERSION_IS_API_COMPATIBLE(0,0,4))
+     #error \"Please use c-toxcore\"
+     #endif
+     int main() {return 0;}
+     " C_TOXCORE)
+  if (C_TOXCORE)
+    message (STATUS "c-toxcore found will use it for Tox support")
+    add_definitions(-DCTOXCORE)
+  endif()
+  if (USE_C_TOXCORE AND NOT C_TOXCORE)
+     message(FATAL_ERROR "Could not find c-toxcore")
+  endif()
   set(SOURCE_FILES
     ${SOURCE_FILES}
     src/toxchannel.cpp
