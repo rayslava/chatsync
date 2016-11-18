@@ -70,8 +70,16 @@ valgrind: memcheck-tox memcheck-hub memcheck-channel memcheck-config
 
 dockerimage:
 	cd dockerbuild && (docker images | grep $(BINARY)-deploy) || docker build -t $(BINARY)-deploy .
+	cd dockerbuild && (docker images | grep $(BINARY)-ctoxcore-deploy) || docker build --build-arg TOXSRC="TokTok/c-toxcore" -t $(BINARY)-ctoxcore-deploy .
+
+dockerimage-clean:
+	docker rm $(docker ps -a -q)
+	docker rmi $(docker images -a --filter=dangling=true -q)
+	docker rmi chatsync-deploy
+	docker rmi chatsync-ctoxcore-deploy
 
 dockerbuild/$(BINARY).tar.gz:
+	rm -f dockerbuild/$(BINARY).tar.gz
 	git archive --format=tar.gz -o dockerbuild/$(BINARY).tar.gz --prefix=$(BINARY)/ HEAD
 
 stylecheck:
@@ -80,6 +88,12 @@ stylecheck:
 stylefix:
 	uncrustify -c uncrustify.cfg src/*.cpp src/*.hpp test/*.cpp --replace
 
-deploy: debug release clang clang-release analyzed memcheck dockerbuild/$(BINARY).tar.gz
+full-deploy: debug release clang clang-release analyzed memcheck deploy
+
+deploy: dockerbuild/$(BINARY).tar.gz
 	cd dockerbuild && docker run -v "$(shell pwd)/dockerbuild:/mnt/host" $(BINARY)-deploy /bin/bash -c 'cd /root && tar xfz /mnt/host/$(BINARY).tar.gz && cd $(BINARY) && mkdir build && cd build && cmake -DSTATIC=True -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make $(BINARY) -j $(JOBS) && cp $(BINARY) /mnt/host'
+	rm dockerbuild/$(BINARY).tar.gz
+
+deploy-ctoxcore: dockerbuild/$(BINARY).tar.gz
+	cd dockerbuild && docker run -v "$(shell pwd)/dockerbuild:/mnt/host" $(BINARY)-ctoxcore-deploy /bin/bash -c 'cd /root && tar xfz /mnt/host/$(BINARY).tar.gz && cd $(BINARY) && mkdir build && cd build && cmake -DSTATIC=True -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make $(BINARY) -j $(JOBS) && cp $(BINARY) /mnt/host'
 	rm dockerbuild/$(BINARY).tar.gz
