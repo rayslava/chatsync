@@ -8,7 +8,7 @@ RUN add-apt-repository --yes ppa:ubuntu-toolchain-r/test
 RUN add-apt-repository --yes ppa:george-edison55/precise-backports
 RUN apt-get -qq update -y
 # Setting up build environment
-RUN apt-get -qq --yes --force-yes install gcc-5 g++-5 libgtest-dev valgrind lcov cmake cmake-data curl build-essential libtool autotools-dev automake checkinstall check git yasm
+RUN apt-get -qq --yes --force-yes install gcc-5 g++-5 libgtest-dev valgrind lcov cmake cmake-data curl build-essential libtool autotools-dev automake checkinstall check git yasm pkg-config libncurses5-dev
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 40 --slave /usr/bin/g++ g++ /usr/bin/g++-5
 RUN update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-5 40
 RUN update-alternatives --config gcc
@@ -17,4 +17,4 @@ RUN cd $(mktemp -d) && cmake /usr/src/gtest &&  make -j4 && sudo mv libgtest.a l
 # Building sodium
 RUN cd $(mktemp -d) && git clone git://github.com/jedisct1/libsodium.git && cd libsodium &&  git checkout tags/1.0.3 &&  ./autogen.sh &&  ./configure --enable-static && make check &&  checkinstall --install --pkgname libsodium --pkgversion 1.0.3 --nodoc && ldconfig
 # Building tox
-RUN cd $(mktemp -d) && git clone git://github.com/irungentoo/toxcore.git && cd toxcore &&  autoreconf -i && ./configure --enable-static && make && checkinstall --install --pkgname libtoxcore --pkgversion 1.0.0 --nodoc && ldconfig
+RUN cd $(mktemp -d) && git clone git://github.com/TokTok/c-toxcore.git && cd c-toxcore &&  autoreconf -i && ./configure --enable-static && make && checkinstall --install --pkgname libtoxcore --pkgversion 1.0.0 --nodoc && ldconfig

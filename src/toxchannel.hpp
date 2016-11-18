@@ -27,8 +27,12 @@ namespace toxChannel {
 
     static void friendRequestCallback(Tox* tox, const uint8_t* public_key, const uint8_t* data, size_t length, void* userdata);
     static void messageCallback(Tox* tox, uint32_t friendnumber, TOX_MESSAGE_TYPE type, const uint8_t* message, size_t length, void* userdata);
+#ifdef CTOXCORE
+    static void groupMessageCallback(Tox* tox, uint32_t conference_number, uint32_t peer_number, TOX_MESSAGE_TYPE type, const uint8_t* message, size_t length, void* user_data);
+#else
     template <typename MsgType>
     static void groupMessageCallback(Tox* tox, int32_t groupnumber, int32_t peernumber, const uint8_t* message, uint16_t length, void* userdata);
+#endif
     static const channeling::ChannelCreatorImpl<ToxChannel> creator;
 
     const messaging::message_ptr parse(const char* line) const override; /**< This would be useful if Tox read something from socket */

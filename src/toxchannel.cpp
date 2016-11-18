@@ -130,7 +130,11 @@ namespace toxChannel {
       const auto len = snprintf(reinterpret_cast<char *>(msg), TOX_MAX_MESSAGE_LENGTH,
                                 "[%s]: %s",
                                 textmsg->user()->name().c_str(), textmsg->data().c_str());
+#ifdef CTOXCORE
+      tox_conference_send_message(_tox, 0, TOX_MESSAGE_TYPE_NORMAL, msg, len, NULL);
+#else
       tox_group_message_send(_tox, 0, msg, len);
+#endif
     } else if (msg->type() == messaging::MessageType::Action) {
       const auto actionmsg = messaging::ActionMessage::fromMessage(msg);
 
@@ -139,7 +143,12 @@ namespace toxChannel {
       const auto len = snprintf(reinterpret_cast<char *>(msg), TOX_MAX_MESSAGE_LENGTH,
                                 "[%s]: %s",
                                 actionmsg->user()->name().c_str(), actionmsg->data().c_str());
+#ifdef CTOXCORE
+      tox_conference_send_message(_tox, 0, TOX_MESSAGE_TYPE_ACTION, msg, len, NULL);
+#else
       tox_group_action_send(_tox, 0, msg, len);
+#endif
+
     } else {
       throw std::runtime_error("Unknown message type");
     }
@@ -148,7 +157,11 @@ namespace toxChannel {
   void ToxChannel::pollThread() {
     std::cerr << "[DEBUG] Starting tox thread" << std::endl;
     while (_pipeRunning) {
+#ifdef CTOXCORE
+      tox_iterate(_tox, this);
+#else
       tox_iterate(_tox);
+#endif
       auto wait = tox_iteration_interval(_tox);
       std::this_thread::sleep_for( std::chrono::milliseconds (wait));
     }
@@ -192,8 +205,13 @@ namespace toxChannel {
     switch (type) {
     case TOX_MESSAGE_TYPE_NORMAL:
       std::cerr << "[DEBUG] Message from friend #" << friendnumber << "> " << *buffer << std::endl;
-      if (util::strncmp(cmd_invite, *buffer, length) == 0)
+      if (util::strncmp(cmd_invite, *buffer, length) == 0) {
+#ifdef CTOXCORE
+        tox_conference_invite(tox, friendnumber, 0, NULL);
+#else
         tox_invite_friend(tox, friendnumber, 0);
+#endif
+      }
       break;
     case TOX_MESSAGE_TYPE_ACTION:
       std::cerr << "[DEBUG] Action from friend #" << friendnumber << "> " << *buffer << std::endl;
@@ -203,6 +221,54 @@ namespace toxChannel {
     }
   }
 
+#ifdef CTOXCORE
+  void ToxChannel::groupMessageCallback (Tox* tox, uint32_t conference_number, uint32_t peer_number, TOX_MESSAGE_TYPE type, const uint8_t* message, size_t length, void* user_data) {
+    const auto channel = static_cast<ToxChannel *>(user_data);
+
+    const auto nameLen = tox_conference_peer_get_name_size(tox, conference_number, peer_number, NULL);
+    const auto nameBuffer = std::make_unique<uint8_t *>(new uint8_t[nameLen]);
+    tox_conference_peer_get_name(tox, conference_number, peer_number, *nameBuffer, NULL);
+    const auto name = std::make_unique<char *>(new char[nameLen + 2]);
+    snprintf(*name, nameLen + 1, "%s", *nameBuffer);
+
+    const auto msg = std::make_unique<char *>(new char[length + 2]);
+    snprintf(*msg,  length + 1,	 "%s", message);
+
+    std::shared_ptr<messaging::Message> newMessage;
+    if (std::string(*name) != std::string(channel->_config.get("nickname", defaultBotName))) {
+      switch (type) {
+      case TOX_MESSAGE_TYPE_NORMAL:
+        newMessage = std::make_shared<messaging::TextMessage>
+                       (channel->_id,
+                       std::make_shared<const messaging::User>(messaging::User(*name)),
+                       *msg);
+        break;
+      case TOX_MESSAGE_TYPE_ACTION:
+        newMessage = std::make_shared<messaging::ActionMessage>
+                       (channel->_id,
+                       std::make_shared<const messaging::User>(messaging::User(*name)),
+                       *msg);
+        break;
+      default:
+        throw std::runtime_error("Unknown tox message type");
+      }
+
+      {
+        std::cerr << "[DEBUG] tox Group msg ";
+        const auto tmsg = std::dynamic_pointer_cast<messaging::TextMessage>(newMessage);
+        const auto amsg = std::dynamic_pointer_cast<messaging::ActionMessage>(newMessage);
+        if (tmsg) {
+          std::cerr << tmsg->user()->name() << "> " << tmsg->data();
+        } else if (amsg) {
+          std::cerr << amsg->user()->name() << "> " << amsg->data();
+        }
+        std::cerr << std::endl;
+      }
+
+      channel->_hub->newMessage(std::move(newMessage));
+    }
+  }
+#else
   template <typename MsgType>
   void ToxChannel::groupMessageCallback(Tox* tox, int32_t groupnumber, int32_t peernumber, const uint8_t* message, uint16_t length, void* userdata) {
     const auto channel = static_cast<ToxChannel *>(userdata);
@@ -223,6 +289,7 @@ namespace toxChannel {
       channel->_hub->newMessage(std::move(newMessage));
     }
   }
+#endif
 
   const messaging::message_ptr ToxChannel::parse(const char* line) const
   {
@@ -240,10 +307,16 @@ namespace toxChannel {
     TOX_ERR_SET_INFO result;
 
     //std::unique_ptr<uint8_t[]> pubKey(new uint8_t[TOX_CLIENT_ID_SIZE]);
+#ifdef CTOXCORE
+    tox_callback_friend_request(_tox, friendRequestCallback);
+    tox_callback_friend_message(_tox, messageCallback);
+    tox_callback_conference_message(_tox, groupMessageCallback);
+#else
     tox_callback_friend_request(_tox, friendRequestCallback, this);
     tox_callback_friend_message(_tox, messageCallback, this);
     tox_callback_group_message(_tox, groupMessageCallback<const messaging::TextMessage>, this);
     tox_callback_group_action(_tox, groupMessageCallback<const messaging::ActionMessage>, this);
+#endif
 
     const std::string nick = _config.get("nickname", defaultBotName);
     const uint8_t* nickData = reinterpret_cast<const uint8_t *>(nick.c_str());
@@ -278,7 +351,11 @@ namespace toxChannel {
 
     while (!wasConnected) {
       TOX_CONNECTION status;
+#ifdef CTOXCORE
+      tox_iterate(_tox, this);
+#else
       tox_iterate(_tox);
+#endif
       auto wait = tox_iteration_interval(_tox);
       if (!wasConnected && (TOX_CONNECTION_NONE != tox_self_get_connection_status(_tox))) {
         std::array<uint8_t, TOX_ADDRESS_SIZE> address;
@@ -290,7 +367,11 @@ namespace toxChannel {
       std::this_thread::sleep_for( std::chrono::milliseconds (wait));
     }
 
+#ifdef CTOXCORE
+    tox_conference_new(_tox, NULL);
+#else
     tox_add_groupchat (_tox);
+#endif
 
     return 0;
   }
