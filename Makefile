@@ -1,5 +1,6 @@
 BINARY=chatsync
 JOBS=$(shell grep -c '^processor' /proc/cpuinfo)
+VERBOSE=1
 
 all: stylecheck doxygen asan tsan clang release clang-release analyzed
 
@@ -43,7 +44,7 @@ tidy:
 	$(call build-dir, $@) && cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=True ..  && clang-tidy -p debug-build ../src/*.cpp
 
 clean:
-	rm -rf *-build
+	rm -rf *-build doc; find -name '*~' -delete; rm -f dockerbuild/$(BINARY).tar.gz; rm -f dockerbuild/$(BINARY)
 
 memcheck-binary = \
 	(valgrind --tool=memcheck --track-origins=yes --leak-check=full --trace-children=yes --show-reachable=yes ./$1 2>/tmp/unit-test-valg-$1.log)</dev/null && sed '/in use/!d;s/.*exit:.*\s\([[:digit:]]\+\)\sblocks.*/\1/' /tmp/unit-test-valg-$1.log | { read lines; test $$lines -eq 1 || cat /tmp/unit-test-valg-$1.log; }
@@ -62,6 +63,9 @@ memcheck-hub: memcheck
 
 memcheck-tox: memcheck
 	cd memcheck-build && [ -e tox_tests ] && $(call memcheck-binary,tox_tests)
+
+memcheck-logging: memcheck
+	cd memcheck-build && $(call memcheck-binary,logging_tests)
 
 memcheck-unit: memcheck
 	cd memcheck-build && $(call memcheck-binary,unit_tests)
@@ -88,12 +92,17 @@ stylecheck:
 stylefix:
 	uncrustify -c uncrustify.cfg src/*.cpp src/*.hpp test/*.cpp --replace
 
-full-deploy: debug release clang clang-release analyzed memcheck deploy
+full-deploy: debug release clang clang-release static-release analyzed memcheck deploy deploy-ctoxcore
 
 deploy: dockerbuild/$(BINARY).tar.gz
-	cd dockerbuild && docker run -v "$(shell pwd)/dockerbuild:/mnt/host" $(BINARY)-deploy /bin/bash -c 'cd /root && tar xfz /mnt/host/$(BINARY).tar.gz && cd $(BINARY) && mkdir build && cd build && cmake -DSTATIC=True -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make $(BINARY) -j $(JOBS) && cp $(BINARY) /mnt/host'
+	cd dockerbuild && docker run -v "$(shell pwd)/dockerbuild:/mnt/host" $(BINARY)-deploy /bin/bash -c 'cd /root && tar xfz /mnt/host/$(BINARY).tar.gz && cd $(BINARY) && mkdir build && cd build && cmake -DSTATIC=True -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make $(BINARY) -j $(JOBS) && cp $(BINARY) /mnt/host/$(BINARY)'
 	rm dockerbuild/$(BINARY).tar.gz
 
 deploy-ctoxcore: dockerbuild/$(BINARY).tar.gz
-	cd dockerbuild && docker run -v "$(shell pwd)/dockerbuild:/mnt/host" $(BINARY)-ctoxcore-deploy /bin/bash -c 'cd /root && tar xfz /mnt/host/$(BINARY).tar.gz && cd $(BINARY) && mkdir build && cd build && cmake -DSTATIC=True -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make $(BINARY) -j $(JOBS) && cp $(BINARY) /mnt/host'
+	cd dockerbuild && docker run -v "$(shell pwd)/dockerbuild:/mnt/host" $(BINARY)-ctoxcore-deploy /bin/bash -c 'cd /root && tar xfz /mnt/host/$(BINARY).tar.gz && cd $(BINARY) && mkdir build && cd build && cmake -DSTATIC=True -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make $(BINARY) -j $(JOBS) && cp $(BINARY) /mnt/host/$(BINARY)-ctoxcore'
 	rm dockerbuild/$(BINARY).tar.gz
+
+coverage:
+	$(call build-dir, $@) &&  cmake .. -DCMAKE_BUILD_TYPE=Debug -DCOVERAGE=True && $(MAKE) coverage -j $(JOBS)
+
+.PHONY: dockerbuild/$(BINARY).tar.gz

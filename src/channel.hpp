@@ -8,6 +8,7 @@
 #include "message.hpp"
 #include "hub.hpp"
 #include "config.hpp"
+#include "logging.hpp"
 
 namespace channeling {
   using namespace messaging;
@@ -69,7 +70,7 @@ namespace channeling {
      */
     void reconnect();
 
-    std::shared_ptr<std::atomic<bool> > _hub_alive;  /**< The hub is alive and we can try reconnecting */
+    std::shared_ptr<std::atomic<bool> > _hub_alive; /**< The hub is alive and we can try reconnecting */
   protected:
     std::atomic_bool _active;                       /**< Channel is prepared and active */
 
@@ -82,7 +83,7 @@ namespace channeling {
     const config::ConfigParser _config;             /**< Configuration storage */
     const std::string _name;                        /**< The channel name in config file */
     const ChannelDirection _direction;              /**< The channel direction for the whole transmission task */
-    Hub::Hub * const _hub;                           /**< Hub the channel is attached to */
+    Hub::Hub * const _hub;                          /**< Hub the channel is attached to */
 
 
     /**
@@ -210,7 +211,7 @@ namespace channeling {
     /**
      * Performs heartbeat actions on tick
      */
-    virtual void tick() { std::cout << "Empty tick in " << _name << std::endl; };
+    virtual void tick() { DEBUG << "Empty tick in " << _name; };
   };
 
   class ChannelCreator

@@ -1,7 +1,7 @@
 #include "filechannel.hpp"
 #include "hub.hpp"
 #include "messages.hpp"
-#include <sstream>
+#include "logging.hpp"
 
 namespace fileChannel {
 
@@ -23,15 +23,15 @@ namespace fileChannel {
   }
 
   void FileChannel::incoming(const messaging::message_ptr&& msg) {
-    std::cerr << "[DEBUG] #file " << _name << " incoming message: " << std::endl;
+    DEBUG << "#file " << _name << " incoming message: ";
     if (msg->type() == messaging::MessageType::Text) {
       const auto textmsg = messaging::TextMessage::fromMessage(msg);
-      _file << textmsg->user()->name() << ": " << textmsg->data() << std::endl;
-      std::cerr << "[DEBUG] #file " << _name << " " << textmsg->data() << std::endl;
+      _file << textmsg->user()->name() << ": " << textmsg->data();
+      DEBUG << "#file " << _name << " " << textmsg->data();
     } else if (msg->type() == messaging::MessageType::Action) {
       const auto actionmsg = messaging::ActionMessage::fromMessage(msg);
-      _file << actionmsg->user()->name() << "[ACTION]: " << actionmsg->data() << std::endl;
-      std::cerr << "[DEBUG] #file " << _name << " performes an action: " << actionmsg->data() << std::endl;
+      _file << actionmsg->user()->name() << "[ACTION]: " << actionmsg->data();
+      DEBUG << "#file " << _name << " performes an action: " << actionmsg->data();
     } else {
       throw std::runtime_error("Unknown message type");
     }

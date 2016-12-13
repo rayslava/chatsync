@@ -1,6 +1,7 @@
 #include "ircchannel.hpp"
 #include "hub.hpp"
 #include "messages.hpp"
+#include "logging.hpp"
 #include <stdexcept>
 #include <utility>
 #include <typeinfo>
@@ -55,12 +56,12 @@ namespace ircChannel {
     if (msg->type() == messaging::MessageType::Text) {
       const auto textmsg = messaging::TextMessage::fromMessage(msg);
       snprintf(message, irc_message_max, "PRIVMSG #%s :[%s]: %s\r\n", _channel.c_str(), textmsg->user()->name().c_str(), textmsg->data().c_str());
-      std::cerr << "[DEBUG] #irc " << _name << " " << textmsg->data() << " inside " << std::endl;
+      DEBUG << "#irc " << _name << " " << textmsg->data() << " inside ";
       send(message);
     } else if (msg->type() == messaging::MessageType::Action) {
       const auto actionmsg = messaging::ActionMessage::fromMessage(msg);
       snprintf(message, irc_message_max, "PRIVMSG #%s :\001ACTION [%s]: %s\001\r\n", _channel.c_str(), actionmsg->user()->name().c_str(), actionmsg->data().c_str());
-      std::cerr << "[DEBUG] #irc " << _name << " performes an action: " << actionmsg->data() << std::endl;
+      DEBUG << "#irc " << _name << " performes an action: " << actionmsg->data();
       send(message);
     } else {
       throw std::runtime_error("Unknown message type");
@@ -72,7 +73,7 @@ namespace ircChannel {
   {
     // :rayslava!~v.barinov@212.44.150.238 PRIVMSG #chatsync :ololo
     const std::string toParse(line);
-    std::cerr << "[DEBUG] Parsing irc line:" << toParse << std::endl;
+    DEBUG << "Parsing irc line:" << toParse;
 
     std::regex msgRe (":(\\S+)!(\\S+)\\s+PRIVMSG\\s+#(\\S+)\\s+:(.*)\r\n$");
     std::regex joinRe(":(\\S+)!(\\S+)\\s+JOIN\\s+:#(\\S+)$");
@@ -84,25 +85,25 @@ namespace ircChannel {
     std::string name = "irc";
     std::string text = toParse;
     if (std::regex_search(toParse, msgMatches, pongRe)) {
-      std::cerr << "[DEBUG] #irc: " << name << "Server pong reply: '" << msgMatches[1] << std::endl;
+      DEBUG << "#irc: " << name << "Server pong reply: '" << msgMatches[1];
       pong();
     }
     if (std::regex_search(toParse, msgMatches, pingRe)) {
       const std::string pong = "PONG " + msgMatches[1].str();
-      std::cerr << "[DEBUG] #irc: sending " << pong << std::endl;
+      DEBUG << "#irc: sending " << pong;
       send(pong);
     };
     if (std::regex_search(toParse, msgMatches, joinRe)) {
       const auto name = msgMatches[1].str();
       const auto host = msgMatches[2].str();
       const auto chan = msgMatches[3].str();
-      std::cerr << "[DEBUG] #irc: user " << name << " has joined " << chan << " from " << host << std::endl;
+      DEBUG << "#irc: user " << name << " has joined " << chan << " from " << host;
     };
     if (std::regex_search(toParse, msgMatches, quitRe)) {
       const auto name = msgMatches[1].str();
       const auto host = msgMatches[2].str();
       const auto msg = msgMatches[3].str();
-      std::cerr << "[DEBUG] #irc: user " << name << " has left because of " << msg << std::endl;
+      DEBUG << "#irc: user " << name << " has left because of " << msg;
     };
     if (std::regex_search(toParse, msgMatches, msgRe)) {
       name = msgMatches[1].str();
@@ -110,14 +111,14 @@ namespace ircChannel {
       std::regex actionRe("\001ACTION (.*)\001");
       if (std::regex_search(text, msgMatches, actionRe)) {
         text = msgMatches[1].str();
-        std::cerr << "[DEBUG] #irc:" << name << "[ACTION]: " << text << std::endl;
+        DEBUG << "#irc:" << name << "[ACTION]: " << text;
 
         const auto msg = std::make_shared<const messaging::ActionMessage>(_id,
                                                                           std::make_shared<const messaging::User>(messaging::User(name.c_str())),
                                                                           text.c_str());
         return msg;
       }
-      std::cerr << "[DEBUG] #irc:" << name << ": " << text << std::endl;
+      DEBUG << "#irc:" << name << ": " << text;
       const auto msg = std::make_shared<const messaging::TextMessage>(_id,
                                                                       std::make_shared<const messaging::User>(messaging::User(name.c_str())),
                                                                       text.c_str());
@@ -127,7 +128,7 @@ namespace ircChannel {
   }
 
   void IrcChannel::registerConnection() {
-    std::cerr << "[DEBUG] Registering IRC connection" << std::endl;
+    DEBUG << "Registering IRC connection";
 
     const std::string nick = _config.get("nickname", "chatsyncbot");
     const std::string mode = _config.get("mode", "*");
@@ -155,12 +156,12 @@ namespace ircChannel {
 
     send(joinline);
     std::this_thread::sleep_for(std::chrono::milliseconds (500));
-    std::cerr << "[DEBUG] #irc: Entered channel" << std::endl;
+    DEBUG << "#irc: Entered channel";
   }
 
   void IrcChannel::ping() {
     _ping_time = std::chrono::high_resolution_clock::now();
-    std::cerr << "[DEBUG] #irc: Sending ping" << std::endl;
+    DEBUG << "#irc: Sending ping";
     send("PING " + _server + "\r\n");
   }
 
@@ -173,9 +174,9 @@ namespace ircChannel {
     _connection_issue = false;
     std::chrono::duration<double> diff = pong_time - _ping_time;
     const auto& pong_time_t = std::chrono::system_clock::to_time_t(pong_time);
-    std::cerr << "[DEBUG] #irc: last pong at: '" <<
+    DEBUG << "#irc: last pong at: '" <<
       std::put_time(std::localtime(&pong_time_t), "%F %T") <<
-      " and it took " << diff.count() << "s" << std::endl;
+      " and it took " << diff.count() << "s";
   }
 
   void IrcChannel::checkTimeout() {
@@ -198,12 +199,12 @@ namespace ircChannel {
     if (diff > max_timeout * 5) {
       if (!_connection_issue) {
         /* Something happened to our connection */
-        std::cerr << "[DEBUG] #irc: Got connection issue" << std::endl;
+        DEBUG << "#irc: Got connection issue";
         _connection_issue = true;
         ping();
       } else {
         /* Drop the descriptor to initiate reconnect() */
-        std::cerr << "[DEBUG] #irc: Connection failure detected. Closing _fd." << std::endl;
+        DEBUG << "#irc: Connection failure detected. Closing _fd.";
         _connection_issue = false;
         disconnect(_fd);
       }

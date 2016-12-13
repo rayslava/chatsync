@@ -1,5 +1,6 @@
 #include "toxchannel.hpp"
 #include "messages.hpp"
+#include "logging.hpp"
 
 namespace linux {
 #include <sys/types.h>
@@ -86,7 +87,7 @@ namespace toxChannel {
       options.savedata_type = TOX_SAVEDATA_TYPE_TOX_SAVE;
       retval = tox_new(&options, &tox_error);
     } catch (config::option_error e) {
-      std::cerr << "[DEBUG] Can't open tox data: " << e.what() << std::endl;
+      DEBUG << "Can't open tox data: " << e.what();
       options.savedata_data = nullptr;
       options.savedata_length = 0;
       options.ipv6_enabled = config.get("ipv6", "false");
@@ -94,13 +95,13 @@ namespace toxChannel {
     }
     switch (tox_error) {
     case TOX_ERR_NEW_OK:
-      std::cerr << "[DEBUG] toxdata successfully loaded" << std::endl;
+      DEBUG << "toxdata successfully loaded";
       break;
     case TOX_ERR_NEW_LOAD_BAD_FORMAT:
-      std::cerr << "[DEBUG] toxdata file is damaged" << std::endl;
+      DEBUG << "toxdata file is damaged";
       break;
     default:
-      std::cerr << "[DEBUG] tox_new error: " << tox_error << std::endl;
+      DEBUG << "tox_new error: " << tox_error;
     }
     return retval;
   }
@@ -125,7 +126,7 @@ namespace toxChannel {
   void ToxChannel::incoming(const messaging::message_ptr&& msg) {
     if (msg->type() == messaging::MessageType::Text) {
       const auto textmsg = messaging::TextMessage::fromMessage(msg);
-      std::cerr << "[DEBUG] #tox " << _name << " " << textmsg->data() << std::endl;
+      DEBUG << "#tox " << _name << " " << textmsg->data();
       static uint8_t msg[TOX_MAX_MESSAGE_LENGTH];
       const auto len = snprintf(reinterpret_cast<char *>(msg), TOX_MAX_MESSAGE_LENGTH,
                                 "[%s]: %s",
@@ -138,7 +139,7 @@ namespace toxChannel {
     } else if (msg->type() == messaging::MessageType::Action) {
       const auto actionmsg = messaging::ActionMessage::fromMessage(msg);
 
-      std::cerr << "[DEBUG] #tox " << _name << " performs action " << actionmsg->data() << std::endl;
+      DEBUG << "#tox " << _name << " performs action " << actionmsg->data();
       static uint8_t msg[TOX_MAX_MESSAGE_LENGTH];
       const auto len = snprintf(reinterpret_cast<char *>(msg), TOX_MAX_MESSAGE_LENGTH,
                                 "[%s]: %s",
@@ -155,7 +156,7 @@ namespace toxChannel {
   }
 
   void ToxChannel::pollThread() {
-    std::cerr << "[DEBUG] Starting tox thread" << std::endl;
+    DEBUG << "Starting tox thread";
     while (_pipeRunning) {
 #ifdef CTOXCORE
       tox_iterate(_tox, this);
@@ -181,12 +182,12 @@ namespace toxChannel {
       int result = linux::write(toxfd, toxData.get(), filesize);
       if (result < 0)
         throw config::option_error("Error writing file");
-      std::cerr << "[DEBUG] #tox " << _name << " Successfully saved " << result << " bytes of tox data" << std::endl;
+      DEBUG << "#tox " << _name << " Successfully saved " << result << " bytes of tox data";
       result = linux::close(toxfd);
       if (result < 0)
         throw config::option_error("Error closing file");
     } catch (config::option_error e) {
-      std::cerr << "[DEBUG] Can't save tox data: " << e.what() << std::endl;
+      DEBUG << "Can't save tox data: " << e.what();
     }
     tox_kill(_tox);
   }
@@ -195,7 +196,7 @@ namespace toxChannel {
     TOX_ERR_FRIEND_ADD friend_error;
     const auto channel = static_cast<ToxChannel *>(userdata);
     const auto friendNum = tox_friend_add_norequest(tox, public_key, &friend_error);     /** @todo check friend_error */
-    std::cerr << "[DEBUG] tox id with data" << data << " of " << length << " bytes " << util::ToxId2HR<TOX_ADDRESS_SIZE>(public_key) << " wants to be your friend. Added with #" << friendNum << std::endl;
+    DEBUG << "tox id with data" << data << " of " << length << " bytes " << util::ToxId2HR<TOX_ADDRESS_SIZE>(public_key) << " wants to be your friend. Added with #" << friendNum;
   }
 
   void ToxChannel::messageCallback(Tox* tox, uint32_t friendnumber, TOX_MESSAGE_TYPE type, const uint8_t* message, size_t length, void* userdata) {
@@ -204,7 +205,7 @@ namespace toxChannel {
     snprintf(*buffer, length + 1, "%s", message);
     switch (type) {
     case TOX_MESSAGE_TYPE_NORMAL:
-      std::cerr << "[DEBUG] Message from friend #" << friendnumber << "> " << *buffer << std::endl;
+      DEBUG << "Message from friend #" << friendnumber << "> " << *buffer;
       if (util::strncmp(cmd_invite, *buffer, length) == 0) {
 #ifdef CTOXCORE
         tox_conference_invite(tox, friendnumber, 0, NULL);
@@ -214,10 +215,10 @@ namespace toxChannel {
       }
       break;
     case TOX_MESSAGE_TYPE_ACTION:
-      std::cerr << "[DEBUG] Action from friend #" << friendnumber << "> " << *buffer << std::endl;
+      DEBUG << "Action from friend #" << friendnumber << "> " << *buffer;
       break;
     default:
-      std::cerr << "[DEBUG] Unknown message type from " << friendnumber << "> " << *buffer << std::endl;
+      DEBUG << "Unknown message type from " << friendnumber << "> " << *buffer;
     }
   }
 
@@ -254,15 +255,14 @@ namespace toxChannel {
       }
 
       {
-        std::cerr << "[DEBUG] tox Group msg ";
+        DEBUG << "tox Group msg ";
         const auto tmsg = std::dynamic_pointer_cast<messaging::TextMessage>(newMessage);
         const auto amsg = std::dynamic_pointer_cast<messaging::ActionMessage>(newMessage);
         if (tmsg) {
-          std::cerr << tmsg->user()->name() << "> " << tmsg->data();
+          ERROR << tmsg->user()->name() << "> " << tmsg->data();
         } else if (amsg) {
-          std::cerr << amsg->user()->name() << "> " << amsg->data();
+          ERROR << amsg->user()->name() << "> " << amsg->data();
         }
-        std::cerr << std::endl;
       }
 
       channel->_hub->newMessage(std::move(newMessage));
@@ -285,7 +285,7 @@ namespace toxChannel {
       const auto newMessage = std::make_shared<MsgType>(channel->_id,
                                                         std::make_shared<const messaging::User>(messaging::User(*name)),
                                                         *msg);
-      std::cerr << "[DEBUG] tox Group msg " << newMessage->user()->name() << "> " << newMessage->data() << std::endl;
+      DEBUG << "tox Group msg " << newMessage->user()->name() << "> " << newMessage->data();
       channel->_hub->newMessage(std::move(newMessage));
     }
   }
@@ -346,11 +346,10 @@ namespace toxChannel {
         throw channeling::activate_error(_name, ERR_TOX_INIT + ": Can't decode bootstrapping ip");
     }
 
-    std::cerr << "[DEBUG] Bootstrapping" << std::endl;
+    DEBUG << "Bootstrapping";
     /* @todo Make timeout exception handling */
 
     while (!wasConnected) {
-      TOX_CONNECTION status;
 #ifdef CTOXCORE
       tox_iterate(_tox, this);
 #else
@@ -360,8 +359,7 @@ namespace toxChannel {
       if (!wasConnected && (TOX_CONNECTION_NONE != tox_self_get_connection_status(_tox))) {
         std::array<uint8_t, TOX_ADDRESS_SIZE> address;
         tox_self_get_address (_tox, address.data ());
-        std::cerr << "[DEBUG] Tox is connected with id " << util::ToxId2HR (address) << std::endl
-        ;
+        DEBUG << "Tox is connected with id " << util::ToxId2HR (address);
         wasConnected = true;
       }
       std::this_thread::sleep_for( std::chrono::milliseconds (wait));

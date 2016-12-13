@@ -1,7 +1,6 @@
 #include "hub.hpp"
 #include <memory>
 #include <algorithm>
-#include <sstream>
 #include <future>
 
 #include "messages.hpp"
@@ -90,7 +89,7 @@ namespace Hub {
   void Hub::msgLoop() {
     while (_loopRunning) {
       const auto msg = popMessage();
-      for (auto & out : _outputChannels)
+      for (auto& out : _outputChannels)
         if ((nullptr != msg) && (msg->_originId != out->_id))
           msg >> *out;
     }
@@ -102,14 +101,14 @@ namespace Hub {
 
     std::vector<std::future<void> > activators;
 
-    for (auto & out : _outputChannels)
+    for (auto& out : _outputChannels)
       activators.push_back(out->activate());
 
     bool ready = true;
     try {
       do {
         ready = true;
-        for (auto & ch : activators) {
+        for (auto& ch : activators) {
           ready &= ch.valid();
           if (ch.valid())
             ch.get();
@@ -117,16 +116,16 @@ namespace Hub {
       } while (!ready);
       activators.clear();
     } catch(const channeling::channel_error& ce) {
-      std::cerr << "Can't run channel " << ce._name << ":" << ce.what() << std::endl;
+      ERROR << "Can't run channel " << ce._name << ":" << ce.what();
       throw std::runtime_error("Failed to activate hub " + _name);
     }
 
-    for (auto & in : _inputChannels)
+    for (auto& in : _inputChannels)
       activators.push_back(in->activate());
 
     do {
       ready = true;
-      for (auto & ch : activators) {
+      for (auto& ch : activators) {
         ready &= ch.valid();
         if (ch.valid())
           ch.get();
@@ -154,13 +153,13 @@ namespace Hub {
   void Hub::tick() {
     std::vector<std::future<void> > activators;
 
-    for (auto & out : _outputChannels)
+    for (auto& out : _outputChannels)
       activators.push_back(
         std::async(std::launch::async, [&out]()
       {
         out->tick();
       }));
-    for (auto & in : _inputChannels)
+    for (auto& in : _inputChannels)
       activators.push_back(
         std::async(std::launch::async, [&in]()
       {

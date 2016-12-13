@@ -6,6 +6,7 @@
 #include <memory>
 
 #include "messages.hpp"
+#include "logging.hpp"
 
 namespace channeling {
   std::atomic_int ChannelFactory::id {ATOMIC_FLAG_INIT};
@@ -23,12 +24,12 @@ namespace channeling {
     _hub(hub),
     _id(ChannelFactory::nextId())
   {
-    std::cout << _name << " : " << _id << std::endl;
+    DEBUG << _name << " : " << _id;
     _hub->addChannel(this);
   }
 
   Channel::~Channel() {
-    std::cerr << "[DEBUG] Destroying " << _name << " : " << _id << std::endl;
+    DEBUG << "Destroying " << _name << " : " << _id;
   }
 
   std::string const& Channel::name() const {
@@ -39,7 +40,7 @@ namespace channeling {
     if (channel.direction() == channeling::ChannelDirection::Input)
       throw std::logic_error("Can't write data to input channel " + channel.name());
     const auto message = messaging::TextMessage::fromMessage(msg);
-    std::cerr << "[DEBUG] Incoming message " << message->data() << std::endl;
+    DEBUG << "Incoming message " << message->data();
     std::async(std::launch::async, [&channel, msg = std::move(msg)]()
     {
       channel.incoming(std::move(msg));
@@ -49,7 +50,7 @@ namespace channeling {
 
   void Channel::startPolling() {
     if (_fd < 0) {
-      std::cerr << "[DEBUG] Channel " << _name << " fd < 0, reconnecting" << std::endl;
+      DEBUG << "Channel " << _name << " fd < 0, reconnecting";
       reconnect();
       return;
     }
@@ -63,16 +64,16 @@ namespace channeling {
       _pipeRunning = false;
       _thread->detach();
       _thread.reset();
-      std::cerr << "[DEBUG] Thread " << _name << " joined." << std::endl;
+      DEBUG << "Thread " << _name << " joined.";
     }
   }
 
   void Channel::reconnect() {
     if (!*_hub_alive) {
-      std::cerr << "[DEBUG] Hub is dead. Aborting reconnect" << std::endl;
+      DEBUG << "Hub is dead. Aborting reconnect";
       return;
     }
-    std::cerr << "[DEBUG] Channel trying to reconnect after stop. @" << this << std::endl;
+    DEBUG << "Channel trying to reconnect after stop. @" << this;
 
     const unsigned int timeout = _config.get("reconnect_timeout", "5000");
     const unsigned int max_repeats = _config.get("max_reconnects", "3");
@@ -81,7 +82,7 @@ namespace channeling {
     stopPolling();
     disconnect();
 
-    std::cerr << "[DEBUG] Channel " << name() << ": file descriptor closed" << std::endl;
+    DEBUG << "Channel " << name() << ": file descriptor closed";
 
     activate().wait();
     if (_pipeRunning) {
@@ -165,7 +166,7 @@ namespace channeling {
       if (!*_alive) return;
       if (_pipeRunning && (err < 0 || net::fcntl(readFd, F_GETFD) == -1 || errno == EBADF)) {
         if (!*_alive) return;
-        std::cerr << "[DEBUG] select() failed. Reconnecting channel " << name() << std::endl;
+        DEBUG << "select() failed. Reconnecting channel " << name();
         std::async(std::launch::async, [this]() {
           std::this_thread::sleep_for(std::chrono::milliseconds(_reconnect_timeout));
           reconnect();
@@ -182,7 +183,7 @@ namespace channeling {
           if (!*_alive) return;
           std::async(std::launch::async, [this]() {
             std::this_thread::sleep_for(std::chrono::milliseconds(_reconnect_timeout));
-            std::cerr << "[DEBUG] ioctl() failed. Reconnecting channel " << name() << std::endl;
+            DEBUG << "ioctl() failed. Reconnecting channel " << name();
             reconnect();
           });
           return;
@@ -210,7 +211,7 @@ namespace channeling {
     /* IPv4 resolution */
     server = net::gethostbyname2(hostname.c_str(), AF_INET);
     if (server != NULL) {
-      std::cerr << "[DEBUG] Connecting through IPv4" << std::endl;
+      DEBUG << "Connecting through IPv4";
       struct net::sockaddr_in serv_addr;
       sockfd = net::socket(AF_INET, net::SOCK_STREAM, 0);
       if (sockfd < 0)
@@ -232,7 +233,7 @@ namespace channeling {
         throw channeling::activate_error(_name, ERR_CONNECTION);
     } else {
       /* IPv6 resolution */
-      std::cerr << "[DEBUG] Connecting through IPv6" << std::endl;
+      DEBUG << "Connecting through IPv6";
       struct net::sockaddr_in6 serv_addr;
       struct servent* sp;
       server = net::gethostbyname2(hostname.c_str(), AF_INET6);
