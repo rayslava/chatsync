@@ -7,30 +7,26 @@ before_install:
     - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
     - sudo add-apt-repository --yes ppa:yjwong/cmake
     - sudo add-apt-repository --yes ppa:george-edison55/precise-backports
-    - sudo add-apt-repository --yes 'deb http://llvm.org/apt/precise/ llvm-toolchain-precise-3.6 main'
+    - sudo add-apt-repository --yes 'deb http://llvm.org/apt/precise/ llvm-toolchain-precise-3.8 main'
     - wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key | sudo apt-key add -
     - sudo apt-get -qq update
-    - sudo apt-get -qq --yes --force-yes install libclang-3.6-dev clang-3.6 gcc-5 g++-5 libgtest-dev valgrind lcov cmake cmake-data build-essential libtool autotools-dev automake checkinstall check git yasm
+    - sudo apt-get -qq --yes --force-yes install libclang-3.8-dev clang-3.8 gcc-5 g++-5 valgrind lcov cmake cmake-data build-essential libtool autotools-dev automake checkinstall check git yasm
     - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 40 --slave /usr/bin/g++ g++ /usr/bin/g++-5
     - sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-5 40
     - sudo update-alternatives --config gcc
     - sudo update-alternatives --config gcov
-    - export LD_LIBRARY_PATH=/usr/lib/llvm-3.6/lib/
-    - export PATH=/usr/lib/llvm-3.6/bin:$PATH
+    - export LD_LIBRARY_PATH=/usr/lib/llvm-3.8/lib/
+    - export PATH=/usr/lib/llvm-3.8/bin:$PATH
     - sudo pip install cpp-coveralls
+    - cd $(mktemp -d) && git clone https://github.com/google/googletest.git && cd googletest && mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX=/usr .. && make VERBOSE=1 && sudo make VERBOSE=1 install && sudo ldconfig
     - cd $(mktemp -d)
-    - cmake /usr/src/gtest
-    - make -j4
-    - sudo mv libgtest.a /usr/lib/
-    - sudo mv libgtest_main.a /usr/lib
-    - cd $(mktemp -d)
-    - wget 'http://ftp.stack.nl/pub/users/dimitri/doxygen-1.8.10.src.tar.gz'
-    - tar xf doxygen-1.8.10.src.tar.gz
-    - cd doxygen-1.8.10 && mkdir build && cd build
+    - wget 'http://ftp.stack.nl/pub/users/dimitri/doxygen-1.8.12.src.tar.gz'
+    - tar xf doxygen-1.8.12.src.tar.gz
+    - cd doxygen-1.8.12 && mkdir build && cd build
     - cmake -G "Unix Makefiles" ..
     - make -j4
     - sudo make install
-    - cd $(mktemp -d) && git clone git://github.com/jedisct1/libsodium.git && cd libsodium &&  git checkout tags/1.0.3 &&  ./autogen.sh &&  ./configure --enable-static --prefix=/usr && make check && sudo checkinstall --install --pkgname libsodium --pkgversion 1.0.3 --nodoc < /dev/null && sudo ldconfig
+    - cd $(mktemp -d) && git clone git://github.com/jedisct1/libsodium.git && cd libsodium &&  git checkout tags/1.0.11 &&  ./autogen.sh &&  ./configure --enable-static --prefix=/usr && make check && sudo checkinstall --install --pkgname libsodium --pkgversion 1.0.11 --nodoc < /dev/null && sudo ldconfig
     - cd $(mktemp -d) && git clone git://github.com/irungentoo/toxcore.git && cd toxcore &&  CC=gcc autoreconf -i && CC=gcc ./configure --enable-static && CC=gcc make && sudo make install && sudo ldconfig
     - cd $TRAVIS_BUILD_DIR
 matrix:

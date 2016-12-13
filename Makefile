@@ -2,7 +2,7 @@ BINARY=chatsync
 JOBS=$(shell grep -c '^processor' /proc/cpuinfo)
 VERBOSE=1
 
-all: stylecheck doxygen asan tsan clang release clang-release analyzed
+all: stylecheck doxygen asan clang release clang-release analyzed
 
 doxygen:
 	doxygen Doxyfile
@@ -23,7 +23,7 @@ asan:
 	$(call build-dir, $@) && cmake .. -DCMAKE_CXX_FLAGS="-fsanitize=address" -DCMAKE_BUILD_TYPE=RelWithDebInfo && $(MAKE) -j $(JOBS) && ctest -j 1
 
 tsan:
-	$(call build-dir, $@) && CXX=clang++ CC=clang cmake .. -DCMAKE_CXX_FLAGS="-fsanitize=thread"  -DCMAKE_BUILD_TYPE=RelWithDebInfo && $(MAKE) -j $(JOBS) && ./unit_tests
+	$(call build-dir, $@) && CXX=clang++ CC=clang cmake .. -DCMAKE_CXX_FLAGS="-fsanitize=thread"  -DCMAKE_BUILD_TYPE=Debug && $(MAKE) -j $(JOBS) && ./unit_tests
 
 msan:
 	$(call build-dir, $@) && CXX=clang++ CC=clang cmake .. -DCMAKE_CXX_FLAGS="-fsanitize=memory -fsanitize-memory-track-origins=2 -fsanitize-memory-use-after-dtor -fno-omit-frame-pointer -fno-optimize-sibling-calls -O0 -fsanitize-blacklist=$(shell pwd)/scripts/msan_blacklist.txt"  -DCMAKE_BUILD_TYPE=Debug && $(MAKE) -j $(JOBS) VERBOSE=1 && MSAN_OPTIONS=poison_in_dtor=1 ./unit_tests
@@ -77,10 +77,10 @@ dockerimage:
 	cd dockerbuild && (docker images | grep $(BINARY)-ctoxcore-deploy) || docker build --build-arg TOXSRC="TokTok/c-toxcore" -t $(BINARY)-ctoxcore-deploy .
 
 dockerimage-clean:
-	docker rm $(docker ps -a -q)
-	docker rmi $(docker images -a --filter=dangling=true -q)
-	docker rmi chatsync-deploy
-	docker rmi chatsync-ctoxcore-deploy
+	docker rm $(shell docker ps -a -q) || true
+	docker rmi $(shell docker images -a --filter=dangling=true -q) || true
+	docker rmi $(BINARY)-deploy || true
+	docker rmi $(BINARY)-ctoxcore-deploy || true
 
 dockerbuild/$(BINARY).tar.gz:
 	rm -f dockerbuild/$(BINARY).tar.gz
@@ -98,7 +98,7 @@ deploy: dockerbuild/$(BINARY).tar.gz
 	cd dockerbuild && docker run -v "$(shell pwd)/dockerbuild:/mnt/host" $(BINARY)-deploy /bin/bash -c 'cd /root && tar xfz /mnt/host/$(BINARY).tar.gz && cd $(BINARY) && mkdir build && cd build && cmake -DSTATIC=True -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make $(BINARY) -j $(JOBS) && cp $(BINARY) /mnt/host/$(BINARY)'
 	rm dockerbuild/$(BINARY).tar.gz
 
-deploy-ctoxcore: dockerbuild/$(BINARY).tar.gz
+deploy-ctoxcore: dockerbuild/$(BINARY).tar.gz dockerimage
 	cd dockerbuild && docker run -v "$(shell pwd)/dockerbuild:/mnt/host" $(BINARY)-ctoxcore-deploy /bin/bash -c 'cd /root && tar xfz /mnt/host/$(BINARY).tar.gz && cd $(BINARY) && mkdir build && cd build && cmake -DSTATIC=True -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make $(BINARY) -j $(JOBS) && cp $(BINARY) /mnt/host/$(BINARY)-ctoxcore'
 	rm dockerbuild/$(BINARY).tar.gz
 
