@@ -20,6 +20,8 @@ var dir_68267d1309a1af8e8297ef4c3efbcdba =
     [ "hub.hpp", "hub_8hpp.html", "hub_8hpp" ],
     [ "ircchannel.cpp", "ircchannel_8cpp.html", null ],
     [ "ircchannel.hpp", "ircchannel_8hpp.html", "ircchannel_8hpp" ],
+    [ "logging.cpp", "logging_8cpp.html", null ],
+    [ "logging.hpp", "logging_8hpp.html", "logging_8hpp" ],
     [ "main.cpp", "main_8cpp.html", "main_8cpp" ],
     [ "message.hpp", "message_8hpp.html", "message_8hpp" ],
     [ "messages.hpp", "messages_8hpp.html", "messages_8hpp" ],

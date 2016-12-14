@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['user',['User',['../classmessaging_1_1User.html',1,'messaging']]]
+  ['textmessage',['TextMessage',['../classmessaging_1_1TextMessage.html',1,'messaging']]],
+  ['toxchannel',['ToxChannel',['../classtoxChannel_1_1ToxChannel.html',1,'toxChannel']]]
 ];

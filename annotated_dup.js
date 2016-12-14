@@ -5,6 +5,7 @@ var annotated_dup =
     [ "fileChannel", "namespacefileChannel.html", "namespacefileChannel" ],
     [ "Hub", "namespaceHub.html", "namespaceHub" ],
     [ "ircChannel", "namespaceircChannel.html", "namespaceircChannel" ],
+    [ "logging", "namespacelogging.html", "namespacelogging" ],
     [ "messaging", "namespacemessaging.html", "namespacemessaging" ],
     [ "toxChannel", "namespacetoxChannel.html", "namespacetoxChannel" ]
 ];

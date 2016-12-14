@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['main',['main',['../main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main.cpp']]],
-  ['max_5ftimeout',['max_timeout',['../namespaceircChannel.html#a0af75e3b8a47f118a789c302017afde0',1,'ircChannel']]],
-  ['message',['Message',['../classmessaging_1_1Message.html#a2acc94cbf688eb6bfc6541a0c7b24f67',1,'messaging::Message']]],
-  ['messagecallback',['messageCallback',['../classtoxChannel_1_1ToxChannel.html#a02850e4dec8811f1cecdb614b40185dd',1,'toxChannel::ToxChannel']]],
-  ['msgloop',['msgLoop',['../classHub_1_1Hub.html#a5046d0079801387ada28d27b612efbc0',1,'Hub::Hub']]]
+  ['log',['log',['../classlogging_1_1LoggerImpl.html#a4715944fbca00e5eb73cd9ddbf6c3897',1,'logging::LoggerImpl']]],
+  ['loggerimpl',['LoggerImpl',['../classlogging_1_1LoggerImpl.html#a2fb650f207f2866b0876ae8ca7aeaf63',1,'logging::LoggerImpl::LoggerImpl(LoggerImpl const &amp;)=delete'],['../classlogging_1_1LoggerImpl.html#a39f7c80cfd511c98d1c127abb3f735ac',1,'logging::LoggerImpl::LoggerImpl(LoggerImpl &amp;&amp;)=delete'],['../classlogging_1_1LoggerImpl.html#a4396f8a094f458f02faaed3f9ae01bed',1,'logging::LoggerImpl::LoggerImpl()']]],
+  ['logmessage',['LogMessage',['../structlogging_1_1LogMessage.html#a7e4f64e9d2475bc225aa4addaf27aebd',1,'logging::LogMessage']]],
+  ['logwriter',['LogWriter',['../classlogging_1_1LogWriter.html#a623282c1e824a92b22ed405f16a39e91',1,'logging::LogWriter']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['input',['Input',['../namespacechanneling.html#a469c576e1963fd3481107d4dcdf6de32a324118a6721dd6b8a9b9f4e327df2bf5',1,'channeling']]]
+  ['debug',['debug',['../namespacelogging.html#a994c417780d7fe2c882aab6dbeb8f451aa8e7bccd55418c8ecc7a23bb5d9afcff',1,'logging']]]
 ];

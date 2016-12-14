@@ -15,6 +15,12 @@ var hierarchy =
     [ "config::ConfigOption", "classconfig_1_1ConfigOption.html", null ],
     [ "config::ConfigParser", "classconfig_1_1ConfigParser.html", null ],
     [ "Hub::Hub", "classHub_1_1Hub.html", null ],
+    [ "logging::LoggerImpl", "classlogging_1_1LoggerImpl.html", null ],
+    [ "logging::LogMessage", "structlogging_1_1LogMessage.html", null ],
+    [ "logging::LogSink", "structlogging_1_1LogSink.html", [
+      [ "logging::LogSinkPrinter", "classlogging_1_1LogSinkPrinter.html", null ]
+    ] ],
+    [ "logging::LogWriter< s >", "classlogging_1_1LogWriter.html", null ],
     [ "messaging::Message", "classmessaging_1_1Message.html", [
       [ "messaging::ActionMessage", "classmessaging_1_1ActionMessage.html", null ],
       [ "messaging::TextMessage", "classmessaging_1_1TextMessage.html", null ]

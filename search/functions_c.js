@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['send',['send',['../classchanneling_1_1Channel.html#ace9560ace8aa973184e49998d6412209',1,'channeling::Channel::send(const uint32_t fd, const std::string &amp;msg) const '],['../classchanneling_1_1Channel.html#a462b0ae528a63c56829e5e887ed0aaa0',1,'channeling::Channel::send(const std::string &amp;msg) const ']]],
-  ['sighandler',['sighandler',['../main_8cpp.html#a8c3b11e8f6bdd36ec82e5332c667ea7b',1,'main.cpp']]],
-  ['startpolling',['startPolling',['../classchanneling_1_1Channel.html#a3a98ed307d751858672f491939811d69',1,'channeling::Channel']]],
-  ['stoppolling',['stopPolling',['../classchanneling_1_1Channel.html#abc9e3ab8a477c1d29f648e3448f8bd7f',1,'channeling::Channel']]]
+  ['reconnect',['reconnect',['../classchanneling_1_1Channel.html#a00fd03f47645cdb87ee289193bd2d39c',1,'channeling::Channel']]],
+  ['registerclass',['registerClass',['../classchanneling_1_1ChannelFactory.html#a41631f90ecfaccd3ba3fc6fdcbe7f3b9',1,'channeling::ChannelFactory']]],
+  ['registerconnection',['registerConnection',['../classircChannel_1_1IrcChannel.html#aa27c22126c88c3ffcd3e954cf7661812',1,'ircChannel::IrcChannel']]]
 ];

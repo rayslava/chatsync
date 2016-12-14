@@ -6,6 +6,7 @@ var namespaces =
     [ "Hub", "namespaceHub.html", null ],
     [ "ircChannel", "namespaceircChannel.html", "namespaceircChannel" ],
     [ "linux", "namespacelinux.html", null ],
+    [ "logging", "namespacelogging.html", null ],
     [ "messaging", "namespacemessaging.html", null ],
     [ "toxChannel", "namespacetoxChannel.html", "namespacetoxChannel" ]
 ];

@@ -34,7 +34,7 @@ var searchData=
   ['configparser',['ConfigParser',['../classconfig_1_1ConfigParser.html#a2017fcd2e6d147536e7e7d8dbe82ff20',1,'config::ConfigParser']]],
   ['configprefixdata',['configPrefixData',['../namespaceconfig.html#aa115b81841b8b3e5a254f02f710d4f81',1,'config']]],
   ['configprefixfile',['configPrefixFile',['../namespaceconfig.html#a6b3bf8de83fc951bd01035bc67ad9417',1,'config']]],
-  ['connect',['connect',['../classchanneling_1_1Channel.html#ace5e2aff2b229a567cbd8b0e66127191',1,'channeling::Channel']]],
+  ['connect',['connect',['../classchanneling_1_1Channel.html#aab3f619551800338c1fe8505100da81c',1,'channeling::Channel']]],
   ['connection_5ferror',['connection_error',['../classchanneling_1_1connection__error.html#a373af6ad41080aa61f64bbc464c2f226',1,'channeling::connection_error']]],
   ['connection_5ferror',['connection_error',['../classchanneling_1_1connection__error.html',1,'channeling']]],
   ['create',['create',['../classchanneling_1_1ChannelCreator.html#a36a8439d92e19fef0d83525bd48c8982',1,'channeling::ChannelCreator::create()'],['../classchanneling_1_1ChannelCreatorImpl.html#ab48ae885f08f8d35560aacff92b7cec5',1,'channeling::ChannelCreatorImpl::create()'],['../classchanneling_1_1ChannelFactory.html#a7731c5ffd09a692193a039e9dbc2088c',1,'channeling::ChannelFactory::create()']]],

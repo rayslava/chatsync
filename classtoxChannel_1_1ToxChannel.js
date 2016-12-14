@@ -7,10 +7,10 @@ var classtoxChannel_1_1ToxChannel =
     [ "groupMessageCallback", "classtoxChannel_1_1ToxChannel.html#a5254882f74ee40b7d54dbf500c7e426f", null ],
     [ "incoming", "classtoxChannel_1_1ToxChannel.html#a3fdbe267b3e96befe52ae3b2cb19e43f", null ],
     [ "messageCallback", "classtoxChannel_1_1ToxChannel.html#a02850e4dec8811f1cecdb614b40185dd", null ],
-    [ "parse", "classtoxChannel_1_1ToxChannel.html#aee8db0a02b7f9806406f96bec21c6fbd", null ],
+    [ "parse", "classtoxChannel_1_1ToxChannel.html#a15bd57c28dd55dbe040dfd3042b902c6", null ],
     [ "pollThread", "classtoxChannel_1_1ToxChannel.html#ae9313cf6fd430d6cce838f847f64f394", null ],
     [ "toxStart", "classtoxChannel_1_1ToxChannel.html#a9f7b87df08419596a010235fb2a9abae", null ],
-    [ "type", "classtoxChannel_1_1ToxChannel.html#a668fdf5e88b41c332c16c71be3c26822", null ],
+    [ "type", "classtoxChannel_1_1ToxChannel.html#aedcd171c13294b16af14563c6c7fb5ff", null ],
     [ "_tox", "classtoxChannel_1_1ToxChannel.html#a21f37a11eddffd62371e36b9e4445eed", null ],
     [ "creator", "classtoxChannel_1_1ToxChannel.html#a47659c8a03b724048bf61fff0674868f", null ],
     [ "wasConnected", "classtoxChannel_1_1ToxChannel.html#ae8a52bbfb2dbe37312b4f9eaf2e9aab5", null ]
