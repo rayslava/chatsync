@@ -59,7 +59,7 @@ namespace logging {
     std::size_t fractional_seconds = ms.count() % 1000;
 
     result << "[" << std::put_time(std::localtime(&t), "%F %T.")
-           << fractional_seconds << "]  "
+           << std::setfill('0') << std::setw(3) << fractional_seconds << "]  "
            << "[" << severity_lines[msg._severity] << "] "
            << msg._message;
     return result.str();
