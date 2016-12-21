@@ -69,15 +69,32 @@ namespace ircChannel {
 
   }
 
-  const messaging::message_ptr IrcChannel::parse(const char* line) const
-  {
+  const messaging::message_ptr IrcChannel::parse(const char* line) const {
     // :rayslava!~v.barinov@212.44.150.238 PRIVMSG #chatsync :ololo
     const std::string toParse(line);
+    std::vector<std::string> lines;
+    std::string::size_type pos = 0, lastpos = 0;
+    while ((pos = toParse.find("\r\n", lastpos, 2)) != std::string::npos) {
+      lines.push_back(toParse.substr(lastpos, pos - lastpos + 2));
+      lastpos = pos + 2;
+    };
+
+    const auto lastitem = std::move(lines.back());
+    lines.pop_back();
+
+    for (const auto& item : lines)
+      _hub->newMessage(parseImpl(item));
+
+    return parseImpl(lastitem);
+  }
+
+  const messaging::message_ptr IrcChannel::parseImpl(const std::string& toParse) const
+  {
     DEBUG << "Parsing irc line:" << toParse;
 
-    std::regex msgRe (":(\\S+)!(\\S+)\\s+PRIVMSG\\s+#(\\S+)\\s+:(.*)\r\n$");
-    std::regex joinRe(":(\\S+)!(\\S+)\\s+JOIN\\s+:#(\\S+)$");
-    std::regex quitRe(":(\\S+)!(\\S+)\\s+QUIT\\s+:#(\\S+)$");
+    std::regex msgRe ("^:(\\S+)!(\\S+)\\s+PRIVMSG\\s+#(\\S+)\\s+:(.*)\r\n$");
+    std::regex joinRe("^:(\\S+)!(\\S+)\\s+JOIN\\s+:#(\\S+)$");
+    std::regex quitRe("^:(\\S+)!(\\S+)\\s+QUIT\\s+:#(\\S+)$");
     std::regex pingRe("PING\\s+:(.*)\r\n$");
     std::regex pongRe("PONG\\s+(.*)\r\n$");
 
@@ -112,7 +129,6 @@ namespace ircChannel {
       if (std::regex_search(text, msgMatches, actionRe)) {
         text = msgMatches[1].str();
         DEBUG << "#irc:" << name << "[ACTION]: " << text;
-
         const auto msg = std::make_shared<const messaging::ActionMessage>(_id,
                                                                           std::make_shared<const messaging::User>(messaging::User(name.c_str())),
                                                                           text.c_str());

@@ -192,5 +192,39 @@ TEST(IrcChannel, Action)
   delete[] buffer;
   close(sfd);
   close(nfd);
+}
 
+TEST(IrcChannel, MultiLine)
+{
+  const auto hub = new Hub::Hub ("Hub");
+  int sfd, nfd;
+
+  const std::string& msgLine = ":testuser!~testhost PRIVMSG #chatsync :message1\r\n:testuser!~testhost PRIVMSG #chatsync :message2\r\n:testuser!~testhost PRIVMSG #chatsync :message3\r\n";
+  const auto server = std::make_unique<std::thread>(std::thread(&sockListen, std::ref(msgLine), std::ref(sfd), std::ref(nfd)));
+  std::this_thread::sleep_for( std::chrono::milliseconds (50) );    // Give time to open socket
+  const auto ich = channeling::ChannelFactory::create("irc", hub, "data://direction=input\nname=ircin\nserver=127.0.0.1\nport=" + std::to_string(port) + "\nchannel=test");
+  channeling::ChannelFactory::create("file", hub, "data://direction=output\nname=outfile");
+  const std::string valid_line = "testuser: message1testuser: message2testuser: message3";
+  const int buffer_size = valid_line.length() + 1;
+  const auto buffer = new char[buffer_size];
+
+  perror("Activating");
+  hub->activate();
+  std::this_thread::sleep_for( std::chrono::milliseconds (150) );
+  perror("Deactivating");
+  hub->deactivate();
+  std::this_thread::sleep_for( std::chrono::milliseconds (50) );
+  delete hub;
+  server->join();
+
+  const auto fd = open("output", O_RDONLY | O_SYNC);
+  ASSERT_NE(fd, -1);
+  bzero(buffer, buffer_size);
+  auto err = read(fd, buffer, buffer_size - 1);
+  ASSERT_EQ(err, buffer_size - 1);
+  close(fd);
+  ASSERT_STREQ(buffer, valid_line.c_str());
+  delete[] buffer;
+  close(sfd);
+  close(nfd);
 }

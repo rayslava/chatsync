@@ -47,6 +47,7 @@ namespace ircChannel {
     const messaging::message_ptr parse(const char* line) const override;
 
     static const channeling::ChannelCreatorImpl<IrcChannel> creator;
+    const messaging::message_ptr parseImpl(const std::string& toParse) const;
   public:
     explicit IrcChannel(Hub::Hub* hub, const std::string& config);
     ~IrcChannel();
