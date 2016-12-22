@@ -27,6 +27,7 @@ TEST(FileChannel, name)
 
 TEST(FileChannel, files)
 {
+  unlink("output");
   const auto hub = new Hub::Hub ("Hub");
 
   const auto ich = channeling::ChannelFactory::create("file", hub, "data://direction=input\nname=infile");
@@ -126,6 +127,7 @@ TEST(IrcChannel, sockerr)
 
 TEST(IrcChannel, socket)
 {
+  unlink("output");
   const auto hub = new Hub::Hub ("Hub");
   int sfd, nfd;
   const std::string& msgLine = ":testuser!~testhost PRIVMSG #chatsync :message\r\n";
@@ -144,7 +146,7 @@ TEST(IrcChannel, socket)
   std::this_thread::sleep_for( std::chrono::milliseconds (150) );
   perror("Deactivating");
   hub->deactivate();
-  std::this_thread::sleep_for( std::chrono::milliseconds (50) );
+  std::this_thread::sleep_for( std::chrono::milliseconds (150) );
   delete hub;
   server->join();
 
@@ -162,6 +164,7 @@ TEST(IrcChannel, socket)
 
 TEST(IrcChannel, Action)
 {
+  unlink("output");
   const auto hub = new Hub::Hub ("Hub");
   int sfd, nfd;
   const std::string& actionLine = ":testuser!~testhost PRIVMSG #chatsync :\001ACTION test\001\r\n";
@@ -178,7 +181,7 @@ TEST(IrcChannel, Action)
   std::this_thread::sleep_for( std::chrono::milliseconds (150) );
   perror("Deactivating");
   hub->deactivate();
-  std::this_thread::sleep_for( std::chrono::milliseconds (50) );
+  std::this_thread::sleep_for( std::chrono::milliseconds (150) );
   delete hub;
   server->join();
 
@@ -196,6 +199,7 @@ TEST(IrcChannel, Action)
 
 TEST(IrcChannel, MultiLine)
 {
+  unlink("output");
   const auto hub = new Hub::Hub ("Hub");
   int sfd, nfd;
 
@@ -213,7 +217,7 @@ TEST(IrcChannel, MultiLine)
   std::this_thread::sleep_for( std::chrono::milliseconds (150) );
   perror("Deactivating");
   hub->deactivate();
-  std::this_thread::sleep_for( std::chrono::milliseconds (50) );
+  std::this_thread::sleep_for( std::chrono::milliseconds (150) );
   delete hub;
   server->join();
 

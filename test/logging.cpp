@@ -4,6 +4,7 @@
 
 TEST(Logging, log)
 {
+  DEFAULT_LOGGING
   testing::internal::CaptureStderr();
   std::string line = "asdf";
   auto sink = std::make_shared<logging::LogSinkPrinter>();
