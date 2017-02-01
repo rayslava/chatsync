@@ -73,7 +73,7 @@ if (FEATURE_TOX)
   find_package (Sodium REQUIRED)
   CHECK_C_SOURCE_COMPILES(
     "#include \"tox/tox.h\"
-     #if !(TOX_VERSION_IS_API_COMPATIBLE(0,0,5))
+     #if !(TOX_VERSION_IS_API_COMPATIBLE(0,1,5))
      #error \"Please use c-toxcore\"
      #endif
      int main() {return 0;}
