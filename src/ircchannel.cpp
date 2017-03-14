@@ -41,6 +41,7 @@ namespace ircChannel {
       registerConnection();
       startPolling();
       _active = true;
+      ping();
     });
   }
 
@@ -221,8 +222,8 @@ namespace ircChannel {
       } else {
         /* Drop the descriptor to initiate reconnect() */
         DEBUG << "#irc: Connection failure detected. Closing _fd.";
-        _connection_issue = false;
         disconnect(_fd);
+        _fd = -1;
       }
     }
   }
