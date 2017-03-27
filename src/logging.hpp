@@ -88,6 +88,7 @@ namespace logging {
     std::condition_variable _cond;         /**< The var to signal new messages */
     std::unique_ptr<std::thread> _writer;  /**< Thread for outing */
     std::atomic_bool _running;             /**< Writing logs is active */
+    std::chrono::milliseconds _log_timeout;/**< Timeout for writing log */
     std::weak_ptr<LogSink> _sink;          /**< Place to send messages */
 
     /**
@@ -122,7 +123,8 @@ namespace logging {
       _mutex(),
       _cond(),
       _writer(nullptr),
-      _running(ATOMIC_FLAG_INIT)
+      _running(ATOMIC_FLAG_INIT),
+      _log_timeout(0)
     {}
 
     ~LoggerImpl() {

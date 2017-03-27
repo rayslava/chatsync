@@ -1,4 +1,5 @@
 #include "logging.hpp"
+
 #include <queue>
 #include <mutex>
 #include <condition_variable>
@@ -8,9 +9,20 @@ namespace logging {
 
   void LoggerImpl::log(const LogMessage&& msg) {
     // Prepare the message
+    const static unsigned int timeout = 25;
+    const static unsigned int max_repeats = 5;
     {
-      std::unique_lock<std::mutex> mlock(_mutex);
-      _messages.push(std::move(msg));
+      std::unique_lock<std::mutex> mlock(_mutex, std::defer_lock);
+      if (mlock.try_lock()) {
+        _messages.push(std::move(msg));
+        _log_timeout = std::chrono::milliseconds(timeout);
+      } else {
+        if (_log_timeout.count() > timeout * max_repeats)
+          throw std::runtime_error("Maximum number of log attempts reached");
+        std::this_thread::sleep_for(std::chrono::milliseconds(_log_timeout));
+        _log_timeout += std::chrono::milliseconds(timeout);
+        log(std::move(msg));
+      }
     }
     // Notifying doesn't require mutex lock
     _cond.notify_one();
