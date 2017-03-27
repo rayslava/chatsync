@@ -11,6 +11,7 @@ var classlogging_1_1LoggerImpl =
     [ "setOutput", "classlogging_1_1LoggerImpl.html#a4b6ad4a97b3db3c33cd9ec3e454f0f98", null ],
     [ "writeOut", "classlogging_1_1LoggerImpl.html#a54754130c342143a7294eeda5fc60044", null ],
     [ "_cond", "classlogging_1_1LoggerImpl.html#a79a75c7176485fc47ed1d7031d226155", null ],
+    [ "_log_timeout", "classlogging_1_1LoggerImpl.html#a1352a362e8ec59eada3b5205ae9f9a40", null ],
     [ "_messages", "classlogging_1_1LoggerImpl.html#ab786e4459801b14e5240a4465688df32", null ],
     [ "_mutex", "classlogging_1_1LoggerImpl.html#aefb8197f1ca131b90ede5e3556dc1051", null ],
     [ "_running", "classlogging_1_1LoggerImpl.html#a48094071b766c19a876e8a9639e7553d", null ],

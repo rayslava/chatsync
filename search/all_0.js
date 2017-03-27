@@ -15,6 +15,7 @@ var searchData=
   ['_5fid',['_id',['../classchanneling_1_1Channel.html#ad6c8e11ef6573578bd8afed0b2b4c912',1,'channeling::Channel']]],
   ['_5finputchannels',['_inputChannels',['../classHub_1_1Hub.html#a4c0e1a3ab97b966fb2686069d796ca42',1,'Hub::Hub']]],
   ['_5flast_5fpong_5ftime',['_last_pong_time',['../classircChannel_1_1IrcChannel.html#a7077238a2b3814cdc8fb61de2230aec9',1,'ircChannel::IrcChannel']]],
+  ['_5flog_5ftimeout',['_log_timeout',['../classlogging_1_1LoggerImpl.html#a1352a362e8ec59eada3b5205ae9f9a40',1,'logging::LoggerImpl']]],
   ['_5flooprunning',['_loopRunning',['../classHub_1_1Hub.html#a1c89f0b1f1644a623b21c8fd7badb7fe',1,'Hub::Hub']]],
   ['_5fmessage',['_message',['../structlogging_1_1LogMessage.html#a5607128265e5457ec598d91d037a018d',1,'logging::LogMessage::_message()'],['../classlogging_1_1LogWriter.html#a1eb6448c28f644d19b7ab66c87058ffb',1,'logging::LogWriter::_message()']]],
   ['_5fmessages',['_messages',['../classHub_1_1Hub.html#a972b709b7fa75e6c80db9619fa093375',1,'Hub::Hub::_messages()'],['../classlogging_1_1LoggerImpl.html#ab786e4459801b14e5240a4465688df32',1,'logging::LoggerImpl::_messages()']]],
