@@ -4,6 +4,7 @@
 #include <mutex>
 #include <condition_variable>
 #include <iostream>
+#include <future>
 
 namespace logging {
 
@@ -19,9 +20,12 @@ namespace logging {
       } else {
         if (_log_timeout.count() > timeout * max_repeats)
           throw std::runtime_error("Maximum number of log attempts reached");
-        std::this_thread::sleep_for(std::chrono::milliseconds(_log_timeout));
+        std::async(std::launch::async,
+                   [](const auto impl, const auto&& msg, const auto& timeout) {
+          std::this_thread::sleep_for(std::chrono::milliseconds(timeout));
+          impl->log(std::move(msg));
+        }, this, std::move(msg), _log_timeout);
         _log_timeout += std::chrono::milliseconds(timeout);
-        log(std::move(msg));
       }
     }
     // Notifying doesn't require mutex lock
