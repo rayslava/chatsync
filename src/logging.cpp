@@ -16,16 +16,17 @@ namespace logging {
       std::unique_lock<std::mutex> mlock(_mutex, std::defer_lock);
       if (mlock.try_lock()) {
         _messages.push(std::move(msg));
-        _log_timeout = std::chrono::milliseconds(timeout);
+        _log_repeat = 1;
       } else {
-        if (_log_timeout.count() > timeout * max_repeats)
+        if (_log_repeat > max_repeats)
           throw std::runtime_error("Maximum number of log attempts reached");
-        std::async(std::launch::async,
-                   [](const auto impl, const auto&& msg, const auto& timeout) {
-          std::this_thread::sleep_for(std::chrono::milliseconds(timeout));
-          impl->log(std::move(msg));
-        }, this, std::move(msg), _log_timeout);
-        _log_timeout += std::chrono::milliseconds(timeout);
+        std::thread(
+          [this, msg {std::move(msg)}]() {
+          const auto& rep = this->_log_repeat;
+          std::this_thread::sleep_for(std::chrono::milliseconds(timeout * rep * rep));
+          this->log(std::move(msg));
+        }).detach();
+        ++_log_repeat;
       }
     }
     // Notifying doesn't require mutex lock
