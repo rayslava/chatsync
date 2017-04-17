@@ -142,7 +142,7 @@ var NAVTREEINDEX0 =
 "classlogging_1_1LoggerImpl.html":[2,0,5,0],
 "classlogging_1_1LoggerImpl.html#a027699540993d63d054bb7b40248a605":[2,0,5,0,3],
 "classlogging_1_1LoggerImpl.html#a040f289766710389af2c83b94c53b809":[2,0,5,0,6],
-"classlogging_1_1LoggerImpl.html#a1352a362e8ec59eada3b5205ae9f9a40":[2,0,5,0,11],
+"classlogging_1_1LoggerImpl.html#a15b7b808ee598bf5029094bcee7439c0":[2,0,5,0,11],
 "classlogging_1_1LoggerImpl.html#a2fb650f207f2866b0876ae8ca7aeaf63":[2,0,5,0,0],
 "classlogging_1_1LoggerImpl.html#a32870178be1395de56a26fcde17f9e82":[2,0,5,0,15],
 "classlogging_1_1LoggerImpl.html#a39f7c80cfd511c98d1c127abb3f735ac":[2,0,5,0,1],
