@@ -36,11 +36,13 @@ namespace logging {
   void LoggerImpl::writeOut() {
     while (_running && !_sink.expired()) {
       if (const auto& out = _sink.lock()) {
-        std::unique_lock<std::mutex> mlock;
-        while (_messages.empty()) {
-          mlock = std::unique_lock<std::mutex>(_mutex);
+        std::unique_lock<std::mutex> mlock(_mutex);
+
+        while (_messages.empty() && _running)
           _cond.wait(mlock);
-        }
+
+        if (!_running)
+          continue;
 
         auto item = std::move(_messages.front());
         _messages.pop();
