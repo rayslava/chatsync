@@ -12,7 +12,7 @@ namespace channeling {
   std::atomic_int ChannelFactory::id {ATOMIC_FLAG_INIT};
 
   Channel::Channel(Hub::Hub * const hub, const std::string& config) :
-    _reconnect_timeout(5000),
+    _reconnect_attempt(0),
     _hub_alive(hub->alive()),
     _active(ATOMIC_FLAG_INIT),
     _thread(nullptr),
@@ -60,6 +60,7 @@ namespace channeling {
 
   void Channel::stopPolling() {
     if (_thread) {
+      DEBUG << "Thread " << _name << " stops polling.";
       _active = false;
       _pipeRunning = false;
       _thread->detach();
@@ -77,7 +78,7 @@ namespace channeling {
 
     const unsigned int timeout = _config.get("reconnect_timeout", "5000");
     const unsigned int max_repeats = _config.get("max_reconnects", "3");
-    if (_reconnect_timeout.count() > timeout * max_repeats)
+    if (_reconnect_attempt > max_repeats)
       throw connection_error(_name, "Maximum number of reconnections reached");
     stopPolling();
     disconnect();
@@ -87,17 +88,15 @@ namespace channeling {
     activate().wait();
     if (_pipeRunning) {
       // Successfully reconnected
-      const unsigned int timeout = _config.get("reconnect_timeout", "5000");
-      _reconnect_timeout = std::chrono::milliseconds(timeout);
+      _reconnect_attempt = 0;
       return;
     }
 
-    _reconnect_timeout *= 2;
-
-    std::async(std::launch::async, [this]() {
-      std::this_thread::sleep_for(std::chrono::milliseconds(_reconnect_timeout));
+    ++_reconnect_attempt;
+    std::thread([this, timeout]() {
+      std::this_thread::sleep_for(std::chrono::milliseconds(timeout * _reconnect_attempt));
       reconnect();
-    });
+    }).detach();
   }
 
   Channel * ChannelFactory::create(const std::string& classname, Hub::Hub * const hub, const std::string& config) {
@@ -167,8 +166,7 @@ namespace channeling {
       if (_pipeRunning && (err < 0 || net::fcntl(readFd, F_GETFD) == -1 || errno == EBADF)) {
         if (!*_alive) return;
         DEBUG << "select() failed. Reconnecting channel " << name();
-        std::async(std::launch::async, [this]() {
-          std::this_thread::sleep_for(std::chrono::milliseconds(_reconnect_timeout));
+        std::thread([this]() {
           reconnect();
         });
         return;
@@ -181,9 +179,7 @@ namespace channeling {
         err = net::ioctl(readFd, FIONREAD, &bytes);
         if (err < 0 || bytes == 0) {
           if (!*_alive) return;
-          std::async(std::launch::async, [this]() {
-            std::this_thread::sleep_for(std::chrono::milliseconds(_reconnect_timeout));
-            DEBUG << "ioctl() failed. Reconnecting channel " << name();
+          std::thread([this]() {
             reconnect();
           });
           return;

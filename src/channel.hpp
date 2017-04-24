@@ -61,7 +61,7 @@ namespace channeling {
    * If channel has own abstraction then it can override _pollThread() and implement own message loop.
    */
   class Channel {
-    std::chrono::milliseconds _reconnect_timeout;   /**< Timeout for next reconnect */
+    unsigned int _reconnect_attempt;                /**< Number of reconnection attempt */
 
     /**
      * Wait for _reconnect_timeout and try to call activate()
