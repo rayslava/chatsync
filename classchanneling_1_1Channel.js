@@ -28,6 +28,6 @@ var classchanneling_1_1Channel =
     [ "_id", "classchanneling_1_1Channel.html#ad6c8e11ef6573578bd8afed0b2b4c912", null ],
     [ "_name", "classchanneling_1_1Channel.html#ab71902360f53639f041db422cf49cae3", null ],
     [ "_pipeRunning", "classchanneling_1_1Channel.html#ab5745eab177ac1dbebf1923c2b35889e", null ],
-    [ "_reconnect_timeout", "classchanneling_1_1Channel.html#a37822d40112432c55cb323deb0988c73", null ],
+    [ "_reconnect_attempt", "classchanneling_1_1Channel.html#ad1410f7836df9b4aa61438561a4353df", null ],
     [ "_thread", "classchanneling_1_1Channel.html#ac38e865ae299a182bffdaa946770ea74", null ]
 ];

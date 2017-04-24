@@ -28,7 +28,7 @@ var searchData=
   ['_5fpiperunning',['_pipeRunning',['../classchanneling_1_1Channel.html#ab5745eab177ac1dbebf1923c2b35889e',1,'channeling::Channel']]],
   ['_5fpong_5ftime_5fmutex',['_pong_time_mutex',['../classircChannel_1_1IrcChannel.html#af843162b6fe04849ac44604e1bfa6a56',1,'ircChannel::IrcChannel']]],
   ['_5fport',['_port',['../classircChannel_1_1IrcChannel.html#ab68f31d628fae4ad985c24a3cc3ee05c',1,'ircChannel::IrcChannel']]],
-  ['_5freconnect_5ftimeout',['_reconnect_timeout',['../classchanneling_1_1Channel.html#a37822d40112432c55cb323deb0988c73',1,'channeling::Channel']]],
+  ['_5freconnect_5fattempt',['_reconnect_attempt',['../classchanneling_1_1Channel.html#ad1410f7836df9b4aa61438561a4353df',1,'channeling::Channel']]],
   ['_5frunning',['_running',['../classlogging_1_1LoggerImpl.html#a48094071b766c19a876e8a9639e7553d',1,'logging::LoggerImpl']]],
   ['_5fserver',['_server',['../classircChannel_1_1IrcChannel.html#afded0c90bc90f3bdae8f73fc64aaac27',1,'ircChannel::IrcChannel']]],
   ['_5fseverity',['_severity',['../structlogging_1_1LogMessage.html#aae4a98fdeccedd0b37468fb6ee9f66ec',1,'logging::LogMessage']]],
