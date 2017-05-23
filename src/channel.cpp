@@ -168,7 +168,7 @@ namespace channeling {
         DEBUG << "select() failed. Reconnecting channel " << name();
         std::thread([this]() {
           reconnect();
-        });
+        }).detach();
         return;
       }
       if (err > 0 && FD_ISSET(readFd, &readset)) {
@@ -181,7 +181,7 @@ namespace channeling {
           if (!*_alive) return;
           std::thread([this]() {
             reconnect();
-          });
+          }).detach();
           return;
         }
         auto line = new char[bytes + 1];
