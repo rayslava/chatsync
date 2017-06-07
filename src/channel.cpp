@@ -5,6 +5,7 @@
 #include <utility>
 #include <memory>
 
+#include "net.hpp"
 #include "messages.hpp"
 #include "logging.hpp"
 
@@ -122,28 +123,6 @@ namespace channeling {
     ChannelFactory::registerClass(classname, this);
   }
 
-  /* OS interaction code begins here */
-  namespace net {
-    extern "C" {
-#include <arpa/inet.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <netdb.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <sys/stat.h>
-#include <unistd.h>
-#include <sys/ioctl.h>
-#include <stropts.h>
-    }
-  }
-
   void Channel::pollThread() {
     const int readFd = _fd;
     auto _alive = _hub_alive;
@@ -163,7 +142,7 @@ namespace channeling {
       errno = 0;
       err = select(readFd + 1, &readset, NULL, NULL, &tv);
       if (!*_alive) return;
-      if (_pipeRunning && (err < 0 || net::fcntl(readFd, F_GETFD) == -1 || errno == EBADF)) {
+      if (_pipeRunning && (err < 0 || networking::os::fcntl(readFd, F_GETFD) == -1 || errno == EBADF)) {
         if (!*_alive) return;
         DEBUG << "select() failed. Reconnecting channel " << name();
         std::thread([this]() {
@@ -176,7 +155,7 @@ namespace channeling {
         FD_CLR(readFd, &readset);
         // Check available size
         int bytes;
-        err = net::ioctl(readFd, FIONREAD, &bytes);
+        err = networking::os::ioctl(readFd, FIONREAD, &bytes);
         if (err < 0 || bytes == 0) {
           if (!*_alive) return;
           std::thread([this]() {
@@ -187,7 +166,7 @@ namespace channeling {
         auto line = new char[bytes + 1];
         line[bytes] = 0;
         // Do a simple read on data
-        err = net::read(readFd, line, bytes);
+        err = networking::os::read(readFd, line, bytes);
         if (err != bytes)
           throw std::runtime_error(ERR_SOCK_READ);
         // Parse received data
@@ -199,68 +178,11 @@ namespace channeling {
   }
 
   int Channel::connect(const std::string& hostname, const uint32_t port) const {
-    int sockfd, n;
-    struct net::hostent* server;
-
-    char buffer[256];
-
-    /* IPv4 resolution */
-    server = net::gethostbyname2(hostname.c_str(), AF_INET);
-    if (server != NULL) {
-      DEBUG << "Connecting through IPv4";
-      struct net::sockaddr_in serv_addr;
-      sockfd = net::socket(AF_INET, net::SOCK_STREAM, 0);
-      if (sockfd < 0)
-        throw channeling::activate_error(_name, ERR_SOCK_CREATE);
-
-      net::bzero((char *) &serv_addr, sizeof(struct net::sockaddr_in));
-      serv_addr.sin_family = AF_INET;
-      net::bcopy((char *) server->h_addr,
-                 (char *) &serv_addr.sin_addr.s_addr,
-                 server->h_length);
-      {
-        /* Ugly workaround to use different optimization levels for compiler */
-#ifndef htons
-        using net::htons;
-#endif
-        serv_addr.sin_port = htons(port);
-      }
-      if (net::connect(sockfd, (struct net::sockaddr *) &serv_addr, sizeof(serv_addr)) < 0)
-        throw channeling::activate_error(_name, ERR_CONNECTION);
-    } else {
-      /* IPv6 resolution */
-      DEBUG << "Connecting through IPv6";
-      struct net::sockaddr_in6 serv_addr;
-      struct servent* sp;
-      server = net::gethostbyname2(hostname.c_str(), AF_INET6);
-      if (server == NULL)
-        throw channeling::activate_error(_name, ERR_HOST_NOT_FOUND);
-
-      sockfd = net::socket(AF_INET6, net::SOCK_STREAM, 0);
-      if (sockfd < 0)
-        throw channeling::activate_error(_name, ERR_SOCK_CREATE);
-
-      net::bzero((char *) &serv_addr, sizeof(struct net::sockaddr_in6));
-      serv_addr.sin6_family = AF_INET6;
-      net::bcopy((char *) server->h_addr,
-                 (char *) &serv_addr.sin6_addr,
-                 server->h_length);
-      {
-        /* Ugly workaround to use different optimization levels for compiler */
-#ifndef htons
-        using net::htons;
-#endif
-        serv_addr.sin6_port = htons(port);
-      }
-      if (net::connect(sockfd, (struct net::sockaddr *) &serv_addr, sizeof(serv_addr)) < 0)
-        throw channeling::activate_error(_name, ERR_CONNECTION);
-    }
-
-    return sockfd;
+    return networking::tcp_connect(hostname + ":" + std::to_string(port));
   }
 
   int Channel::send(const uint32_t fd, const std::string& msg) const {
-    const int n = net::write(fd, msg.c_str(), msg.length());
+    const int n = networking::os::write(fd, msg.c_str(), msg.length());
     if (n < 0)
       throw std::runtime_error(ERR_SOCK_WRITE);
 
@@ -269,7 +191,7 @@ namespace channeling {
 
   int Channel::disconnect(const uint32_t fd) const {
     if (_fd > 0)
-      net::close(fd);
+      networking::os::close(fd);
     return 0;
   }
 }

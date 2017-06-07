@@ -31,7 +31,11 @@ namespace ircChannel {
     return std::async(std::launch::async, [this]() {
       if (_active)
         return;
-      _fd = connect(_server, _port);
+      try {
+        _fd = connect(_server, _port);
+      } catch (std::exception& ex) {
+        throw channeling::activate_error(_name, ex.what());
+      }
       // Wait for server
       int retval = -1;
       while (retval < 0) {
