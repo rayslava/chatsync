@@ -4,9 +4,13 @@
 #include <memory>
 #include <iomanip>
 #include <signal.h>
+#ifdef TLS_SUPPORT
+#include <gnutls/gnutls.h>
+#endif
 #include "channel.hpp"
 #include "config.hpp"
 #include "logging.hpp"
+
 
 static std::atomic_bool running = ATOMIC_FLAG_INIT;
 
@@ -95,6 +99,10 @@ int main(int argc, char* argv[])
   if (sigaction(SIGINT, &sa, NULL) == -1)
     ERROR << "Couldn't set up signal handling, continuing without graceful death possibility";
 
+#ifdef TLS_SUPPORT
+  gnutls_global_init();
+#endif
+
   running = true;
   for (auto& c : hublist)
     c->activate();
@@ -108,5 +116,10 @@ int main(int argc, char* argv[])
 
   for (auto& c : hublist)
     c->deactivate();
+
+#ifdef TLS_SUPPORT
+  gnutls_global_deinit();
+#endif
+
   return 0;
 }

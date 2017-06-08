@@ -4,6 +4,7 @@ cmake_policy(SET CMP0049 OLD)
 
 enable_language(C CXX)
 include (CheckCSourceCompiles)
+include (CheckCXXSourceCompiles)
 
 set(CMAKE_MODULE_PATH
   ${CMAKE_MODULE_PATH}
@@ -14,6 +15,9 @@ find_package (Threads REQUIRED)
 
 # Optional plugins
 option (FEATURE_TOX "Build Tox support" ON)
+
+# Optional plugins
+option (TLS_SUPPORT "Build TLS connection support (using gnutlsxx)" ON)
 
 if(FEATURE_TOX)
   option (USE_C_TOXCORE "Build Tox support using c-toxcore from TokTok" OFF)
@@ -58,6 +62,8 @@ macro(create_test name files)
     ${name}_tests
     ${GTEST_BOTH_LIBRARIES}
     ${GMOCK_BOTH_LIBRARIES}
+    ${GNUTLSXX_LIBRARY}
+    ${GNUTLS_LIBRARIES}
     ${CMAKE_THREAD_LIBS_INIT}
     ${TOX_LIBRARY}
     ${SODIUM_LIBRARY}
@@ -91,6 +97,21 @@ if (FEATURE_TOX)
     )
 endif()
 
+if (TLS_SUPPORT)
+  message (STATUS "Compiling with TLS support")
+  find_package(PkgConfig REQUIRED)
+  pkg_check_modules(GNUTLS REQUIRED gnutls>=3.5.12)
+  CHECK_CXX_SOURCE_COMPILES(
+    "#include \"gnutls/gnutlsxx.h\"
+     int main() {return 0;}
+     " GNUTLSXX)
+  if (NOT GNUTLSXX)
+    message(FATAL_ERROR "Can't find gnutlsxx")
+  endif()
+  add_definitions(-DTLS_SUPPORT)
+  set(GNUTLSXX_LIBRARY "gnutlsxx")
+endif()
+
 include(ConfigSafeGuards)
 
 find_package(GTest)
@@ -114,6 +135,7 @@ set(CMAKE_CXX_FLAGS_PROFILED "${CMAKE_CXX_FLAGS} -pg")
 
 if (STATIC)
   set(BUILD_SHARED_LIBS OFF)
+  set(GNUTLS_LIBRARIES ${GNUTLS_LIBRARIES_STATIC})
   set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
   set(CMAKE_CXX_FLAGS         "${CMAKE_CXX_FLAGS} -static -Wl,--whole-archive -lpthread -Wl,--no-whole-archive -fPIC -fPIE")
   if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
@@ -163,6 +185,8 @@ include_directories(
 target_link_libraries(
   chatsync
   ${CMAKE_THREAD_LIBS_INIT}
+  ${GNUTLSXX_LIBRARY}
+  ${GNUTLS_LIBRARIES}
   ${TOX_LIBRARY}
   ${SODIUM_LIBRARY}
   ${STATIC_LIBRT}
