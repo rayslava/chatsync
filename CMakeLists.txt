@@ -30,6 +30,7 @@ set(SOURCE_FILES
   src/filechannel.cpp
   src/hub.cpp
   src/logging.cpp
+  src/http.cpp
   )
 
 macro(create_test name files)
@@ -202,6 +203,8 @@ create_test(hub test/hub.cpp)
 create_test(config test/config.cpp)
 
 create_test(logging test/logging.cpp)
+
+create_test(http test/http.cpp)
 
 if (FEATURE_TOX)
   create_test(tox test/tox.cpp)

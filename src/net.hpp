@@ -45,8 +45,10 @@ namespace networking {
    */
   class tls_error: public network_error {
   public:
-    tls_error(std::string const& message) :
-      network_error(message)
+    const size_t code;
+    tls_error(size_t _code, std::string const& message) :
+      network_error(message),
+      code(_code)
     {};
   };
 
@@ -60,13 +62,14 @@ namespace networking {
    */
   static inline std::pair<os::hostent *, bool> resolve_host(const std::string& hostname) {
     bool ipv6 = false;
+    DEBUG << "Trying to resolve " << hostname;
     auto server = os::gethostbyname2(hostname.c_str(), AF_INET);
     if (!server) {
       server = os::gethostbyname2(hostname.c_str(), AF_INET6);
       ipv6 = true;
     }
     if (!server)
-      throw hostname_error("Can't resolve hostname");
+      throw hostname_error("Can't resolve hostname '" + hostname + "'");
     return std::make_pair(server, ipv6);
   }
 
@@ -90,6 +93,7 @@ namespace networking {
 
     os::hostent* server;
     bool ipv6 = false;
+    TRACE << "Opening tcp connect to " << url;
     std::tie(server, ipv6) = resolve_host(url);
     TRACE << "Host resolved to " << server << " ipv6:" << ipv6;
 
@@ -142,6 +146,7 @@ namespace networking {
 #ifdef TLS_SUPPORT
 #include <gnutls/gnutls.h>
 #include <gnutls/gnutlsxx.h>
+namespace networking {
 
 /**
  * TLS connection management class
@@ -149,74 +154,74 @@ namespace networking {
  * Initializes TLS connection on creation and deinitializes on deletion.
  * All TLS interaction should be done using this class
  */
-class TLSConnection {
-  gnutls::client_session session;                  /**< gnutls session */
-  gnutls::certificate_credentials credentials;     /**< gnutls credentials TODO: support customization */
-public:
-  /**
-   * Create a connection
-   *
-   * \param tcp_fd A file descriptor of socket to the server.
-   *               \b MUST be opened. E.g. using \c tcp_connect()
-   */
-  TLSConnection(int tcp_fd) {
-    session.set_credentials(credentials);
-    session.set_priority ("NORMAL", NULL);
-    session.set_transport_ptr((gnutls_transport_ptr_t) (ptrdiff_t) tcp_fd);
-  }
+  class TLSConnection {
+    gnutls::client_session session;                /**< gnutls session */
+    gnutls::certificate_credentials credentials;   /**< gnutls credentials TODO: support customization */
+  public:
+    /**
+     * Create a connection
+     *
+     * \param tcp_fd A file descriptor of socket to the server.
+     *               \b MUST be opened. E.g. using \c tcp_connect()
+     */
+    TLSConnection(int tcp_fd) {
+      session.set_credentials(credentials);
+      session.set_priority ("NORMAL", NULL);
+      session.set_transport_ptr((gnutls_transport_ptr_t) (ptrdiff_t) tcp_fd);
+    }
 
-  ~TLSConnection() {
-    session.bye(GNUTLS_SHUT_RDWR);
-  }
+    ~TLSConnection() {
+      session.bye(GNUTLS_SHUT_RDWR);
+    }
 
-  /**
-   * Perform TLS handshake
-   */
-  int handshake() {
-    return session.handshake();
-  }
+    /**
+     * Perform TLS handshake
+     */
+    int handshake() {
+      return session.handshake();
+    }
 
-  /**
-   * Number of TLS bytes in socket (may differ from tcp_fd socket bytes)
-   */
-  ssize_t pending_bytes () {
-    return session.check_pending();
-  }
+    /**
+     * Number of TLS bytes in socket (may differ from tcp_fd socket bytes)
+     */
+    ssize_t pending_bytes () {
+      return session.check_pending();
+    }
 
-  /**
-   * Receive data from TLS
-   *
-   * \param buffer Allocated memory for data
-   * \param count Size of \c buffer
-   */
-  ssize_t recv(void* buffer, size_t count) {
-    int ret = session.recv(buffer, count);
+    /**
+     * Receive data from TLS
+     *
+     * \param buffer Allocated memory for data
+     * \param count Size of \c buffer
+     */
+    ssize_t recv(void* buffer, size_t count) {
+      int ret = session.recv(buffer, count);
 
-    if (ret == 0)
-      throw networking::tls_error("Peer has closed the TLS connection");
-    if (ret < 0)
-      throw networking::tls_error(gnutls_strerror(ret));
-    return ret;
-  }
+      if (ret == 0)
+        throw networking::tls_error(ret, "Peer has closed the TLS connection");
+      if (ret < 0)
+        throw networking::tls_error(ret, gnutls_strerror(ret));
+      return ret;
+    }
 
-  /**
-   * Send bytes to TLS
-   *
-   * \param buffer Data to send
-   * \param count Size of \c buffer
-   */
-  ssize_t send(const void * const buffer, size_t count) {
-    return session.send(buffer, count);
-  }
-};
+    /**
+     * Send bytes to TLS
+     *
+     * \param buffer Data to send
+     * \param count Size of \c buffer
+     */
+    ssize_t send(const void * const buffer, size_t count) {
+      return session.send(buffer, count);
+    }
+  };
 
-namespace networking {
   /**
    * Open tls connection to server
    *
    * \param server Server address as servername.domain:port
    */
   static inline std::unique_ptr<TLSConnection> tls_connect(const std::string& host) {
+    TRACE << "Opening tls connect to " << host;
     int tcp_fd = tcp_connect(host);
     auto connection = std::make_unique<TLSConnection>(tcp_fd);
 
@@ -224,7 +229,7 @@ namespace networking {
     int ret = connection->handshake();
 
     if (ret < 0) {
-      throw tls_error("Handshake failed");
+      throw tls_error(ret, "Handshake failed");
     } else {
       DEBUG << "TLS handshake completed";
     }
