@@ -5,6 +5,7 @@ cmake_policy(SET CMP0049 OLD)
 enable_language(C CXX)
 include (CheckCSourceCompiles)
 include (CheckCXXSourceCompiles)
+include (CMakeDependentOption)
 
 set(CMAKE_MODULE_PATH
   ${CMAKE_MODULE_PATH}
@@ -18,10 +19,12 @@ option (FEATURE_TOX "Build Tox support" ON)
 
 # Optional plugins
 option (TLS_SUPPORT "Build TLS connection support (using gnutlsxx)" ON)
+option (FEATURE_TELEGRAM "Build Telegram chat support" ON)
 
 if(FEATURE_TOX)
   option (USE_C_TOXCORE "Build Tox support using c-toxcore from TokTok" OFF)
 endif()
+
 
 set(SOURCE_FILES
   src/config.cpp
@@ -111,6 +114,17 @@ if (TLS_SUPPORT)
   endif()
   add_definitions(-DTLS_SUPPORT)
   set(GNUTLSXX_LIBRARY "gnutlsxx")
+endif()
+
+if (FEATURE_TELEGRAM)
+  if (NOT TLS_SUPPORT)
+    message(FATAL_ERROR "Telegram support requires TLS")
+  endif()
+  message (STATUS "Compiling with Telegram support")
+  find_package(PkgConfig REQUIRED)
+  pkg_check_modules(RAPIDJSON REQUIRED RapidJSON>=1.1.0)
+  add_definitions(-DTELEGRAM)
+  set(SOURCE_FILES ${SOURCE_FILES} src/telegram.cpp)
 endif()
 
 include(ConfigSafeGuards)
@@ -208,6 +222,10 @@ create_test(http test/http.cpp)
 
 if (FEATURE_TOX)
   create_test(tox test/tox.cpp)
+endif()
+
+if (FEATURE_TELEGRAM)
+  create_test(telegram test/telegram.cpp)
 endif()
 
 create_test(unit "${all_test_files}")
