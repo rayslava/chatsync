@@ -22,16 +22,6 @@ namespace http {
     rtrim(s);
   }
 
-  static inline std::string ltrimmed(std::string s) {
-    ltrim(s);
-    return s;
-  }
-
-  static inline std::string rtrimmed(std::string s) {
-    rtrim(s);
-    return s;
-  }
-
   static inline std::string trimmed(std::string s) {
     trim(s);
     return s;
@@ -49,7 +39,8 @@ namespace http {
   }
 
   std::future<std::unique_ptr<HTTPResponse> >
-  HTTPRequest(const std::string& url, HTTPRequestType type, const void* payload, size_t payload_size) {
+  PerformHTTPRequest(const std::string& url, HTTPRequestType type,
+                     const void* payload, size_t payload_size) {
     bool https = false;
     const std::string::size_type proto_end = url.find("://");
     if (proto_end == std::string::npos)
@@ -90,15 +81,8 @@ namespace http {
     DEBUG << "Opening " << std::string(https ? "secure" : "insecure")
           << " connection to " << server << " on port " << port;
 
-    std::string request_line;
-    switch (type) {
-    case HTTPRequestType::GET:
-      request_line.append("GET ");
-      const auto& endpoint = url.substr(port_end);
-      request_line.append(endpoint);
-      request_line.append(" HTTP/1.0\r\n\r\n");
-      break;
-    }
+    HTTPRequest req(type, server, url.substr(port_end));
+    std::string request_line = req.getHTTPLine();
     TRACE << "Requesting: " << request_line;
 
     if (!https) {
@@ -268,6 +252,46 @@ namespace http {
   ssize_t HTTPSConnectionManager::pending() {
     return _conn->pending_bytes();
   }
-
 #endif
+
+  HTTPRequest::HTTPRequest(const HTTPRequestType type, const std::string& host, const std::string& url) :
+    _type(type),
+    _host(host),
+    _url(url)
+  {
+    addHeader("host",	host);
+    addHeader("accept", "*/*");
+  }
+
+  void HTTPRequest::addHeader(const std::string& header, const std::string& val) {
+    std::string head;
+    std::transform(header.begin(), header.end(), std::back_inserter(head), ::tolower);
+    bool nextup = true;
+    for (auto i = head.begin(); i != head.end(); ++i) {
+      if (nextup) {
+        *i = ::toupper(*i);
+        nextup = false;
+      }
+      if (*i == '-') nextup = true;
+    }
+    _headers.push_back(std::make_pair(head, val));
+  }
+
+  const std::string HTTPRequest::getHTTPLine() const {
+    const static std::string http_suffix {"HTTP/1.1"};
+    const static std::string newline {"\r\n"};
+    const std::string req =
+      [this](){
+        switch (_type) {
+        case HTTPRequestType::GET:  return "GET";
+        case HTTPRequestType::HEAD: return "HEAD";
+        default: throw http_error("Can't construct request");
+        }
+      } ();
+    std::string request_line = req + " " + _url + " " + http_suffix + newline;
+    for (auto h : _headers)
+      request_line.append(h.first + ": " + h.second + newline);
+    request_line.append(newline);
+    return request_line;
+  }
 }

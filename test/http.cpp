@@ -15,6 +15,15 @@ namespace http {
     ssize_t pending() {return 0;};
   };
 
+  TEST(HTTPRequest, Creation)
+  {
+    HTTPRequest r(HTTPRequestType::GET, "test");
+    r.addHeader("tEsT-hEaDeR", "Test value");
+    ASSERT_STREQ(r.getHTTPLine().c_str(),
+                 "GET / HTTP/1.1\r\nHost: test\r\n\
+Accept: */*\r\nTest-Header: Test value\r\n\r\n");
+  }
+
   TEST(HTTPResponse, Creation)
   {
     std::unique_ptr<ConnectionManager> ec(new EmptyConnection());
@@ -30,27 +39,27 @@ namespace http {
   {
     DEFAULT_LOGGING
 
-      EXPECT_THROW({ HTTPRequest("test.site");
+      EXPECT_THROW({ PerformHTTPRequest("test.site");
                    }, url_error);
-    EXPECT_THROW({ HTTPRequest("unsupp://test.site");
+    EXPECT_THROW({ PerformHTTPRequest("unsupp://test.site");
                  }, http_error);
-    EXPECT_NO_THROW({ HTTPRequest ("http://test.site");
+    EXPECT_NO_THROW({ PerformHTTPRequest ("http://test.site");
                     });
-    EXPECT_NO_THROW({ HTTPRequest ("http://test.site:443");
+    EXPECT_NO_THROW({ PerformHTTPRequest ("http://test.site:443");
                     });
-    EXPECT_NO_THROW({ HTTPRequest ("https://test.site:8080");
+    EXPECT_NO_THROW({ PerformHTTPRequest ("https://test.site:8080");
                     });
-    EXPECT_NO_THROW({ HTTPRequest ("http://test.site/");
+    EXPECT_NO_THROW({ PerformHTTPRequest ("http://test.site/");
                     });
-    EXPECT_NO_THROW({ HTTPRequest ("https://test.site/");
+    EXPECT_NO_THROW({ PerformHTTPRequest ("https://test.site/");
                     });
   }
 
-  TEST(HTTPRequest, Yandex)
+  TEST(PerformHTTPRequest, Yandex)
   {
     DEFAULT_LOGGING
 
-    auto hr = HTTPRequest("https://yandex.ru");
+    auto hr = PerformHTTPRequest("https://yandex.ru");
     hr.wait();
     std::cerr << "HR is waited";
     auto result = hr.get();

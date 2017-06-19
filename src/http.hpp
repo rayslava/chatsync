@@ -3,6 +3,7 @@
 #include <map>
 #include <future>
 #include <functional>
+#include <list>
 #if defined(_UNIT_TEST_BUILD)
 #include <gtest/gtest_prod.h>
 #endif
@@ -36,7 +37,25 @@ namespace http {
   };
 
   enum class HTTPRequestType {
-    GET
+    GET,
+    HEAD
+  };
+
+  class HTTPRequest {
+    std::list<std::pair<const std::string, const std::string> > _headers;
+  public:
+    const HTTPRequestType _type;
+    const std::string _host;
+    const std::string _url;
+    const std::string getHTTPLine() const;
+    void addHeader(const std::string& header, const std::string& val);
+    HTTPRequest(const HTTPRequestType type, const std::string& host,
+                const std::string& url="/");
+    ~HTTPRequest() {};
+#if defined(_UNIT_TEST_BUILD)
+  private:
+    FRIEND_TEST(HTTPRequest, Creation);
+#endif
   };
 
   struct ConnectionManager {
@@ -94,9 +113,9 @@ namespace http {
   };
 
   std::future<std::unique_ptr<HTTPResponse> >
-  HTTPRequest(const std::string& url,
-              HTTPRequestType	 type=HTTPRequestType::GET,
-              const void       * payload=nullptr,
-              size_t		 payload_size=0);
+  PerformHTTPRequest(const std::string& url,
+                     HTTPRequestType	type=HTTPRequestType::GET,
+                     const void	      * payload=nullptr,
+                     size_t		payload_size=0);
 
 }
