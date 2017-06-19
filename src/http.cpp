@@ -46,7 +46,6 @@ namespace http {
     if (proto_end == std::string::npos)
       throw url_error("Can't detect protocol");
     const auto& proto = url.substr(0, proto_end);
-    ERROR << proto;
     if (proto == "http") {
       WARNING << "Raw HTTP connection is insecure";
       https = false;
@@ -54,15 +53,13 @@ namespace http {
       DEBUG << "HTTPS connection is secure";
       https = true;
     } else {
-      ERROR << "FAILURE with proto" << proto;
-      ERROR << "FAILURE with proto" << proto;
-      ERROR << "FAILURE with proto" << proto;
       throw http_error("Unsupported protocol provided");
     }
 
     /* Now trying to detect if there is a port */
     const std::vector<char> c {':', '/'};
-    const auto server_end_c = std::find_first_of(std::next(url.cbegin(), proto_end + 3), url.cend(),
+    const auto server_end_c = std::find_first_of(std::next(url.cbegin(), proto_end + 3),
+                                                 url.cend(),
                                                  c.begin(), c.end());
     const auto server_end = std::distance(url.cbegin(), server_end_c);
 
@@ -144,7 +141,9 @@ namespace http {
       const auto& http_keyword = http_proto.substr(0, http_proto.find("/"));
       if (http_keyword != "HTTP")
         throw http_error("Response is not HTTP");
-      const auto& http_ver = http_proto.substr(http_keyword.length() + 1, http_proto.length() - http_keyword.length());
+      const auto& http_ver =
+        http_proto.substr(http_keyword.length() + 1,
+                          http_proto.length() - http_keyword.length());
       TRACE << "HTTP: " << http_keyword << " " << http_ver;
       if (std::stof(http_ver) > 1.1f)
         throw http_error("Unsupported version of HTTP");
@@ -194,11 +193,12 @@ namespace http {
       size_t res = 0;
       size_t pending;
       auto last_read = std::chrono::high_resolution_clock::now();
-      auto timeout = [](auto start) {
-                       const auto now = std::chrono::high_resolution_clock::now();
-                       const std::chrono::duration<double> diff = now - start;
-                       return diff > receive_timeout;
-                     };
+      auto timeout =
+        [](auto start) {
+          const auto now = std::chrono::high_resolution_clock::now();
+          const std::chrono::duration<double> diff = now - start;
+          return diff > receive_timeout;
+        };
       while ((pending = _connection_manager->pending()) || !timeout(last_read)) {
         if (current_size < _buffer_size + pending + 1) {
           current_size += MAX_BUF;
@@ -254,7 +254,9 @@ namespace http {
   }
 #endif
 
-  HTTPRequest::HTTPRequest(const HTTPRequestType type, const std::string& host, const std::string& url) :
+  HTTPRequest::HTTPRequest(const HTTPRequestType type,
+                           const std::string   & host,
+                           const std::string   & url) :
     _type(type),
     _host(host),
     _url(url)
@@ -263,9 +265,11 @@ namespace http {
     addHeader("accept", "*/*");
   }
 
-  void HTTPRequest::addHeader(const std::string& header, const std::string& val) {
+  void HTTPRequest::addHeader(const std::string& header,
+                              const std::string& val) {
     std::string head;
-    std::transform(header.begin(), header.end(), std::back_inserter(head), ::tolower);
+    std::transform(header.begin(), header.end(),
+                   std::back_inserter(head), ::tolower);
     bool nextup = true;
     for (auto i = head.begin(); i != head.end(); ++i) {
       if (nextup) {
