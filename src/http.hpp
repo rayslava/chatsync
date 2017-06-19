@@ -50,6 +50,8 @@ namespace http {
    */
   class HTTPRequest {
     std::list<std::pair<const std::string, const std::string> > _headers;
+    std::unique_ptr<char[]> _body;
+    size_t _body_size;
   public:
     const HTTPRequestType _type;           /**< Request type */
     const std::string _host;               /**< Host to insert into Host: header */
@@ -63,6 +65,12 @@ namespace http {
      * \param val Right part of header (after :)
      */
     void addHeader(const std::string& header, const std::string& val);
+
+    /**
+     * Add HTTP request body
+     */
+    void setBody(std::unique_ptr<char[]>&& body, size_t body_size);
+    std::pair<const void * const, size_t> body() const;
     HTTPRequest(const HTTPRequestType type, const std::string& host,
                 const std::string& url="/");
     ~HTTPRequest() {};

@@ -257,6 +257,7 @@ namespace http {
   HTTPRequest::HTTPRequest(const HTTPRequestType type,
                            const std::string   & host,
                            const std::string   & url) :
+    _body_size(0),
     _type(type),
     _host(host),
     _url(url)
@@ -297,5 +298,15 @@ namespace http {
       request_line.append(h.first + ": " + h.second + newline);
     request_line.append(newline);
     return request_line;
+  }
+
+  void HTTPRequest::setBody(std::unique_ptr<char[]>&& body, size_t body_size) {
+    _body = std::move(body);
+    _body_size = body_size;
+  }
+
+  std::pair<const void * const, size_t> HTTPRequest::body() const {
+    const void * const ptr = static_cast<void*>(_body.get());
+    return std::make_pair(ptr, _body_size);
   }
 }

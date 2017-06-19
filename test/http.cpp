@@ -24,6 +24,19 @@ namespace http {
 Accept: */*\r\nTest-Header: Test value\r\n\r\n");
   }
 
+  TEST(HTTPRequest, Body)
+  {
+    HTTPRequest r(HTTPRequestType::GET, "test");
+    auto body = std::unique_ptr<char[]>(new char[1024]);
+    memset(body.get(), 0 , 1024);
+    snprintf(body.get(), 10, "%s", "test line");
+    r.setBody(std::move(body), 1024);
+    const void * ptr;
+    size_t len;
+    std::tie(ptr, len) = r.body();
+    ASSERT_STREQ(static_cast<const char*>(ptr), "test line");
+  }
+
   TEST(HTTPResponse, Creation)
   {
     std::unique_ptr<ConnectionManager> ec(new EmptyConnection());
