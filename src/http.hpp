@@ -20,8 +20,10 @@ namespace http {
    */
   class http_error: public std::runtime_error {
   public:
-    http_error(std::string const& message) :
-      std::runtime_error(message)
+    const int code;
+    http_error(std::string const& message, int code=-1) :
+      std::runtime_error(message),
+      code(code)
     {};
   };
 
@@ -40,7 +42,8 @@ namespace http {
    */
   enum class HTTPRequestType {
     GET,
-    HEAD
+    HEAD,
+    POST
   };
 
   /**
@@ -55,7 +58,7 @@ namespace http {
   public:
     const HTTPRequestType _type;           /**< Request type */
     const std::string _host;               /**< Host to insert into Host: header */
-    const std::string _url;                /**< Endpoint on the \c _host */
+    const std::string _uri;                /**< Endpoint on the \c _host */
     const std::string getHTTPLine() const; /**< Get resulting request */
 
     /**
@@ -72,7 +75,7 @@ namespace http {
     void setBody(std::unique_ptr<char[]>&& body, size_t body_size);
     std::pair<const void * const, size_t> body() const;
     HTTPRequest(const HTTPRequestType type, const std::string& host,
-                const std::string& url="/");
+                const std::string& uri="/");
     ~HTTPRequest() {};
 #if defined(_UNIT_TEST_BUILD)
   private:
@@ -163,7 +166,7 @@ namespace http {
     std::unique_ptr<std::istringstream> _resp;     /**< Internal conversion object */
 
     void parseHttp();                              /**< Parse headers filling \c _headers */
-    void recvPayload();                            /**< Download the rest of answer */
+    void recvBody();                            /**< Download the rest of answer */
   public:
     HTTPResponse(std::unique_ptr<ConnectionManager>&&);
     ~HTTPResponse();

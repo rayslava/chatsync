@@ -120,7 +120,7 @@ namespace http {
     _buffer_size = _connection_manager->recv(_buffer, MAX_BUF - 1);
     /** TODO : check res < 0 */
     parseHttp();
-    recvPayload();
+    recvBody();
   }
 
   HTTPResponse::~HTTPResponse() {
@@ -153,8 +153,8 @@ namespace http {
     const std::string http_text = header.substr(index + 1, header.length());
     TRACE << "The response of proto " << http_proto << " is " << http_code << " with text " << http_text;
     _code = http_code;
-    if (http_code != 200) {
-      throw http_error("Server return HTTP error " + std::to_string(http_code));
+    if (http_code >= 400) {
+      throw http_error("Server return HTTP error " + std::to_string(http_code), http_code);
     }
     // Parse HTTP Headers
     while (std::getline(*_resp, header) && header != "\r") {
@@ -168,12 +168,12 @@ namespace http {
     }
   }
 
-  void HTTPResponse::recvPayload() {
+  void HTTPResponse::recvBody() {
     if (_headers.find("CONTENT-LENGTH") != _headers.end()) {
-      const size_t last_char = MAX_BUF - _resp->tellg();
+      const size_t last_char = _resp->tellg();
       const size_t response_size = std::stoi(_headers["CONTENT-LENGTH"]);
       DEBUG << "Content-Length provided with " << response_size << " bytes.";
-      if (last_char < response_size)
+      if (MAX_BUF - last_char < response_size)
         _buffer = realloc(_buffer, MAX_BUF + response_size);
       char* buf = static_cast<char *>(_buffer);
       while (_buffer_size < last_char + response_size) {
@@ -260,7 +260,7 @@ namespace http {
     _body_size(0),
     _type(type),
     _host(host),
-    _url(url)
+    _uri(url)
   {
     addHeader("host",	host);
     addHeader("accept", "*/*");
@@ -290,10 +290,11 @@ namespace http {
         switch (_type) {
         case HTTPRequestType::GET:  return "GET";
         case HTTPRequestType::HEAD: return "HEAD";
+        case HTTPRequestType::POST: return "POST";
         default: throw http_error("Can't construct request");
         }
       } ();
-    std::string request_line = req + " " + _url + " " + http_suffix + newline;
+    std::string request_line = req + " " + _uri + " " + http_suffix + newline;
     for (auto h : _headers)
       request_line.append(h.first + ": " + h.second + newline);
     request_line.append(newline);
@@ -306,7 +307,7 @@ namespace http {
   }
 
   std::pair<const void * const, size_t> HTTPRequest::body() const {
-    const void * const ptr = static_cast<void*>(_body.get());
+    const void * const ptr = static_cast<void *>(_body.get());
     return std::make_pair(ptr, _body_size);
   }
 }
