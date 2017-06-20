@@ -163,6 +163,7 @@ namespace http {
     std::map<std::string, std::string> _headers;   /**< HTTP headers */
     void* _buffer;                                 /**< Raw data received */
     size_t _buffer_size;                           /**< Guaranteed size of \c _buffer */
+    size_t _header_size;                           /**< Last char of header, where the body starts in _buffer */
     std::unique_ptr<std::istringstream> _resp;     /**< Internal conversion object */
 
     void parseHttp();                              /**< Parse headers filling \c _headers */

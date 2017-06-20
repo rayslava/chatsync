@@ -35,7 +35,8 @@ namespace http {
   }
 
   const std::pair<const void * const, size_t> HTTPResponse::data() const {
-    return std::make_pair(_buffer, _buffer_size);
+    const char* _body = static_cast<const char *>(_buffer) + _header_size;
+    return std::make_pair(static_cast<const void *>(_body), _buffer_size - _header_size);
   }
 
   std::future<std::unique_ptr<HTTPResponse> >
@@ -115,7 +116,8 @@ namespace http {
     _connection_manager(std::move(mgr)),
     _code(0),
     _buffer(malloc(MAX_BUF)),
-    _buffer_size(0) {
+    _buffer_size(0),
+    _header_size(0) {
     networking::os::memset(_buffer, 0, MAX_BUF);
     _buffer_size = _connection_manager->recv(_buffer, MAX_BUF - 1);
     /** TODO : check res < 0 */
@@ -169,15 +171,15 @@ namespace http {
   }
 
   void HTTPResponse::recvBody() {
+    _header_size = _resp->tellg();
     if (_headers.find("CONTENT-LENGTH") != _headers.end()) {
-      const size_t last_char = _resp->tellg();
       const size_t response_size = std::stoi(_headers["CONTENT-LENGTH"]);
       DEBUG << "Content-Length provided with " << response_size << " bytes.";
-      if (MAX_BUF - last_char < response_size)
+      if (MAX_BUF - _header_size < response_size)
         _buffer = realloc(_buffer, MAX_BUF + response_size);
       char* buf = static_cast<char *>(_buffer);
-      while (_buffer_size < last_char + response_size) {
-        TRACE << "[" << _buffer_size << "/" << last_char + response_size << "] downloaded";
+      while (_buffer_size < _header_size + response_size) {
+        TRACE << "[" << _buffer_size << "/" << _header_size + response_size << "] downloaded";
         try {
           auto res = _connection_manager->recv(buf + _buffer_size, response_size);
           _buffer_size += res;
