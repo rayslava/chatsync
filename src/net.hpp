@@ -236,5 +236,25 @@ namespace networking {
 
     return connection;
   }
+
+  /**
+   * Open tls connection to server
+   *
+   * \param fd File descriptor if connection is externally managed
+   */
+  static inline std::unique_ptr<TLSConnection> tls_connect(int fd) {
+    auto connection = std::make_unique<TLSConnection>(fd);
+
+    // Perform the TLS handshake
+    int ret = connection->handshake();
+
+    if (ret < 0) {
+      throw tls_error(ret, "Handshake failed");
+    } else {
+      DEBUG << "TLS handshake completed";
+    }
+
+    return connection;
+  }
 }
 #endif
