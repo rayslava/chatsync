@@ -10,7 +10,7 @@ before_install:
     - sudo add-apt-repository --yes 'deb http://llvm.org/apt/precise/ llvm-toolchain-precise-3.8 main'
     - wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key | sudo apt-key add -
     - sudo apt-get -qq update
-    - sudo apt-get -qq --yes --force-yes install libclang-3.8-dev clang-3.8 gcc-5 g++-5 valgrind lcov cmake cmake-data build-essential libtool autotools-dev automake checkinstall check git yasm
+    - sudo apt-get -qq --yes --force-yes install libclang-3.8-dev clang-3.8 gcc-5 g++-5 valgrind lcov cmake cmake-data build-essential libtool autotools-dev automake checkinstall check git yasm libgnutls-dev
     - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 40 --slave /usr/bin/g++ g++ /usr/bin/g++-5
     - sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-5 40
     - sudo update-alternatives --config gcc
@@ -28,6 +28,7 @@ before_install:
     - sudo make install
     - cd $(mktemp -d) && git clone git://github.com/jedisct1/libsodium.git && cd libsodium &&  git checkout tags/1.0.11 &&  ./autogen.sh &&  ./configure --enable-static --prefix=/usr && make check && sudo checkinstall --install --pkgname libsodium --pkgversion 1.0.11 --nodoc < /dev/null && sudo ldconfig
     - cd $(mktemp -d) && git clone git://github.com/irungentoo/toxcore.git && cd toxcore &&  CC=gcc autoreconf -i && CC=gcc ./configure --enable-static && CC=gcc make && sudo make install && sudo ldconfig
+    - cd $(mktemp -d) && git clone git://github.com/miloyip/rapidjson.git && cd rapidjson && mkdir build && cd build && cmake .. && make && sudo make install && sudo ldconfig
     - cd $TRAVIS_BUILD_DIR
 matrix:
     include:
