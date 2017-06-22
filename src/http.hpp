@@ -195,14 +195,12 @@ namespace http {
    * Run single HTTP (HTTPS) request
    *
    * \param url The full url (e.g. https://google.com:443/index.html)
-   * \param type type of request.
+   * \param req The HTTPRequest to make
    *
    * \retval the HTTPResponse with answer.
    */
   std::future<std::unique_ptr<HTTPResponse> >
   PerformHTTPRequest(const std::string& url,
-                     HTTPRequestType	type=HTTPRequestType::GET,
-                     const void	      * payload=nullptr,
-                     size_t		payload_size=0);
+                     const HTTPRequest& req);
 
 }

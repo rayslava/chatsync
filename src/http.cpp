@@ -45,8 +45,7 @@ namespace http {
   }
 
   std::future<std::unique_ptr<HTTPResponse> >
-  PerformHTTPRequest(const std::string& url, HTTPRequestType type,
-                     const void* payload, size_t payload_size) {
+  PerformHTTPRequest(const std::string& url, const HTTPRequest& req) {
     bool https = false;
     const std::string::size_type proto_end = url.find("://");
     if (proto_end == std::string::npos)
@@ -84,27 +83,31 @@ namespace http {
     DEBUG << "Opening " << std::string(https ? "secure" : "insecure")
           << " connection to " << server << " on port " << port;
 
-    HTTPRequest req(type, server, url.substr(port_end));
     std::string request_line = req.getHTTPLine();
+    const auto request_body = req.body();
     TRACE << "Requesting: " << request_line;
 
     if (!https) {
-      return std::async(std::launch::async, [server, port, request_line]() {
+      return std::async(std::launch::async, [server, port, request_line, request_body]() {
         const int fd = networking::tcp_connect(server + ":" + port);
         auto&& conn_mgr = std::make_unique<HTTPConnectionManager>(fd);
-        TRACE << "Sending " << request_line;
+        TRACE << "Sending " << request_line << static_cast<const char *>(request_body.first);
         conn_mgr->send(request_line.c_str(), request_line.length());
+        if (request_body.second > 0)
+          conn_mgr->send(request_body.first, request_body.second);
         auto&& response = std::make_unique<HTTPResponse>(std::move(conn_mgr));
         return std::move(response);
       });
     }
 #ifdef TLS_SUPPORT
     else {
-      return std::async(std::launch::async, [server, port, request_line]() {
+      return std::async(std::launch::async, [server, port, request_line, request_body]() {
         auto&& conn = networking::tls_connect(server + ":" + port);
         auto&& conn_mgr = std::make_unique<HTTPSConnectionManager>(std::move(conn));
-        TRACE << "Sending " << request_line;
+        TRACE << "Sending " << request_line << static_cast<const char *>(request_body.first);
         conn_mgr->send(request_line.c_str(), request_line.length());
+        if (request_body.second > 0)
+          conn_mgr->send(request_body.first, request_body.second);
         auto&& response = std::make_unique<HTTPResponse>(std::move(conn_mgr));
         return std::move(response);
       });
@@ -180,8 +183,10 @@ namespace http {
     if (_headers.find("CONTENT-LENGTH") != _headers.end()) {
       const size_t response_size = std::stoi(_headers["CONTENT-LENGTH"]);
       DEBUG << "Content-Length provided with " << response_size << " bytes.";
-      if (MAX_BUF - _header_size < response_size)
+      if (MAX_BUF - _header_size < response_size) {
         _buffer = realloc(_buffer, MAX_BUF + response_size + 1);
+        memset(static_cast<char *>(_buffer) + _buffer_size, 0, response_size + 1);
+      }
       char* buf = static_cast<char *>(_buffer);
       while (_buffer_size < _header_size + response_size) {
         TRACE << "[" << _buffer_size << "/" << _header_size + response_size << "] downloaded";
@@ -210,6 +215,7 @@ namespace http {
         if (current_size < _buffer_size + pending + 1) {
           current_size += MAX_BUF;
           _buffer = realloc(_buffer, current_size);
+          memset(static_cast<char *>(_buffer) + _buffer_size, 0, MAX_BUF);
           pending = MAX_BUF;
         }
         char* buf = static_cast<char *>(_buffer);

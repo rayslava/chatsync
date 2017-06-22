@@ -3,10 +3,11 @@
 #include "rapidjson/document.h"
 
 namespace telegram {
-  const static std::string telegram_api_srv = "api.telegram.org:443";
+  const static std::string telegram_api_srv = "api.telegram.org";
+  constexpr int telegram_api_port = 443;
 
   namespace api {
-    enum class Chat_type {
+    enum class ChatType {
       Private,
       Group,
       Supergroup,
@@ -15,12 +16,12 @@ namespace telegram {
 
     struct Chat {
       const std::int64_t id;
-      const Chat_type type {};
+      const ChatType type {};
       const std::string title {};
+      const bool all_are_admins {};
       const std::string username {};
       const std::string first_name {};
       const std::string last_name {};
-      const bool all_are_admins {};
     };
 
     struct User {
@@ -53,6 +54,8 @@ namespace telegram {
     const std::string _botid;                             /**< Bot id */
     const std::string _hash;                              /**< Bot access hash */
     const std::string _endpoint;                          /**< API endpoint to compute URI from */
+    const int64_t _chat;                                  /**< Chat id to use */
+    mutable std::uint64_t _last_update_id;                /**< Last processed update id */
     std::future<void> activate() override;
     static const channeling::ChannelCreatorImpl<TgChannel> creator;
 
@@ -61,6 +64,7 @@ namespace telegram {
 
     rapidjson::Document apiRequest(const std::string& uri);
     const messaging::message_ptr buildTextMessage(const api::Message& msg) const;
+    bool messageMatch(const api::Message& msg) const;
   public:
     explicit TgChannel(Hub::Hub *, const std::string&);
     ~TgChannel();
