@@ -9,6 +9,10 @@
 #include "messages.hpp"
 #include "logging.hpp"
 
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/ioctl.h>
+
 namespace channeling {
   std::atomic_int ChannelFactory::id {ATOMIC_FLAG_INIT};
 
@@ -142,7 +146,7 @@ namespace channeling {
       errno = 0;
       err = select(readFd + 1, &readset, NULL, NULL, &tv);
       if (!*_alive) return;
-      if (_pipeRunning && (err < 0 || networking::os::fcntl(readFd, F_GETFD) == -1 || errno == EBADF)) {
+      if (_pipeRunning && (err < 0 || fcntl(readFd, F_GETFD) == -1 || errno == EBADF)) {
         if (!*_alive) return;
         DEBUG << "select() failed. Reconnecting channel " << name();
         std::thread([this]() {
@@ -155,7 +159,7 @@ namespace channeling {
         FD_CLR(readFd, &readset);
         // Check available size
         int bytes;
-        err = networking::os::ioctl(readFd, FIONREAD, &bytes);
+        err = ioctl(readFd, FIONREAD, &bytes);
         if (err < 0 || bytes == 0) {
           if (!*_alive) return;
           std::thread([this]() {
@@ -166,7 +170,7 @@ namespace channeling {
         auto line = new char[bytes + 1];
         line[bytes] = 0;
         // Do a simple read on data
-        err = networking::os::read(readFd, line, bytes);
+        err = read(readFd, line, bytes);
         if (err != bytes)
           throw std::runtime_error(ERR_SOCK_READ);
         // Parse received data
@@ -182,7 +186,7 @@ namespace channeling {
   }
 
   int Channel::send(const uint32_t fd, const std::string& msg) const {
-    const int n = networking::os::write(fd, msg.c_str(), msg.length());
+    const int n = write(fd, msg.c_str(), msg.length());
     if (n < 0)
       throw std::runtime_error(ERR_SOCK_WRITE);
 
@@ -191,7 +195,7 @@ namespace channeling {
 
   int Channel::disconnect(const uint32_t fd) const {
     if (_fd > 0)
-      networking::os::close(fd);
+      close(fd);
     return 0;
   }
 }

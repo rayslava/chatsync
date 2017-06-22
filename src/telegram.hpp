@@ -3,7 +3,45 @@
 #include "rapidjson/document.h"
 
 namespace telegram {
-  const static std::string telegram_api_srv = "https://api.telegram.org";
+  const static std::string telegram_api_srv = "api.telegram.org:443";
+
+  namespace api {
+    enum class Chat_type {
+      Private,
+      Group,
+      Supergroup,
+      Channel
+    };
+
+    struct Chat {
+      const std::int64_t id;
+      const Chat_type type {};
+      const std::string title {};
+      const std::string username {};
+      const std::string first_name {};
+      const std::string last_name {};
+      const bool all_are_admins {};
+    };
+
+    struct User {
+      const std::int64_t id;
+      const std::string first_name {};
+      const std::string last_name {};
+      const std::string lang {};
+    };
+
+    struct Message {
+      const std::int64_t id;
+      const std::int64_t date;
+      const std::string text {};
+      const User from {};
+      const Chat chat {};
+    };
+  }
+
+  /*
+     {"ok":true,"result":[{"update_id":544181547,
+     "message":{"message_id":19,"from":{"id":336435018,"first_name":"ray","language_code":"en-RU"},"chat":{"id":336435018,"first_name":"ray","type":"private"},"date":1498049744,"text":"\u0429"}}]} */
 
   class telegram_error: std::runtime_error {
   public:
@@ -22,6 +60,7 @@ namespace telegram {
     void pollThread() override;     /**< Thread for telegram infinite loop */
 
     rapidjson::Document apiRequest(const std::string& uri);
+    const messaging::message_ptr buildTextMessage(const api::Message& msg) const;
   public:
     explicit TgChannel(Hub::Hub *, const std::string&);
     ~TgChannel();

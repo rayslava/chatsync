@@ -34,6 +34,7 @@ set(SOURCE_FILES
   src/hub.cpp
   src/logging.cpp
   src/http.cpp
+  src/net.cpp
   )
 
 macro(create_test name files)

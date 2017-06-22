@@ -4,6 +4,11 @@
 #include "http.hpp"
 #include "logging.hpp"
 
+#include <cstring>
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/ioctl.h>
+
 namespace http {
 
   static inline void ltrim(std::string& s) {
@@ -118,7 +123,7 @@ namespace http {
     _buffer(malloc(MAX_BUF)),
     _buffer_size(0),
     _header_size(0) {
-    networking::os::memset(_buffer, 0, MAX_BUF);
+    memset(_buffer, 0, MAX_BUF);
     _buffer_size = _connection_manager->recv(_buffer, MAX_BUF - 1);
     /** TODO : check res < 0 */
     parseHttp();
@@ -176,7 +181,7 @@ namespace http {
       const size_t response_size = std::stoi(_headers["CONTENT-LENGTH"]);
       DEBUG << "Content-Length provided with " << response_size << " bytes.";
       if (MAX_BUF - _header_size < response_size)
-        _buffer = realloc(_buffer, MAX_BUF + response_size);
+        _buffer = realloc(_buffer, MAX_BUF + response_size + 1);
       char* buf = static_cast<char *>(_buffer);
       while (_buffer_size < _header_size + response_size) {
         TRACE << "[" << _buffer_size << "/" << _header_size + response_size << "] downloaded";
@@ -219,20 +224,20 @@ namespace http {
   }
 
   HTTPConnectionManager::~HTTPConnectionManager() {
-    networking::os::close(_fd);
+    close(_fd);
   }
 
   ssize_t HTTPConnectionManager::recv(void* buffer, size_t count) {
-    return networking::os::read(_fd, buffer, count);
+    return read(_fd, buffer, count);
   }
 
   ssize_t HTTPConnectionManager::send(const void * const buffer, size_t count) {
-    return networking::os::write(_fd, buffer, count);
+    return write(_fd, buffer, count);
   }
 
   ssize_t HTTPConnectionManager::pending() {
     int bytes = 0;
-    auto res = networking::os::ioctl(_fd, FIONREAD, &bytes);
+    auto res = ioctl(_fd, FIONREAD, &bytes);
     /* TODO: check res < 0 */
     return bytes;
   }
