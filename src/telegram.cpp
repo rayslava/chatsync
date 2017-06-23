@@ -12,8 +12,8 @@ namespace telegram {
     channeling::Channel(hub, config),
     _botid(_config["botid"]),
     _hash(_config["hash"]),
-    _endpoint("https://" + telegram_api_srv + ":" + std::to_string(telegram_api_port)
-              + "/" + _botid + ":" + _hash + "/"),
+    _server("https://" + telegram_api_srv + ":" + std::to_string(telegram_api_port)),
+    _endpoint("/" + _botid + ":" + _hash + "/"),
     _chat(_config["chat"]),
     _last_update_id(0)
   {}
@@ -21,8 +21,16 @@ namespace telegram {
   void TgChannel::pollThread() {
     DEBUG << "Starting telegram thread";
     while (_pipeRunning) {
-      apiRequest("getUpdates");
-      std::this_thread::sleep_for( std::chrono::milliseconds (100));
+      rapidjson::StringBuffer s;
+      rapidjson::Writer<rapidjson::StringBuffer> writer(s);
+      writer.StartObject();
+      writer.Key("timeout");
+      writer.Int(60);
+      writer.Key("offset");
+      writer.Int(_last_update_id);
+      writer.EndObject();
+      const auto& body_line = std::string(s.GetString());
+      apiRequest("getUpdates", body_line);
     }
   }
 
@@ -47,31 +55,20 @@ namespace telegram {
     constexpr int tg_message_max = 4096;
     const std::string uri = "sendMessage";
     char message[tg_message_max];
+    const auto textmsg = messaging::TextMessage::fromMessage(msg);
+    int msglen = snprintf(message, tg_message_max, "@%s: %s",
+                          textmsg->user()->name().c_str(),
+                          textmsg->data().c_str());
     rapidjson::StringBuffer s;
     rapidjson::Writer<rapidjson::StringBuffer> writer(s);
-    const auto textmsg = messaging::TextMessage::fromMessage(msg);
-    int msglen = snprintf(message, tg_message_max, "@%s: [%s]", textmsg->user()->name().c_str(), textmsg->data().c_str());
     writer.StartObject();
     writer.Key("chat_id");
     writer.Int(_chat);
     writer.Key("text");
     writer.String(message, msglen);
     writer.EndObject();
-    const auto& body_line = s.GetString();
-    const size_t body_size = strlen(body_line);
-    std::unique_ptr<char[]> req_body = std::unique_ptr<char[]>(new char[body_size]);
-    memcpy(req_body.get(), body_line, body_size);
-    http::HTTPRequest req(http::HTTPRequestType::POST,
-                          telegram_api_srv,
-                          "/" + _botid + ":" + _hash + "/" + uri);
-    req.setBody(std::move(req_body), body_size);
-    req.addHeader("content-type",   "application/json");
-    req.addHeader("content-length", std::to_string(body_size));
-    std::this_thread::sleep_for( std::chrono::milliseconds (1000));
-    auto hr = http::PerformHTTPRequest(_endpoint + uri, req);
-    hr.wait();
-    auto response = hr.get();
-    std::cout << response->code();
+    const auto& body_line = std::string(s.GetString());
+    apiRequest("sendMessage", body_line);
   }
 
   bool TgChannel::messageMatch(const api::Message& msg) const {
@@ -94,25 +91,34 @@ namespace telegram {
       throw telegram_error("Telegram reports an error " + std::to_string(err) + "\n" + std::string(line));
     }
 
-    assert(doc["result"].IsArray());
-    const auto& updates = doc["result"].GetArray();
-    if (updates.Size() > 1)
-      for (const auto& upd : updates) {
-        if (upd.HasMember("message")) {
-          const auto& msg = parseUpdate(upd);
-          const auto message = buildTextMessage(msg);
-          if (messageMatch(msg)) {
-            _last_update_id = upd["update_id"].GetInt() + 1;
-            TRACE << "Last update :" << _last_update_id;
-            _hub->newMessage(std::move(message));
+    if (doc["result"].IsArray()) {
+      const auto& updates = doc["result"].GetArray();
+      if (updates.Size() == 0)
+        throw parse_error(0, "Empty array");
+      if (updates.Size() > 1)
+        for (const auto& upd : updates) {
+          if (upd.HasMember("message")) {
+            const auto& msg = parseUpdate(upd);
+            const auto message = buildTextMessage(msg);
+            if (messageMatch(msg)) {
+              _last_update_id = upd["update_id"].GetInt() + 1;
+              TRACE << "Last update :" << _last_update_id;
+              _hub->newMessage(std::move(message));
+            }
           }
         }
-      }
-    const auto& last_update = updates[updates.Size() - 1];
-    const auto& item = parseUpdate(last_update);
-    _last_update_id = last_update["update_id"].GetInt() + 1;
-    TRACE << "Last update :" << _last_update_id;
-    return buildTextMessage(item);
+      const auto& last_update = updates[updates.Size() - 1];
+      const auto& item = parseUpdate(last_update);
+      _last_update_id = last_update["update_id"].GetInt() + 1;
+      TRACE << "Last update :" << _last_update_id;
+      return buildTextMessage(std::move(item));
+    } else {
+      const auto& update = doc["result"];
+      const auto& item = parseUpdate(doc["result"]);
+      _last_update_id = update["update_id"].GetInt() + 1;
+      TRACE << "Last update :" << _last_update_id;
+      return buildTextMessage(std::move(item));
+    }
     throw telegram_error("Message without text:" + std::string(line));
   }
 
@@ -122,27 +128,18 @@ namespace telegram {
                                                           msg.text.c_str());
   }
 
-  rapidjson::Document TgChannel::apiRequest(const std::string& uri) {
-    rapidjson::StringBuffer s;
-    rapidjson::Writer<rapidjson::StringBuffer> writer(s);
-    writer.StartObject();
-    writer.Key("timeout");
-    writer.Int(60);
-    writer.Key("offset");
-    writer.Int(_last_update_id);
-    writer.EndObject();
-    const auto& body_line = s.GetString();
-    const size_t body_size = strlen(body_line);
-    std::unique_ptr<char[]> req_body = std::unique_ptr<char[]>(new char[body_size]);
-    memcpy(req_body.get(), body_line, body_size);
+  void TgChannel::apiRequest(const std::string& uri, const std::string& body) {
+    const auto body_size = body.length();
+    std::unique_ptr<char[]> req_body (new char[body_size]);
+    memcpy(req_body.get(), body.c_str(), body_size);
     http::HTTPRequest req(http::HTTPRequestType::POST,
                           telegram_api_srv,
-                          "/" + _botid + ":" + _hash + "/" + uri);
+                          _endpoint + uri);
     req.setBody(std::move(req_body), body_size);
     req.addHeader("content-type",   "application/json");
     req.addHeader("content-length", std::to_string(body_size));
     std::this_thread::sleep_for( std::chrono::milliseconds (1000));
-    auto hr = http::PerformHTTPRequest(_endpoint + uri, req);
+    auto hr = http::PerformHTTPRequest(_server, req);
     hr.wait();
     auto response = hr.get();
     std::cout << response->code();
@@ -150,9 +147,13 @@ namespace telegram {
     size_t size;
     std::tie(buffer, size) = response->data();
     const char* charbuf = static_cast<const char *>(buffer);
-    parse(charbuf);
-    rapidjson::Document doc;
-    return doc;
+    try {
+      _hub->newMessage(parse(charbuf));
+    } catch (parse_error e) {
+      if (e.code == 0) {
+        DEBUG << "Empty array from Telegram. Apparently timeout triggered";
+      }
+    }
   }
 
   static inline api::ChatType parseChatType(const std::string& str) {
@@ -167,7 +168,13 @@ namespace telegram {
 
 #define __TG_API_CHECK_OR_ADD_STR(obj, field) obj.HasMember(field) ? obj[field].GetString() : ""
   static const api::Message parseUpdate(const rapidjson::Value& update) {
-    const auto& json_msg = update["message"];
+    const auto& json_msg = [&update](){
+                             if (update.HasMember("message"))
+                               return update.FindMember("message");
+                             else if (update.HasMember("result"))
+                               return update.FindMember("result");
+                             throw parse_error(1, "Could parse neither message nor result");
+                           } ()->value;
     assert(json_msg.HasMember("from"));
     const auto& json_user = json_msg["from"];
     assert(json_user.HasMember("id"));

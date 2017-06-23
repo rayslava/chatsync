@@ -40,19 +40,25 @@ namespace telegram {
     };
   }
 
-  /*
-     {"ok":true,"result":[{"update_id":544181547,
-     "message":{"message_id":19,"from":{"id":336435018,"first_name":"ray","language_code":"en-RU"},"chat":{"id":336435018,"first_name":"ray","type":"private"},"date":1498049744,"text":"\u0429"}}]} */
-
   class telegram_error: std::runtime_error {
   public:
     telegram_error(std::string const& message) :
       std::runtime_error(message) {};
   };
 
+  class parse_error: telegram_error {
+  public:
+    const int code;
+    parse_error(int c, std::string const& message) :
+      telegram_error(message),
+      code(c)
+    {};
+  };
+
   class TgChannel: public channeling::Channel {
     const std::string _botid;                             /**< Bot id */
     const std::string _hash;                              /**< Bot access hash */
+    const std::string _server;                            /**< Server address to connect to */
     const std::string _endpoint;                          /**< API endpoint to compute URI from */
     const int64_t _chat;                                  /**< Chat id to use */
     mutable std::uint64_t _last_update_id;                /**< Last processed update id */
@@ -60,10 +66,17 @@ namespace telegram {
     static const channeling::ChannelCreatorImpl<TgChannel> creator;
 
     const messaging::message_ptr parse(const char* line) const override; /**< This would be useful if telegram read something from socket */
-    void pollThread() override;     /**< Thread for telegram infinite loop */
+    void pollThread() override;                           /**< Thread for telegram infinite loop */
 
-    rapidjson::Document apiRequest(const std::string& uri);
+    /**
+     * Perform a POST request to \c url with \c body
+     */
+    void apiRequest(const std::string& uri, const std::string& body);
     const messaging::message_ptr buildTextMessage(const api::Message& msg) const;
+
+    /**
+     * Check if the message is from chat which should be processed
+     */
     bool messageMatch(const api::Message& msg) const;
   public:
     explicit TgChannel(Hub::Hub *, const std::string&);
