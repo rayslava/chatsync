@@ -201,12 +201,12 @@ namespace toxChannel {
 
   void ToxChannel::messageCallback(Tox* tox, uint32_t friendnumber, TOX_MESSAGE_TYPE type, const uint8_t* message, size_t length, void* userdata) {
     const auto channel = static_cast<ToxChannel *>(userdata);
-    const auto buffer = std::make_unique<char *>(new char[length + 1]);
-    snprintf(*buffer, length + 1, "%s", message);
+    const auto buffer = std::unique_ptr<char[]>(new char[length + 1]);
+    snprintf(buffer.get(), length + 1, "%s", message);
     switch (type) {
     case TOX_MESSAGE_TYPE_NORMAL:
-      DEBUG << "Message from friend #" << friendnumber << "> " << *buffer;
-      if (util::strncmp(cmd_invite, *buffer, length) == 0) {
+      DEBUG << "Message from friend #" << friendnumber << "> " << buffer.get();
+      if (util::strncmp(cmd_invite, buffer.get(), length) == 0) {
 #ifdef CTOXCORE
         tox_conference_invite(tox, friendnumber, 0, NULL);
 #else
@@ -215,10 +215,10 @@ namespace toxChannel {
       }
       break;
     case TOX_MESSAGE_TYPE_ACTION:
-      DEBUG << "Action from friend #" << friendnumber << "> " << *buffer;
+      DEBUG << "Action from friend #" << friendnumber << "> " << buffer.get();
       break;
     default:
-      DEBUG << "Unknown message type from " << friendnumber << "> " << *buffer;
+      DEBUG << "Unknown message type from " << friendnumber << "> " << buffer.get();
     }
   }
 
@@ -227,28 +227,28 @@ namespace toxChannel {
     const auto channel = static_cast<ToxChannel *>(user_data);
 
     const auto nameLen = tox_conference_peer_get_name_size(tox, conference_number, peer_number, NULL);
-    const auto nameBuffer = std::make_unique<uint8_t *>(new uint8_t[nameLen]);
-    tox_conference_peer_get_name(tox, conference_number, peer_number, *nameBuffer, NULL);
-    const auto name = std::make_unique<char *>(new char[nameLen + 2]);
-    snprintf(*name, nameLen + 1, "%s", *nameBuffer);
+    const auto nameBuffer = std::unique_ptr<uint8_t[]>(new uint8_t[nameLen + 1]);
+    tox_conference_peer_get_name(tox, conference_number, peer_number, nameBuffer.get(), NULL);
+    const auto name = std::unique_ptr<char[]>(new char[nameLen + 3]);
+    snprintf(name.get(), nameLen + 1, "%.*s", static_cast<int>(nameLen), nameBuffer.get());
 
-    const auto msg = std::make_unique<char *>(new char[length + 2]);
-    snprintf(*msg,  length + 1,	 "%s", message);
+    const auto msg = std::unique_ptr<char[]>(new char[length + 2]);
+    snprintf(msg.get(),	 length + 1,  "%s",   message);
 
     std::shared_ptr<messaging::Message> newMessage;
-    if (std::string(*name) != std::string(channel->_config.get("nickname", defaultBotName))) {
+    if (std::string(name.get()) != std::string(channel->_config.get("nickname", defaultBotName))) {
       switch (type) {
       case TOX_MESSAGE_TYPE_NORMAL:
         newMessage = std::make_shared<messaging::TextMessage>
                        (channel->_id,
-                       std::make_shared<const messaging::User>(messaging::User(*name)),
-                       *msg);
+                       std::make_shared<const messaging::User>(messaging::User(name.get())),
+                       msg.get());
         break;
       case TOX_MESSAGE_TYPE_ACTION:
         newMessage = std::make_shared<messaging::ActionMessage>
                        (channel->_id,
-                       std::make_shared<const messaging::User>(messaging::User(*name)),
-                       *msg);
+                       std::make_shared<const messaging::User>(messaging::User(name.get())),
+                       msg.get());
         break;
       default:
         throw std::runtime_error("Unknown tox message type");
@@ -273,18 +273,18 @@ namespace toxChannel {
   void ToxChannel::groupMessageCallback(Tox* tox, int32_t groupnumber, int32_t peernumber, const uint8_t* message, uint16_t length, void* userdata) {
     const auto channel = static_cast<ToxChannel *>(userdata);
 
-    const auto nameBuffer = std::make_unique<uint8_t *>(new uint8_t[TOX_MAX_NAME_LENGTH]);
-    const auto nameLen = tox_group_peername(tox, groupnumber, peernumber, *nameBuffer);
-    const auto name = std::make_unique<char *>(new char[nameLen + 2]);
-    snprintf(*name, nameLen + 1, "%s", *nameBuffer);
+    const auto nameBuffer = std::unique_ptr<uint8_t[]>(new uint8_t[TOX_MAX_NAME_LENGTH]);
+    const auto nameLen = tox_group_peername(tox, groupnumber, peernumber, nameBuffer.get());
+    const auto name = std::unique_ptr<char[]>(new char[nameLen + 2]);
+    snprintf(name.get(), nameLen + 1, "%.*s", static_cast<int>(nameLen), nameBuffer.get());
 
-    const auto msg = std::make_unique<char *>(new char[length + 2]);
-    snprintf(*msg,  length + 1,	 "%s", message);
+    const auto msg = std::unique_ptr<char[]>(new char[length + 2]);
+    snprintf(msg.get(),	 length + 1,  "%s",   message);
 
-    if (std::string(*name) != std::string(channel->_config.get("nickname", defaultBotName))) {
+    if (std::string(name.get()) != std::string(channel->_config.get("nickname", defaultBotName))) {
       const auto newMessage = std::make_shared<MsgType>(channel->_id,
-                                                        std::make_shared<const messaging::User>(messaging::User(*name)),
-                                                        *msg);
+                                                        std::make_shared<const messaging::User>(messaging::User(name.get())),
+                                                        msg.get());
       DEBUG << "tox Group msg " << newMessage->user()->name() << "> " << newMessage->data();
       channel->_hub->newMessage(std::move(newMessage));
     }
