@@ -91,7 +91,14 @@ namespace http {
       return std::async(std::launch::async, [server, port, request_line, request_body]() {
         const int fd = networking::tcp_connect(server + ":" + port);
         auto&& conn_mgr = std::make_unique<HTTPConnectionManager>(fd);
-        TRACE << "Sending " << request_line << static_cast<const char *>(request_body.first);
+        {
+          auto buf = new char[request_body.second + 1];
+          int res = snprintf(buf, request_body.second + 1, "%.*s",
+                             static_cast<int>(request_body.second),
+                             static_cast<const char *>(request_body.first));
+          TRACE << "Sending " << request_line << buf;
+          delete[] buf;
+        }
         conn_mgr->send(request_line.c_str(), request_line.length());
         if (request_body.second > 0)
           conn_mgr->send(request_body.first, request_body.second);
@@ -104,7 +111,14 @@ namespace http {
       return std::async(std::launch::async, [server, port, request_line, request_body]() {
         auto&& conn = networking::tls_connect(server + ":" + port);
         auto&& conn_mgr = std::make_unique<HTTPSConnectionManager>(std::move(conn));
-        TRACE << "Sending " << request_line << static_cast<const char *>(request_body.first);
+        {
+          auto buf = new char[request_body.second + 1];
+          int res = snprintf(buf, request_body.second + 1, "%.*s",
+                             static_cast<int>(request_body.second),
+                             static_cast<const char *>(request_body.first));
+          TRACE << "Sending " << request_line << buf;
+          delete[] buf;
+        }
         conn_mgr->send(request_line.c_str(), request_line.length());
         if (request_body.second > 0)
           conn_mgr->send(request_body.first, request_body.second);
