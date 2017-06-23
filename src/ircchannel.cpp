@@ -102,10 +102,16 @@ namespace ircChannel {
     std::regex quitRe("^:(\\S+)!(\\S+)\\s+QUIT\\s+:#(\\S+)$");
     std::regex pingRe("PING\\s+:(.*)\r\n$");
     std::regex pongRe("PONG\\s+(.*)\r\n$");
+    std::regex errNotReg(".*You have not registered.*\r\n$");
 
     std::smatch msgMatches;
     std::string name = "irc";
     std::string text = toParse;
+    if (std::regex_search(toParse, msgMatches, errNotReg)) {
+      WARNING << "#irc: " << name << "Server says that connection not registered : '";
+      registerConnection();
+      return nullptr;
+    }
     if (std::regex_search(toParse, msgMatches, pongRe)) {
       DEBUG << "#irc: " << name << "Server pong reply: '" << msgMatches[1];
       pong();
@@ -148,7 +154,7 @@ namespace ircChannel {
     return nullptr;
   }
 
-  void IrcChannel::registerConnection() {
+  void IrcChannel::registerConnection() const {
     DEBUG << "Registering IRC connection";
 
     const std::string nick = _config.get("nickname", "chatsyncbot");

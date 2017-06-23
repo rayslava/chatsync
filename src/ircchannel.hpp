@@ -28,7 +28,7 @@ namespace ircChannel {
     /**
      * Sends PASS, NICK and USER commands to register irc connection
      */
-    void registerConnection();
+    void registerConnection() const;
     /**
      * Sends PING message to server
      */
