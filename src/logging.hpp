@@ -21,6 +21,9 @@
   auto default_sink = std::make_shared<logging::LogSinkPrinter>(); \
   logging::LoggerImpl::get().setOutput(std::static_pointer_cast<logging::LogSink>(default_sink));
 
+#define DEFAULT_LOGGER_SEVERITY(s) \
+  logging::LoggerImpl::get().setSeverity(s);
+
 namespace logging {
   enum Severity {
     fatal,
@@ -90,6 +93,7 @@ namespace logging {
     std::atomic_bool _running;             /**< Writing logs is active */
     unsigned int _log_repeat;              /**< Repeats for writing logs */
     std::weak_ptr<LogSink> _sink;          /**< Place to send messages */
+    Severity _severity;                    /**< Minimal severity */
 
     /**
      * The main thread function for the output.
@@ -117,6 +121,13 @@ namespace logging {
      */
     void setOutput(const std::shared_ptr<LogSink>& output);
 
+    /**
+     * Set minimal severity of message to log
+     *
+     * \param s New minimal severity.
+     * \retval Previous severity
+     */
+    Severity setSeverity(Severity s);
   protected:
     LoggerImpl() :
       _messages(),
@@ -124,7 +135,8 @@ namespace logging {
       _cond(),
       _writer(nullptr),
       _running(ATOMIC_FLAG_INIT),
-      _log_repeat(1)
+      _log_repeat(1),
+      _severity(logging::Severity::trace)
     {}
 
     ~LoggerImpl() {

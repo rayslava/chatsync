@@ -9,6 +9,8 @@
 namespace logging {
 
   void LoggerImpl::log(const LogMessage&& msg) {
+    if (msg._severity > _severity)
+      return;
     // Prepare the message
     const static unsigned int timeout = 25;
     const static unsigned int max_repeats = 5;
@@ -31,6 +33,12 @@ namespace logging {
     }
     // Notifying doesn't require mutex lock
     _cond.notify_one();
+  }
+
+  Severity LoggerImpl::setSeverity(Severity s) {
+    const Severity old = _severity;
+    _severity = s;
+    return old;
   }
 
   void LoggerImpl::writeOut() {
