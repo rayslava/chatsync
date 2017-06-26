@@ -4,6 +4,7 @@
 #include "logging.hpp"
 
 namespace fileChannel {
+  const channeling::ChannelCreatorImpl<FileChannel> FileChannel::creator("file");
 
   FileChannel::FileChannel(Hub::Hub* hub, const std::string& config) :
     channeling::Channel(hub, config)

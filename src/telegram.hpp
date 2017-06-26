@@ -86,6 +86,4 @@ namespace telegram {
   protected:
     void incoming(const messaging::message_ptr&& msg) override;
   };
-
-  const channeling::ChannelCreatorImpl<TgChannel> TgChannel::creator("telegram");
 }

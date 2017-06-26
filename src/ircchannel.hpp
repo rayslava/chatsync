@@ -62,5 +62,4 @@ namespace ircChannel {
 
     void incoming(const messaging::message_ptr&& msg) override;
   };
-  const channeling::ChannelCreatorImpl<IrcChannel> IrcChannel::creator("irc");
 }

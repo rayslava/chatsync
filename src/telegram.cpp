@@ -6,6 +6,8 @@
 #include <rapidjson/writer.h>
 
 namespace telegram {
+  const channeling::ChannelCreatorImpl<TgChannel> TgChannel::creator("telegram");
+
   static const api::Message parseUpdate(const rapidjson::Value& update);
 
   TgChannel::TgChannel(Hub::Hub* hub, const std::string& config) :

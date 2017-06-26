@@ -46,5 +46,4 @@ namespace toxChannel {
   protected:
     void incoming(const messaging::message_ptr&& msg) override;
   };
-  const channeling::ChannelCreatorImpl<ToxChannel> ToxChannel::creator("tox");
 }

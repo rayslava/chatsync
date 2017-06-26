@@ -34,5 +34,4 @@ namespace fileChannel {
   protected:
     void incoming(const messaging::message_ptr&& msg) override;
   };
-  const channeling::ChannelCreatorImpl<FileChannel> FileChannel::creator("file");
 }

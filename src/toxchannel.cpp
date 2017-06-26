@@ -10,6 +10,7 @@ namespace linux {
 }
 
 namespace toxChannel {
+  const channeling::ChannelCreatorImpl<ToxChannel> ToxChannel::creator("tox");
 
   namespace util {
     /* Thanks to [0xd34df00d](https://github.com/0xd34df00d) for this bunch of functions */

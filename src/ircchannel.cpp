@@ -10,6 +10,8 @@
 #include <iomanip>
 
 namespace ircChannel {
+  const channeling::ChannelCreatorImpl<IrcChannel> IrcChannel::creator("irc");
+
   IrcChannel::IrcChannel(Hub::Hub* hub, const std::string& config) :
     channeling::Channel(hub, config),
     _server(_config["server"]),
