@@ -23,8 +23,8 @@ namespace telegram {
         return 0;
       }
       _read = true;
-      memcpy(buffer, _data.c_str(), std::max(_data.length(), count));
-      return std::max(_data.length(), count);
+      memcpy(buffer, _data.c_str(), std::min(_data.length(), count));
+      return std::min(_data.length(), count);
     }
     ssize_t send(const void * const buffer, size_t count) override { return 0; }
     ssize_t pending() {return _read ? 0 : _data.length();};

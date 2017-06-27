@@ -1,12 +1,60 @@
-#define _UNIT_TEST_BUILD
 #include "../src/http.hpp"
-#undef _UNIT_TEST_BUILD
 #include "../src/logging.hpp"
 #include <gtest/gtest.h>
 #include <gtest/gtest-spi.h>
 #include <cstdio>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
 
 namespace http {
+  static void sockListen(const std::string& answer, int port, int& sockfd, int& newsockfd) {
+    int portno;
+    socklen_t clilen;
+    char buffer[256];
+    struct sockaddr_in serv_addr, cli_addr;
+    int n;
+
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (sockfd < 0) {
+      perror("ERROR opening socket");
+      exit(1);
+    }
+
+    bzero((char *) &serv_addr, sizeof(serv_addr));
+    portno = port;
+    serv_addr.sin_family = AF_INET;
+    serv_addr.sin_addr.s_addr = INADDR_ANY;
+    serv_addr.sin_port = htons(portno);
+
+    if (bind(sockfd, (struct sockaddr *) &serv_addr,
+             sizeof(serv_addr)) < 0) {
+      perror("ERROR on binding");
+      exit(1);
+    }
+
+    listen(sockfd, 5);
+    clilen = sizeof(cli_addr);
+
+    newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, &clilen);
+    if (newsockfd < 0) {
+      perror("ERROR on accept");
+      exit(1);
+    }
+
+    bzero(buffer, 256);
+
+    n = write(newsockfd, answer.c_str(), answer.length());
+    if (n < 0) {
+      perror("ERROR writing to socket");
+      exit(1);
+    }
+  }
+
   struct EmptyConnection: public ConnectionManager {
     EmptyConnection() {};
     ~EmptyConnection() {};
@@ -39,18 +87,36 @@ Accept: */*\r\nTest-Header: Test value\r\n\r\n");
 
   TEST(HTTPRequest, ProtoDetection)
   {
-    DEFAULT_LOGGING
-      EXPECT_THROW({ PerformHTTPRequest("test.site");
-                   }, url_error);
-    EXPECT_THROW({ PerformHTTPRequest("unsupp://test.site");
+    DEFAULT_LOGGING;
+    HTTPRequest req(HTTPRequestType::GET, "test.site", "/");
+    EXPECT_THROW({ PerformHTTPRequest("test.site", req);
+                 }, url_error);
+    EXPECT_THROW({ PerformHTTPRequest("unsupp://test.site", req);
                  }, http_error);
+  }
+
+  TEST(PerformHTTPRequest, local)
+  {
+    int sfd, nfd;
+    int port = 8080;
+    const std::string& answer = "HTTP/1.1 200 OK\r\nContent-Length: 2\r\n\r\nok";
+    const auto server = std::make_unique<std::thread>(std::thread(&sockListen, std::ref(answer), std::ref(port), std::ref(sfd), std::ref(nfd)));
+    HTTPRequest req(HTTPRequestType::HEAD, "localhost", "/");
+    auto hr = PerformHTTPRequest("http://localhost:8080/", req);
+    hr.wait();
+    auto result = hr.get();
+    ASSERT_EQ(result->code(), 200);
+    const auto data = result->data();
+    const char* line = static_cast<const char *>(data.first);
+    ASSERT_STREQ(line, "ok");
+    ASSERT_EQ(data.second, 2);
+    server->join();
   }
 
   TEST(PerformHTTPRequest, Yandex)
   {
-    DEFAULT_LOGGING
-
-    auto hr = PerformHTTPRequest("http://ya.ru/", HTTPRequestType::HEAD);
+    HTTPRequest req(HTTPRequestType::HEAD, "ya.ru", "/");
+    auto hr = PerformHTTPRequest("http://ya.ru/", req);
     hr.wait();
     auto result = hr.get();
     ASSERT_EQ(result->code(), 302);
