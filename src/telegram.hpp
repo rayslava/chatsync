@@ -1,5 +1,6 @@
 #pragma once
 #include "channel.hpp"
+#include "http.hpp"
 #include "rapidjson/document.h"
 
 namespace telegram {
@@ -40,14 +41,12 @@ namespace telegram {
     };
   }
 
-  class telegram_error: std::runtime_error {
-  public:
+  struct telegram_error: std::runtime_error {
     telegram_error(std::string const& message) :
       std::runtime_error(message) {};
   };
 
-  class parse_error: telegram_error {
-  public:
+  struct parse_error: telegram_error {
     const int code;
     parse_error(int c, std::string const& message) :
       telegram_error(message),
@@ -73,6 +72,9 @@ namespace telegram {
      */
     void apiRequest(const std::string& uri, const std::string& body);
     const messaging::message_ptr buildTextMessage(const api::Message& msg) const;
+
+    std::unique_ptr<http::HTTPResponse>
+    httpRequest(const std::string& srv, const http::HTTPRequest& req) const;
 
     /**
      * Check if the message is from chat which should be processed

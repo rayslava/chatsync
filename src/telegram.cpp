@@ -130,6 +130,15 @@ namespace telegram {
                                                           msg.text.c_str());
   }
 
+#ifndef _UNIT_TEST_BUILD
+  std::unique_ptr<http::HTTPResponse>
+  TgChannel::httpRequest(const std::string& srv, const http::HTTPRequest& req) const {
+    auto hr = http::PerformHTTPRequest(srv, req);
+    hr.wait();
+    return std::move(hr.get());
+  }
+#endif
+
   void TgChannel::apiRequest(const std::string& uri, const std::string& body) {
     const auto body_size = body.length();
     std::unique_ptr<char[]> req_body (new char[body_size]);
@@ -140,10 +149,9 @@ namespace telegram {
     req.setBody(std::move(req_body), body_size);
     req.addHeader("content-type",   "application/json");
     req.addHeader("content-length", std::to_string(body_size));
-    std::this_thread::sleep_for( std::chrono::milliseconds (1000));
-    auto hr = http::PerformHTTPRequest(_server, req);
-    hr.wait();
-    auto response = hr.get();
+    const auto response = httpRequest(_server, req);
+    if (!response)
+      return;
     std::cout << response->code();
     const void* buffer;
     size_t size;
@@ -154,6 +162,8 @@ namespace telegram {
     } catch (parse_error e) {
       if (e.code == 0) {
         DEBUG << "Empty array from Telegram. Apparently timeout triggered";
+      } else {
+        ERROR << "Wrong answer received from server:" << std::string(e.what());
       }
     }
   }

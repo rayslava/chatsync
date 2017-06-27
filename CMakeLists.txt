@@ -74,7 +74,7 @@ macro(create_test name files)
     ${SODIUM_LIBRARY}
     ${STATIC_LIBRT}
     )
-
+  add_definitions(-D_UNIT_TEST_BUILD)
   add_test(${name} ${name}_tests)
 endmacro(create_test)
 
