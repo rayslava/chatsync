@@ -26,15 +26,19 @@ if(FEATURE_TOX)
 endif()
 
 
-set(SOURCE_FILES
+set(COMMON_SOURCE_FILES
   src/config.cpp
   src/channel.cpp
-  src/ircchannel.cpp
-  src/filechannel.cpp
   src/hub.cpp
   src/logging.cpp
-  src/http.cpp
   src/net.cpp
+  )
+
+set(SOURCE_FILES
+  ${COMMON_SOURCE_FILES}
+  src/ircchannel.cpp
+  src/filechannel.cpp
+  src/http.cpp
   )
 
 macro(create_test name files)
@@ -57,7 +61,7 @@ macro(create_test name files)
 
   add_executable(
     ${name}_tests
-    ${SOURCE_FILES}
+    ${COMMON_SOURCE_FILES}
     ${GTEST_SOURCES}
     ${GMOCK_SOURCES}
     ${test_files}
@@ -74,8 +78,11 @@ macro(create_test name files)
     ${SODIUM_LIBRARY}
     ${STATIC_LIBRT}
     )
-  add_definitions(-D_UNIT_TEST_BUILD)
   add_test(${name} ${name}_tests)
+  set_target_properties(
+            ${name}_tests
+            PROPERTIES
+            COMPILE_DEFINITIONS _UNIT_TEST_BUILD)
 endmacro(create_test)
 
 if (FEATURE_TOX)
@@ -211,28 +218,29 @@ target_link_libraries(
 include(CTest)
 enable_testing()
 
-create_test(channel test/channel.cpp)
+create_test(channel "test/channel.cpp;src/ircchannel.cpp;src/filechannel.cpp")
 
-create_test(hub test/hub.cpp)
+create_test(hub "test/hub.cpp;src/ircchannel.cpp;src/filechannel.cpp;src/toxchannel.cpp;src/http.cpp")
 
 create_test(config test/config.cpp)
 
 create_test(logging test/logging.cpp)
 
-create_test(http test/http.cpp)
+create_test(http "test/http.cpp;src/http.cpp")
 
 if (FEATURE_TOX)
-  create_test(tox test/tox.cpp)
+  create_test(tox "test/tox.cpp;src/filechannel.cpp;src/toxchannel.cpp")
 endif()
 
 if (FEATURE_TELEGRAM)
-  create_test(telegram test/telegram.cpp)
+  create_test(telegram "test/telegram.cpp;src/http.cpp;src/filechannel.cpp;src/telegram.cpp")
 endif()
+
 
 create_test(unit "${all_test_files}")
 
 if (COVERAGE)
-  setup_target_for_coverage(coverage unit_tests . coverage)
+  setup_target_for_coverage(coverage unit_tests CMakeFiles/unit_tests.dir/src coverage)
 endif()
 
 if (COVERALLS)

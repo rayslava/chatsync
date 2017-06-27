@@ -208,7 +208,7 @@ TEST(IrcChannel, MultiLine)
   std::this_thread::sleep_for( std::chrono::milliseconds (50) );    // Give time to open socket
   const auto ich = channeling::ChannelFactory::create("irc", hub, "data://direction=input\nname=ircin\nserver=127.0.0.1\nport=" + std::to_string(port) + "\nchannel=test");
   channeling::ChannelFactory::create("file", hub, "data://direction=output\nname=outfile");
-  const std::string valid_line = "testuser: message1testuser: message2testuser: message3";
+  const std::string valid_line = "testuser: message1\ntestuser: message2\ntestuser: message3\n";
   const int buffer_size = valid_line.length() + 1;
   const auto buffer = new char[buffer_size];
 

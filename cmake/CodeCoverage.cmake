@@ -12,10 +12,10 @@
 # 2. Add the following line to your CMakeLists.txt:
 #      INCLUDE(CodeCoverage)
 #
-# 3. Set compiler flags to turn off optimization and enable coverage: 
+# 3. Set compiler flags to turn off optimization and enable coverage:
 #    SET(CMAKE_CXX_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
 #	 SET(CMAKE_C_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
-#  
+#
 # 3. Use the function SETUP_TARGET_FOR_COVERAGE to create a custom make target
 #    which runs your test executable and produces a lcov code coverage report:
 #    Example:
@@ -47,7 +47,7 @@ ENDIF() # NOT GCOV_PATH
 IF(NOT CMAKE_COMPILER_IS_GNUCXX)
 	# Clang version 3.0.0 and greater now supports gcov as well.
 	MESSAGE(WARNING "Compiler is not GNU gcc! Clang Version 3.0.0 and greater supports gcov as well, but older versions don't.")
-	
+
 	IF(NOT "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 		MESSAGE(FATAL_ERROR "Compiler is not GNU gcc! Aborting...")
 	ENDIF()
@@ -60,7 +60,7 @@ ENDIF() # NOT CMAKE_BUILD_TYPE STREQUAL "Debug"
 
 # Param _targetname     The name of new the custom make target
 # Param _testrunner     The name of the target which runs the tests.
-#						MUST return ZERO always, even on errors. 
+#						MUST return ZERO always, even on errors.
 #						If not, no coverage report will be created!
 # Param _sourcedir      The directory of sources where lcov should be run
 # Param _outputname     lcov output is generated as _outputname.info
@@ -79,23 +79,23 @@ FUNCTION(SETUP_TARGET_FOR_COVERAGE _targetname _testrunner _sourcedir _outputnam
 
 	# Setup target
 	ADD_CUSTOM_TARGET(${_targetname}
-		
+
 		# Cleanup lcov
 		${LCOV_PATH} --directory ${_sourcedir} --zerocounters
-		
+
 		# Run tests
 		COMMAND ${_testrunner} ${ARGV3}
-		
+
 		# Capturing lcov counters and generating report
 		COMMAND ${LCOV_PATH} --directory ${_sourcedir} --capture --output-file ${_outputname}.info
 		COMMAND ${LCOV_PATH} --remove ${_outputname}.info 'tests/*' '/usr/*' --output-file ${_outputname}.info.cleaned
-		COMMAND ${GENHTML_PATH} -o ${_outputname} ${_outputname}.info.cleaned
+		COMMAND ${GENHTML_PATH} -o ${_outputname} -p 'src' ${_outputname}.info.cleaned
 		COMMAND ${CMAKE_COMMAND} -E remove ${_outputname}.info ${_outputname}.info.cleaned
-		
+
 		WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
 		COMMENT "Resetting code coverage counters to zero.\nProcessing code coverage counters and generating report."
 	)
-	
+
 	# Show info where to find the report
 	ADD_CUSTOM_COMMAND(TARGET ${_targetname} POST_BUILD
 		COMMAND ;
