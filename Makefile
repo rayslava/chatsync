@@ -20,10 +20,10 @@ static-release:
 	$(call build-dir, $@) && cmake .. -DCMAKE_BUILD_TYPE=Release -DSTATIC=True && $(MAKE) $(BINARY) -j $(JOBS)
 
 asan:
-	$(call build-dir, $@) && cmake .. -DCMAKE_CXX_FLAGS="-fsanitize=address" -DCMAKE_BUILD_TYPE=RelWithDebInfo && $(MAKE) && ctest -j 1
+	$(call build-dir, $@) && cmake .. -DCMAKE_CXX_FLAGS="-fsanitize=address" -DCMAKE_BUILD_TYPE=RelWithDebInfo && $(MAKE) && ctest -j 1 -R unit
 
 tsan:
-	$(call build-dir, $@) && CXX=clang++ CC=clang cmake .. -DCMAKE_CXX_FLAGS="-fsanitize=thread"  -DCMAKE_BUILD_TYPE=Debug && $(MAKE) && ./unit_tests
+	$(call build-dir, $@) && CXX=clang++ CC=clang cmake .. -DCMAKE_CXX_FLAGS="-fsanitize=thread"  -DCMAKE_BUILD_TYPE=Debug && $(MAKE) && ctest -j 1 -R unit
 
 msan:
 	$(call build-dir, $@) && CXX=clang++ CC=clang cmake .. -DCMAKE_CXX_FLAGS="-fsanitize=memory -fsanitize-memory-track-origins=2 -fsanitize-memory-use-after-dtor -fno-omit-frame-pointer -fno-optimize-sibling-calls -O0 -fsanitize-blacklist=$(shell pwd)/scripts/msan_blacklist.txt -stdlib=libc++ -L/home/v.barinov/work/btrwork/soft/llvm-build/lib -lc++abi -I/home/v.barinov/work/btrwork/soft/llvm-build/include" -DGTEST_BOTH_LIBRARIES="/home/v.barinov/work/btrwork/soft/gtest-build/libgtest_main.so /home/v.barinov/work/btrwork/soft/gtest-build/libgtest.so" -DCMAKE_BUILD_TYPE=Debug && $(MAKE) -j $(JOBS) VERBOSE=1 && MSAN_OPTIONS=poison_in_dtor=1 ./unit_tests

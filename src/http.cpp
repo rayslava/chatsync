@@ -69,10 +69,9 @@ namespace http {
     const auto server_end = std::distance(url.cbegin(), server_end_c);
 
     std::string port;
-    std::string::size_type port_end = server_end;
     if (*server_end_c == ':') {
       /* There is port */
-      port_end = url.find("/", server_end);
+      std::string::size_type port_end = url.find("/", server_end);
       port = url.substr(server_end + 1, server_end - port_end);
     } else {
       port = https ? "443" : "80";
@@ -257,8 +256,7 @@ namespace http {
 
   ssize_t HTTPConnectionManager::pending() {
     int bytes = 0;
-    auto res = ioctl(_fd, FIONREAD, &bytes);
-    /* TODO: check res < 0 */
+    ioctl(_fd, FIONREAD, &bytes);
     return bytes;
   }
 

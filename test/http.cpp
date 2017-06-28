@@ -58,9 +58,11 @@ namespace http {
   struct EmptyConnection: public ConnectionManager {
     EmptyConnection() {};
     ~EmptyConnection() {};
-    ssize_t recv(void* buffer, size_t count) override { return 0; }
-    ssize_t send(const void * const buffer, size_t count) override { return 0; }
-    ssize_t pending() {return 0;};
+    ssize_t recv(void * buffer __attribute__((unused)),
+                 size_t count __attribute__((unused))) override { return 0; }
+    ssize_t send(const void * const buffer __attribute__((unused)),
+                 size_t		    count __attribute__((unused))) override { return 0; }
+    ssize_t pending() override {return 0;};
   };
 
   TEST(HTTPRequest, Creation)

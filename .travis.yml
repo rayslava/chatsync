@@ -27,10 +27,10 @@ before_install:
     - make -j4
     - sudo make install
     - cd $(mktemp -d) && git clone git://github.com/jedisct1/libsodium.git && cd libsodium &&  git checkout tags/1.0.11 &&  ./autogen.sh &&  ./configure --enable-static --prefix=/usr && make check && sudo checkinstall --install --pkgname libsodium --pkgversion 1.0.11 --nodoc < /dev/null && sudo ldconfig
-    - cd $(mktemp -d) && git clone git://github.com/irungentoo/toxcore.git && cd toxcore &&  CC=gcc autoreconf -i && CC=gcc ./configure --enable-static && CC=gcc make && sudo make install && sudo ldconfig
-    - cd $(mktemp -d) && git clone git://github.com/miloyip/rapidjson.git && cd rapidjson && mkdir build && cd build && cmake .. && make && sudo make install && sudo ldconfig
-    - cd $(mktemp -d) && curl -L 'https://ftp.gnu.org/gnu/nettle/nettle-3.3.tar.gz' | tar xfz - && cd nettle* && mkdir build && cd build && ../configure --enable-static && make && checkinstall --install --pkgname nettle --pkgversion 3.3 --nodoc && ldconfig
-    - cd $(mktemp -d) && curl -L 'https://www.gnupg.org/ftp/gcrypt/gnutls/v3.5/gnutls-3.5.13.tar.xz' | tar xfJ - && cd gnutls* && mkdir build && cd build && ../configure --disable-shared --enable-static --with-included-libtasn1 --with-included-unistring --without-p11-kit  --disable-hardware-acceleration --disable-padlock && make && checkinstall --install --pkgname gnutls --pkgversion 3.5.13 --nodoc && ldconfig
+    - cd $(mktemp -d) && git clone git://github.com/irungentoo/toxcore.git && cd toxcore &&  CC=gcc autoreconf -i && CC=gcc ./configure --enable-static && CC=gcc make && sudo checkinstall --install --pkgname toxcore --pkgversion 1.0 --nodoc < /dev/null && sudo ldconfig
+    - cd $(mktemp -d) && git clone git://github.com/miloyip/rapidjson.git && cd rapidjson && mkdir build && cd build && cmake .. && make && sudo checkinstall --install --pkgname rapidjson --pkgversion 1.1.0 --nodoc < /dev/null && sudo ldconfig
+    - cd $(mktemp -d) && curl -L 'https://ftp.gnu.org/gnu/nettle/nettle-3.3.tar.gz' | tar xfz - && cd nettle* && mkdir build && cd build && ../configure --enable-static && make && sudo checkinstall --install --pkgname nettle --pkgversion 3.3 --nodoc < /dev/null && sudo ldconfig
+    - cd $(mktemp -d) && curl -L 'https://www.gnupg.org/ftp/gcrypt/gnutls/v3.5/gnutls-3.5.13.tar.xz' | tar xfJ - && cd gnutls* && mkdir build && cd build && ../configure --disable-shared --enable-static --with-included-libtasn1 --with-included-unistring --without-p11-kit  --disable-hardware-acceleration --disable-padlock && make && sudo checkinstall --install --pkgname gnutls --pkgversion 3.5.13 --nodoc < /dev/null && sudo ldconfig
     - cd $TRAVIS_BUILD_DIR
 matrix:
     include:

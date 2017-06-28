@@ -135,7 +135,7 @@ namespace telegram {
   TgChannel::httpRequest(const std::string& srv, const http::HTTPRequest& req) const {
     auto hr = http::PerformHTTPRequest(srv, req);
     hr.wait();
-    return std::move(hr.get());
+    return hr.get();
   }
 #endif
 

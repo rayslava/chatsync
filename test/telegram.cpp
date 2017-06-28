@@ -26,8 +26,9 @@ namespace telegram {
       memcpy(buffer, _data.c_str(), std::min(_data.length(), count));
       return std::min(_data.length(), count);
     }
-    ssize_t send(const void * const buffer, size_t count) override { return 0; }
-    ssize_t pending() {return _read ? 0 : _data.length();};
+    ssize_t send(const void * const buffer __attribute__((unused)),
+                 size_t		    count __attribute__((unused))) override { return 0; }
+    ssize_t pending() override {return _read ? 0 : _data.length();};
   private:
     const std::string _data;
   };
@@ -36,7 +37,8 @@ namespace telegram {
   static std::string response_contents;
 
   std::unique_ptr<http::HTTPResponse>
-  TgChannel::httpRequest(const std::string& srv, const http::HTTPRequest& req) const {
+  TgChannel::httpRequest(const std::string	& srv __attribute__((unused)),
+                         const http::HTTPRequest& req __attribute__((unused))) const {
     if (_read) {
       return nullptr;
     }
