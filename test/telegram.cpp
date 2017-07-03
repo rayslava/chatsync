@@ -123,7 +123,4 @@ namespace telegram {
     ASSERT_STREQ(buffer, valid_line.c_str());
     delete[] buffer;
   }
-
-
-
 }

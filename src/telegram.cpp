@@ -134,8 +134,11 @@ namespace telegram {
   std::unique_ptr<http::HTTPResponse>
   TgChannel::httpRequest(const std::string& srv, const http::HTTPRequest& req) const {
     auto hr = http::PerformHTTPRequest(srv, req);
-    hr.wait();
-    return hr.get();
+    while (_pipeRunning) {
+      if (hr.wait_for(std::chrono::milliseconds (100)) == std::future_status::ready)
+        return hr.get();
+    }
+    return nullptr;
   }
 #endif
 

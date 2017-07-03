@@ -10,7 +10,7 @@
 #include <iomanip>
 
 #define LOG(lvl)    logging::LogWriter<lvl>
-#define TRACE   LOG(logging::Severity::trace)() << __FILE__ << ":" << __LINE__ << " "
+#define TRACE   LOG(logging::Severity::trace)() << __FUNCTION__ << "@" << __FILE__ << ":" << __LINE__ << " "
 #define DEBUG   LOG(logging::Severity::debug)()
 #define INFO    LOG(logging::Severity::info)()
 #define WARNING LOG(logging::Severity::warning)()

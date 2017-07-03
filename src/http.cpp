@@ -138,7 +138,8 @@ namespace http {
     _code(0),
     _buffer(malloc(MAX_BUF)),
     _buffer_size(0),
-    _header_size(0) {
+    _header_size(0)
+  {
     memset(_buffer, 0, MAX_BUF);
     _buffer_size = _connection_manager->recv(_buffer, MAX_BUF - 1);
     /** TODO : check res < 0 */
