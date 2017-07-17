@@ -104,25 +104,25 @@ namespace networking {
 
 #ifdef TLS_SUPPORT
   TLSConnection::TLSConnection(int tcp_fd) {
-    session.set_credentials(credentials);
-    session.set_priority ("NORMAL", NULL);
-    session.set_transport_ptr((gnutls_transport_ptr_t) (ptrdiff_t) tcp_fd);
+    _session.set_credentials(_credentials);
+    _session.set_priority ("NORMAL", NULL);
+    _session.set_transport_ptr((gnutls_transport_ptr_t) (ptrdiff_t) tcp_fd);
   }
 
   TLSConnection::~TLSConnection() {
-    session.bye(GNUTLS_SHUT_RDWR);
+    _session.bye(GNUTLS_SHUT_RDWR);
   }
 
   int TLSConnection::handshake() {
-    return session.handshake();
+    return _session.handshake();
   }
 
   ssize_t TLSConnection::pending_bytes () {
-    return session.check_pending();
+    return _session.check_pending();
   }
 
   ssize_t TLSConnection::recv(void* buffer, size_t count) {
-    int ret = session.recv(buffer, count);
+    int ret = _session.recv(buffer, count);
 
     if (ret == 0)
       throw networking::tls_error(ret, "Peer has closed the TLS connection");
@@ -132,7 +132,7 @@ namespace networking {
   }
 
   ssize_t TLSConnection::send(const void * const buffer, size_t count) {
-    return session.send(buffer, count);
+    return _session.send(buffer, count);
   }
 
   std::unique_ptr<TLSConnection> tls_connect(const std::string& host) {

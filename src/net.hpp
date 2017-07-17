@@ -44,8 +44,8 @@ namespace networking {
 
 #ifdef TLS_SUPPORT
   class TLSConnection {
-    gnutls::client_session session;                /**< gnutls session */
-    gnutls::certificate_credentials credentials;   /**< gnutls credentials TODO: support customization */
+    gnutls::client_session _session;                /**< gnutls session */
+    gnutls::certificate_credentials _credentials;   /**< gnutls credentials TODO: support customization */
   public:
     /**
      * Create a connection

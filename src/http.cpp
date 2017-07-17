@@ -125,9 +125,8 @@ namespace http {
         return std::move(response);
       });
     }
-#else
-    throw http_error("Unsupported protocol provided");
 #endif
+    throw http_error("Unsupported protocol provided");
   }
 
   constexpr auto MAX_BUF = 4096;
