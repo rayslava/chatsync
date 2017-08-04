@@ -165,11 +165,13 @@ namespace http {
     size_t _buffer_size;                           /**< Guaranteed size of \c _buffer */
     size_t _header_size;                           /**< Last char of header, where the body starts in _buffer */
     std::unique_ptr<std::istringstream> _resp;     /**< Internal conversion object */
+    bool _body_received;                           /**< True when body download finished */
 
     void parseHttp();                              /**< Parse headers filling \c _headers */
-    void recvBody();                            /**< Download the rest of answer */
+    void recvBody();                               /**< Download the rest of answer */
   public:
-    HTTPResponse(std::unique_ptr<ConnectionManager>&&);
+    HTTPResponse(std::unique_ptr<ConnectionManager>&&,
+		 bool get_body = true);
     ~HTTPResponse();
     /**
      * Get HTTP header
@@ -184,10 +186,11 @@ namespace http {
      *
      * \retval \c std::pair<buffer, size> with answer.
      */
-    const std::pair<const void * const, size_t> data() const;
+    const std::pair<const void * const, size_t> data();
 #if defined(_UNIT_TEST_BUILD)
   private:
     FRIEND_TEST(HTTPResponse, Creation);
+    FRIEND_TEST(PerformHTTPRequest, localNoBody);
 #endif
   };
 
@@ -201,6 +204,7 @@ namespace http {
    */
   std::future<std::unique_ptr<HTTPResponse> >
   PerformHTTPRequest(const std::string& url,
-                     const HTTPRequest& req);
+                     const HTTPRequest& req,
+		     bool get_body = true);
 
 }

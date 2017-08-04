@@ -39,13 +39,15 @@ namespace http {
     return _headers.at(upcase_header);
   }
 
-  const std::pair<const void * const, size_t> HTTPResponse::data() const {
+  const std::pair<const void * const, size_t> HTTPResponse::data() {
+    if (!_body_received)
+      recvBody();
     const char* _body = static_cast<const char *>(_buffer) + _header_size;
     return std::make_pair(static_cast<const void *>(_body), _buffer_size - _header_size);
   }
 
   std::future<std::unique_ptr<HTTPResponse> >
-  PerformHTTPRequest(const std::string& url, const HTTPRequest& req) {
+  PerformHTTPRequest(const std::string& url, const HTTPRequest& req, bool get_body) {
     bool https = false;
     const std::string::size_type proto_end = url.find("://");
     if (proto_end == std::string::npos)
@@ -87,7 +89,7 @@ namespace http {
     TRACE << "Requesting: " << request_line;
 
     if (!https) {
-      return std::async(std::launch::async, [server, port, request_line, request_body]() {
+      return std::async(std::launch::async, [server, port, request_line, request_body, get_body]() {
         const int fd = networking::tcp_connect(server + ":" + port);
         auto&& conn_mgr = std::make_unique<HTTPConnectionManager>(fd);
         {
@@ -101,13 +103,13 @@ namespace http {
         conn_mgr->send(request_line.c_str(), request_line.length());
         if (request_body.second > 0)
           conn_mgr->send(request_body.first, request_body.second);
-        auto&& response = std::make_unique<HTTPResponse>(std::move(conn_mgr));
+        auto&& response = std::make_unique<HTTPResponse>(std::move(conn_mgr), get_body);
         return std::move(response);
       });
     }
 #ifdef TLS_SUPPORT
     else {
-      return std::async(std::launch::async, [server, port, request_line, request_body]() {
+      return std::async(std::launch::async, [server, port, request_line, request_body, get_body]() {
         auto&& conn = networking::tls_connect(server + ":" + port);
         auto&& conn_mgr = std::make_unique<HTTPSConnectionManager>(std::move(conn));
         {
@@ -121,7 +123,7 @@ namespace http {
         conn_mgr->send(request_line.c_str(), request_line.length());
         if (request_body.second > 0)
           conn_mgr->send(request_body.first, request_body.second);
-        auto&& response = std::make_unique<HTTPResponse>(std::move(conn_mgr));
+        auto&& response = std::make_unique<HTTPResponse>(std::move(conn_mgr), get_body);
         return std::move(response);
       });
     }
@@ -132,18 +134,21 @@ namespace http {
   constexpr auto MAX_BUF = 4096;
   constexpr auto receive_timeout = std::chrono::milliseconds(5);
 
-  HTTPResponse::HTTPResponse(std::unique_ptr<ConnectionManager>&& mgr) :
+  HTTPResponse::HTTPResponse(std::unique_ptr<ConnectionManager>&& mgr,
+			     bool get_body) :
     _connection_manager(std::move(mgr)),
     _code(0),
     _buffer(malloc(MAX_BUF)),
     _buffer_size(0),
-    _header_size(0)
+    _header_size(0),
+    _body_received(false)
   {
     memset(_buffer, 0, MAX_BUF);
     _buffer_size = _connection_manager->recv(_buffer, MAX_BUF - 1);
     /** TODO : check res < 0 */
     parseHttp();
-    recvBody();
+    if (get_body)
+      recvBody();
   }
 
   HTTPResponse::~HTTPResponse() {
@@ -240,6 +245,7 @@ namespace http {
         }
       }
     }
+    _body_received = true;
   }
 
   HTTPConnectionManager::~HTTPConnectionManager() {

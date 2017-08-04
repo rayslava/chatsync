@@ -115,10 +115,40 @@ Accept: */*\r\nTest-Header: Test value\r\n\r\n");
     server->join();
   }
 
+  TEST(PerformHTTPRequest, localNoBody)
+  {
+    int sfd, nfd;
+    int port = 8081;
+    const std::string& answer = "HTTP/1.1 200 OK\r\nContent-Length: 2\r\n\r\nok";
+    const auto server = std::make_unique<std::thread>(std::thread(&sockListen, std::ref(answer), std::ref(port), std::ref(sfd), std::ref(nfd)));
+    HTTPRequest req(HTTPRequestType::HEAD, "localhost", "/");
+    auto hr = PerformHTTPRequest("http://localhost:8081/", req, false);
+    hr.wait();
+    auto result = hr.get();
+    ASSERT_EQ(result->code(), 200);
+    ASSERT_EQ(result->_body_received, false);
+    const auto data = result->data();
+    ASSERT_EQ(result->_body_received, true);
+    const char* line = static_cast<const char *>(data.first);
+    ASSERT_STREQ(line, "ok");
+    ASSERT_EQ(data.second, 2);
+    server->join();
+  }
+
   TEST(PerformHTTPRequest, Yandex)
   {
     HTTPRequest req(HTTPRequestType::HEAD, "ya.ru", "/");
     auto hr = PerformHTTPRequest("http://ya.ru/", req);
+    hr.wait();
+    auto result = hr.get();
+    ASSERT_EQ(result->code(), 302);
+    ASSERT_STREQ((*result)["location"].c_str(), "https://ya.ru/");
+  }
+
+  TEST(PerformHTTPRequest, NoBody)
+  {
+    HTTPRequest req(HTTPRequestType::HEAD, "ya.ru", "/");
+    auto hr = PerformHTTPRequest("http://ya.ru/", req, false);
     hr.wait();
     auto result = hr.get();
     ASSERT_EQ(result->code(), 302);
