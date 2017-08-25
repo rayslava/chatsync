@@ -136,7 +136,11 @@ namespace logging {
       _writer(nullptr),
       _running(ATOMIC_FLAG_INIT),
       _log_repeat(1),
+#ifdef _UNIT_TEST_BUILD
       _severity(logging::Severity::trace)
+#else
+      _severity(logging::Severity::info)
+#endif
     {}
 
     ~LoggerImpl() {

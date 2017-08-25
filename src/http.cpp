@@ -31,12 +31,18 @@ namespace http {
     trim(s);
     return s;
   }
+  const std::string& HTTPResponse::header(const std::string& hdr) const {
+    static const std::string nothing = "";
+    std::string upcase_hdr;
+    std::transform(hdr.begin(), hdr.end(),
+                   std::back_inserter(upcase_hdr), ::toupper);
+    if (_headers.find(upcase_hdr) != _headers.end())
+      return _headers.at(upcase_hdr);
+    return nothing;
+  }
 
-  const std::string& HTTPResponse::operator[](const std::string& header) const {
-    std::string upcase_header;
-    std::transform(header.begin(), header.end(),
-                   std::back_inserter(upcase_header), ::toupper);
-    return _headers.at(upcase_header);
+  const std::string& HTTPResponse::operator[](const std::string& hdr) const {
+    return header(hdr);
   }
 
   const std::pair<const void * const, size_t> HTTPResponse::data() {
@@ -135,7 +141,7 @@ namespace http {
   constexpr auto receive_timeout = std::chrono::milliseconds(5);
 
   HTTPResponse::HTTPResponse(std::unique_ptr<ConnectionManager>&& mgr,
-			     bool get_body) :
+                             bool				  get_body) :
     _connection_manager(std::move(mgr)),
     _code(0),
     _buffer(malloc(MAX_BUF)),

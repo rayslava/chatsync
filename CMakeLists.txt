@@ -25,6 +25,7 @@ if(FEATURE_TOX)
   option (USE_C_TOXCORE "Build Tox support using c-toxcore from TokTok" OFF)
 endif()
 
+option (ENABLE_HANDLERS "Build support for message processing" ON)
 
 set(COMMON_SOURCE_FILES
   src/config.cpp
@@ -40,6 +41,19 @@ set(SOURCE_FILES
   src/filechannel.cpp
   src/http.cpp
   )
+
+if (ENABLE_HANDLERS)
+  message(STATUS "Compiling with handlers support")
+  SET(HANDLERS_FILES
+    src/handlers/handler.cpp
+    src/handlers/handler_http_probe.cpp
+    src/http.cpp
+    )
+  SET(SOURCE_FILES
+    ${SOURCE_FILES}
+    ${HANDLERS_FILES}
+    )
+endif()
 
 macro(create_test name files)
   message(STATUS "Creating test '${name}' of ${files}")
@@ -151,7 +165,11 @@ if (TRAVIS_BUILD)
   add_definitions(-DTRAVIS_BUILD)
 endif()
 
-set(STANDARD "-std=c++14")
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+  set(STANDARD "-std=c++17")
+elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+  set(STANDARD "-std=c++1z")
+endif()
 
 set(CMAKE_CXX_FLAGS         "${CMAKE_CXX_FLAGS} -fvisibility=hidden -Wall -Wno-unknown-pragmas -Wno-sign-compare -Woverloaded-virtual -Wwrite-strings -Wno-unused ${STANDARD} -Wextra -pedantic -Werror -pthread")
 set(CMAKE_CXX_FLAGS_PROFILED "${CMAKE_CXX_FLAGS} -pg")
@@ -177,7 +195,7 @@ if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 endif()
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-error=unknown-warning-option -Wno-error=braced-scalar-init")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-error=unknown-warning-option -Wno-error=braced-scalar-init -stdlib=libc++")
 endif()
 
 if ((COVERALLS OR COVERAGE) AND CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -236,6 +254,9 @@ if (FEATURE_TELEGRAM)
   create_test(telegram "test/telegram.cpp;src/http.cpp;src/filechannel.cpp;src/telegram.cpp")
 endif()
 
+if (ENABLE_HANDLERS)
+  create_test(handler "test/handler.cpp;${HANDLERS_FILES}")
+endif()
 
 create_test(unit "${all_test_files}")
 

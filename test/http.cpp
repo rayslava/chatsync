@@ -125,7 +125,7 @@ Accept: */*\r\nTest-Header: Test value\r\n\r\n");
     auto hr = PerformHTTPRequest("http://localhost:8081/", req, false);
     hr.wait();
     auto result = hr.get();
-    ASSERT_EQ(result->code(), 200);
+    ASSERT_EQ(result->code(),	      200);
     ASSERT_EQ(result->_body_received, false);
     const auto data = result->data();
     ASSERT_EQ(result->_body_received, true);

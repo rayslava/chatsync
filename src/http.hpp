@@ -171,14 +171,15 @@ namespace http {
     void recvBody();                               /**< Download the rest of answer */
   public:
     HTTPResponse(std::unique_ptr<ConnectionManager>&&,
-		 bool get_body = true);
+                 bool get_body=true);
     ~HTTPResponse();
     /**
      * Get HTTP header
      *
      * \retval header or empty string if no such header exists.
      */
-    const std::string& operator[](const std::string& header) const;
+    const std::string& operator[](const std::string&) const;
+    const std::string& header(const std::string&) const;
     int code() const {return _code;};
 
     /**
@@ -189,7 +190,7 @@ namespace http {
     const std::pair<const void * const, size_t> data();
 #if defined(_UNIT_TEST_BUILD)
   private:
-    FRIEND_TEST(HTTPResponse, Creation);
+    FRIEND_TEST(HTTPResponse,	    Creation);
     FRIEND_TEST(PerformHTTPRequest, localNoBody);
 #endif
   };
@@ -205,6 +206,6 @@ namespace http {
   std::future<std::unique_ptr<HTTPResponse> >
   PerformHTTPRequest(const std::string& url,
                      const HTTPRequest& req,
-		     bool get_body = true);
+                     bool		get_body=true);
 
 }

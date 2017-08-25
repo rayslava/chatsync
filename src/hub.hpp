@@ -80,7 +80,8 @@ namespace Hub {
     /**
      * New message receiving callback
      *
-     * @param msg The message. Costref is used to pass ownership to this Hub. Must be normally passed using std::move()
+     * @param msg The message. Constref is used to pass ownership to this
+     * Hub. Must be normally passed using std::move()
      */
     void newMessage(const messaging::message_ptr&& msg);
 

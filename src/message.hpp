@@ -44,7 +44,9 @@ namespace messaging {
     const std::string _data;                                        /**< Message text */
     const std::shared_ptr<const messaging::User> _user;             /**< Message author */
   public:
-    TextMessage(const uint16_t origin, std::shared_ptr<const messaging::User>&& user, const std::string& data) :
+    TextMessage(const uint16_t				 origin,
+                std::shared_ptr<const messaging::User>&& user,
+                const std::string		       & data) :
       Message(origin),
       _data(data),
       _user(std::move(user)) {};

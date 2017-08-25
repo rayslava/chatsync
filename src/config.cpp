@@ -3,7 +3,7 @@
 #include <fstream>
 #include <streambuf>
 #include <algorithm>
-#include <string>
+#include <sstream>
 #include "config.hpp"
 #include "messages.hpp"
 
