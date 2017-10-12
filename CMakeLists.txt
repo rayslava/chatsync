@@ -236,7 +236,9 @@ target_link_libraries(
 include(CTest)
 enable_testing()
 
-create_test(channel "test/channel.cpp;src/ircchannel.cpp;src/filechannel.cpp")
+create_test(filechannel "test/filechannel.cpp;src/filechannel.cpp")
+
+create_test(ircchannel "test/ircchannel.cpp;src/ircchannel.cpp;src/filechannel.cpp")
 
 create_test(hub "test/hub.cpp;src/ircchannel.cpp;src/filechannel.cpp;src/toxchannel.cpp;src/http.cpp")
 
