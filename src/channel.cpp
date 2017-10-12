@@ -66,8 +66,8 @@ namespace channeling {
   void Channel::stopPolling() {
     if (_thread) {
       DEBUG << "Thread " << _name << " stops polling.";
-      _active = false;
-      _pipeRunning = false;
+      _active.store(false, std::memory_order_release);
+      _pipeRunning.store(false, std::memory_order_release);
       _thread->detach();
       _thread.reset();
       DEBUG << "Thread " << _name << " joined.";
@@ -75,7 +75,7 @@ namespace channeling {
   }
 
   void Channel::reconnect() {
-    if (!*_hub_alive) {
+    if (!_hub_alive->load(std::memory_order_acquire)) {
       DEBUG << "Hub is dead. Aborting reconnect";
       return;
     }
@@ -91,7 +91,7 @@ namespace channeling {
     DEBUG << "Channel " << name() << ": file descriptor closed";
 
     activate().wait();
-    if (_pipeRunning) {
+    if (_pipeRunning.load(std::memory_order_acquire)) {
       // Successfully reconnected
       _reconnect_attempt = 0;
       return;
@@ -134,7 +134,7 @@ namespace channeling {
     int err = 0;
     const unsigned int select_timeout = _config.get("poll_time", "5");
     // Implement the receiver loop
-    while (_pipeRunning) {
+    while (_pipeRunning.load(std::memory_order_acquire)) {
       // Initialize time out struct for select()
       struct timeval tv;
       tv.tv_sec = select_timeout;
@@ -145,9 +145,10 @@ namespace channeling {
       // Now, check for readability
       errno = 0;
       err = select(readFd + 1, &readset, NULL, NULL, &tv);
-      if (!*_alive) return;
-      if (_pipeRunning && (err < 0 || fcntl(readFd, F_GETFD) == -1 || errno == EBADF)) {
-        if (!*_alive) return;
+      if (!_alive->load(std::memory_order_acquire)) return;
+      if (_pipeRunning.load(std::memory_order_acquire) &&
+	  (err < 0 || fcntl(readFd, F_GETFD) == -1 || errno == EBADF)) {
+        if (!_alive->load(std::memory_order_acquire)) return;
         DEBUG << "select() failed. Reconnecting channel " << name();
         std::thread([this]() {
           reconnect();
@@ -161,7 +162,7 @@ namespace channeling {
         int bytes;
         err = ioctl(readFd, FIONREAD, &bytes);
         if (err < 0 || bytes == 0) {
-          if (!*_alive) return;
+          if (!_alive->load(std::memory_order_acquire)) return;
           std::thread([this]() {
             reconnect();
           }).detach();
