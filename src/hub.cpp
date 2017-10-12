@@ -10,10 +10,12 @@
 namespace Hub {
   Hub::Hub(std::string const& name) :
     _name(name),
+    _mutex(),
+    _cond(),
     _loopRunning(ATOMIC_FLAG_INIT),
     _alive(new std::atomic<bool>(ATOMIC_FLAG_INIT))
   {
-    *_alive = true;
+    _alive->store(true, std::memory_order_release);
   }
 
   void Hub::addInput(channeling::Channel * const channel) {
@@ -60,7 +62,7 @@ namespace Hub {
     /* We'll sleep here during the reconnection attempts to prevent resource
        deadlock while the channel tries to reach the server and start
        messaging again */
-    while (!_loopRunning)
+    while (!_loopRunning.load(std::memory_order_acquire))
       std::this_thread::sleep_for(std::chrono::milliseconds (1000));
 
     std::unique_lock<std::mutex> mlock;
@@ -81,13 +83,12 @@ namespace Hub {
       std::unique_lock<std::mutex> mlock(_mutex);
       _messages.push(std::move(item));
       mlock.unlock();
+      _cond.notify_one();
     }
-    /* Notifying doesn't require mutex lock */
-    _cond.notify_one();
   }
 
   void Hub::msgLoop() {
-    while (_loopRunning) {
+    while (_loopRunning.load(std::memory_order_acquire)) {
       const auto msg = popMessage();
       for (auto& out : _outputChannels)
         if ((nullptr != msg) && (msg->_originId != out->_id))
@@ -134,15 +135,15 @@ namespace Hub {
     } while (!ready);
     activators.clear();
 
-    _loopRunning = true;
+    _loopRunning.store(true, std::memory_order_release);
     _msgLoop = std::make_unique<std::thread>(std::thread(&Hub::msgLoop, this));
   }
 
   void Hub::deactivate() {
-    if (!_loopRunning)
+    if (!_loopRunning.load(std::memory_order_acquire))
       return;
-    _loopRunning = false;
-    *_alive = false;
+    _loopRunning.store(false, std::memory_order_release);
+    _alive->store(false, std::memory_order_release);
     const auto msg = std::make_shared<const messaging::TextMessage>(0xFFFF,
                                                                     std::make_shared<const messaging::User>(messaging::User("system")),
                                                                     MSG_EXITING);
