@@ -92,6 +92,7 @@ namespace logging {
     std::unique_ptr<std::thread> _writer;  /**< Thread for outing */
     std::atomic_bool _running;             /**< Writing logs is active */
     unsigned int _log_repeat;              /**< Repeats for writing logs */
+    std::mutex _sink_mutex;                /**< Sink lock (used during changes) */
     std::weak_ptr<LogSink> _sink;          /**< Place to send messages */
     Severity _severity;                    /**< Minimal severity */
 
@@ -136,6 +137,7 @@ namespace logging {
       _writer(nullptr),
       _running(ATOMIC_FLAG_INIT),
       _log_repeat(1),
+      _sink_mutex(),
 #ifdef _UNIT_TEST_BUILD
       _severity(logging::Severity::trace)
 #else
@@ -145,10 +147,25 @@ namespace logging {
 
     ~LoggerImpl() {
       if (_writer) {
-        while (!_messages.empty() && !_sink.expired()) { _cond.notify_one(); }
-        _running = false;
-        _writer->detach();
-        _cond.notify_one();
+        bool empty = false;
+        bool expired = false;
+        do {
+          {
+            std::unique_lock<std::mutex> mlock(_mutex);
+            empty = _messages.empty();
+            _cond.notify_one();
+          }
+          {
+            std::unique_lock<std::mutex> slock(_sink_mutex);
+            expired = _sink.expired();
+          }
+        } while (!empty && !expired);
+        _running.store(false, std::memory_order_release);
+        {
+          std::unique_lock<std::mutex> mlock(_mutex);
+          _cond.notify_one();
+        }
+        _writer->join();
       }
     }
   };

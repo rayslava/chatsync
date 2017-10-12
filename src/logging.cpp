@@ -30,9 +30,8 @@ namespace logging {
         }).detach();
         ++_log_repeat;
       }
+      _cond.notify_one();
     }
-    // Notifying doesn't require mutex lock
-    _cond.notify_one();
   }
 
   Severity LoggerImpl::setSeverity(Severity s) {
@@ -42,15 +41,22 @@ namespace logging {
   }
 
   void LoggerImpl::writeOut() {
-    while (_running && !_sink.expired()) {
-      if (const auto& out = _sink.lock()) {
+    while (_running.load(std::memory_order_acquire)) {
+      std::shared_ptr<LogSink> out;
+      {
+        std::unique_lock<std::mutex> slock(_sink_mutex);
+        if (_sink.expired())
+          break;
+        out = _sink.lock();
+      }
+      if (out) {
         std::unique_lock<std::mutex> mlock(_mutex);
 
-        while (_messages.empty() && _running)
+        while (_messages.empty() && _running.load(std::memory_order_acquire))
           _cond.wait(mlock);
 
-        if (!_running)
-          continue;
+        if (!_running.load(std::memory_order_acquire))
+          break;
 
         auto item = std::move(_messages.front());
         _messages.pop();
@@ -63,14 +69,17 @@ namespace logging {
 
   LoggerImpl& LoggerImpl::get() {
     static LoggerImpl instance;
-    if (!instance._running)
-      instance._running = true;
+    if (!instance._running.load(std::memory_order_acquire))
+      instance._running.store(true, std::memory_order_release);
 
     return instance;
   }
 
   void LoggerImpl::setOutput(const std::shared_ptr<LogSink>& output) {
-    _sink = output;
+    {
+      std::unique_lock<std::mutex> slock(_sink_mutex);
+      _sink = output;
+    }
     if (!_writer)
       _writer = std::make_unique<std::thread>
                   (std::thread(&LoggerImpl::writeOut, this));
