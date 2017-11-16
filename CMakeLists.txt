@@ -168,10 +168,10 @@ endif()
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
   set(STANDARD "-std=c++17")
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-  set(STANDARD "-std=c++1z")
+  set(STANDARD "-std=c++17")
 endif()
 
-set(CMAKE_CXX_FLAGS         "${CMAKE_CXX_FLAGS} -fvisibility=hidden -Wall -Wno-unknown-pragmas -Wno-sign-compare -Woverloaded-virtual -Wwrite-strings -Wno-unused ${STANDARD} -Wextra -pedantic -Werror -pthread")
+set(CMAKE_CXX_FLAGS         "${CMAKE_CXX_FLAGS} -Wall -Wno-unknown-pragmas -Wno-sign-compare -Woverloaded-virtual -Wwrite-strings -Wno-unused ${STANDARD} -Wextra -pedantic -Werror -pthread")
 set(CMAKE_CXX_FLAGS_PROFILED "${CMAKE_CXX_FLAGS} -pg")
 
 if (STATIC)
@@ -191,7 +191,7 @@ set(CMAKE_CXX_FLAGS_DEBUG   "-O0 -g3 ${STANDARD}")
 set(CMAKE_CXX_FLAGS_RELEASE "-Ofast ${STANDARD}")
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-  set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -flto")
+  set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -flto -fvisibility=hidden")
 endif()
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")

@@ -9,12 +9,33 @@ namespace networking {
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include <string.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/ioctl.h>
 #include <netdb.h>
+#ifndef __clang__
+#include <string.h>
     }
+#else
+    }
+#include <cstring>
+#endif
+  }
+
+  static inline void * _memset(void* s, int c, size_t n) {
+#ifndef __clang__
+    return os::memset(s, c, n);
+#else
+    return memset(s, c, n);
+#endif
+  }
+
+  static inline void * _memcpy(void* dest, const void* src, size_t n) {
+#ifndef __clang__
+    return os::memcpy(dest, src, n);
+#else
+    return memcpy(dest, src, n);
+#endif
   }
 
   /**
@@ -63,11 +84,11 @@ namespace networking {
       if (fd < 0)
         throw network_error("Can't create socket");
 
-      os::memset(&serv_addr, 0, sizeof(struct os::sockaddr_in));
+      _memset(&serv_addr, 0, sizeof(struct os::sockaddr_in));
       serv_addr.sin_family = AF_INET;
-      os::memcpy((char *) &serv_addr.sin_addr.s_addr,
-                 (char *) server->h_addr,
-                 server->h_length);
+      _memcpy((char *) &serv_addr.sin_addr.s_addr,
+              (char *) server->h_addr,
+              server->h_length);
       {
         /* Ugly workaround to use different optimization levels for compiler */
 #ifndef htons
@@ -83,11 +104,11 @@ namespace networking {
       fd = socket(AF_INET6, os::SOCK_STREAM, 0);
       if (fd < 0)
         throw network_error("Can't create ipv6 socket");
-      os::memset(&serv_addr, 0, sizeof(struct os::sockaddr_in6));
+      _memset(&serv_addr, 0, sizeof(struct os::sockaddr_in6));
       serv_addr.sin6_family = AF_INET6;
-      os::memcpy((char *) &serv_addr.sin6_addr,
-                 (char *) server->h_addr,
-                 server->h_length);
+      _memcpy((char *) &serv_addr.sin6_addr,
+              (char *) server->h_addr,
+              server->h_length);
       {
         /* Ugly workaround to use different optimization levels for compiler */
 #ifndef htons

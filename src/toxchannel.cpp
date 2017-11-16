@@ -1,3 +1,4 @@
+#include <array>
 #include "toxchannel.hpp"
 #include "messages.hpp"
 #include "logging.hpp"
@@ -55,7 +56,21 @@ namespace toxChannel {
     {
       return ToxId2HR<Size>(address.data ());
     }
+
+#ifndef __clang__
 #include <string.h>
+  }
+#else
+  }
+#include <cstring>
+#endif
+
+  static inline int _strncmp(const char* s1, const char* s2, size_t n) {
+#ifndef __clang__
+    return util::strncmp(s1, s2, n);
+#else
+    return strncmp(s1, s2, n);
+#endif
   }
 
   static Tox * toxInit(const config::ConfigParser& config)
@@ -207,7 +222,7 @@ namespace toxChannel {
     switch (type) {
     case TOX_MESSAGE_TYPE_NORMAL:
       DEBUG << "Message from friend #" << friendnumber << "> " << buffer.get();
-      if (util::strncmp(cmd_invite, buffer.get(), length) == 0) {
+      if (_strncmp(cmd_invite, buffer.get(), length) == 0) {
 #ifdef CTOXCORE
         tox_conference_invite(tox, friendnumber, 0, NULL);
 #else

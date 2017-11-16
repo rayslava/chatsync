@@ -17,8 +17,8 @@ namespace ircChannel {
     _server(_config["server"]),
     _port(_config["port"]),
     _channel(_config["channel"]),
-    _ping_time(std::chrono::high_resolution_clock::now()),
-    _last_pong_time(std::chrono::high_resolution_clock::now()),
+    _ping_time(std::chrono::system_clock::now()),
+    _last_pong_time(std::chrono::system_clock::now()),
     _connection_issue(ATOMIC_FLAG_INIT)
   {}
 
@@ -189,13 +189,13 @@ namespace ircChannel {
   }
 
   void IrcChannel::ping() {
-    _ping_time = std::chrono::high_resolution_clock::now();
+    _ping_time = std::chrono::system_clock::now();
     DEBUG << "#irc: Sending ping";
     send("PING " + _server + "\r\n");
   }
 
   void IrcChannel::pong() const {
-    const auto& pong_time = std::chrono::high_resolution_clock::now();
+    const auto& pong_time = std::chrono::system_clock::now();
     {
       std::unique_lock<std::mutex> lock(_pong_time_mutex);
       _last_pong_time = pong_time;
@@ -209,7 +209,7 @@ namespace ircChannel {
   }
 
   void IrcChannel::checkTimeout() {
-    const auto timestamp = std::chrono::high_resolution_clock::now();
+    const auto timestamp = std::chrono::system_clock::now();
     std::chrono::duration<double> diff = timestamp - _ping_time;
     if (diff > max_timeout) {
       ping();
@@ -218,8 +218,8 @@ namespace ircChannel {
   }
 
   void IrcChannel::tick() {
-    const auto timestamp = std::chrono::high_resolution_clock::now();
-    std::chrono::time_point<std::chrono::high_resolution_clock> last_pong;
+    const auto timestamp = std::chrono::system_clock::now();
+    std::chrono::time_point<std::chrono::system_clock> last_pong;
     {
       std::unique_lock<std::mutex> lock(_pong_time_mutex);
       last_pong = _last_pong_time;

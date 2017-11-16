@@ -1,5 +1,6 @@
 #include <stdexcept>
 #include <algorithm>
+#include <functional>
 #include "net.hpp"
 #include "http.hpp"
 #include "logging.hpp"
