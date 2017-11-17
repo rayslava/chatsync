@@ -167,6 +167,7 @@ namespace telegram {
         DEBUG << "Empty array from Telegram. Apparently timeout triggered";
       } else {
         ERROR << "Wrong answer received from server:" << std::string(e.what());
+        DEBUG << "The response is \n" << charbuf;
       }
     }
   }

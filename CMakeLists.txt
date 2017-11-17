@@ -25,7 +25,7 @@ if(FEATURE_TOX)
   option (USE_C_TOXCORE "Build Tox support using c-toxcore from TokTok" OFF)
 endif()
 
-option (ENABLE_HANDLERS "Build support for message processing" ON)
+option (ENABLE_HANDLERS "Build support for message processing" OFF)
 
 set(COMMON_SOURCE_FILES
   src/config.cpp
@@ -165,6 +165,9 @@ if (TRAVIS_BUILD)
   add_definitions(-DTRAVIS_BUILD)
 endif()
 
+# Enable thread-safe POSIX implementations of C library
+add_definitions(-D_POSIX_C_SOURCE)
+
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
   set(STANDARD "-std=c++17")
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
@@ -175,6 +178,7 @@ set(CMAKE_CXX_FLAGS         "${CMAKE_CXX_FLAGS} -Wall -Wno-unknown-pragmas -Wno-
 set(CMAKE_CXX_FLAGS_PROFILED "${CMAKE_CXX_FLAGS} -pg")
 
 if (STATIC)
+  add_definitions(-DSTATIC)
   set(BUILD_SHARED_LIBS OFF)
   set(GNUTLS_LIBRARIES ${GNUTLS_STATIC_LIBRARIES})
   set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")

@@ -13,9 +13,9 @@ namespace Hub {
     _mutex(),
     _cond(),
     _loopRunning(ATOMIC_FLAG_INIT),
-    _alive(new std::atomic<bool>(ATOMIC_FLAG_INIT))
+    _alive(ATOMIC_FLAG_INIT)
   {
-    _alive->store(true, std::memory_order_release);
+    _alive.store(true, std::memory_order_release);
   }
 
   void Hub::addInput(channeling::Channel * const channel) {
@@ -65,9 +65,9 @@ namespace Hub {
     while (!_loopRunning.load(std::memory_order_acquire))
       std::this_thread::sleep_for(std::chrono::milliseconds (1000));
 
-    std::unique_lock<std::mutex> mlock;
+    std::unique_lock<std::mutex> mlock(_mutex);
     while (_messages.empty()) {
-      mlock = std::unique_lock<std::mutex>(_mutex);
+      //      mlock = std::unique_lock<std::mutex>(_mutex);
       _cond.wait(mlock);
     }
 
@@ -82,8 +82,8 @@ namespace Hub {
     {
       std::unique_lock<std::mutex> mlock(_mutex);
       _messages.push(std::move(item));
-      mlock.unlock();
       _cond.notify_one();
+      mlock.unlock();
     }
   }
 
@@ -143,7 +143,7 @@ namespace Hub {
     if (!_loopRunning.load(std::memory_order_acquire))
       return;
     _loopRunning.store(false, std::memory_order_release);
-    _alive->store(false, std::memory_order_release);
+    _alive.store(false, std::memory_order_release);
     const auto msg = std::make_shared<const messaging::TextMessage>(0xFFFF,
                                                                     std::make_shared<const messaging::User>(messaging::User("system")),
                                                                     MSG_EXITING);

@@ -12,15 +12,20 @@
 
 namespace http {
 
-  static inline void ltrim(std::string& s) {
-    s.erase(s.begin(), std::find_if(s.begin(), s.end(),
-                                    std::not1(std::ptr_fun<int, int>(std::isspace))));
+  static inline void ltrim(std::string& str)
+  {
+    auto it = std::find_if( str.begin(), str.end(), [](char ch){
+      return !std::isspace<char>(ch, std::locale::classic() );
+    } );
+    str.erase( str.begin(), it);
   }
 
-  static inline void rtrim(std::string& s) {
-    s.erase(std::find_if(s.rbegin(), s.rend(),
-                         std::not1(std::ptr_fun<int, int>(std::isspace))).base(),
-            s.end());
+  static inline void rtrim(std::string& str)
+  {
+    auto it = std::find_if( str.rbegin(), str.rend(), [](char ch){
+      return !std::isspace<char>(ch, std::locale::classic() );
+    } );
+    str.erase( it.base(), str.end() );
   }
 
   static inline void trim(std::string& s) {

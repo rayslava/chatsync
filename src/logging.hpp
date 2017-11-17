@@ -91,7 +91,7 @@ namespace logging {
     std::condition_variable _cond;         /**< The var to signal new messages */
     std::unique_ptr<std::thread> _writer;  /**< Thread for outing */
     std::atomic_bool _running;             /**< Writing logs is active */
-    unsigned int _log_repeat;              /**< Repeats for writing logs */
+    std::atomic<unsigned int> _log_repeat; /**< Repeats for writing logs */
     std::mutex _sink_mutex;                /**< Sink lock (used during changes) */
     std::weak_ptr<LogSink> _sink;          /**< Place to send messages */
     Severity _severity;                    /**< Minimal severity */

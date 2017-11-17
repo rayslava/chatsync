@@ -64,13 +64,13 @@ namespace Hub {
     /**
      * Shows the hub is still alive and channels should continue work
      */
-    std::shared_ptr<std::atomic<bool> > _alive;
+    std::atomic<bool> _alive;
   public:
     Hub(std::string const& name);
-    ~Hub() { _alive.reset(); };
+    ~Hub() { };
 
-    const std::string& name() const {return _name; };
-    std::shared_ptr<std::atomic<bool> > alive() const {return _alive; };
+    const std::string& name() const { return _name; };
+    bool alive() const { return _alive.load(std::memory_order_acquire); };
 
     /**
      * Append channel accordingly to its direction

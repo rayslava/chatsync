@@ -1,4 +1,6 @@
 #include "net.hpp"
+#include <memory>
+#include <mutex>
 
 /** This namespace contains network-related inline functions intended to embed
     into clients */
@@ -38,26 +40,75 @@ namespace networking {
 #endif
   }
 
+#ifndef STATIC
   /**
-   * Perform the hostname resolution
+   * Perform the hostname resolution asyncronously
    *
    * \param hostname Name of host to resolve
-   * \returns std::pair<hostent*,bool> hostent is for use in other networking,
+   * \returns std::tuple with h_addr, its size and bool for ipv6
    * bool is \c true if ipv6 is used
    * \throws hostname_error if it's impossible to resolve host
    */
-  static inline std::pair<os::hostent *, bool> resolve_host(const std::string& hostname) {
+  static inline std::tuple<std::unique_ptr<char[]>, int, bool>
+  resolve_host(const std::string& hostname) {
+    struct os::hostent he;
+    struct os::hostent* hp = &he;
+
+    const std::size_t buflen = 1024;
+    auto buf = std::make_unique<char[]>(buflen);
+    int herr, hres;
+
     bool ipv6 = false;
     DEBUG << "Trying to resolve " << hostname;
-    auto server = os::gethostbyname2(hostname.c_str(), AF_INET);
-    if (!server) {
-      server = os::gethostbyname2(hostname.c_str(), AF_INET6);
+    hres = os::gethostbyname2_r(hostname.c_str(), AF_INET,
+                                &he, buf.get(), buflen, &hp, &herr);
+    if (hres) {
+      hres = os::gethostbyname2_r(hostname.c_str(), AF_INET6,
+                                  &he, buf.get(), buflen, &hp, &herr);
       ipv6 = true;
     }
-    if (!server)
+    if (hres)
       throw hostname_error("Can't resolve hostname '" + hostname + "'");
-    return std::make_pair(server, ipv6);
+    auto result = std::make_unique<char[]>(he.h_length);
+    _memcpy(result.get(), he.h_addr, he.h_length);
+    return std::make_tuple(std::move(result), he.h_length, ipv6);
   }
+#else
+  /**
+   * Perform the hostname resolution syncronously with mutex
+   *
+   * Only available during dynamic linkage due to glibc bug 10652
+   * https://sourceware.org/bugzilla/show_bug.cgi?id=10652
+   *
+   * \param hostname Name of host to resolve
+   * \returns std::tuple with h_addr, its size and bool for ipv6
+   * bool is \c true if ipv6 is used
+   * \throws hostname_error if it's impossible to resolve host
+   */
+  static inline std::tuple<std::unique_ptr<char[]>, int, bool>
+  resolve_host(const std::string& hostname) {
+    static std::mutex resolve_mutex;
+    os::hostent* hp;
+    const std::size_t buflen = 0;
+    auto buf = std::make_unique<char[]>(buflen);
+
+    bool ipv6 = false;
+    {
+      std::unique_lock<std::mutex> resolve_lock(resolve_mutex);
+      DEBUG << "Trying to resolve " << hostname;
+      hp = os::gethostbyname2(hostname.c_str(), AF_INET);
+      if (!hp) {
+        hp = os::gethostbyname2(hostname.c_str(), AF_INET6);
+        ipv6 = true;
+      }
+      if (!hp)
+        throw hostname_error("Can't resole hostname '" + hostname + "'");
+      auto result = std::make_unique<char[]>(hp->h_length);
+      _memcpy(result.get(), hp->h_addr, hp->h_length);
+      return std::make_tuple(std::move(result), hp->h_length, ipv6);
+    }
+  }
+#endif
 
   int tcp_connect(const std::string& host) {
     int fd = -1;
@@ -72,12 +123,11 @@ namespace networking {
       throw network_error("Please provide server address in host:port format");
     }
 
-    os::hostent* server;
+    std::unique_ptr<char[]> resolved_host;
+    int resolved_host_len;
     bool ipv6 = false;
+    std::tie(resolved_host, resolved_host_len, ipv6) = resolve_host(url);
     TRACE << "Opening tcp connect to " << url;
-    std::tie(server, ipv6) = resolve_host(url);
-    TRACE << "Host resolved to " << server << " ipv6:" << ipv6;
-
     if (!ipv6) {
       struct os::sockaddr_in serv_addr;
       fd = socket(AF_INET, os::SOCK_STREAM, 0);
@@ -87,8 +137,8 @@ namespace networking {
       _memset(&serv_addr, 0, sizeof(struct os::sockaddr_in));
       serv_addr.sin_family = AF_INET;
       _memcpy((char *) &serv_addr.sin_addr.s_addr,
-              (char *) server->h_addr,
-              server->h_length);
+              (char *) resolved_host.get(),
+              resolved_host_len);
       {
         /* Ugly workaround to use different optimization levels for compiler */
 #ifndef htons
@@ -96,7 +146,7 @@ namespace networking {
 #endif
         serv_addr.sin_port = htons(port);
       }
-      if (connect(fd, (struct os::sockaddr *) &serv_addr, sizeof(serv_addr)) < 0)
+      if (connect(fd, (struct os::sockaddr *) &serv_addr, sizeof(struct os::sockaddr_in)) < 0)
         throw network_error("Can't connect to server");
     } else {
       struct os::sockaddr_in6 serv_addr;
@@ -107,8 +157,8 @@ namespace networking {
       _memset(&serv_addr, 0, sizeof(struct os::sockaddr_in6));
       serv_addr.sin6_family = AF_INET6;
       _memcpy((char *) &serv_addr.sin6_addr,
-              (char *) server->h_addr,
-              server->h_length);
+              (char *) resolved_host.get(),
+              resolved_host_len);
       {
         /* Ugly workaround to use different optimization levels for compiler */
 #ifndef htons

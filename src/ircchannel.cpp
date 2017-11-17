@@ -202,10 +202,7 @@ namespace ircChannel {
     }
     _connection_issue = false;
     std::chrono::duration<double> diff = pong_time - _ping_time;
-    const auto& pong_time_t = std::chrono::system_clock::to_time_t(pong_time);
-    DEBUG << "#irc: last pong at: '" <<
-      std::put_time(std::localtime(&pong_time_t), "%F %T") <<
-      " and it took " << diff.count() << "s";
+    DEBUG << "#irc: last pong took " << diff.count() << "s";
   }
 
   void IrcChannel::checkTimeout() {

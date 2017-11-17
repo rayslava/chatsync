@@ -16,11 +16,8 @@ static std::atomic_bool running = ATOMIC_FLAG_INIT;
 
 static void sighandler(int signum)
 {
-  if (signum == SIGINT) {
+  if (signum == SIGINT)
     running = false;
-    WARNING << "SIGINT caught. Finalizing data. "
-            << "Will exit after next tick.";
-  }
 }
 
 int main(int argc, char* argv[])
@@ -113,6 +110,9 @@ int main(int argc, char* argv[])
     for (auto& c : hublist)
       c->tick();
   }
+
+  WARNING << "SIGINT caught. Finalizing data. "
+          << "Will exit after threads are stopped.";
 
   for (auto& c : hublist)
     c->deactivate();

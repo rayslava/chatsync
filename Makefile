@@ -2,7 +2,7 @@ BINARY=chatsync
 JOBS=$(shell grep -c '^processor' /proc/cpuinfo)
 VERBOSE=1
 MAKE=cmake --build . -- -j $(JOBS)
-all: stylecheck doxygen asan clang release clang-release analyzed
+all: stylecheck doxygen asan-release tsan-release clang release clang-release analyzed
 
 doxygen:
 	doxygen Doxyfile
@@ -16,14 +16,23 @@ debug:
 release: debug
 	$(call build-dir, $@) && cmake .. -DCMAKE_BUILD_TYPE=Release && $(MAKE) && ctest -j 1
 
+static:
+	$(call build-dir, $@) && cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DSTATIC=True && $(MAKE) $(BINARY) -j $(JOBS)
+
 static-release:
 	$(call build-dir, $@) && cmake .. -DCMAKE_BUILD_TYPE=Release -DSTATIC=True && $(MAKE) $(BINARY) -j $(JOBS)
 
 asan:
+	$(call build-dir, $@) && cmake .. -DCMAKE_CXX_FLAGS="-fsanitize=address" -DCMAKE_BUILD_TYPE=Debug && $(MAKE) && ctest -j 1 -R unit
+
+asan-release:
 	$(call build-dir, $@) && cmake .. -DCMAKE_CXX_FLAGS="-fsanitize=address" -DCMAKE_BUILD_TYPE=RelWithDebInfo && $(MAKE) && ctest -j 1 -R unit
 
 tsan:
-	$(call build-dir, $@) && CXX=clang++ CC=clang cmake .. -DCMAKE_CXX_FLAGS="-fsanitize=thread"  -DCMAKE_BUILD_TYPE=Debug && $(MAKE) && ctest -j 1 -R unit
+	$(call build-dir, $@) && cmake .. -DCMAKE_CXX_FLAGS="-fsanitize=thread"  -DCMAKE_BUILD_TYPE=Debug && $(MAKE) && ctest -j 1 -R unit
+
+tsan-release:
+	$(call build-dir, $@) && cmake .. -DCMAKE_CXX_FLAGS="-fsanitize=thread"  -DCMAKE_BUILD_TYPE=RelWithDebInfo && $(MAKE) && ctest -j 1 -R unit
 
 msan:
 	$(call build-dir, $@) && CXX=clang++ CC=clang cmake .. -DCMAKE_CXX_FLAGS="-fsanitize=memory -fsanitize-memory-track-origins=2 -fsanitize-memory-use-after-dtor -fno-omit-frame-pointer -fno-optimize-sibling-calls -O0 -fsanitize-blacklist=$(shell pwd)/scripts/msan_blacklist.txt -stdlib=libc++ -L/home/v.barinov/work/btrwork/soft/llvm-build/lib -lc++abi -I/home/v.barinov/work/btrwork/soft/llvm-build/include" -DGTEST_BOTH_LIBRARIES="/home/v.barinov/work/btrwork/soft/gtest-build/libgtest_main.so /home/v.barinov/work/btrwork/soft/gtest-build/libgtest.so" -DCMAKE_BUILD_TYPE=Debug && $(MAKE) -j $(JOBS) VERBOSE=1 && MSAN_OPTIONS=poison_in_dtor=1 ./unit_tests
@@ -92,7 +101,7 @@ stylecheck:
 stylefix:
 	uncrustify -c uncrustify.cfg src/*.cpp src/*.hpp test/*.cpp --replace
 
-full-deploy: debug release clang clang-release static-release analyzed memcheck deploy deploy-ctoxcore
+full-deploy: debug release clang clang-release static-release analyzed memcheck deploy deploy-ctoxcore asan asan-release tsan tsan-release
 
 deploy: dockerbuild/$(BINARY).tar.gz
 	cd dockerbuild && docker run -v "$(shell pwd)/dockerbuild:/mnt/host" $(BINARY)-deploy /bin/bash -c 'cd /root && tar xfz /mnt/host/$(BINARY).tar.gz && cd $(BINARY) && mkdir build && cd build && cmake -DSTATIC=True -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make $(BINARY) -j $(JOBS) && cp $(BINARY) /mnt/host/$(BINARY)'

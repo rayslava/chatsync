@@ -8,6 +8,12 @@
 
 namespace logging {
 
+  namespace os {
+    extern "C" {
+#include <time.h>
+    }
+  }
+
   void LoggerImpl::log(const LogMessage&& msg) {
     if (msg._severity > _severity)
       return;
@@ -93,8 +99,9 @@ namespace logging {
       std::chrono::duration_cast<std::chrono::seconds>(ms);
     std::time_t t = sec.count();
     std::size_t fractional_seconds = ms.count() % 1000;
+    std::tm r;
 
-    result << "[" << std::put_time(std::localtime(&t), "%F %T.")
+    result << "[" << std::put_time(::localtime_r(&t, &r), "%F %T.")
            << std::setfill('0') << std::setw(3) << fractional_seconds << "]  "
            << "[" << severity_lines[msg._severity] << "] "
            << msg._message;

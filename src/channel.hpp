@@ -70,7 +70,6 @@ namespace channeling {
      */
     void reconnect();
 
-    std::shared_ptr<std::atomic<bool> > _hub_alive; /**< The hub is alive and we can try reconnecting */
   protected:
     std::atomic_bool _active;                       /**< Channel is prepared and active */
 
