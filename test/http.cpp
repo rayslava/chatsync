@@ -97,6 +97,7 @@ Accept: */*\r\nTest-Header: Test value\r\n\r\n");
                  }, http_error);
   }
 
+#if !defined(TRAVIS_BUILD)
   TEST(PerformHTTPRequest, local)
   {
     int sfd, nfd;
@@ -154,4 +155,5 @@ Accept: */*\r\nTest-Header: Test value\r\n\r\n");
     ASSERT_EQ(result->code(), 302);
     ASSERT_STREQ((*result)["location"].c_str(), "https://ya.ru/");
   }
+#endif
 }

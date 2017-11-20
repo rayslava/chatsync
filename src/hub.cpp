@@ -67,7 +67,6 @@ namespace Hub {
 
     std::unique_lock<std::mutex> mlock(_mutex);
     while (_messages.empty()) {
-      //      mlock = std::unique_lock<std::mutex>(_mutex);
       _cond.wait(mlock);
     }
 

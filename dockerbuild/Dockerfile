@@ -8,9 +8,9 @@ RUN add-apt-repository --yes ppa:ubuntu-toolchain-r/test
 RUN add-apt-repository --yes ppa:george-edison55/precise-backports
 RUN apt-get -qq update -y
 # Setting up build environment
-RUN apt-get -qq --yes --force-yes install gcc-5 g++-5 libgtest-dev valgrind lcov cmake cmake-data curl build-essential libtool autotools-dev automake checkinstall check git yasm pkg-config libncurses5-dev libgmp-dev
-RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 40 --slave /usr/bin/g++ g++ /usr/bin/g++-5
-RUN update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-5 40
+RUN apt-get -qq --yes --force-yes install gcc-6 g++-6 libgtest-dev valgrind lcov cmake cmake-data curl build-essential libtool autotools-dev automake checkinstall check git yasm pkg-config libncurses5-dev libgmp-dev
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 40 --slave /usr/bin/g++ g++ /usr/bin/g++-6
+RUN update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-6 40
 RUN update-alternatives --config gcc
 RUN update-alternatives --config gcov
 RUN cd $(mktemp -d) && cmake /usr/src/gtest &&  make -j4 && sudo mv libgtest.a libgtest_main.a /usr/lib/
