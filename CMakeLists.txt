@@ -44,6 +44,7 @@ set(SOURCE_FILES
 
 if (ENABLE_HANDLERS)
   message(STATUS "Compiling with handlers support")
+  add_definitions(-DHANDLERS)
   SET(HANDLERS_FILES
     src/handlers/handler.cpp
     src/handlers/handler_http_probe.cpp

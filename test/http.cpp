@@ -89,7 +89,6 @@ Accept: */*\r\nTest-Header: Test value\r\n\r\n");
 
   TEST(HTTPRequest, ProtoDetection)
   {
-    DEFAULT_LOGGING;
     HTTPRequest req(HTTPRequestType::GET, "test.site", "/");
     EXPECT_THROW({ PerformHTTPRequest("test.site", req);
                  }, url_error);

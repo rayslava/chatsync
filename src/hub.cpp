@@ -135,7 +135,11 @@ namespace Hub {
     activators.clear();
 
     _loopRunning.store(true, std::memory_order_release);
+#ifdef HANDLERS
+    _msgLoop = std::make_unique<std::thread>(std::thread(&Hub::msgLoopPipelined, this));
+#else
     _msgLoop = std::make_unique<std::thread>(std::thread(&Hub::msgLoop, this));
+#endif
   }
 
   void Hub::deactivate() {
@@ -167,4 +171,24 @@ namespace Hub {
       }));
   }
 
+#ifdef HANDLERS
+  void Hub::msgLoopPipelined() {
+    while (_loopRunning.load(std::memory_order_acquire)) {
+      auto msg = popMessage();
+      if (!_handlers.empty())
+        for (auto& handler : _handlers)
+          if (nullptr != msg) {
+            msg = handler->processMessage(std::move(msg)).get();
+          }
+      for (auto& out : _outputChannels)
+        if ((nullptr != msg) && (msg->_originId != out->_id))
+          msg >> *out;
+    }
+  }
+
+  void Hub::addHandler(handlerPtr hndl) {
+    DEBUG << "Adding handler";
+    _handlers.push_back(std::move(hndl));
+  }
+#endif
 }

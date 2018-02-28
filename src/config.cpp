@@ -6,18 +6,9 @@
 #include <sstream>
 #include "config.hpp"
 #include "messages.hpp"
+#include "strutil.hpp"
 
 namespace config {
-  namespace strutil {
-    bool cipred(unsigned char a, unsigned char b) {
-      return std::tolower(a) == std::tolower(b);
-    }
-
-    bool cistrcmp(const std::string& a, const std::string& b) {
-      return std::lexicographical_compare(a.begin(), a.end(),
-                                          b.begin(), b.end(), cipred);
-    }
-  }
   ConfigParser::ConfigParser(const std::string& path) :
     _config(std::move(parseConfig(openConfig(path))))
   {

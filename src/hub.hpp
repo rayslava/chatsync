@@ -9,13 +9,19 @@
 #include <condition_variable>
 #include <atomic>
 
+#ifdef HANDLERS
+#include "handlers/handler.hpp"
+#endif
+
 namespace channeling {
   class Channel;
 }
 
 namespace Hub {
-
   typedef std::unique_ptr<channeling::Channel> chanPtr;
+#ifdef HANDLERS
+  typedef std::unique_ptr<pipelining::Handler> handlerPtr;
+#endif
 
   /**
    * A thread-safe implementation of two connected channels sets.
@@ -26,7 +32,16 @@ namespace Hub {
     const std::string _name;                        /**< Human-readable name */
     std::list<chanPtr> _inputChannels;              /**< Container for all input channels */
     std::list<chanPtr> _outputChannels;             /**< Container for all output channels */
-
+#ifdef HANDLERS
+    /**
+     * Handlers list
+     *
+     * These handlers are executed one-by-one in order of adding to the list.
+     * The runs are pipelined: result on first handler becomes input of the
+     * second one.
+     */
+    std::list<handlerPtr> _handlers;
+#endif
     std::queue<messaging::message_ptr> _messages;   /**< Message queue */
     std::mutex _mutex;                              /**< Message queue lock */
     std::condition_variable _cond;                  /**< Lock condvar */
@@ -61,6 +76,13 @@ namespace Hub {
      */
     void msgLoop();
 
+#ifdef HANDLERS
+    /**
+     * Thread function with main event loop
+     */
+    void msgLoopPipelined();
+#endif
+
     /**
      * Shows the hub is still alive and channels should continue work
      */
@@ -76,6 +98,13 @@ namespace Hub {
      * Append channel accordingly to its direction
      */
     void addChannel(channeling::Channel * const);
+
+#ifdef HANDLERS
+    /**
+     * Append channel accordingly to its direction
+     */
+    void addHandler(handlerPtr);
+#endif
 
     /**
      * New message receiving callback

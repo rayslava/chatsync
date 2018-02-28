@@ -4,6 +4,7 @@
 #include "net.hpp"
 #include "http.hpp"
 #include "logging.hpp"
+#include "strutil.hpp"
 
 #include <cstring>
 #include <unistd.h>
@@ -11,32 +12,6 @@
 #include <sys/ioctl.h>
 
 namespace http {
-
-  static inline void ltrim(std::string& str)
-  {
-    auto it = std::find_if( str.begin(), str.end(), [](char ch){
-      return !std::isspace<char>(ch, std::locale::classic() );
-    } );
-    str.erase( str.begin(), it);
-  }
-
-  static inline void rtrim(std::string& str)
-  {
-    auto it = std::find_if( str.rbegin(), str.rend(), [](char ch){
-      return !std::isspace<char>(ch, std::locale::classic() );
-    } );
-    str.erase( it.base(), str.end() );
-  }
-
-  static inline void trim(std::string& s) {
-    ltrim(s);
-    rtrim(s);
-  }
-
-  static inline std::string trimmed(std::string s) {
-    trim(s);
-    return s;
-  }
   const std::string& HTTPResponse::header(const std::string& hdr) const {
     static const std::string nothing = "";
     std::string upcase_hdr;
@@ -203,7 +178,8 @@ namespace http {
         std::string key = header.substr(0, index);
         TRACE << "Found key " << key;
         std::transform(key.begin(), key.end(), key.begin(), ::toupper);
-        _headers.insert(std::make_pair(trimmed(key), trimmed(header.substr(index + 1))));
+        _headers.insert(std::make_pair(strutil::trimmed(key),
+				       strutil::trimmed(header.substr(index + 1))));
       }
     }
   }
