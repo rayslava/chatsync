@@ -2,6 +2,9 @@
 #include <string>
 
 namespace messaging {
+
+  constexpr uint16_t system_user_id = 0xFFFF; /**< ID for messages from bot */
+
   /**
    * Internal user representation
    */

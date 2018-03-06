@@ -57,13 +57,26 @@ namespace pipelining {
     const std::string host = url.substr(server_start, server_end - server_start);
     const std::string uri = url.substr(0, server_end);
     const std::string page = server_end == url.length() ? "/" : url.substr(server_end);
-    DEBUG  << url << " Start: " << server_start << " End: " << server_end << " Host: " << host << "  Uri: " << uri << " Page: " << page;
-
+    DEBUG  << url << " Start: " << server_start
+	   << " End: "  << server_end
+	   << " Host: " << host
+	   << " Uri: "  << uri
+	   << " Page: " << page;
     http::HTTPRequest req(http::HTTPRequestType::HEAD, host, uri);
-    auto hr = http::PerformHTTPRequest(url.substr(0, server_end), req, false);
-    hr.wait();
-    auto result = hr.get();
+    std::unique_ptr<http::HTTPResponse> result;
     std::ostringstream result_line;
+    try {
+      auto hr = http::PerformHTTPRequest(url.substr(0, server_end), req, false);
+      hr.wait();
+      result = hr.get();
+    } catch (http::http_error e) {
+      result_line << url << " returns HTTP " << std::to_string(e.code);
+      return std::make_shared<messaging::TextMessage>(id,
+						      std::make_shared
+						      <const messaging::User>
+						      (messaging::User("HTTProbe")),
+						      result_line.str());
+    }
     std::future<std::pair<const void * const, size_t>> data_recv;
     result_line << "URL: [";
     if (!result->header("content-type").empty()) {
@@ -105,6 +118,6 @@ namespace pipelining {
 	  const auto tm = probeUrl(id, url);
 	  send(tm);
 	}
-	return msg; }, _id, _send, std::move(msg));
+	return msg; }, messaging::system_user_id, _send, std::move(msg));
   }
 }

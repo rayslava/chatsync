@@ -39,7 +39,7 @@ namespace strutil {
    */
   static inline bool cistrcmp(const std::string& a, const std::string& b) {
     return std::lexicographical_compare(a.begin(), a.end(),
-					b.begin(), b.end(), cipred);
+                                        b.begin(), b.end(), cipred);
   }
 
 }

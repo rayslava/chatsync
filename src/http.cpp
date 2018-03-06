@@ -179,7 +179,7 @@ namespace http {
         TRACE << "Found key " << key;
         std::transform(key.begin(), key.end(), key.begin(), ::toupper);
         _headers.insert(std::make_pair(strutil::trimmed(key),
-				       strutil::trimmed(header.substr(index + 1))));
+                                       strutil::trimmed(header.substr(index + 1))));
       }
     }
   }

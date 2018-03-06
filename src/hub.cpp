@@ -147,7 +147,7 @@ namespace Hub {
       return;
     _loopRunning.store(false, std::memory_order_release);
     _alive.store(false, std::memory_order_release);
-    const auto msg = std::make_shared<const messaging::TextMessage>(0xFFFF,
+    const auto msg = std::make_shared<const messaging::TextMessage>(messaging::system_user_id,
                                                                     std::make_shared<const messaging::User>(messaging::User("system")),
                                                                     MSG_EXITING);
     pushMessage(std::move(msg));
