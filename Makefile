@@ -82,14 +82,12 @@ memcheck-unit: memcheck
 valgrind: memcheck-tox memcheck-hub memcheck-channel memcheck-config
 
 dockerimage:
-	cd dockerbuild && (docker images | grep $(BINARY)-deploy) || docker build -t $(BINARY)-deploy .
-	cd dockerbuild && (docker images | grep $(BINARY)-ctoxcore-deploy) || docker build --build-arg TOXSRC="TokTok/c-toxcore" -t $(BINARY)-ctoxcore-deploy .
+	cd dockerbuild && (docker images | grep $(BINARY)-deploy) || docker build -t $(BINARY)-deploy -f Dockerfile-deploy .
 
 dockerimage-clean:
 	docker rm $(shell docker ps -a -q) || true
 	docker rmi $(shell docker images -a --filter=dangling=true -q) || true
 	docker rmi $(BINARY)-deploy || true
-	docker rmi $(BINARY)-ctoxcore-deploy || true
 
 dockerbuild/$(BINARY).tar.gz:
 	rm -f dockerbuild/$(BINARY).tar.gz
@@ -107,11 +105,11 @@ deploy: dockerbuild/$(BINARY).tar.gz
 	cd dockerbuild && docker run -v "$(shell pwd)/dockerbuild:/mnt/host" $(BINARY)-deploy /bin/bash -c 'cd /root && tar xfz /mnt/host/$(BINARY).tar.gz && cd $(BINARY) && mkdir build && cd build && cmake -DSTATIC=True -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make $(BINARY) -j $(JOBS) && cp $(BINARY) /mnt/host/$(BINARY)'
 	rm dockerbuild/$(BINARY).tar.gz
 
-deploy-ctoxcore: dockerbuild/$(BINARY).tar.gz dockerimage
-	cd dockerbuild && docker run -v "$(shell pwd)/dockerbuild:/mnt/host" $(BINARY)-ctoxcore-deploy /bin/bash -c 'cd /root && tar xfz /mnt/host/$(BINARY).tar.gz && cd $(BINARY) && mkdir build && cd build && cmake -DSTATIC=True -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make $(BINARY) -j $(JOBS) && cp $(BINARY) /mnt/host/$(BINARY)-ctoxcore'
-	rm dockerbuild/$(BINARY).tar.gz
-
 coverage:
 	$(call build-dir, $@) &&  cmake .. -DCMAKE_BUILD_TYPE=Debug -DCOVERAGE=True && $(MAKE) coverage
+
+dockerized-build: dockerbuild/$(BINARY).tar.gz
+	cd dockerbuild && docker run -v "$(shell pwd)/dockerbuild:/mnt/host" chatsync /bin/bash -c 'cd /root && tar xfz /mnt/host/$(BINARY).tar.gz && cd $(BINARY) && export LD_LIBRARY_PATH=/usr/lib/llvm-6.0/lib/ && export PATH=/usr/lib/llvm-6.0/bin:$$PATH && make'
+	rm dockerbuild/$(BINARY).tar.gz
 
 .PHONY: dockerbuild/$(BINARY).tar.gz

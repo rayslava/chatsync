@@ -21,10 +21,6 @@ option (FEATURE_TOX "Build Tox support" ON)
 option (TLS_SUPPORT "Build TLS connection support (using gnutlsxx)" ON)
 option (FEATURE_TELEGRAM "Build Telegram chat support" ON)
 
-if(FEATURE_TOX)
-  option (USE_C_TOXCORE "Build Tox support using c-toxcore from TokTok" OFF)
-endif()
-
 option (ENABLE_HANDLERS "Build support for message processing" OFF)
 
 set(COMMON_SOURCE_FILES
@@ -84,6 +80,7 @@ macro(create_test name files)
 
   target_link_libraries(
     ${name}_tests
+    ${LIBCXX_LIBRARY}
     ${GTEST_BOTH_LIBRARIES}
     ${GMOCK_BOTH_LIBRARIES}
     ${GNUTLSXX_LIBRARY}
@@ -104,20 +101,6 @@ if (FEATURE_TOX)
   message (STATUS "Compiling with Tox support")
   find_package (Tox REQUIRED)
   find_package (Sodium REQUIRED)
-  CHECK_C_SOURCE_COMPILES(
-    "#include \"tox/tox.h\"
-     #if !(TOX_VERSION_IS_API_COMPATIBLE(0,1,5))
-     #error \"Please use c-toxcore\"
-     #endif
-     int main() {return 0;}
-     " C_TOXCORE)
-  if (C_TOXCORE)
-    message (STATUS "c-toxcore found will use it for Tox support")
-    add_definitions(-DCTOXCORE)
-  endif()
-  if (USE_C_TOXCORE AND NOT C_TOXCORE)
-     message(FATAL_ERROR "Could not find c-toxcore")
-  endif()
   set(SOURCE_FILES
     ${SOURCE_FILES}
     src/toxchannel.cpp
@@ -201,6 +184,7 @@ endif()
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-error=unknown-warning-option -Wno-error=braced-scalar-init -stdlib=libc++")
+  set(LIBCXX_LIBRARY "-lc++abi")
 endif()
 
 if ((COVERALLS OR COVERAGE) AND CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -231,6 +215,7 @@ include_directories(
 target_link_libraries(
   chatsync
   ${CMAKE_THREAD_LIBS_INIT}
+  ${LIBCXX_LIBRARY}
   ${GNUTLSXX_LIBRARY}
   ${GNUTLS_LIBRARIES}
   ${TOX_LIBRARY}
