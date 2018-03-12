@@ -72,6 +72,7 @@ namespace logging {
     std::string formatMessage(const LogMessage&& msg) const;
   public:
     void write(const LogMessage&& msg) override;
+    virtual ~LogSinkPrinter() {};
   };
 
   /**

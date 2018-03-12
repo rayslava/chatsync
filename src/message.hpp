@@ -50,6 +50,7 @@ namespace messaging {
       Message(origin),
       _data(data),
       _user(std::move(user)) {};
+    virtual ~TextMessage() {};
 
     const std::string& data() const { return _data; };
     const std::shared_ptr<const messaging::User> user() const { return _user; };
@@ -77,6 +78,7 @@ namespace messaging {
       Message(origin),
       _data(data),
       _user(std::move(user)) {};
+    virtual ~ActionMessage() {};
 
     const std::string& data() const { return _data; };
     const std::shared_ptr<const messaging::User> user() const { return _user; };
