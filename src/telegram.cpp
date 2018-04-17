@@ -2,6 +2,7 @@
 #include "http.hpp"
 #include "net.hpp"
 
+#include <future>
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/writer.h>
 
@@ -17,12 +18,15 @@ namespace telegram {
     _server("https://" + telegram_api_srv + ":" + std::to_string(telegram_api_port)),
     _endpoint("/" + _botid + ":" + _hash + "/"),
     _chat(_config["chat"]),
-    _last_update_id(0)
+    _last_update_id(0),
+    _reconnect_attempt(0)
   {}
 
   void TgChannel::pollThread() {
     DEBUG << "Starting telegram thread";
     while (_pipeRunning) {
+      if (_reconnect_attempt > max_reconnects)
+        throw channeling::connection_error(_name, "Can't connect to telegram server");
       rapidjson::StringBuffer s;
       rapidjson::Writer<rapidjson::StringBuffer> writer(s);
       writer.StartObject();
@@ -152,23 +156,35 @@ namespace telegram {
     req.setBody(std::move(req_body), body_size);
     req.addHeader("content-type",   "application/json");
     req.addHeader("content-length", std::to_string(body_size));
-    const auto response = httpRequest(_server, req);
-    if (!response)
-      return;
-    std::cout << response->code();
-    const void* buffer;
-    size_t size;
-    std::tie(buffer, size) = response->data();
-    const char* charbuf = static_cast<const char *>(buffer);
     try {
-      _hub->newMessage(parse(charbuf));
-    } catch (parse_error e) {
-      if (e.code == 0) {
-        DEBUG << "Empty array from Telegram. Apparently timeout triggered";
-      } else {
-        ERROR << "Wrong answer received from server:" << std::string(e.what());
-        DEBUG << "The response is \n" << charbuf;
+      const auto response = httpRequest(_server, req);
+      if (!response)
+        return;
+      DEBUG << "Got HTTP " << response->code() << " from telegram server.";
+
+      const void* buffer;
+      size_t size;
+      std::tie(buffer, size) = response->data();
+      const char* charbuf = static_cast<const char *>(buffer);
+      try {
+        _hub->newMessage(parse(charbuf));
+      } catch (parse_error e) {
+        if (e.code == 0) {
+          DEBUG << "Empty array from Telegram. Apparently timeout triggered";
+        } else {
+          ERROR << "Wrong answer received from server:" << std::string(e.what());
+          DEBUG << "The response is \n" << charbuf;
+        }
       }
+      _reconnect_attempt = 0;
+    } catch (http::http_error& e) {
+      WARNING << "Got HTTP protocol error " << std::to_string(e.code)
+              << ". Trying to reconnect.";
+      _reconnect_attempt++;
+    } catch (networking::network_error& e) {
+      WARNING << "Got network error " << e.what()
+              << ". Trying to reconnect.";
+      _reconnect_attempt++;
     }
   }
 

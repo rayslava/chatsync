@@ -41,7 +41,7 @@ lsan:
 	$(call build-dir, $@) && CXX=clang++ CC=clang cmake .. -DCMAKE_CXX_FLAGS="-fsanitize=leak"  -DCMAKE_BUILD_TYPE=RelWithDebInfo && $(MAKE)
 
 clang:
-	$(call build-dir, $@) && CXX=clang++ CC=clang cmake .. && $(MAKE) $(BINARY)
+	$(call build-dir, $@) && CXX=clang++ CC=clang  cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=True .. && $(MAKE) $(BINARY)
 
 clang-release:
 	$(call build-dir, $@) && CXX=clang++ CC=clang cmake .. -DCMAKE_BUILD_TYPE=Release && $(MAKE) $(BINARY) -j $(JOBS)

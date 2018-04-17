@@ -102,7 +102,7 @@ namespace networking {
         ipv6 = true;
       }
       if (!hp)
-        throw hostname_error("Can't resole hostname '" + hostname + "'");
+        throw hostname_error("Can't resolve hostname '" + hostname + "'");
       auto result = std::make_unique<char[]>(hp->h_length);
       _memcpy(result.get(), hp->h_addr, hp->h_length);
       return std::make_tuple(std::move(result), hp->h_length, ipv6);

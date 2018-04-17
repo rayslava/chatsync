@@ -20,7 +20,6 @@ option (FEATURE_TOX "Build Tox support" ON)
 # Optional plugins
 option (TLS_SUPPORT "Build TLS connection support (using gnutlsxx)" ON)
 option (FEATURE_TELEGRAM "Build Telegram chat support" ON)
-
 option (ENABLE_HANDLERS "Build support for message processing" OFF)
 
 set(COMMON_SOURCE_FILES
@@ -155,7 +154,7 @@ add_definitions(-D_POSIX_C_SOURCE)
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
   set(STANDARD "-std=c++17")
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-  set(STANDARD "-std=c++17")
+  set(STANDARD "-std=c++2a")
 endif()
 
 set(CMAKE_CXX_FLAGS         "${CMAKE_CXX_FLAGS} -Wall -Wno-unknown-pragmas -Wno-sign-compare -Woverloaded-virtual -Wwrite-strings -Wno-unused ${STANDARD} -Wextra -pedantic -Werror -pthread")

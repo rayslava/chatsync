@@ -6,6 +6,7 @@
 namespace telegram {
   const static std::string telegram_api_srv = "api.telegram.org";
   constexpr int telegram_api_port = 443;
+  constexpr int max_reconnects = 5;
 
   namespace api {
     enum class ChatType {
@@ -61,6 +62,7 @@ namespace telegram {
     const std::string _endpoint;                          /**< API endpoint to compute URI from */
     const int64_t _chat;                                  /**< Chat id to use */
     mutable std::uint64_t _last_update_id;                /**< Last processed update id */
+    int64_t _reconnect_attempt;                           /**< Number of server http errors */
     std::future<void> activate() override;
     static const channeling::ChannelCreatorImpl<TgChannel> creator;
 
