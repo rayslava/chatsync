@@ -36,10 +36,34 @@ namespace http {
   std::future<std::unique_ptr<HTTPResponse> >
   PerformHTTPRequest(const std::string& url, const HTTPRequest& req, bool get_body) {
     bool https = false;
-    const std::string::size_type proto_end = url.find("://");
-    if (proto_end == std::string::npos)
+    std::string::size_type proto_begin = 0;
+    std::string::size_type proto_len = url.find("://");
+    if (proto_len == std::string::npos)
       throw url_error("Can't detect protocol");
-    const auto& proto = url.substr(0, proto_end);
+#ifdef PROXY_SUPPORT
+    std::string proxy;
+    networking::ProxyType proxy_type;
+    /* Check if first http:// was a proxy
+     * http://proxy.company.com:8080/http://google.com
+     */
+    auto real_proto_len = url.find("://", proto_len + 3);
+    if (real_proto_len != std::string::npos) {
+      auto real_proto_beg = url.rfind("/", real_proto_len);
+      proxy = url.substr(proto_len + 3, real_proto_beg - proto_len - 3);
+      const auto& proxy_proto = url.substr(0, proto_len);
+      if (proxy_proto == "http")
+        proxy_type = networking::ProxyType::HTTP;
+      else if (proxy_proto == "socks5")
+        proxy_type = networking::ProxyType::SOCKS5;
+      else
+        throw networking::proxy_error("Unsupported proxy protocol");
+      /* TODO: Check proxy port and set default one if not set */
+      DEBUG << "Found " << proxy_proto << " proxy: " << proxy;
+      proto_len = real_proto_len - real_proto_beg - 1;
+      proto_begin = real_proto_beg + 1;
+    }
+#endif
+    const auto& proto = url.substr(proto_begin, proto_len);
     if (proto == "http") {
       WARNING << "Raw HTTP connection is insecure";
       https = false;
@@ -52,10 +76,10 @@ namespace http {
 
     /* Now trying to detect if there is a port */
     const std::vector<char> c {':', '/'};
-    const auto server_end_c = std::find_first_of(std::next(url.cbegin(), proto_end + 3),
+    const auto server_end_c = std::find_first_of(std::next(url.cbegin(), proto_begin + proto_len + 3),
                                                  url.cend(),
                                                  c.begin(), c.end());
-    const auto server_end = std::distance(url.cbegin(), server_end_c);
+    const auto server_end = std::distance(std::next(url.cbegin(), proto_begin), server_end_c);
 
     std::string port;
     if (*server_end_c == ':') {
@@ -66,7 +90,7 @@ namespace http {
       port = https ? "443" : "80";
     }
 
-    const auto& server = url.substr(proto_end + 3, server_end - proto_end - 3);
+    const auto& server = url.substr(proto_begin + proto_len + 3, server_end - proto_len - 3);
 
     DEBUG << "Opening " << std::string(https ? "secure" : "insecure")
           << " connection to " << server << " on port " << port;
@@ -76,8 +100,20 @@ namespace http {
     TRACE << "Requesting: " << request_line;
 
     if (!https) {
-      return std::async(std::launch::async, [server, port, request_line, request_body, get_body]() {
+      return std::async(std::launch::async, [server, port, request_line, request_body, get_body
+#ifdef PROXY_SUPPORT
+                                             , proxy, proxy_type
+#endif
+                        ]() {
+#ifndef PROXY_SUPPORT
         const int fd = networking::tcp_connect(server + ":" + port);
+#else
+        int fd;
+        if (proxy.empty())
+          fd = networking::tcp_connect(server + ":" + port);
+        else
+          fd = networking::proxy_tcp_connect(server + ":" + port, proxy, proxy_type);
+#endif
         auto&& conn_mgr = std::make_unique<HTTPConnectionManager>(fd);
         {
           auto buf = new char[request_body.second + 1];

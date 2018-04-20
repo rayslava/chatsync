@@ -161,10 +161,7 @@ namespace telegram {
       if (!response)
         return;
       DEBUG << "Got HTTP " << response->code() << " from telegram server.";
-
-      const void* buffer;
-      size_t size;
-      std::tie(buffer, size) = response->data();
+      const auto& [buffer, size] = response->data();
       const char* charbuf = static_cast<const char *>(buffer);
       try {
         _hub->newMessage(parse(charbuf));
@@ -205,7 +202,7 @@ namespace telegram {
                                return update.FindMember("message");
                              else if (update.HasMember("result"))
                                return update.FindMember("result");
-                             throw parse_error(1, "Could parse neither message nor result");
+                             throw parse_error(1, std::string("Could parse neither message nor result from ") + update.GetString());
                            } ()->value;
     assert(json_msg.HasMember("from"));
     const auto& json_user = json_msg["from"];

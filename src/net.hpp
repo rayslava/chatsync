@@ -42,6 +42,32 @@ namespace networking {
   };
   int tcp_connect(const std::string& host);
 
+#ifdef PROXY_SUPPORT
+#ifndef _UNIT_TEST_BUILD
+  constexpr std::chrono::seconds proxy_timeout(5);
+#else
+  constexpr std::chrono::milliseconds proxy_timeout(700);
+#endif
+  constexpr std::chrono::milliseconds proxy_loop_delay(100);
+
+  /**
+   * Proxy error
+   */
+  class proxy_error: public network_error {
+  public:
+    proxy_error(std::string const& message) :
+      network_error(message)
+    {};
+  };
+
+  enum class ProxyType {
+    HTTP,
+    SOCKS5
+  };
+
+  int proxy_tcp_connect(const std::string& host, const std::string& proxy, ProxyType type);
+#endif
+
 #ifdef TLS_SUPPORT
   class TLSConnection {
     gnutls::client_session _session;                /**< gnutls session */

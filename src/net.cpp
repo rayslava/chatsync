@@ -1,6 +1,12 @@
 #include "net.hpp"
 #include <memory>
 #include <mutex>
+#include <future>
+#include <algorithm>
+
+#ifdef PROXY_SUPPORT
+#include "http.hpp"
+#endif
 
 /** This namespace contains network-related inline functions intended to embed
     into clients */
@@ -123,10 +129,7 @@ namespace networking {
       throw network_error("Please provide server address in host:port format");
     }
 
-    std::unique_ptr<char[]> resolved_host;
-    int resolved_host_len;
-    bool ipv6 = false;
-    std::tie(resolved_host, resolved_host_len, ipv6) = resolve_host(url);
+    const auto& [resolved_host, resolved_host_len, ipv6] = resolve_host(url);
     TRACE << "Opening tcp connect to " << url;
     if (!ipv6) {
       struct os::sockaddr_in serv_addr;
@@ -172,6 +175,90 @@ namespace networking {
     }
     return fd;
   }
+
+#ifdef PROXY_SUPPORT
+
+  class HTTPProxyConnectionManager: public http::ConnectionManager {
+    const char* _buf;  /**< Pointer to buffer with response */
+    int _left;         /**< Bytes left to read */
+  public:
+    HTTPProxyConnectionManager(int sz, const char* buf) : _buf(buf), _left(sz) {};
+    ~HTTPProxyConnectionManager() {};
+    ssize_t recv(void* buffer, size_t count) override {
+      const auto copied = std::min<size_t>(count, _left);
+      _memcpy(buffer, _buf, copied);
+      _left -= copied;
+      return copied;
+    };
+    ssize_t send(const void * const buffer, size_t count) override {return 0;};
+    ssize_t pending() override { return _left; };
+  };
+
+#ifndef _UNIT_TEST_BUILD
+  static
+#endif
+  int http_proxy_connect(const std::string& host, const std::string& proxy)
+  {
+    int fd = tcp_connect(proxy);
+    static const std::string newline = "\r\n\r\n";
+    static const std::string http = " HTTP/1.1";
+    static const std::string connect_cmd = "CONNECT ";
+    const auto line_len = connect_cmd.length() + host.length() +
+                          http.length() + newline.length();
+    const auto line_buf = std::make_unique<char[]>(line_len + 1);
+    int res = snprintf(line_buf.get(), line_len + 1, "%s%s%s%s",
+                       connect_cmd.c_str(),
+                       host.c_str(),
+                       http.c_str(),
+                       newline.c_str());
+    line_buf[line_len] = '\0';
+    if (res != line_len)
+      throw std::runtime_error("Really awful snprintf() overflow happened");
+    res = os::write(fd, line_buf.get(), line_len);
+    if (res != line_len)
+      throw proxy_error("Couldn't send proxy request");
+    int bytes = 0;
+    std::chrono::milliseconds timeout = proxy_timeout;
+    /* Try FIONREAD until we get something or ioctl fails. */
+    while (!bytes && os::ioctl (fd, FIONREAD, &bytes) >= 0 && timeout.count() > 0) {
+      std::this_thread::sleep_for(proxy_loop_delay);
+      timeout -= proxy_loop_delay;
+    }
+    if (res < 0 || !bytes)
+      throw proxy_error("Proxy didn't respond");
+    const auto response_buf = std::make_unique<char[]>(bytes + 1);
+    res = os::read(fd, response_buf.get(), bytes);
+    response_buf[bytes] = 0;
+    auto manager = std::make_unique<HTTPProxyConnectionManager>(bytes, response_buf.get());
+    auto response = std::make_unique<http::HTTPResponse>(std::move(manager), false);
+    if (response->code() != 200) {
+      ERROR << "Proxy returned " << std::to_string(response->code());
+      throw proxy_error("Proxy connection error");
+    }
+    DEBUG << "Proxy connection established with " << proxy;
+    return fd;
+  }
+
+  static int socks_proxy_connect(const std::string& host,
+                                 const std::string& proxy)
+  {
+    return tcp_connect(host);
+  }
+
+  int proxy_tcp_connect(const std::string& host, const std::string& proxy, ProxyType type) {
+    TRACE << "Connecting to proxy " << proxy;
+    switch (type) {
+    case ProxyType::HTTP:
+      return http_proxy_connect(host, proxy);
+      break;
+    case ProxyType::SOCKS5:
+      return socks_proxy_connect(host, proxy);
+      break;
+    default:
+      throw proxy_error("Unsupported proxy protocol");
+    };
+  }
+#endif
 
 #ifdef TLS_SUPPORT
   TLSConnection::TLSConnection(int tcp_fd) {

@@ -81,9 +81,7 @@ Accept: */*\r\nTest-Header: Test value\r\n\r\n");
     memset(body.get(), 0, 1024);
     snprintf(body.get(), 10, "%s", "test line");
     r.setBody(std::move(body), 1024);
-    const void* ptr;
-    size_t len;
-    std::tie(ptr, len) = r.body();
+    const auto& [ptr, len] = r.body();
     ASSERT_STREQ(static_cast<const char *>(ptr), "test line");
   }
 
@@ -154,5 +152,18 @@ Accept: */*\r\nTest-Header: Test value\r\n\r\n");
     ASSERT_EQ(result->code(), 302);
     ASSERT_STREQ((*result)["location"].c_str(), "https://ya.ru/");
   }
+
+#ifdef PROXY_SUPPORT
+  TEST(PerformHTTPRequest, Proxy)
+  {
+    DEFAULT_LOGGING;
+    HTTPRequest req(HTTPRequestType::HEAD, "ya.ru", "/");
+    auto hr = PerformHTTPRequest("http://localhost:3128/http://ya.ru/", req, false);
+    hr.wait();
+    auto result = hr.get();
+    ASSERT_EQ(result->code(), 302);
+    ASSERT_STREQ((*result)["location"].c_str(), "https://ya.ru/");
+  }
+#endif
 #endif
 }

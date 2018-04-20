@@ -21,6 +21,7 @@ option (FEATURE_TOX "Build Tox support" ON)
 option (TLS_SUPPORT "Build TLS connection support (using gnutlsxx)" ON)
 option (FEATURE_TELEGRAM "Build Telegram chat support" ON)
 option (ENABLE_HANDLERS "Build support for message processing" OFF)
+option (PROXY_SUPPORT "Enable proxy support for HTTP proxying" ON)
 
 set(COMMON_SOURCE_FILES
   src/config.cpp
@@ -29,6 +30,14 @@ set(COMMON_SOURCE_FILES
   src/logging.cpp
   src/net.cpp
   )
+
+if (PROXY_SUPPORT)
+# http.cpp is used for http proxy interaction
+set(COMMON_SOURCE_FILES
+  ${COMMON_SOURCE_FILES}
+  src/http.cpp
+  )
+endif()
 
 set(SOURCE_FILES
   ${COMMON_SOURCE_FILES}
@@ -130,6 +139,10 @@ if (FEATURE_TELEGRAM)
   pkg_check_modules(RAPIDJSON REQUIRED RapidJSON>=1.1.0)
   add_definitions(-DTELEGRAM)
   set(SOURCE_FILES ${SOURCE_FILES} src/telegram.cpp)
+endif()
+
+if (PROXY_SUPPORT)
+  add_definitions(-DPROXY_SUPPORT)
 endif()
 
 include(ConfigSafeGuards)
@@ -243,6 +256,10 @@ endif()
 
 if (FEATURE_TELEGRAM)
   create_test(telegram "test/telegram.cpp;src/http.cpp;src/filechannel.cpp;src/telegram.cpp")
+endif()
+
+if (PROXY_SUPPORT)
+  create_test(proxy "test/proxy.cpp;src/net.cpp")
 endif()
 
 if (ENABLE_HANDLERS)

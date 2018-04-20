@@ -35,7 +35,9 @@ int main(int argc, char* argv[])
   }
   std::string filename = argv[1];
 
-  DEFAULT_LOGGING
+  DEFAULT_LOGGING;
+  DEFAULT_LOGGER_SEVERITY(logging::Severity::trace);
+
   std::list<std::shared_ptr<Hub::Hub> > hublist;
   std::ifstream config_stream;
   config_stream.open(filename);

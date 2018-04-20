@@ -1,4 +1,6 @@
 #pragma once
+#include <functional>
+#include <locale>
 
 namespace strutil {
   static inline void ltrim(std::string& str)
