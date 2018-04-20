@@ -34,4 +34,4 @@ RUN cd $(mktemp -d) && git clone git://github.com/jedisct1/libsodium.git && cd l
 # For c-toxcore pass
 ARG TOXSRC
 ENV TOXSRC ${TOXSRC:-"TokTok/c-toxcore"}
-RUN cd $(mktemp -d) && git clone git://github.com/${TOXSRC}.git toxcore && cd toxcore &&  autoreconf -i && ./configure --enable-static && make && checkinstall --install --pkgname libtoxcore --pkgversion 1.0.0 --nodoc && ldconfig
+RUN cd $(mktemp -d) && git clone git://github.com/${TOXSRC}.git c-toxcore && cd c-toxcore &&  autoreconf -i && ./configure --enable-static && make && checkinstall --install --pkgname libtoxcore --pkgversion 1.0.0 --nodoc && ldconfig
