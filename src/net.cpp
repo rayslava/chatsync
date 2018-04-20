@@ -190,7 +190,9 @@ namespace networking {
       _left -= copied;
       return copied;
     };
-    ssize_t send(const void * const buffer, size_t count) override {return 0;};
+    ssize_t send(const void * const buffer [[maybe_unused]], size_t count [[maybe_unused]]) override {
+      return 0;
+    };
     ssize_t pending() override { return _left; };
   };
 
@@ -203,8 +205,8 @@ namespace networking {
     static const std::string newline = "\r\n\r\n";
     static const std::string http = " HTTP/1.1";
     static const std::string connect_cmd = "CONNECT ";
-    const auto line_len = connect_cmd.length() + host.length() +
-                          http.length() + newline.length();
+    const ssize_t line_len = connect_cmd.length() + host.length() +
+                             http.length() + newline.length();
     const auto line_buf = std::make_unique<char[]>(line_len + 1);
     int res = snprintf(line_buf.get(), line_len + 1, "%s%s%s%s",
                        connect_cmd.c_str(),
@@ -242,6 +244,7 @@ namespace networking {
   static int socks_proxy_connect(const std::string& host,
                                  const std::string& proxy)
   {
+    DEBUG << "Connecting socks5 proxy " << proxy;
     return tcp_connect(host);
   }
 
