@@ -5,7 +5,6 @@ RUN apt-get -qq dist-upgrade -y
 RUN apt-get -qq update -y
 RUN apt-get -qq --yes --force-yes install software-properties-common python-software-properties
 RUN add-apt-repository --yes ppa:ubuntu-toolchain-r/test
-RUN add-apt-repository --yes ppa:george-edison55/precise-backports
 RUN apt-get -qq update -y
 # Setting up build environment
 RUN apt-get -qq --yes --force-yes install gcc-7 g++-7 libgtest-dev valgrind lcov cmake cmake-data curl build-essential libtool autotools-dev automake checkinstall check git yasm pkg-config libncurses5-dev libgmp-dev
