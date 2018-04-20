@@ -42,7 +42,7 @@ namespace http {
       throw url_error("Can't detect protocol");
 #ifdef PROXY_SUPPORT
     std::string proxy;
-    networking::ProxyType proxy_type;
+    networking::ProxyType proxy_type = networking::ProxyType::UNSUPPORTED;
     /* Check if first http:// was a proxy
      * http://proxy.company.com:8080/http://google.com
      */

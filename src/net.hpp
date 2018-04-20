@@ -62,7 +62,8 @@ namespace networking {
 
   enum class ProxyType {
     HTTP,
-    SOCKS5
+    SOCKS5,
+    UNSUPPORTED
   };
 
   int proxy_tcp_connect(const std::string& host, const std::string& proxy, ProxyType type);
