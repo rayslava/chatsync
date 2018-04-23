@@ -7,6 +7,7 @@ namespace telegram {
   const static std::string telegram_api_srv = "api.telegram.org";
   constexpr int telegram_api_port = 443;
   constexpr int max_reconnects = 5;
+  constexpr std::chrono::milliseconds reconnect_timeout(500);
 
   namespace api {
     enum class ChatType {
