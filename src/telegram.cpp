@@ -3,6 +3,8 @@
 #include "net.hpp"
 
 #include <future>
+#include <cmath>
+#include <chrono>
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/writer.h>
 
@@ -147,8 +149,11 @@ namespace telegram {
 #endif
 
   void TgChannel::apiRequest(const std::string& uri, const std::string& body) {
-    if (_reconnect_attempt)
-      std::this_thread::sleep_for(_reconnect_attempt * reconnect_timeout);
+    if (_reconnect_attempt) {
+      double new_timeout = reconnect_timeout.count();
+      new_timeout = std::pow(new_timeout, _reconnect_attempt);
+      std::this_thread::sleep_for(std::chrono::duration<double, std::ratio<1, 1000> >(new_timeout));
+    }
     const auto body_size = body.length();
     std::unique_ptr<char[]> req_body (new char[body_size]);
     memcpy(req_body.get(), body.c_str(), body_size);
