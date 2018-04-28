@@ -11,6 +11,7 @@
 
 constexpr auto port = 33445;
 const char testLine[] = "Testing file writing\r\n";
+const char lorem_ipsum[] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 
 void sockListen(const std::string& ircTestLine, int& sockfd, int& newsockfd) {
   int portno;
@@ -156,6 +157,42 @@ TEST(IrcChannel, MultiLine)
   const auto ich = channeling::ChannelFactory::create("irc", hub, "data://direction=input\nname=ircin\nserver=127.0.0.1\nport=" + std::to_string(port) + "\nchannel=test");
   channeling::ChannelFactory::create("file", hub, "data://direction=output\nname=outfile");
   const std::string valid_line = "testuser: message1\ntestuser: message2\ntestuser: message3\n";
+  const int buffer_size = valid_line.length() + 1;
+  const auto buffer = new char[buffer_size];
+
+  perror("Activating");
+  hub->activate();
+  std::this_thread::sleep_for( std::chrono::milliseconds (150) );
+  perror("Deactivating");
+  hub->deactivate();
+  std::this_thread::sleep_for( std::chrono::milliseconds (150) );
+  delete hub;
+  server->join();
+
+  const auto fd = open("output", O_RDONLY | O_SYNC);
+  ASSERT_NE(fd, -1);
+  bzero(buffer, buffer_size);
+  auto err = read(fd, buffer, buffer_size - 1);
+  ASSERT_EQ(err, buffer_size - 1);
+  close(fd);
+  ASSERT_STREQ(buffer, valid_line.c_str());
+  delete[] buffer;
+  close(sfd);
+  close(nfd);
+}
+
+TEST(IrcChannel, LoremIpsum)
+{
+  unlink("output");
+  const auto hub = new Hub::Hub ("Hub");
+  int sfd, nfd;
+
+  const std::string& msgLine = std::string(":testuser!~testhost PRIVMSG #chatsync :") + lorem_ipsum + "\r\n";
+  const auto server = std::make_unique<std::thread>(std::thread(&sockListen, std::ref(msgLine), std::ref(sfd), std::ref(nfd)));
+  std::this_thread::sleep_for( std::chrono::milliseconds (50) );    // Give time to open socket
+  const auto ich = channeling::ChannelFactory::create("irc", hub, "data://direction=input\nname=ircin\nserver=127.0.0.1\nport=" + std::to_string(port) + "\nchannel=test");
+  channeling::ChannelFactory::create("file", hub, "data://direction=output\nname=outfile");
+  const std::string valid_line = std::string("testuser: ") + lorem_ipsum + "\n";
   const int buffer_size = valid_line.length() + 1;
   const auto buffer = new char[buffer_size];
 
