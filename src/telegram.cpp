@@ -172,7 +172,7 @@ namespace telegram {
       const char* charbuf = static_cast<const char *>(buffer);
       try {
         _hub->newMessage(parse(charbuf));
-      } catch (parse_error e) {
+      } catch (parse_error& e) {
         if (e.code == 0) {
           DEBUG << "Empty array from Telegram. Apparently timeout triggered";
         } else {

@@ -102,7 +102,7 @@ namespace toxChannel {
       options.savedata_length = filesize;
       options.savedata_type = TOX_SAVEDATA_TYPE_TOX_SAVE;
       retval = tox_new(&options, &tox_error);
-    } catch (config::option_error e) {
+    } catch (config::option_error& e) {
       DEBUG << "Can't open tox data: " << e.what();
       options.savedata_data = nullptr;
       options.savedata_length = 0;
@@ -189,7 +189,7 @@ namespace toxChannel {
       result = linux::close(toxfd);
       if (result < 0)
         throw config::option_error("Error closing file");
-    } catch (config::option_error e) {
+    } catch (config::option_error& e) {
       DEBUG << "Can't save tox data: " << e.what();
     }
     tox_kill(_tox);

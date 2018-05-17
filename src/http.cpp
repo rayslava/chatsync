@@ -236,7 +236,7 @@ namespace http {
           auto res = _connection_manager->recv(buf + _buffer_size, response_size);
           _buffer_size += res;
         }
-        catch (networking::tls_error e) {
+        catch (networking::tls_error& e) {
           if (e.code == 0) break; // Just end of data in TLS connection
           else throw networking::tls_error(e);
         }
