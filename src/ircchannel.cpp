@@ -62,18 +62,60 @@ namespace ircChannel {
     checkTimeout();
     if (msg->type() == messaging::MessageType::Text) {
       const auto textmsg = messaging::TextMessage::fromMessage(msg);
-      snprintf(message, irc_message_max, "PRIVMSG #%s :[%s]: %s\r\n", _channel.c_str(), textmsg->user()->name().c_str(), textmsg->data().c_str());
-      DEBUG << "#irc " << _name << " " << textmsg->data() << " inside ";
-      send(message);
+      const int max_msg_len = irc_message_max - 1 -
+                              strlen("PRIVMSG # :[]: \r\n") -
+                              textmsg->user()->name().length() -
+                              _channel.length();
+      std::string text = textmsg->data();
+      if (text.length() < max_msg_len) {
+        snprintf(message, irc_message_max - 1, "PRIVMSG #%s :[%s]: %.*s\r\n",
+                 _channel.c_str(), textmsg->user()->name().c_str(),
+                 max_msg_len,
+                 text.c_str());
+        DEBUG << "#irc " << _name << " " << textmsg->data() << " inside ";
+        send(message);
+      } else {
+        /**
+         * If message does not fit \ref irc_message_max we have to split message
+         * into several smaller ones.
+         */
+        while (text.length()) {
+          /* Find nearest space char */
+          auto last_space_pos = text.crend() - max_msg_len;
+          const auto space = std::find_if(last_space_pos, text.crend(), ::isspace);
+          size_t part_len = 0;
+          if (space != text.crend()) {
+            /* Found space to split the line */
+            part_len = std::distance(space, text.crend());
+          } else {
+            part_len = max_msg_len;
+          }
+          std::string part = text.substr(0, part_len);
+
+          snprintf(message, irc_message_max - 1, "PRIVMSG #%s :[%s]: %.*s\r\n",
+                   _channel.c_str(), textmsg->user()->name().c_str(),
+                   max_msg_len,
+                   part.c_str());
+          DEBUG << "#irc " << _name << " sending part| " << part;
+          send(message);
+          text.erase(0, part_len);
+        }
+      }
     } else if (msg->type() == messaging::MessageType::Action) {
       const auto actionmsg = messaging::ActionMessage::fromMessage(msg);
-      snprintf(message, irc_message_max, "PRIVMSG #%s :\001ACTION [%s]: %s\001\r\n", _channel.c_str(), actionmsg->user()->name().c_str(), actionmsg->data().c_str());
+      const int max_msg_len = irc_message_max - 1 -
+                              strlen("PRIVMSG #%s :\001ACTION [%s]: %.*s\001\r\n") -
+                              actionmsg->user()->name().length() -
+                              _channel.length();
+      snprintf(message, irc_message_max - 1, "PRIVMSG #%s :\001ACTION [%s]: %.*s\001\r\n",
+               _channel.c_str(), actionmsg->user()->name().c_str(),
+               max_msg_len,
+               actionmsg->data().c_str());
       DEBUG << "#irc " << _name << " performes an action: " << actionmsg->data();
       send(message);
     } else {
       throw std::runtime_error("Unknown message type");
     }
-
   }
 
   const messaging::message_ptr IrcChannel::parse(const char* line) const {
