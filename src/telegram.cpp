@@ -150,8 +150,8 @@ namespace telegram {
 
   void TgChannel::apiRequest(const std::string& uri, const std::string& body) {
     if (_reconnect_attempt) {
-      double new_timeout = reconnect_timeout.count();
-      new_timeout = std::pow(new_timeout, _reconnect_attempt);
+      double new_timeout = reconnect_timeout.count() * std::pow(3.0, _reconnect_attempt);
+      DEBUG << "Telegram reconnection attempt #" << _reconnect_attempt << ". Waiting for " << new_timeout << "ms.";
       std::this_thread::sleep_for(std::chrono::duration<double, std::ratio<1, 1000> >(new_timeout));
     }
     const auto body_size = body.length();
@@ -165,6 +165,7 @@ namespace telegram {
     req.addHeader("content-length", std::to_string(body_size));
     try {
       const auto response = httpRequest(_server, req);
+      _reconnect_attempt = 0;
       if (!response)
         return;
       DEBUG << "Got HTTP " << response->code() << " from telegram server.";
@@ -180,7 +181,6 @@ namespace telegram {
           DEBUG << "The response is \n" << charbuf;
         }
       }
-      _reconnect_attempt = 0;
     } catch (http::http_error& e) {
       WARNING << "Got HTTP protocol error " << std::to_string(e.code)
               << ". Trying to reconnect.";

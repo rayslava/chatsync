@@ -88,6 +88,7 @@ namespace telegram {
     ~TgChannel();
 
     std::string type() const override { return "telegram"; };
+    void tick() override { DEBUG << _name << " ticking with reconnect " << _reconnect_attempt; };
   protected:
     void incoming(const messaging::message_ptr&& msg) override;
   };
