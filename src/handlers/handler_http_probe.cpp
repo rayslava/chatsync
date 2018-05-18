@@ -69,8 +69,8 @@ namespace pipelining {
       auto hr = http::PerformHTTPRequest(url.substr(0, server_end), req, false);
       hr.wait();
       result = hr.get();
-    } catch (http::http_error e) {
-      result_line << url << " returns HTTP " << std::to_string(e.code);
+    } catch (http::http_error& e) {
+      result_line << "URL returns HTTP " << std::to_string(e.code);
       return std::make_shared<messaging::TextMessage>(id,
 						      std::make_shared
 						      <const messaging::User>
