@@ -76,21 +76,21 @@ namespace http {
 
     /* Now trying to detect if there is a port */
     const std::vector<char> c {':', '/'};
-    const auto server_end_c = std::find_first_of(std::next(url.cbegin(), proto_begin + proto_len + 3),
+    const auto server_end = std::find_first_of(std::next(url.cbegin(), proto_begin + proto_len + 3),
                                                  url.cend(),
                                                  c.begin(), c.end());
-    const auto server_end = std::distance(std::next(url.cbegin(), proto_begin), server_end_c);
+    auto server_len = std::distance(url.cbegin(), server_end);
 
     std::string port;
-    if (*server_end_c == ':') {
+    if (*server_end == ':') {
       /* There is port */
-      std::string::size_type port_end = url.find("/", server_end);
-      port = url.substr(server_end + 1, server_end - port_end);
+      std::string::size_type port_end = url.find("/", server_len);
+      port = url.substr(server_len + 1, port_end - server_len - 1);
     } else {
       port = https ? "443" : "80";
     }
 
-    const auto& server = url.substr(proto_begin + proto_len + 3, server_end - proto_len - 3);
+    const auto& server = url.substr(proto_begin + proto_len + 3, server_len - proto_len - proto_begin - 3);
 
     DEBUG << "Opening " << std::string(https ? "secure" : "insecure")
           << " connection to " << server << " on port " << port;

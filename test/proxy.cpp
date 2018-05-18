@@ -57,13 +57,12 @@ namespace networking {
 
   TEST(http_proxy, connect)
   {
-    int fd = http_proxy_connect("google.com:80", "localhost:1080");
+    int fd = http_proxy_connect("google.com:80", "127.0.0.1:3128");
   }
 
   TEST(http_proxy, not_connect)
   {
-    EXPECT_THROW({ http_proxy_connect("google.com:80", "localhost:12345");
+    EXPECT_THROW({ http_proxy_connect("google.com:80", "127.0.0.1:12345");
                  }, proxy_error);
   }
-
 }

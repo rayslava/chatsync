@@ -156,13 +156,21 @@ Accept: */*\r\nTest-Header: Test value\r\n\r\n");
 #ifdef PROXY_SUPPORT
   TEST(PerformHTTPRequest, Proxy)
   {
-    DEFAULT_LOGGING;
     HTTPRequest req(HTTPRequestType::HEAD, "ya.ru", "/");
     auto hr = PerformHTTPRequest("http://localhost:3128/http://ya.ru/", req, false);
     hr.wait();
     auto result = hr.get();
     ASSERT_EQ(result->code(), 302);
     ASSERT_STREQ((*result)["location"].c_str(), "https://ya.ru/");
+  }
+
+  TEST(PerformHTTPRequest, ProxyWithHttpsPort)
+  {
+    HTTPRequest req(HTTPRequestType::HEAD, "ya.ru", "/");
+    auto hr = PerformHTTPRequest("http://localhost:3128/https://ya.ru:443/", req, false);
+    hr.wait();
+    auto result = hr.get();
+    ASSERT_EQ(result->code(), 200);
   }
 #endif
 #endif
