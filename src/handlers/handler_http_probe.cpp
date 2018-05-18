@@ -55,20 +55,27 @@ namespace pipelining {
       url.find("/", server_start);
 
     const std::string host = url.substr(server_start, server_end - server_start);
-    const std::string uri = url.substr(0, server_end);
+    std::string uri = url.substr(0, server_end);
     const std::string page = server_end == url.length() ? "/" : url.substr(server_end);
     DEBUG  << url << " Start: " << server_start
 	   << " End: "  << server_end
 	   << " Host: " << host
 	   << " Uri: "  << uri
 	   << " Page: " << page;
-    http::HTTPRequest req(http::HTTPRequestType::HEAD, host, uri);
+    http::HTTPRequest req(http::HTTPRequestType::HEAD, host, page);
     std::unique_ptr<http::HTTPResponse> result;
     std::ostringstream result_line;
     try {
-      auto hr = http::PerformHTTPRequest(url.substr(0, server_end), req, false);
+      auto hr = http::PerformHTTPRequest(uri, req, false);
       hr.wait();
       result = hr.get();
+      if (result->code() == 302 || result->code() == 301) {
+	uri = result->header("location");
+	TRACE << "Redirect to " << uri << " found";
+	auto hr = http::PerformHTTPRequest(uri , req, false);
+	hr.wait();
+	result = hr.get();
+      }
     } catch (http::http_error& e) {
       result_line << "URL returns HTTP " << std::to_string(e.code);
       return std::make_shared<messaging::TextMessage>(id,
@@ -83,16 +90,20 @@ namespace pipelining {
       result_line << result->header("content-type");
       DEBUG << result->header("content-type");
       if (!result->header("content-type").compare(0, 9, "text/html")) {
-	data_recv = std::async([&result](){ return result->data(); });
+	data_recv = std::async([url, host, uri, server_end, page](){
+				 http::HTTPRequest req(http::HTTPRequestType::GET, host, page);
+				 return http::PerformHTTPRequest(uri, req, true).get()->data();
+			       });
       }
     }
     if (!result->header("content-length").empty())
       result_line << ", " << result->header("content-length") << " b";
     result_line << "]";
     if (data_recv.valid()) {
-      data_recv.wait();
+      DEBUG << "There is data!";
       const auto& data = data_recv.get();
       const std::string page(static_cast<const char*>(data.first));
+      DEBUG << "Data is " << page;
       result_line << ": " << extract_title(page);
     }
 

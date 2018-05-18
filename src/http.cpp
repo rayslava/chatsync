@@ -77,8 +77,8 @@ namespace http {
     /* Now trying to detect if there is a port */
     const std::vector<char> c {':', '/'};
     const auto server_end = std::find_first_of(std::next(url.cbegin(), proto_begin + proto_len + 3),
-                                                 url.cend(),
-                                                 c.begin(), c.end());
+                                               url.cend(),
+                                               c.begin(), c.end());
     auto server_len = std::distance(url.cbegin(), server_end);
 
     std::string port;
@@ -155,7 +155,7 @@ namespace http {
   }
 
   constexpr auto MAX_BUF = 4096;
-  constexpr auto receive_timeout = std::chrono::milliseconds(5);
+  constexpr auto receive_timeout = std::chrono::milliseconds(10);
 
   HTTPResponse::HTTPResponse(std::unique_ptr<ConnectionManager>&& mgr,
                              bool				  get_body) :
@@ -212,7 +212,7 @@ namespace http {
       index = header.find(':', 0);
       if(index != std::string::npos) {
         std::string key = header.substr(0, index);
-        TRACE << "Found key " << key;
+        TRACE << "Found key " << key << ": " << strutil::trimmed(header.substr(index + 1));
         std::transform(key.begin(), key.end(), key.begin(), ::toupper);
         _headers.insert(std::make_pair(strutil::trimmed(key),
                                        strutil::trimmed(header.substr(index + 1))));
@@ -253,7 +253,11 @@ namespace http {
           const std::chrono::duration<double> diff = now - start;
           return diff > receive_timeout;
         };
-      while ((pending = _connection_manager->pending()) || !timeout(last_read)) {
+      while (_connection_manager->valid() && (pending = _connection_manager->pending())) {
+
+        TRACE << pending << " bytes are pending";
+        if (pending < 2)
+          break;
         if (current_size < _buffer_size + pending + 1) {
           current_size += MAX_BUF;
           _buffer = realloc(_buffer, current_size);
@@ -263,6 +267,7 @@ namespace http {
         char* buf = static_cast<char *>(_buffer);
         res = _connection_manager->recv(buf + _buffer_size, pending);
         _buffer_size += res;
+        std::this_thread::sleep_for(receive_timeout);
         if (res) {
           TRACE << "[" << current_size << "/" << _buffer_size + pending << "] downloaded";
           last_read = std::chrono::high_resolution_clock::now();
@@ -287,7 +292,13 @@ namespace http {
   ssize_t HTTPConnectionManager::pending() {
     int bytes = 0;
     ioctl(_fd, FIONREAD, &bytes);
+    TRACE << bytes << " pending in socket";
     return bytes;
+  }
+
+  bool HTTPConnectionManager::valid() {
+    errno = 0;
+    return (fcntl(_fd, F_GETFD) != -1) && (errno != EBADF);
   }
 
 #ifdef TLS_SUPPORT
@@ -307,6 +318,11 @@ namespace http {
   ssize_t HTTPSConnectionManager::pending() {
     return _conn->pending_bytes();
   }
+
+  bool HTTPSConnectionManager::valid() {
+    return _conn->valid();
+  }
+
 #endif
 
   HTTPRequest::HTTPRequest(const HTTPRequestType type,

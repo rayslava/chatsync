@@ -73,6 +73,7 @@ namespace networking {
   class TLSConnection {
     gnutls::client_session _session;                /**< gnutls session */
     gnutls::certificate_credentials _credentials;   /**< gnutls credentials TODO: support customization */
+    int _fd;                                        /**< socket descriptor */
   public:
     /**
      * Create a connection
@@ -107,6 +108,13 @@ namespace networking {
      * \param count Size of \c buffer
      */
     ssize_t send(const void * const buffer, size_t count);
+
+    /**
+     * Check if connection is still available;
+     *
+     * \retval true if connection intact
+     */
+    bool valid();
   };
   std::unique_ptr<TLSConnection> tls_connect(const std::string& host);
   std::unique_ptr<TLSConnection> tls_connect(int fd);

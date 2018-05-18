@@ -194,6 +194,7 @@ namespace networking {
       return 0;
     };
     ssize_t pending() override { return _left; };
+    bool valid() override { return _left > 0; };
   };
 
 #ifndef _UNIT_TEST_BUILD
@@ -264,7 +265,9 @@ namespace networking {
 #endif
 
 #ifdef TLS_SUPPORT
-  TLSConnection::TLSConnection(int tcp_fd) {
+  TLSConnection::TLSConnection(int tcp_fd) :
+    _fd(tcp_fd)
+  {
     _session.set_credentials(_credentials);
     _session.set_priority ("NORMAL", NULL);
     _session.set_transport_ptr((gnutls_transport_ptr_t) (ptrdiff_t) tcp_fd);
@@ -294,6 +297,11 @@ namespace networking {
 
   ssize_t TLSConnection::send(const void * const buffer, size_t count) {
     return _session.send(buffer, count);
+  }
+
+  bool TLSConnection::valid() {
+    errno = 0;
+    return (os::fcntl(_fd, F_GETFD) != -1) && (errno != EBADF);
   }
 
   std::unique_ptr<TLSConnection> tls_connect(const std::string& host) {

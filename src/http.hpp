@@ -107,6 +107,13 @@ namespace http {
      * \retval number of bytes waiting for reading.
      */
     virtual ssize_t pending() = 0;
+
+    /**
+     * Check if connection is still available;
+     *
+     * \retval true if connection intact
+     */
+    virtual bool valid() = 0;
     virtual ~ConnectionManager() {};
   };
 
@@ -126,6 +133,7 @@ namespace http {
     ssize_t recv(void* buffer, size_t count) override;
     ssize_t send(const void * const buffer, size_t count) override;
     ssize_t pending() override;
+    bool valid() override;
   };
 
 #ifdef TLS_SUPPORT
@@ -148,6 +156,7 @@ namespace http {
     ssize_t recv(void* buffer, size_t count) override;
     ssize_t send(const void * const buffer, size_t count) override;
     ssize_t pending() override;
+    bool valid() override;
   };
 #endif
 
