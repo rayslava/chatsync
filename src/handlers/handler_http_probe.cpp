@@ -81,7 +81,8 @@ namespace pipelining {
     result_line << "URL: [";
     if (!result->header("content-type").empty()) {
       result_line << result->header("content-type");
-      if (result->header("content-type") == "text/html") {
+      DEBUG << result->header("content-type");
+      if (!result->header("content-type").compare(0, 9, "text/html")) {
 	data_recv = std::async([&result](){ return result->data(); });
       }
     }
