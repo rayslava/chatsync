@@ -12,6 +12,8 @@ set(CMAKE_MODULE_PATH
   ${CMAKE_CURRENT_SOURCE_DIR}/cmake
   )
 
+add_subdirectory(cslog EXCLUDE_FROM_ALL)
+
 find_package (Threads REQUIRED)
 
 # Optional plugins
@@ -20,14 +22,14 @@ option (FEATURE_TOX "Build Tox support" ON)
 # Optional plugins
 option (TLS_SUPPORT "Build TLS connection support (using gnutlsxx)" ON)
 option (FEATURE_TELEGRAM "Build Telegram chat support" ON)
-option (ENABLE_HANDLERS "Build support for message processing" OFF)
+option (ENABLE_HANDLERS "Build support for message processing" ON)
 option (PROXY_SUPPORT "Enable proxy support for HTTP proxying" ON)
 
 set(COMMON_SOURCE_FILES
   src/config.cpp
   src/channel.cpp
   src/hub.cpp
-  src/logging.cpp
+  cslog/src/logging.cpp
   src/net.cpp
   )
 
@@ -165,7 +167,7 @@ endif()
 add_definitions(-D_POSIX_C_SOURCE)
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-  set(STANDARD "-std=c++17")
+  set(STANDARD "-std=c++2a")
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
   set(STANDARD "-std=c++2a")
 endif()
@@ -221,6 +223,7 @@ enable_testing()
 
 include_directories(
   ${PROJECT_SOURCE_DIR}/src
+  cslog/include
   ${TOX_INCLUDE_DIR}
   )
 
@@ -245,8 +248,6 @@ create_test(ircchannel "test/ircchannel.cpp;src/ircchannel.cpp;src/filechannel.c
 create_test(hub "test/hub.cpp;src/ircchannel.cpp;src/filechannel.cpp;src/toxchannel.cpp;src/http.cpp")
 
 create_test(config test/config.cpp)
-
-create_test(logging test/logging.cpp)
 
 create_test(http "test/http.cpp;src/http.cpp")
 

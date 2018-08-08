@@ -1,8 +1,8 @@
-#include "../src/hub.hpp"
-#include "../src/channel.hpp"
-#include "../src/handlers/handler.hpp"
-#include "../src/handlers/handler_http_probe.hpp"
-#include "../src/logging.hpp"
+#include "hub.hpp"
+#include "channel.hpp"
+#include "handlers/handler.hpp"
+#include "handlers/handler_http_probe.hpp"
+#include "logging.hpp"
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 #include <cstdio>
