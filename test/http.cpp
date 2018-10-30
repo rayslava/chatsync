@@ -1,5 +1,5 @@
-#include "http.hpp"
-#include "logging.hpp"
+#include "../src/http.hpp"
+#include "../src/logging.hpp"
 #include <gtest/gtest.h>
 #include <gtest/gtest-spi.h>
 #include <cstdio>
