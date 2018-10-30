@@ -16,6 +16,7 @@ namespace telegram {
   struct MockedConnection: public http::ConnectionManager {
     MockedConnection(const std::string& data) : _data(data) {};
     ~MockedConnection() {};
+    bool valid() override { return true; }
     ssize_t recv(void* buffer, size_t count) override {
       if (_read) {
         while (_keep_connected)
