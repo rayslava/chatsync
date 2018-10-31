@@ -38,6 +38,7 @@ if (PROXY_SUPPORT)
 set(COMMON_SOURCE_FILES
   ${COMMON_SOURCE_FILES}
   src/http.cpp
+  src/socks5.cpp
   )
 endif()
 
@@ -260,7 +261,7 @@ if (FEATURE_TELEGRAM)
 endif()
 
 if (PROXY_SUPPORT)
-  create_test(proxy "test/proxy.cpp;src/net.cpp")
+  create_test(proxy "test/proxy.cpp;src/net.cpp;src/socks5.cpp")
 endif()
 
 if (ENABLE_HANDLERS)

@@ -1,5 +1,4 @@
 #include "../src/http.hpp"
-#include "../src/logging.hpp"
 #include <gtest/gtest.h>
 #include <gtest/gtest-spi.h>
 #include <cstdio>
@@ -172,6 +171,16 @@ Accept: */*\r\nTest-Header: Test value\r\n\r\n");
     auto result = hr.get();
     ASSERT_EQ(result->code(), 200);
   }
+
+  TEST(PerformHTTPRequest, SocksWithHttpsPort)
+  {
+    HTTPRequest req(HTTPRequestType::HEAD, "ya.ru", "/");
+    auto hr = PerformHTTPRequest("socks5://localhost:1080/https://ya.ru:443/", req, false);
+    hr.wait();
+    auto result = hr.get();
+    ASSERT_EQ(result->code(), 200);
+  }
+
 #endif
 #endif
 }

@@ -242,11 +242,14 @@ namespace networking {
     return fd;
   }
 
-  static int socks_proxy_connect(const std::string& host,
-                                 const std::string& proxy)
+  int _do_socks_proxy_connect(const std::string& host, const std::string& proxy);
+#ifndef _UNIT_TEST_BUILD
+  static
+#endif
+  int socks_proxy_connect(const std::string& host,
+                          const std::string& proxy)
   {
-    DEBUG << "Connecting socks5 proxy " << proxy;
-    return tcp_connect(host);
+    return _do_socks_proxy_connect(host, proxy);
   }
 
   int proxy_tcp_connect(const std::string& host, const std::string& proxy, ProxyType type) {

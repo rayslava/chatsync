@@ -1,15 +1,17 @@
+#include "http.hpp"
+
 #include <stdexcept>
 #include <algorithm>
 #include <functional>
-#include "net.hpp"
-#include "http.hpp"
-#include "logging.hpp"
-#include "strutil.hpp"
-
+#include <string>
 #include <cstring>
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
+
+#include "net.hpp"
+#include "logging.hpp"
+#include "strutil.hpp"
 
 namespace http {
   const std::string& HTTPResponse::header(const std::string& hdr) const {

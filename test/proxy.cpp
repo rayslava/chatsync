@@ -54,6 +54,7 @@ namespace networking {
     }
   }
   int http_proxy_connect(const std::string& host, const std::string& proxy);
+  int socks_proxy_connect(const std::string& host, const std::string& proxy);
 
   TEST(http_proxy, connect)
   {
@@ -64,5 +65,15 @@ namespace networking {
   {
     EXPECT_THROW({ http_proxy_connect("google.com:80", "127.0.0.1:12345");
                  }, proxy_error);
+  }
+
+  TEST(socks_proxy, connect)
+  {
+    DEFAULT_LOGGING;
+    int fd = socks_proxy_connect("www.google.com", "127.0.0.1:1080");
+    int n = write(fd, "GET / HTTP/1.1\r\n\r\n", sizeof("GET / HTTP/1.1\r\n\r\n"));
+    char buf[1024];
+    n = read(fd, buf, 1024);
+    DEBUG << std::string(buf, 128);
   }
 }
