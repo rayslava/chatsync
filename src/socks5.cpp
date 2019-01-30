@@ -247,7 +247,10 @@ namespace networking {
         DEBUG << "Connect line " << connection_line;
         return fd;
         //	int newfd = tcp_connect(connection_line);
-        os::write(fd, "GET / HTTP/1.1\r\n\r\n", sizeof("GET / HTTP/1.1\r\n\r\n"));
+        int result = os::write(fd, "GET / HTTP/1.1\r\n\r\n", sizeof("GET / HTTP/1.1\r\n\r\n"));
+        if (result < 0) {
+          ERROR << "Can't send request to proxy";
+        }
         char buf[256];
         res = os::read(fd, buf, 256);
         DEBUG << std::string(buf);
