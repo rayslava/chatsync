@@ -213,12 +213,14 @@ namespace ircChannel {
     const auto loginline = "PRIVMSG nickserv :id " + servicePassword + "\r\n";
     const auto joinline = "JOIN #" + _channel + "  \r\n";
 
+    std::future<void> nsidentifier{};
+
     send(passline);
     send(nickline);
     send(userline);
     std::this_thread::sleep_for(std::chrono::milliseconds (1000));
     if (servicePassword.length() > 0) {
-      std::async(std::launch::async, [this, loginline]() {
+      nsidentifier = std::async(std::launch::async, [this, loginline]() {
         send(_fd, loginline);
         std::this_thread::sleep_for(std::chrono::milliseconds (1000));
         send(loginline);
@@ -227,6 +229,9 @@ namespace ircChannel {
 
     send(joinline);
     std::this_thread::sleep_for(std::chrono::milliseconds (500));
+    DEBUG << "Before get()";
+    if (nsidentifier.valid())
+      nsidentifier.get();
     DEBUG << "#irc: Entered channel";
   }
 

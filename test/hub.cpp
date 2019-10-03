@@ -28,8 +28,8 @@ TEST(hub, name)
 
   EXPECT_THROW({msg >> *inch;
                }, std::logic_error);
-  EXPECT_NO_THROW({msg >> *ouch;
-                  });
+  EXPECT_THROW({msg >> *ouch;
+               }, std::runtime_error);
   std::this_thread::sleep_for(std::chrono::milliseconds (50));
   hub->deactivate();
   std::this_thread::sleep_for(std::chrono::milliseconds (50));

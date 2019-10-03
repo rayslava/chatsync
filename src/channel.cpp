@@ -45,10 +45,7 @@ namespace channeling {
       throw std::logic_error("Can't write data to input channel " + channel.name());
     const auto message = messaging::TextMessage::fromMessage(msg);
     DEBUG << "Incoming message " << message->data();
-    std::async(std::launch::async, [&channel, msg = std::move(msg)]()
-    {
-      channel.incoming(std::move(msg));
-    });
+    channel.incoming(std::move(msg));
     return channel;
   }
 
