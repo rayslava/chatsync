@@ -2,6 +2,7 @@ BINARY=chatsync
 JOBS=$(shell grep -c '^processor' /proc/cpuinfo)
 VERBOSE=1
 MAKE=cmake --build . -- -j $(JOBS)
+SUBMODULES=$(shell git submodule status | awk '{printf("%s.tar.gz",$$2)}')
 all: stylecheck doxygen asan-release tsan-release clang release clang-release analyzed
 
 doxygen:
@@ -53,7 +54,7 @@ tidy:
 	$(call build-dir, $@) && cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=True ..  && clang-tidy -p debug-build ../src/*.cpp
 
 clean:
-	rm -rf *-build doc; find -name '*~' -delete; rm -f dockerbuild/$(BINARY).tar.gz; rm -f dockerbuild/$(BINARY)
+	rm -rf *-build doc; find -name '*~' -delete; rm -f dockerbuild/*.tar.gz; rm -f dockerbuild/$(BINARY)
 
 memcheck-binary = \
 	(valgrind --tool=memcheck --track-origins=yes --leak-check=full --trace-children=yes --show-reachable=yes ./$1 2>/tmp/unit-test-valg-$1.log)</dev/null && sed '/in use/!d;s/.*exit:.*\s\([[:digit:]]\+\)\sblocks.*/\1/' /tmp/unit-test-valg-$1.log | { read lines; test $$lines -eq 1 || cat /tmp/unit-test-valg-$1.log; }
@@ -89,9 +90,13 @@ dockerimage-clean:
 	docker rmi $(shell docker images -a --filter=dangling=true -q) || true
 	docker rmi $(BINARY)-deploy || true
 
-dockerbuild/$(BINARY).tar.gz:
-	rm -f dockerbuild/$(BINARY).tar.gz
-	git archive --format=tar.gz -o dockerbuild/$(BINARY).tar.gz --prefix=$(BINARY)/ HEAD
+%.tar.gz: %
+	cd $(subst .tar.gz,,$@) && git archive --format=tar.gz -o ../$@ --prefix=$(subst .tar.gz,,$@)/ HEAD
+
+$(BINARY).tar.gz: $(SUBMODULES)
+	rm -f dockerbuild/*.tar.gz
+	git archive --format=tar.gz -o $@ --prefix=$(subst .tar.gz,,$@)/ HEAD
+	mv *.tar.gz dockerbuild/
 
 stylecheck:
 	uncrustify -c uncrustify.cfg src/*.cpp src/*.hpp test/*.cpp --check
@@ -101,15 +106,14 @@ stylefix:
 
 full-deploy: debug release clang clang-release static-release analyzed memcheck deploy deploy-ctoxcore asan asan-release tsan tsan-release
 
-deploy: dockerbuild/$(BINARY).tar.gz
-	cd dockerbuild && docker run -v "$(shell pwd)/dockerbuild:/mnt/host" $(BINARY)-deploy /bin/bash -c 'cd /root && tar xfz /mnt/host/$(BINARY).tar.gz && cd $(BINARY) && mkdir build && cd build && cmake -DSTATIC=True -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make $(BINARY) -j $(JOBS) && cp $(BINARY) /mnt/host/$(BINARY)'
-	rm dockerbuild/$(BINARY).tar.gz
+deploy: $(BINARY).tar.gz dockerimage
+	cd dockerbuild && docker run -v "$(shell pwd)/dockerbuild:/mnt/host" $(BINARY)-deploy /bin/bash -c 'cd /root && tar xfz /mnt/host/$(BINARY).tar.gz && rm /mnt/host/$(BINARY).tar.gz && cd $(BINARY) && tar xfz /mnt/host/*.tar.gz && rm -f /mnt/host/*.tar.gz && mkdir build && cd build && cmake -DSTATIC=True -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make $(BINARY) -j $(JOBS) && cp $(BINARY) /mnt/host/$(BINARY)'
 
 coverage:
 	$(call build-dir, $@) &&  cmake .. -DCMAKE_BUILD_TYPE=Debug -DCOVERAGE=True && $(MAKE) coverage
 
-dockerized-build: dockerbuild/$(BINARY).tar.gz
-	cd dockerbuild && docker run -v "$(shell pwd)/dockerbuild:/mnt/host" chatsync /bin/bash -c 'cd /root && tar xfz /mnt/host/$(BINARY).tar.gz && cd $(BINARY) && export LD_LIBRARY_PATH=/usr/lib/llvm-6.0/lib/ && export PATH=/usr/lib/llvm-6.0/bin:$$PATH && make'
+dockerized-build: $(BINARY).tar.gz
+	cd dockerbuild && docker run -v "$(shell pwd)/dockerbuild:/mnt/host" chatsync /bin/bash -c 'cd /root && tar xfz /mnt/host/$(BINARY).tar.gz && rm /mnt/host/$(BINARY).tar.gz && cd $(BINARY) && tar xfz /mnt/host/*.tar.gz && rm -f /mnt/host/*.tar.gz && export LD_LIBRARY_PATH=/usr/lib/llvm-6.0/lib/ && export PATH=/usr/lib/llvm-6.0/bin:$$PATH && make'
 	rm dockerbuild/$(BINARY).tar.gz
 
 .PHONY: dockerbuild/$(BINARY).tar.gz
