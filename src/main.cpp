@@ -75,33 +75,36 @@ int main(int argc, char* argv[])
 #ifdef HANDLERS
         /* Parse and create handlers */
         std::string handlers_list = hubOptions.get("handlers", "");
-        DEBUG << "Handlers for : " << hubOptions["name"] << ": " << handlers_list;
-        std::vector<std::string> handlers;
-        size_t pos = 0;
-        const std::string delimiter = ",";
-        std::string token;
-        if (handlers_list.find(delimiter) == std::string::npos) {
-          /* The only handler */
-          handlers.emplace_back(strutil::trimmed(handlers_list));
-        } else {
-          /* Several handlers */
-          while ((pos = handlers_list.find(delimiter)) != std::string::npos) {
-            token = handlers_list.substr(0, pos);
-            handlers.emplace_back(strutil::trimmed(token));
-            handlers_list.erase(0, pos + delimiter.length());
-          }
-        }
-        for (const auto& handler : handlers) {
-          std::any initializer;
-          /* Now we have to prepare appropriate initializers for handlers
-             accordingly to their documentation */
-          if (handler == "http_probe") {
-            initializer = std::function<void(const messaging::message_ptr&& msg)>(std::bind(&Hub::Hub::newMessage, currentHub.get(), std::placeholders::_1));
+        if (!handlers_list.empty()) {
+          DEBUG << "Handlers for : " << hubOptions["name"] << ": " << handlers_list;
+          std::vector<std::string> handlers;
+          size_t pos = 0;
+          const std::string delimiter = ",";
+          std::string token;
+          if (handlers_list.find(delimiter) == std::string::npos) {
+            /* The only handler */
+            handlers.emplace_back(strutil::trimmed(handlers_list));
           } else {
-            throw config::config_error("Unsupported handler " + handler);
+            /* Several handlers */
+            while ((pos = handlers_list.find(delimiter)) != std::string::npos) {
+              token = handlers_list.substr(0, pos);
+              handlers.emplace_back(strutil::trimmed(token));
+              handlers_list.erase(0, pos + delimiter.length());
+            }
           }
-          Hub::handlerPtr probe = pipelining::CreateHandler(handler, initializer);
-          currentHub->addHandler(std::move(probe));
+          for (const auto& handler : handlers) {
+            std::any initializer;
+            /* Now we have to prepare appropriate initializers for handlers
+               accordingly to their documentation */
+            if (handler == "http_probe") {
+              initializer = std::function<void(const messaging::message_ptr&& msg)>(std::bind(&Hub::Hub::newMessage, currentHub.get(), std::placeholders::_1));
+            } else {
+              throw config::config_error("Unsupported handler " + handler);
+            }
+            Hub::handlerPtr probe =
+              pipelining::CreateHandler(handler, initializer);
+            currentHub->addHandler(std::move(probe));
+          }
         }
 #endif
         /* Channel parsing */

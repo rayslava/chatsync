@@ -117,7 +117,8 @@ namespace Hub {
       activators.clear();
     } catch(const channeling::channel_error& ce) {
       ERROR << "Can't run channel " << ce._name << ":" << ce.what();
-      throw std::runtime_error("Failed to activate hub " + _name);
+      throw std::runtime_error("Failed to activate hub " + _name +
+                               " due to channel " + ce._name);
     }
 
     for (auto& in : _inputChannels)
