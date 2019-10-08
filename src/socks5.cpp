@@ -74,7 +74,7 @@ namespace networking {
     }
 
     void packIpv6Addr(const std::string& addr) {
-      throw proxy_error("ipv6 addresses are not supported yet");
+      throw proxy_error("ipv6 addresses are not supported yet: " + addr);
     }
 
     void packDomain(const std::string& addr) {

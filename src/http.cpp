@@ -335,8 +335,8 @@ namespace http {
     _host(host),
     _uri(url)
   {
-    addHeader("accept", "*/*");
-    addHeader("host",	host);
+    addHeader("accept",	    "*/*");
+    addHeader("host",	    host);
     addHeader("user-agent", "chatsync/0.1");
   }
 

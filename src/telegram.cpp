@@ -161,8 +161,8 @@ namespace telegram {
                           telegram_api_srv,
                           _endpoint + uri);
     req.setBody(std::move(req_body), body_size);
-    req.addHeader("connection",    "keep-alive");
-    req.addHeader("content-type",  "application/json");
+    req.addHeader("connection",	    "keep-alive");
+    req.addHeader("content-type",   "application/json");
     req.addHeader("content-length", std::to_string(body_size));
     try {
       const auto response = httpRequest(_server, req);

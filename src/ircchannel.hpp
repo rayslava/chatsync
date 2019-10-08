@@ -20,7 +20,6 @@ namespace ircChannel {
     const std::string _channel;                          /**< Channel name (starting with #) */
     std::chrono::time_point<std::chrono::system_clock> _ping_time; /**< Ping to server in microseconds */
 
-
     mutable std::mutex _pong_time_mutex;                 /**< Lock for _last_pong_time */
     mutable std::chrono::time_point<std::chrono::system_clock> _last_pong_time; /**< Last pong received from server */
     mutable std::atomic_bool _connection_issue /**< The connection issue has been detected, check is ongoing*/;

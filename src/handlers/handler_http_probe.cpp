@@ -130,6 +130,6 @@ namespace pipelining {
 	  const auto tm = probeUrl(id, url);
 	  send(tm);
 	}
-	return msg; }, messaging::system_user_id, _send, std::move(msg));
+	return std::move(msg); }, messaging::system_user_id, _send, std::move(msg));
   }
 }

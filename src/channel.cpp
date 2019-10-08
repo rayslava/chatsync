@@ -170,6 +170,7 @@ namespace channeling {
         if (err != bytes)
           throw std::runtime_error(ERR_SOCK_READ);
         // Parse received data
+        TRACE << "Reading " << std::string(line);
         if (direction() == ChannelDirection::Input || direction() == ChannelDirection::Bidirectional)
           _hub->newMessage(parse(line));
         delete[] line;
@@ -182,6 +183,7 @@ namespace channeling {
   }
 
   int Channel::send(const uint32_t fd, const std::string& msg) const {
+    TRACE << "Writing " << msg;
     const int n = write(fd, msg.c_str(), msg.length());
     if (n < 0)
       throw std::runtime_error(ERR_SOCK_WRITE);

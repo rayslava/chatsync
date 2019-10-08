@@ -61,7 +61,6 @@ namespace fileChannel {
 #include <sys/stat.h>
 #include <unistd.h>
 #include <sys/ioctl.h>
-#include <stropts.h>
 
   int FileChannel::openPipe(const std::string& filename) {
     int ret_val = mkfifo(filename.c_str(), 0666);

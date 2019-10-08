@@ -3,6 +3,7 @@
 #include "messages.hpp"
 #include "logging.hpp"
 #include <stdexcept>
+#include <string>
 #include <utility>
 #include <typeinfo>
 #include <regex>
@@ -42,12 +43,11 @@ namespace ircChannel {
       int retval = -1;
       while (retval < 0) {
         retval = sys::fcntl(_fd, F_GETFD);
-        std::this_thread::sleep_for(std::chrono::milliseconds (100));
+        std::this_thread::sleep_for(std::chrono::milliseconds (10));
       }
+      _active = true;
       registerConnection();
       startPolling();
-      _active = true;
-      ping();
     });
   }
 
@@ -62,10 +62,10 @@ namespace ircChannel {
     checkTimeout();
     if (msg->type() == messaging::MessageType::Text) {
       const auto textmsg = messaging::TextMessage::fromMessage(msg);
-      const int max_msg_len = irc_message_max - 1 -
-                              strlen("PRIVMSG # :[]: \r\n") -
-                              textmsg->user()->name().length() -
-                              _channel.length();
+      const unsigned int max_msg_len = irc_message_max - 1 -
+                                       strlen("PRIVMSG # :[]: \r\n") -
+                                       textmsg->user()->name().length() -
+                                       _channel.length();
       std::string text = textmsg->data();
       if (text.length() < max_msg_len) {
         snprintf(message, irc_message_max - 1, "PRIVMSG #%s :[%s]: %.*s\r\n",
@@ -141,12 +141,12 @@ namespace ircChannel {
   {
     DEBUG << "Parsing irc line:" << toParse;
 
-    std::regex msgRe ("^:(\\S+)!(\\S+)\\s+PRIVMSG\\s+#(\\S+)\\s+:(.*)\r\n$");
-    std::regex joinRe("^:(\\S+)!(\\S+)\\s+JOIN\\s+:#(\\S+)$");
-    std::regex quitRe("^:(\\S+)!(\\S+)\\s+QUIT\\s+:#(\\S+)$");
-    std::regex pingRe("PING\\s+:(.*)\r\n$");
-    std::regex pongRe("PONG\\s+(.*)\r\n$");
-    std::regex errNotReg(".*You have not registered.*\r\n$");
+    const static std::regex msgRe ("^:(\\S+)!(\\S+)\\s+PRIVMSG\\s+#(\\S+)\\s+:(.*)\r\n$");
+    const static std::regex joinRe("^:(\\S+)!(\\S+)\\s+JOIN\\s+:#(\\S+)$");
+    const static std::regex quitRe("^:(\\S+)!(\\S+)\\s+QUIT\\s+:#(\\S+)$");
+    const static std::regex pingRe("PING\\s+:(.*)\r\n$");
+    const static std::regex pongRe("PONG\\s+(.*)\r\n$");
+    const static std::regex errNotReg(".*You have not registered.*\r\n$");
 
     std::smatch msgMatches;
     std::string name = "irc";
@@ -161,7 +161,7 @@ namespace ircChannel {
       pong();
     }
     if (std::regex_search(toParse, msgMatches, pingRe)) {
-      const std::string pong = "PONG " + msgMatches[1].str();
+      const std::string pong = "PONG " + msgMatches[1].str() + "\r\n";
       DEBUG << "#irc: sending " << pong;
       send(pong);
     };
@@ -198,41 +198,66 @@ namespace ircChannel {
     return nullptr;
   }
 
+  static inline std::string getstring(int fd) {
+    char c{0};
+    std::string result{};
+    while (c != '\n') {
+      int res = sys::read(fd, &c, 1);
+      if (res > 0)
+        result.push_back(c);
+      else if (res == 0)
+        std::this_thread::sleep_for(std::chrono::milliseconds (50));
+      else
+        throw std::runtime_error("Socket closed");
+    }
+    return result;
+  }
+
   void IrcChannel::registerConnection() const {
     DEBUG << "Registering IRC connection";
 
     const std::string nick = _config.get("nickname", "chatsyncbot");
-    const std::string mode = _config.get("mode", "*");
-    const std::string hostname = _config.get("hostname", "chatsynchost");
-    const std::string servername = _config.get("servername", "chatsyncserver");
+    const std::string login = _config.get("login", nick.c_str());
+    const std::string mode = _config.get("mode", "0");
     const std::string realname = _config.get("realname", "Chat Sync");
-    const std::string servicePassword = _config.get("servicepassword", "");
-    const auto passline = "PASS *\r\n";
+    const std::string servicePassword = _config.get("password", "");
+    const bool auth = (servicePassword.length() > 0);
+
     const auto nickline = "NICK " + nick + "\r\n";
-    const auto userline = "USER " + nick + " " + hostname + " " + servername + " :" + realname + "\r\n";
+    const auto userline = "USER " + nick + " " + mode + " * :" + realname + "\r\n";
     const auto loginline = "PRIVMSG nickserv :id " + servicePassword + "\r\n";
+    const auto passline = "PASS " + (auth ?
+                                     (login + ":" + servicePassword) : "*") + "\r\n";
     const auto joinline = "JOIN #" + _channel + "  \r\n";
+    const auto regline = passline + nickline + userline;
 
-    std::future<void> nsidentifier{};
+    static char buf[1024];
+    std::string toParse;
+    int result = 0;
+    std::smatch msgMatches;
 
-    send(passline);
-    send(nickline);
-    send(userline);
-    std::this_thread::sleep_for(std::chrono::milliseconds (1000));
-    if (servicePassword.length() > 0) {
-      nsidentifier = std::async(std::launch::async, [this, loginline]() {
-        send(_fd, loginline);
-        std::this_thread::sleep_for(std::chrono::milliseconds (1000));
-        send(loginline);
-      });
+    const static std::regex welcome("\\s+001\\s+");
+    const static std::regex identreq("NOTICE.*?hostname.*?\r\n");
+
+    while (!std::regex_search(toParse, msgMatches, identreq)) {
+      toParse = getstring(_fd);
+      TRACE << toParse;
     }
 
+    DEBUG << "Ident requested, registering";
+    send(regline);
+
+    // Wait for the welcome message
+    while (!std::regex_search(toParse, msgMatches, welcome)) {
+      toParse = getstring(_fd);
+      TRACE << toParse;
+    }
+
+    if (auth)
+      send(loginline);
+
     send(joinline);
-    std::this_thread::sleep_for(std::chrono::milliseconds (500));
-    DEBUG << "Before get()";
-    if (nsidentifier.valid())
-      nsidentifier.get();
-    DEBUG << "#irc: Entered channel";
+    DEBUG << "#irc: Registered connection";
   }
 
   void IrcChannel::ping() {
