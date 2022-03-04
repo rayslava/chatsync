@@ -102,7 +102,7 @@ TEST(configParser, file)
 {
   // Prepare config file
   const auto configLine = "test = testval\ntest2\t=\tvalue2\n";
-  char nameBuffer [L_tmpnam];
+  char nameBuffer[L_tmpnam];
   const auto tmpnamres = tmpnam(nameBuffer);
 
   FILE* config = fopen(nameBuffer, "w");

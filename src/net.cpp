@@ -217,7 +217,7 @@ namespace networking {
     line_buf[line_len] = '\0';
     if (res != line_len)
       throw std::runtime_error("Really awful snprintf() overflow happened");
-    res = os::write(fd, line_buf.get(), line_len);
+    res = write(fd, line_buf.get(), line_len);
     if (res != line_len)
       throw proxy_error("Couldn't send proxy request");
     int bytes = 0;
@@ -230,7 +230,7 @@ namespace networking {
     if (res < 0 || !bytes)
       throw proxy_error("Proxy didn't respond");
     const auto response_buf = std::make_unique<char[]>(bytes + 1);
-    res = os::read(fd, response_buf.get(), bytes);
+    res = read(fd, response_buf.get(), bytes);
     response_buf[bytes] = 0;
     auto manager = std::make_unique<HTTPProxyConnectionManager>(bytes, response_buf.get());
     auto response = std::make_unique<http::HTTPResponse>(std::move(manager), false);

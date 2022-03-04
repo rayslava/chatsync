@@ -208,10 +208,10 @@ namespace networking {
 
     TRACE << "Requesting methods";
     const auto [hello, hello_len] = SocksHello::buffer();
-    int res = os::write(fd, hello.get(), hello_len);
+    int res = write(fd, hello.get(), hello_len);
 
     SocksAck socks_ack;
-    res = os::read(fd, &socks_ack, sizeof(socks_ack));
+    res = read(fd, &socks_ack, sizeof(socks_ack));
     if (res != sizeof(socks_ack))
       throw proxy_error("Wrong socks5 proxy response");
 
@@ -228,12 +228,12 @@ namespace networking {
                      host, 80);
 
     const auto [buf, len] = req.buffer();
-    res = os::write(fd, buf.get(), len);
+    res = write(fd, buf.get(), len);
 
     char header[4];
-    res = os::read(fd, header, 4);
+    res = read(fd, header, 4);
     char body[6];
-    res = os::read(fd, body, 6);
+    res = read(fd, body, 6);
     std::uint16_t port = 0;
     port |= body[5];
     port |= body[4] << 8;
@@ -247,12 +247,12 @@ namespace networking {
         DEBUG << "Connect line " << connection_line;
         return fd;
         //	int newfd = tcp_connect(connection_line);
-        int result = os::write(fd, "GET / HTTP/1.1\r\n\r\n", sizeof("GET / HTTP/1.1\r\n\r\n"));
+        int result = write(fd, "GET / HTTP/1.1\r\n\r\n", sizeof("GET / HTTP/1.1\r\n\r\n"));
         if (result < 0) {
           ERROR << "Can't send request to proxy";
         }
         char buf[256];
-        res = os::read(fd, buf, 256);
+        res = read(fd, buf, 256);
         DEBUG << std::string(buf);
       }
     }

@@ -90,10 +90,10 @@ namespace toxChannel {
       const size_t filesize = sb.st_size;
       const auto toxData = std::make_unique<uint8_t[]>(filesize);
       const int toxfd = linux::open(dataFileName.c_str(), O_RDONLY);
-      int result = linux::read(toxfd, toxData.get(), filesize);
+      int result = read(toxfd, toxData.get(), filesize);
       if (result < 0)
         throw config::option_error("Error reading file");
-      result = linux::close(toxfd);
+      result = close(toxfd);
       if (result < 0)
         throw config::option_error("Error closing file");
       if (result > 0)
@@ -182,11 +182,11 @@ namespace toxChannel {
       const auto toxData = std::make_unique<uint8_t[]>(filesize);
       tox_get_savedata(_tox, toxData.get());
       const int toxfd = linux::open(dataFileName, O_WRONLY | O_CREAT, 0644);
-      int result = linux::write(toxfd, toxData.get(), filesize);
+      int result = write(toxfd, toxData.get(), filesize);
       if (result < 0)
         throw config::option_error("Error writing file");
       DEBUG << "#tox " << _name << " Successfully saved " << result << " bytes of tox data";
-      result = linux::close(toxfd);
+      result = close(toxfd);
       if (result < 0)
         throw config::option_error("Error closing file");
     } catch (config::option_error& e) {

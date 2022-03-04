@@ -202,7 +202,7 @@ namespace ircChannel {
     char c{0};
     std::string result{};
     while (c != '\n') {
-      int res = sys::read(fd, &c, 1);
+      int res = read(fd, &c, 1);
       if (res > 0)
         result.push_back(c);
       else if (res == 0)
